@@ -7,10 +7,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^4.14.0",
+    "@next-auth/prisma-adapter": "^0.4.4-canary.81",
+    "@prisma/client": "^5.6.0",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "bcrypt": "^5.1.0",
+    "fs": "^0.0.1-security",
     "next": "^13.4.2",
     "next-auth": "^4.22.1",
     "react": "^18.2.0",
@@ -23,7 +25,7 @@
     "eslint": "8.11.0",
     "eslint-config-next": "^13.0.5",
     "postcss": "^8.4.12",
-    "prisma": "^4.14.0",
+    "prisma": "^5.6.0",
     "tailwindcss": "^3.0.23",
     "typescript": "^4.6.2"
   }

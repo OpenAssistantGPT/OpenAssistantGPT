@@ -19,7 +19,7 @@ export default function Login() {
           </Link>
           <h3 className="text-xl font-semibold">Sign In</h3>
           <p className="text-sm text-gray-500">
-            Use your email and password to sign in
+            Use your Github account to sign in
           </p>
         </div>
         <Form type="login" />

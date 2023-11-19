@@ -3,7 +3,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  swcMinify: true,
+  swcMinify: true
 };
 
 module.exports = nextConfig;
