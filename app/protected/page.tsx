@@ -8,9 +8,8 @@ import { getCurrentUser } from "@/lib/session"
 
 
 export default async function Home() {
-  //const session = await getServerSession(authOptions);
-
   const user = await getCurrentUser()
+  
   console.log(user)
 
   if (!user) {

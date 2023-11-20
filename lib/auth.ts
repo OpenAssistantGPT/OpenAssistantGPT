@@ -9,12 +9,13 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),
   secret: process.env.NEXTAUTH_SECRET,
   site: process.env.NEXTAUTH_URL,
+  useSecureCookies: false,
   session: {
     strategy: "jwt",
   },
-  //pages: {
-  //  signIn: "/login",
-  //},
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || 'bdda90e7f10d3641ee6c', 
