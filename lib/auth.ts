@@ -18,8 +18,8 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_ID || 'bdda90e7f10d3641ee6c', 
-      clientSecret: process.env.GITHUB_SECRET || '58880cd7e7413e3e428bd7f43c622411ddf299fc',
+      clientId: process.env.GITHUB_ID, 
+      clientSecret: process.env.GITHUB_SECRET,
     })
   ],
   callbacks: {

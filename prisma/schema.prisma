@@ -7,6 +7,24 @@ generator client {
   provider        = "prisma-client-js"
 }
 
+model Chatbot {
+  id                 String  @id @default(cuid())
+  name               String
+  userId             String
+  createdAt          DateTime @default(now()) @map(name: "created_at")
+  openaiKey          String
+  fromDomain         String
+  prompt             String
+  crawlUrl           String
+  urlMatch           String
+  selector           String
+  maxPagesToCrawl    Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "chatbots")
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
