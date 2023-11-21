@@ -16,6 +16,8 @@ export const metadata = {
 export default async function DashboardPage() {
   const user = await getCurrentUser()
 
+  console.log(user)
+
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
