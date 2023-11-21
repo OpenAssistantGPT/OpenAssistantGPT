@@ -1,20 +1,19 @@
 // These styles apply to every route in the application
 import "@/styles/globals.css";
+import { Inter as FontSans } from "next/font/google"
+
 import { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Toaster } from "react-hot-toast";
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
-import AuthStatus from "@/components/auth-status";
-import { Suspense } from "react";
 
-const inter = Inter({
-  variable: "--font-inter",
+const fontSans = FontSans({
   subsets: ["latin"],
-});
+  variable: "--font-sans",
+})
 
-const title = "Next.js Prisma Postgres Auth Starter";
-const description =
-  "This is a Next.js starter kit that uses Next-Auth for simple email + password login and a Postgres database to persist the data.";
+const title = "BLA BLA";
+const description = "test";
 
 export const metadata: Metadata = {
   title,
@@ -34,8 +33,17 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+          fontSans.variable
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+        </ThemeProvider>
       </body>
     </html>
   );
