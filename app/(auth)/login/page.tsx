@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Form from "@/components/form";
 import Link from "next/link";
+
 import { Metadata } from "next";
+
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button"
+import { Icons } from "@/components/icons"
 
 export const metadata: Metadata = {
   title: "Login",
