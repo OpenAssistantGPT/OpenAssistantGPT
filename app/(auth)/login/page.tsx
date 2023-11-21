@@ -37,8 +37,8 @@ export default function Login() {
           <p className="text-sm text-muted-foreground">
             Use your Github account to sign in
           </p>
+          <Form type="login" />
         </div>
-        <Form type="login" />
       </div>
     </div>
   );
