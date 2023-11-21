@@ -5,6 +5,8 @@ import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
+import { CrawlerCreateButton } from "@/components/crawler-create-button"
+
 
 export const metadata = {
     title: "Crawling settings",
@@ -18,14 +20,31 @@ export default async function CrawlingPage() {
         redirect(authOptions?.pages?.signIn || "/login")
     }
 
+    const crawlers: any[] = []
+
     return (
         <DashboardShell>
-            <DashboardHeader
-                heading="Crawling"
-                text="Manage your crawlers and crawling configuration."
-            />
-            <div className="grid gap-10">
+        <DashboardHeader heading="Chatbots" text="Create and manage your chatbots.">
+          <CrawlerCreateButton />
+        </DashboardHeader>
+        <div>
+          {crawlers?.length ? (
+            <div className="divide-y divide-border rounded-md border">
+              {crawlers.map((crawler) => (
+                <div key={crawler.id}> test </div>
+              ))}
             </div>
-        </DashboardShell>
+          ) : (
+            <EmptyPlaceholder>
+              <EmptyPlaceholder.Icon name="post" />
+              <EmptyPlaceholder.Title>No crawler created</EmptyPlaceholder.Title>
+              <EmptyPlaceholder.Description>
+                You don&apos;t have any crawler yet. Start importing content.
+              </EmptyPlaceholder.Description>
+              <PostCreateButton variant="outline" />
+            </EmptyPlaceholder>
+          )}
+        </div>
+      </DashboardShell >
     )
 }
