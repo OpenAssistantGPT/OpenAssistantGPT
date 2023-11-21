@@ -33,7 +33,8 @@ export default function Login() {
             Use your Github account to sign in
           </p>
         </div>
-      <Form type="login" />
+        <Form type="login" />
+      </div>
     </div>
   );
 }
