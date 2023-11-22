@@ -53,9 +53,9 @@ export default async function DashboardPage() {
         ) : (
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="bot" />
-            <EmptyPlaceholder.Title>No chatbots created</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>No chatbot created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any chatbot yet. Start creating content.
+              You don&apos;t have any chatbot yet. Start creating.
             </EmptyPlaceholder.Description>
             <PostCreateButton variant="outline" />
           </EmptyPlaceholder>
