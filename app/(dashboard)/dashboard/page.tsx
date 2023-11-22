@@ -52,7 +52,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
+            <EmptyPlaceholder.Icon name="bot" />
             <EmptyPlaceholder.Title>No chatbots created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
               You don&apos;t have any chatbot yet. Start creating content.
