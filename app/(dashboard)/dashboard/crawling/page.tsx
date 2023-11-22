@@ -25,7 +25,7 @@ export default async function CrawlingPage() {
 
     return (
         <DashboardShell>
-        <DashboardHeader heading="Chatbots" text="Create and manage your chatbots.">
+        <DashboardHeader heading="Crawling" text="Create and manage your crawlers.">
           <CrawlerCreateButton />
         </DashboardHeader>
         <div>
