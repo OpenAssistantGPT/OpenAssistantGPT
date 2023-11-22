@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
+import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { CrawlerCreateButton } from "@/components/crawler-create-button"
 
 
