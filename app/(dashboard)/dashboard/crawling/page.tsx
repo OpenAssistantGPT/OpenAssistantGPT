@@ -42,7 +42,7 @@ export default async function CrawlingPage() {
               <EmptyPlaceholder.Description>
                 You don&apos;t have any crawler yet. Start importing content.
               </EmptyPlaceholder.Description>
-              <PostCreateButton variant="outline" />
+              <CrawlerCreateButton variant="outline" />
             </EmptyPlaceholder>
           )}
         </div>
