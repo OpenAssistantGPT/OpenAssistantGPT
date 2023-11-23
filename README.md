@@ -13,3 +13,49 @@ Pricing:
 - Bring you openAI key, Always infinite messages
 - x/$ per month for each bot (Free 1 free bot for 3 days max of 15 messages, Basic 3 bot max for 9$/month, Pro up to 10 bots for 30$/month)
 - max number of files that can be imported (Free import 1 file, Basic 3 import files, Pro 10 files)
+
+
+
+model Chatbot {
+  id          String        @id @default(cuid())
+  name        String
+  userId      String
+  createdAt   DateTime      @default(now()) @map(name: "created_at")
+  openaiKey   String
+  draft       Boolean
+  fromDomain  String
+  prompt      String
+  crawlerFile CrawlerFile[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "chatbots")
+}
+
+model Crawler {
+  id              String   @id @default(cuid())
+  name            String
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+  userId          String
+  crawlUrl        String
+  urlMatch        String
+  selector        String
+  maxPagesToCrawl Int
+
+  crawlerFile CrawlerFile[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "crawlers")
+}
+
+model CrawlerFile {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  blobUrl   String
+  crawlerId String
+
+  crawler   Crawler  @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
+  Chatbot   Chatbot? @relation(fields: [chatbotId], references: [id])
+  chatbotId String?
+}

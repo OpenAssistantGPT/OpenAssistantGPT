@@ -8,21 +8,47 @@ generator client {
 }
 
 model Chatbot {
+  id          String        @id @default(cuid())
+  name        String
+  userId      String
+  createdAt   DateTime      @default(now()) @map(name: "created_at")
+  openaiKey   String
+  draft       Boolean
+  fromDomain  String
+  prompt      String
+  crawlerFile CrawlerFile[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "chatbots")
+}
+
+model Crawler {
   id              String   @id @default(cuid())
   name            String
-  userId          String
   createdAt       DateTime @default(now()) @map(name: "created_at")
-  openaiKey       String
-  fromDomain      String
-  prompt          String
+  userId          String
   crawlUrl        String
   urlMatch        String
   selector        String
   maxPagesToCrawl Int
 
+  crawlerFile CrawlerFile[]
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map(name: "chatbots")
+  @@map(name: "crawlers")
+}
+
+model CrawlerFile {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  blobUrl   String
+  crawlerId String
+
+  crawler   Crawler  @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
+  Chatbot   Chatbot? @relation(fields: [chatbotId], references: [id])
+  chatbotId String?
 }
 
 model Account {
@@ -61,6 +87,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Chatbot       Chatbot[]
+  Crawler       Crawler[]
 }
 
 model VerificationToken {

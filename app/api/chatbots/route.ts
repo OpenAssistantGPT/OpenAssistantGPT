@@ -1,7 +1,6 @@
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db"
 
@@ -20,10 +19,9 @@ export async function GET(request: Request) {
         name: true,
         fromDomain: true,
         createdAt: true,
-        fromDomain: true
       },
       where: {
-        userId: user.id,
+        userId: user?.id,
       },
     })
 
@@ -40,7 +38,7 @@ export async function POST(req: Request) {
     if (!session) {
       return new Response("Unauthorized", { status: 403 })
     }
-    
+
     return new Response(JSON.stringify({}))
   } catch (error) {
 

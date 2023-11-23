@@ -16,8 +16,8 @@ export const dashboardConfig: DashboardConfig = {
             icon: "bot",
         },
         {
-            title: "Crawling",
-            href: "/dashboard/crawling",
+            title: "Crawlers",
+            href: "/dashboard/crawlers",
             icon: "post",
         },
         {

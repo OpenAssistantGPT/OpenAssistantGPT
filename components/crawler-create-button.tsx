@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
-import { toast } from "./ui/use-toast"
 import { Icons } from "@/components/icons"
 
 interface CrawlerCreateButtonProps extends ButtonProps { }
@@ -23,7 +22,7 @@ export function CrawlerCreateButton({
 
         router.refresh()
 
-        router.push(`/dashboard/crawling`)
+        router.push(`/dashboard/new/crawler`)
     }
 
     return (

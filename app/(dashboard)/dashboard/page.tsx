@@ -22,21 +22,20 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const bots: any[] = []
-  //const posts = await db.chatbots.findMany({
-  //  where: {
-  //    authorId: user.id,
-  //  },
-  //  select: {
-  //    id: true,
-  //    title: true,
-  //    published: true,
-  //    createdAt: true,
-  //  },
-  //  orderBy: {
-  //    updatedAt: "desc",
-  //  },
-  //})
+  const bots: any[] = await db.chatbot.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+      name: true,
+      draft: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  })
 
   return (
     <DashboardShell>

@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import LoadingDots from "@/components/loading-dots";
-import toast from "react-hot-toast";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icons } from "./icons";
 
@@ -18,6 +16,8 @@ export default function Form({ type }: { type: "login" | "register" }) {
         e.preventDefault();
         setLoading(true);
         signIn("github")
+
+        router.refresh()
         router.push("/dashboard")
       }}
       className="flex flex-col space-y-4 px-4 py-8 sm:px-16"
