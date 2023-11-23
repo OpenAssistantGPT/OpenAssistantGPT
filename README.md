@@ -8,6 +8,7 @@ TODO:
 - DONE! Create table for files with storage url linked with owner id and link them to a bot
 - When bot is deployed store all openai bot info in other table (model id)
 - Add option for the welcome line
+- When deleting crawler also delete files in blob storage
 - When your bot is deployed put on the main page a chat window with him
 
 Pricing:
