@@ -1,6 +1,6 @@
 TODO:
 
-- Add db row about is model draft or not (Not in draft mode mean it is created in openAI)
+- DONE! Add db row about is model draft or not (Not in draft mode mean it is created in openAI)
 - DONE! Remove crawling related stuff from chatbot tab
 - DONE! Create a tab for your crawlers and crawling configs
 - DONE! For each crawler create a tabs for your crawled files files
