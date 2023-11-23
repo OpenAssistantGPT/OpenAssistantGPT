@@ -65,7 +65,7 @@ export function CrawlerOperations({ crawler }: CrawlerOperationsProps) {
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link href={`/dashboard/crawling/${crawler.id}`} className="flex w-full">
+                        <Link href={`/dashboard/crawlers/${crawler.id}/crawl`} className="flex w-full">
                             Crawl
                         </Link>
                     </DropdownMenuItem>

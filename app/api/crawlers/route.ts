@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         }
 
         const { user } = session
-        const chatbots = await db.crawler.findMany({
+        const crawlers = await db.crawler.findMany({
             select: {
                 id: true,
                 name: true,
@@ -31,7 +31,7 @@ export async function GET(request: Request) {
             },
         })
 
-        return new Response(JSON.stringify(chatbots))
+        return new Response(JSON.stringify(crawlers))
     } catch (error) {
         return new Response(null, { status: 500 })
     }

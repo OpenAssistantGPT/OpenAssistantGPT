@@ -12,6 +12,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
+import { StartCrawlingButton } from "@/components/start-crawling-button"
 
 interface CrawlerSettingsProps {
     params: { crawlerId: string }
@@ -40,6 +41,12 @@ export default async function CrawlingPage({ params }: CrawlerSettingsProps) {
         notFound()
     }
 
+    const files = await db.crawlerFile.findMany({
+        where: {
+            crawlerId: crawler.id,
+        },
+    })
+
     return (
         <DashboardShell>
             <DashboardHeader heading="Crawling" text="Start crawling to import files">
@@ -56,15 +63,28 @@ export default async function CrawlingPage({ params }: CrawlerSettingsProps) {
                     </>
                 </Link>
             </DashboardHeader>
-            <div className="grid gap-10">
-                <EmptyPlaceholder>
-                    <EmptyPlaceholder.Icon name="laptop" />
-                    <EmptyPlaceholder.Title>Start crawling now to import files</EmptyPlaceholder.Title>
-                    <EmptyPlaceholder.Description>
-                        You don&apos;t have any files yet. Start crawling.
-                    </EmptyPlaceholder.Description>
-                </EmptyPlaceholder>
-            </div>
+            {files?.length ?
+                <>
+                    <div className="divide-y divide-border rounded-md border">
+                        {files.map((file) => (
+                            <div key={file.id} > {file.blobUrl} </div>
+                        ))}
+                    </div>
+                    <StartCrawlingButton crawler={crawler} />
+                </>
+
+                : <div className="grid gap-10">
+                    <EmptyPlaceholder>
+                        <EmptyPlaceholder.Icon name="laptop" />
+                        <EmptyPlaceholder.Title>Start crawling now to import files</EmptyPlaceholder.Title>
+                        <EmptyPlaceholder.Description>
+                            You don&apos;t have any files yet. Start crawling.
+                        </EmptyPlaceholder.Description>
+                        <StartCrawlingButton crawler={crawler} />
+                    </EmptyPlaceholder>
+                </div>
+
+            }
         </DashboardShell>
     )
 }
