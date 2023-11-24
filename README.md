@@ -24,4 +24,5 @@ Landing page:
 - Low code required
 - Powered by custom gpts
 - Unlimited message
+- Implement on unlimited websites
 

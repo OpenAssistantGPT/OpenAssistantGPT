@@ -8,6 +8,7 @@ import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { ChatbotCreateButton } from "@/components/chatbot-create-button"
+import { ChatbotItem } from "@/components/chatbot-item"
 
 export const metadata = {
   title: "Dashboard",
@@ -15,8 +16,6 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
-
-  console.log(user)
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
@@ -31,6 +30,7 @@ export default async function DashboardPage() {
       name: true,
       draft: true,
       createdAt: true,
+      modelId: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -45,8 +45,8 @@ export default async function DashboardPage() {
       <div>
         {bots?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {bots.map((post) => (
-              <div key={post.id} > test </div>
+            {bots.map((bot) => (
+              <ChatbotItem key={bot.id} chatbot={bot} />
             ))}
           </div>
         ) : (

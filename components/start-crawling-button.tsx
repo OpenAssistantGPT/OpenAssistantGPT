@@ -27,8 +27,9 @@ export function StartCrawlingButton({
 
     async function onClick() {
         setIsLoading(true)
-        const x = await fetch(`/api/crawlers/${crawler.id}/crawling`)
-        console.log(x)
+
+        await fetch(`/api/crawlers/${crawler.id}/crawling`)
+
         setIsLoading(false)
         router.refresh()
     }

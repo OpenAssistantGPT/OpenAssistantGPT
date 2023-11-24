@@ -54,7 +54,7 @@ export function ChatbotCreateButton({
         // This forces a cache invalidation.
         router.refresh()
 
-        router.push(`/new/chatbot`)
+        router.push(`/dashboard/new/chatbot`)
     }
 
     return (

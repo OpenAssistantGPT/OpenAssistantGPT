@@ -1,53 +1,71 @@
-
 "use client"
 
-import * as React from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Crawler } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
-import { crawlerSchema } from "@/lib/validations/crawler"
 import { buttonVariants } from "@/components/ui/button"
 import {
     Card,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import { chatbotSchema } from "@/lib/validations/chatbot"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ChatbotModel } from "@prisma/client"
 
 
-type FormData = z.infer<typeof crawlerSchema>
+type FormData = z.infer<typeof chatbotSchema>
 
-export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
+export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
     const router = useRouter()
     const form = useForm<FormData>({
-        resolver: zodResolver(crawlerSchema)
+        resolver: zodResolver(chatbotSchema)
     })
-    const [isSaving, setIsSaving] = React.useState<boolean>(false)
+
+    const [models, setModels] = useState<ChatbotModel[]>([])
+    const [isSaving, setIsSaving] = useState<boolean>(false)
+
+    useEffect(() => {
+        const init = async () => {
+            const response = await fetch('/api/models', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+
+            const models = await response.json()
+            setModels(models)
+        }
+        init()
+
+    }, [])
 
     async function onSubmit(data: FormData) {
         setIsSaving(true)
+        console.log(data)
 
-        const response = await fetch(`/api/crawlers`, {
+        const response = await fetch(`/api/chatbots`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 name: data.name,
-                crawlUrl: data.crawlUrl,
-                selector: data.selector,
-                urlMatch: data.urlMatch
+                prompt: data.prompt,
+                openAIKey: data.openAIKey,
+                welcomeMessage: data.welcomeMessage,
+                modelId: data.modelId
             }),
         })
 
@@ -56,29 +74,25 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
         if (!response?.ok) {
             return toast({
                 title: "Something went wrong.",
-                description: "Your crawler was not saved. Please try again.",
+                description: "Your chatbot was not saved. Please try again.",
                 variant: "destructive",
             })
         }
 
         toast({
-            description: "Your crawler has been saved.",
+            description: "Your chatbot has been saved.",
         })
 
         router.refresh()
-        router.push("/dashboard/crawlers")
+        router.push("/dashboard")
     }
 
     return (
         <Form {...form}>
-            <form
-                className={cn(className)}
-                onSubmit={form.handleSubmit(onSubmit)}
-                {...props}
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)}>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Create new crawler</CardTitle>
+                        <CardTitle>Create new Chatbot</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <FormField
@@ -90,31 +104,48 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                         Display Name
                                     </FormLabel>
                                     <Input
-                                        id="name"
                                         onChange={field.onChange}
+                                        id="name"
                                         size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
                                     </FormDescription>
                                     <FormMessage />
-                                </FormItem>
-                            )}
+                                </FormItem>)}
                         />
                         <FormField
                             control={form.control}
-                            name="crawlUrl"
+                            name="welcomeMessage"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="crawlUrl">
-                                        Crawling URL
+                                    <FormLabel htmlFor="welcomemessage">
+                                        Welcome message
+                                    </FormLabel>
+                                    <Input
+                                        onChange={field.onChange}
+                                        id="welcomemessage"
+                                    />
+                                    <FormDescription>
+                                        The message that will be sent when a user starts a conversation
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>)}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="prompt"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="prompt">
+                                        Default prompt
                                     </FormLabel >
                                     <Input
                                         onChange={field.onChange}
-                                        id="crawlUrl"
+                                        id="prompt"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The default prompt that will be sent to the Open AI API
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -122,18 +153,31 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                         />
                         <FormField
                             control={form.control}
-                            name="urlMatch"
+                            name="modelId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="urlmatch">
-                                        URL Match
+                                    <FormLabel htmlFor="model">
+                                        Open AI Model
                                     </FormLabel>
-                                    <Input
-                                        id="urlmatch"
-                                        onChange={field.onChange}
-                                    />
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a model" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {
+                                                    models.map((model: ChatbotModel) => (
+                                                        <SelectItem key={model.id} value={model.id}>
+                                                            {model.name}
+                                                        </SelectItem>
+                                                    ))
+                                                }
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The Open AI model that will be used to generate responses
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -141,18 +185,19 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                         />
                         <FormField
                             control={form.control}
-                            name="selector"
+                            name="openAIKey"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="selector">
-                                        Selector
+                                    <FormLabel htmlFor="openAIKey">
+                                        Open AI API Key
                                     </FormLabel>
                                     <Input
-                                        id="selector"
                                         onChange={field.onChange}
+                                        id="openAIKey"
+                                        type="password"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The Open AI API key that will be used to connect to the API
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -172,7 +217,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                         </button>
                     </CardFooter>
                 </Card>
-            </form>
+            </form >
         </Form >
     )
 }

@@ -8,19 +8,29 @@ generator client {
 }
 
 model Chatbot {
-  id          String        @id @default(cuid())
-  name        String
-  userId      String
-  createdAt   DateTime      @default(now()) @map(name: "created_at")
-  openaiKey   String
-  draft       Boolean
-  fromDomain  String
-  prompt      String
-  crawlerFile CrawlerFile[]
+  id             String        @id @default(cuid())
+  name           String
+  userId         String
+  createdAt      DateTime      @default(now()) @map(name: "created_at")
+  openaiKey      String
+  modelId        String
+  draft          Boolean
+  prompt         String
+  welcomeMessage String
+  crawlerFile    CrawlerFile[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  model ChatbotModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
 
   @@map(name: "chatbots")
+}
+
+model ChatbotModel {
+  id      String    @id @default(cuid())
+  name    String
+  Chatbot Chatbot[]
+
+  @@map(name: "models")
 }
 
 model Crawler {

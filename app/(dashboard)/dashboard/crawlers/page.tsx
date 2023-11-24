@@ -24,7 +24,7 @@ export default async function CrawlersPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const crawlers = await await db.crawler.findMany({
+  const crawlers = await db.crawler.findMany({
     where: {
       userId: user.id,
     },

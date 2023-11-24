@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 import { db } from "@/lib/db"
+import { chatbotSchema } from "@/lib/validations/chatbot";
 
 export async function GET(request: Request) {
   try {
@@ -17,7 +18,6 @@ export async function GET(request: Request) {
       select: {
         id: true,
         name: true,
-        fromDomain: true,
         createdAt: true,
       },
       where: {
@@ -39,9 +39,56 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    return new Response(JSON.stringify({}))
-  } catch (error) {
+    const { user } = session
+    // If user is on a free plan.
+    // Check if user has reached limit of 3 posts.
+    //if (!subscriptionPlan?.isPro) {
+    //    const count = await db.post.count({
+    //        where: {
+    //            authorId: user.id,
+    //        },
+    //    })
 
+    //    if (count >= 3) {
+    //        throw new RequiresProPlanError()
+    //    }
+    //}
+
+    // Validate the request body.
+    const json = await req.json()
+
+    const body = chatbotSchema.parse(json)
+    console.log(body)
+
+    const model = await db.chatbotModel.findUnique({
+      where: {
+        id: body.modelId
+      }
+    })
+
+    if (!model) {
+      console.log("model not found")
+      return new Response(null, { status: 404 })
+    }
+
+    const chatbot = await db.chatbot.create({
+      data: {
+        name: body.name,
+        prompt: body.prompt,
+        openaiKey: body.openAIKey,
+        draft: true,
+        modelId: model.id,
+        userId: user?.id,
+        welcomeMessage: body.welcomeMessage,
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    return new Response(JSON.stringify({ chatbot }))
+  } catch (error) {
+    console.log(error)
     return new Response(null, { status: 500 })
   }
 }

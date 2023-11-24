@@ -4,7 +4,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { CrawlerFile } from "@prisma/client"
+import { Chatbot } from "@prisma/client"
 
 import {
     AlertDialog,
@@ -26,15 +26,15 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-async function deleteCrawlerFile(crawlerId: string, fileId: string) {
-    const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}`, {
+async function deleteChatbot(chatbotId: string) {
+    const response = await fetch(`/api/chatbots/${chatbotId}`, {
         method: "DELETE",
     })
 
     if (!response?.ok) {
         toast({
             title: "Something went wrong.",
-            description: "Your file was not deleted. Please try again.",
+            description: "Your chatbot was not deleted. Please try again.",
             variant: "destructive",
         })
     }
@@ -42,11 +42,11 @@ async function deleteCrawlerFile(crawlerId: string, fileId: string) {
     return true
 }
 
-interface CrawlerFileOperationsProps {
-    file: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "crawlerId">
+interface ChatbotOperationsProps {
+    chatbot: Pick<Chatbot, "id" | "name" | "modelId">
 }
 
-export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
+export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
     const router = useRouter()
     const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
@@ -56,12 +56,16 @@ export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
             <DropdownMenu>
                 <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
                     <Icons.ellipsis className="h-4 w-4" />
-                    <span className="sr-only">Download</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem>
-                        <Link href={file.blobUrl} className="flex w-full">
-                            Download
+                        <Link href={`/dashboard/chatbots/${chatbot.id}/chat`} className="flex w-full">
+                            Chat
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link href={`/dashboard/chatbots/${chatbot.id}`} className="flex w-full">
+                            Settings
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -77,7 +81,7 @@ export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Are you sure you want to delete this file?
+                            Are you sure you want to delete this chatbot?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             This action cannot be undone.
@@ -90,7 +94,7 @@ export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
 
-                                const deleted = await deleteCrawlerFile(file.crawlerId, file.id)
+                                const deleted = await deleteChatbot(chatbot.id)
 
                                 if (deleted) {
                                     setIsDeleteLoading(false)
