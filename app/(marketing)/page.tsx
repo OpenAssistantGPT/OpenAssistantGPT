@@ -14,7 +14,7 @@ export default function Home() {
             Lets build
           </p>
           <div className="space-x-4">
-            <Link href="/dashboard" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
+            <Link href="/login" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
               Get Started
             </Link>
           </div>

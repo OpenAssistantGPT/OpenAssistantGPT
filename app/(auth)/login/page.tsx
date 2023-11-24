@@ -6,13 +6,22 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { getCurrentUser } from "@/lib/session";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Login",
   description: "Login to your account",
 }
 
-export default function Login() {
+export default async function Login() {
+  const user = await getCurrentUser()
+
+  if (user) {
+    redirect("/dashboard")
+  }
+
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Link
