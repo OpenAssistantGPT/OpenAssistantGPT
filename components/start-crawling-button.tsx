@@ -30,6 +30,7 @@ export function StartCrawlingButton({
         const x = await fetch(`/api/crawlers/${crawler.id}/crawling`)
         console.log(x)
         setIsLoading(false)
+        router.refresh()
     }
 
     return (

@@ -6,8 +6,8 @@ import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
-import { PostCreateButton } from "@/components/post-create-button"
 import { DashboardShell } from "@/components/shell"
+import { ChatbotCreateButton } from "@/components/chatbot-create-button"
 
 export const metadata = {
   title: "Dashboard",
@@ -40,7 +40,7 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Chatbots" text="Create and manage your chatbots.">
-        <PostCreateButton />
+        <ChatbotCreateButton />
       </DashboardHeader>
       <div>
         {bots?.length ? (
@@ -56,7 +56,7 @@ export default async function DashboardPage() {
             <EmptyPlaceholder.Description>
               You don&apos;t have any chatbot yet. Start creating.
             </EmptyPlaceholder.Description>
-            <PostCreateButton variant="outline" />
+            <ChatbotCreateButton variant="outline" />
           </EmptyPlaceholder>
         )}
       </div>

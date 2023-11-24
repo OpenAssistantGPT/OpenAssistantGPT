@@ -1,6 +1,7 @@
 
 import { getServerSession } from "next-auth/next"
 import { z } from "zod"
+import { del } from '@vercel/blob';
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -36,6 +37,18 @@ export async function DELETE(
         if (!(await verifyCurrentUserHasAccessToCrawler(params.crawlerId))) {
             return new Response(null, { status: 403 })
         }
+
+        const crawlerFiles = await db.crawlerFile.findMany({
+            where: {
+                crawlerId: params.crawlerId
+            }
+        })
+
+        for (const crawlerFile of crawlerFiles) {
+            console.log(crawlerFile.blobUrl)
+            await del(crawlerFile.blobUrl)
+        }
+
 
         // Delete the crawler.
         await db.crawler.delete({

@@ -1,40 +1,38 @@
 
+
 import Link from "next/link"
-import { Crawler } from "@prisma/client"
+import { CrawlerFile } from "@prisma/client"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
-import { CrawlerOperations } from "@/components/crawler-operations"
+import { CrawlerFileOperations } from "@/components/file-operations"
 
-interface CrawlerItemProps {
-    crawler: Pick<Crawler, "id" | "name" | "crawlUrl" | "createdAt">
+interface CrawlFileProps {
+    file: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "createdAt" | "crawlerId">
 }
 
-export function CrawlerItem({ crawler }: CrawlerItemProps) {
+export function CrawlerFileItem({ file }: CrawlFileProps) {
     return (
         <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
                 <Link
-                    href={`/dashboard/crawlers/${crawler.id}`}
+                    href={file.blobUrl}
                     className="font-semibold hover:underline"
                 >
-                    {crawler.name}
+                    {file.name}
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
-                        {crawler.crawlUrl}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        {formatDate(crawler.createdAt?.toDateString())}
+                        {formatDate(file.createdAt?.toDateString())}
                     </p>
                 </div>
             </div>
-            <CrawlerOperations crawler={{ id: crawler.id, name: crawler.name }} />
+            <CrawlerFileOperations file={file} />
         </div>
     )
 }
 
-CrawlerItem.Skeleton = function CrawltemSkeleton() {
+CrawlerFileItem.Skeleton = function CrawledFileItemSkeleton() {
     return (
         <div className="p-4">
             <div className="space-y-3">

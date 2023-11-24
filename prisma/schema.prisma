@@ -43,6 +43,7 @@ model Crawler {
 model CrawlerFile {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now()) @map(name: "created_at")
+  name      String
   blobUrl   String
   crawlerId String
 

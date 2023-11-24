@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { StartCrawlingButton } from "@/components/start-crawling-button"
+import { CrawlerFileItem } from "@/components/file-items"
 
 interface CrawlerSettingsProps {
     params: { crawlerId: string }
@@ -67,7 +68,7 @@ export default async function CrawlingPage({ params }: CrawlerSettingsProps) {
                 <>
                     <div className="divide-y divide-border rounded-md border">
                         {files.map((file) => (
-                            <div key={file.id} > {file.blobUrl} </div>
+                            <CrawlerFileItem file={file} key={file.id} />
                         ))}
                     </div>
                     <StartCrawlingButton crawler={crawler} />

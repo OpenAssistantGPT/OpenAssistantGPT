@@ -10,6 +10,7 @@ TODO:
 - Add option for the welcome line
 - When deleting crawler also delete files in blob storage
 - When your bot is deployed put on the main page a chat window with him
+- Add a tab to see all of you files without going to a specific bot
 
 Pricing:
 - Bring you openAI key, Always infinite messages

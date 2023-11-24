@@ -17,17 +17,7 @@ interface CrawlerSettingsProps {
     params: { crawlerId: string }
 }
 
-async function getCrawlerForUser(crawlerId: Crawler["id"], userId: User["id"]) {
-    return await db.crawler.findFirst({
-        where: {
-            id: crawlerId,
-            userId: userId,
-        },
-    })
-}
-
-
-export default async function CrawlerSettingsPage({ params }: CrawlerSettingsProps) {
+export default async function CrawlerCreatePage({ params }: CrawlerSettingsProps) {
     const user = await getCurrentUser()
 
     if (!user) {

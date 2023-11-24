@@ -1,6 +1,6 @@
 
 import { getServerSession } from "next-auth/next"
-import { z } from "zod"
+import { date, z } from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -101,6 +101,7 @@ export async function GET(
                 urlMatch: true,
                 crawlUrl: true,
                 selector: true,
+                name: true,
             },
             where: {
                 id: params.crawlerId,
@@ -113,13 +114,16 @@ export async function GET(
 
         const content = await crawl(crawler.crawlUrl, crawler.selector, crawler.maxPagesToCrawl, crawler.urlMatch)
 
-        const blob = await put("test.json", JSON.stringify(content), {
+        const date = new Date()
+        const fileName = crawler.name.toLowerCase().replace(/\s/g, "-") + '-' + date.toISOString() + ".json"
+
+        const blob = await put(fileName, JSON.stringify(content), {
             access: "public"
         })
-        console.log(blob)
 
         await db.crawlerFile.create({
             data: {
+                name: fileName,
                 crawlerId: crawler.id,
                 blobUrl: blob.url
             }
