@@ -98,3 +98,28 @@ export async function PATCH(
     return new Response(null, { status: 500 })
   }
 }
+
+export async function DELETE(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
+
+  const { params } = routeContextSchema.parse(context)
+
+  if (!(await verifyCurrentUserHasAccessToChatbot(params.chatbotId))) {
+    return new Response(null, { status: 403 })
+  }
+
+  try {
+    // TODO Add delete in openAI platform 
+    await db.chatbot.delete({
+      where: {
+        id: params.chatbotId
+      }
+    })
+
+    return new Response(null, { status: 204 })
+  } catch (error) {
+    return new Response(null, { status: 500 })
+  }
+}
