@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -20,9 +19,9 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
 interface CrawlerFormProps extends React.HTMLAttributes<HTMLFormElement> {
     crawler: Pick<Crawler, "id" | "name" | "crawlUrl" | "selector" | "urlMatch">
@@ -32,18 +31,8 @@ type FormData = z.infer<typeof crawlerSchema>
 
 export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) {
     const router = useRouter()
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm<FormData>({
+    const form = useForm<FormData>({
         resolver: zodResolver(crawlerSchema),
-        defaultValues: {
-            name: crawler?.name || "",
-            crawlUrl: crawler?.crawlUrl || "",
-            selector: crawler?.selector || "",
-            urlMatch: crawler?.urlMatch || ""
-        },
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
@@ -81,86 +70,116 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
     }
 
     return (
-        <form
-            className={cn(className)}
-            onSubmit={handleSubmit(onSubmit)}
-            {...props}
-        >
-            <Card>
-                <CardHeader>
-                    <CardTitle>Crawlers settings</CardTitle>
-                    <CardDescription>
-                        Configure your crawler.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="name">
-                            Display Name
-                        </Label>
-                        <Input
-                            id="name"
-                            className="w-[400px]"
-                            size={32}
-                            {...register("name")}
+        <Form {...form}>
+            <form
+                className={cn(className)}
+                onSubmit={form.handleSubmit(onSubmit)}
+                {...props}
+            >
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Crawlers settings</CardTitle>
+                        <CardDescription>
+                            Update your crawler configuration.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="name">
+                                        Display Name
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={crawler?.name || ""}
+                                        onChange={field.onChange}
+                                        id="name"
+                                        size={32}
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.name && (
-                            <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="crawlUrl">
-                            Crawling URL
-                        </Label>
-                        <Input
-                            id="crawlUrl"
-                            className="w-[400px]"
-                            {...register("crawlUrl")}
+                        <FormField
+                            control={form.control}
+                            name="crawlUrl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="crawlUrl">
+                                        Crawling URL
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={crawler?.crawlUrl || ""}
+                                        onChange={field.onChange}
+                                        id="crawlUrl"
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.name && (
-                            <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="urlmatch">
-                            URL Match
-                        </Label>
-                        <Input
-                            id="urlmatch"
-                            className="w-[400px]"
-                            {...register("urlMatch")}
+                        <FormField
+                            control={form.control}
+                            name="urlMatch"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="urlmatch">
+                                        URL Match
+                                    </FormLabel >
+                                    <Input
+                                        defaultValue={crawler?.urlMatch || ""}
+                                        onChange={field.onChange}
+                                        id="urlmatch"
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.name && (
-                            <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1">
-                        <Label htmlFor="selector">
-                            Selector
-                        </Label>
-                        <Input
-                            id="selector"
-                            className="w-[400px]"
-                            {...register("selector")}
+                        <FormField
+                            control={form.control}
+                            name="selector"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="selector">
+                                        Selector
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={crawler?.selector || ""}
+                                        onChange={field.onChange}
+                                        id="selector"
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.name && (
-                            <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-                        )}
-                    </div>
-                </CardContent>
-                <CardFooter>
-                    <button
-                        type="submit"
-                        className={cn(buttonVariants(), className)}
-                        disabled={isSaving}
-                    >
-                        {isSaving && (
-                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                        )}
-                        <span>Save</span>
-                    </button>
-                </CardFooter>
-            </Card>
-        </form>
+                    </CardContent>
+                    <CardFooter>
+                        <button
+                            type="submit"
+                            className={cn(buttonVariants(), className)}
+                            disabled={isSaving}
+                        >
+                            {isSaving && (
+                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                            )}
+                            <span>Save</span>
+                        </button>
+                    </CardFooter>
+                </Card>
+            </form>
+        </Form >
     )
 }

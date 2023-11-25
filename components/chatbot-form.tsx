@@ -19,9 +19,9 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
     chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "draft">
@@ -31,19 +31,8 @@ type FormData = z.infer<typeof chatbotSchema>
 
 export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) {
     const router = useRouter()
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-    } = useForm<FormData>({
+    const form = useForm<FormData>({
         resolver: zodResolver(chatbotSchema),
-        defaultValues: {
-            name: chatbot?.name || "",
-            openAIKey: chatbot?.openaiKey || "",
-            modelId: chatbot?.modelId || "",
-            welcomeMessage: chatbot?.welcomeMessage || "",
-            prompt: chatbot?.prompt || ""
-        },
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
@@ -83,104 +72,137 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
     }
 
     return (
-        <form
-            className={cn(className)}
-            onSubmit={handleSubmit(onSubmit)}
-            {...props}
-        >
-            <Card>
-                <CardHeader>
-                    <CardTitle>Chatbot settings</CardTitle>
-                    <CardDescription>
-                        Configure your chatbot.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="name">
-                            Display Name
-                        </Label>
-                        <Input
-                            id="name"
-                            className="w-[400px]"
-                            size={32}
-                            {...register("name")}
+        <Form {...form}>
+            <form
+                className={cn(className)}
+                onSubmit={form.handleSubmit(onSubmit)}
+                {...props}
+            >
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Chatbot settings</CardTitle>
+                        <CardDescription>
+                            Update your chatbot configuration.
+                        </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="name">
+                                        Display Name
+                                    </FormLabel>
+
+                                    <Input
+                                        defaultValue={chatbot.name}
+                                        id="name"
+                                        size={32}
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.name && (
-                            <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="openAIKey">
-                            OpenAI Key
-                        </Label>
-                        <Input
-                            id="openAIKey"
-                            type="password"
-                            className="w-[400px]"
-                            size={32}
-                            {...register("openAIKey")}
+                        <FormField
+                            control={form.control}
+                            name="openAIKey"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="openAIKey">
+                                        OpenAI Key
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={chatbot.openaiKey}
+                                        id="openAIKey"
+                                        type="password"
+                                        size={32}
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.openAIKey && (
-                            <p className="px-1 text-xs text-red-600">{errors.openAIKey.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="modelId">
-                            Model ID
-                        </Label>
-                        <Input
-                            id="modelId"
-                            className="w-[400px]"
-                            size={32}
-                            {...register("modelId")}
+                        <FormField
+                            control={form.control}
+                            name="modelId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="modelId">
+                                        Model ID
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={chatbot.modelId}
+                                        id="modelId"
+                                        size={32}
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.modelId && (
-                            <p className="px-1 text-xs text-red-600">{errors.modelId.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="welcomeMessage">
-                            Welcome Message
-                        </Label>
-                        <Input
-                            id="welcomeMessage"
-                            className="w-[400px]"
-                            size={32}
-                            {...register("welcomeMessage")}
+                        <FormField
+                            control={form.control}
+                            name="welcomeMessage"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="welcomeMessage">
+                                        Welcome Message
+                                    </FormLabel >
+                                    <Input
+                                        defaultValue={chatbot.welcomeMessage}
+                                        id="welcomeMessage"
+                                        size={32}
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.welcomeMessage && (
-                            <p className="px-1 text-xs text-red-600">{errors.welcomeMessage.message}</p>
-                        )}
-                    </div>
-                    <div className="grid gap-1 mb-4">
-                        <Label htmlFor="prompt">
-                            Prompt
-                        </Label>
-                        <Input
-                            id="prompt"
-                            className="w-[400px]"
-                            size={32}
-                            {...register("prompt")}
+                        <FormField
+                            control={form.control}
+                            name="prompt"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="prompt">
+                                        Prompt
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={chatbot.prompt}
+                                        id="prompt"
+                                        size={32}
+                                    />
+                                    <FormDescription>
+                                        The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                        {errors?.prompt && (
-                            <p className="px-1 text-xs text-red-600">{errors.prompt.message}</p>
-                        )}
-                    </div>
-                </CardContent>
-                <CardFooter>
-                    <button
-                        type="submit"
-                        className={cn(buttonVariants(), className)}
-                        disabled={isSaving}
-                    >
-                        {isSaving && (
-                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                        )}
-                        <span>Save</span>
-                    </button>
-                </CardFooter>
-            </Card>
-        </form>
+                    </CardContent>
+                    <CardFooter>
+                        <button
+                            type="submit"
+                            className={cn(buttonVariants(), className)}
+                            disabled={isSaving}
+                        >
+                            {isSaving && (
+                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                            )}
+                            <span>Save</span>
+                        </button>
+                    </CardFooter>
+                </Card>
+            </form>
+        </Form>
     )
 }

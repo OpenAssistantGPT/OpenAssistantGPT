@@ -85,7 +85,7 @@ export async function PATCH(
         welcomeMessage: payload.welcomeMessage,
         prompt: payload.prompt,
         openaiKey: payload.openAIKey,
-        modelId: payload.model,
+        modelId: payload.modelId,
       },
       select: {
         id: true,

@@ -30,7 +30,12 @@ export default async function DashboardPage() {
       name: true,
       draft: true,
       createdAt: true,
-      modelId: true,
+      model: {
+        select: {
+          id: true,
+          name: true,
+        }
+      }
     },
     orderBy: {
       createdAt: "desc",
@@ -46,7 +51,7 @@ export default async function DashboardPage() {
         {bots?.length ? (
           <div className="divide-y divide-border rounded-md border">
             {bots.map((bot) => (
-              <ChatbotItem key={bot.id} chatbot={bot} />
+              <ChatbotItem key={bot.id} chatbot={bot} model={bot.model} />
             ))}
           </div>
         ) : (
