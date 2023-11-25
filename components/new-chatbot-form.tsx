@@ -106,13 +106,13 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                     <Input
                                         onChange={field.onChange}
                                         id="name"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
                                     </FormDescription>
                                     <FormMessage />
-                                </FormItem>)}
+                                </FormItem>
+                            )}
                         />
                         <FormField
                             control={form.control}

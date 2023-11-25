@@ -1,9 +1,10 @@
 import { getServerSession } from "next-auth/next"
 import { z } from "zod"
-import { del } from '@vercel/blob';
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import OpenAI from "openai"
+
 
 
 const routeContextSchema = z.object({
@@ -26,11 +27,13 @@ async function verifyCurrentUserHasAccessToCrawler(crawlerId: string) {
     return count > 0
 }
 
-export async function DELETE(
+export async function POST(
     req: Request,
     context: z.infer<typeof routeContextSchema>
 ) {
     try {
+        const session = await getServerSession(authOptions)
+
         // Validate the route params.
         const { params } = routeContextSchema.parse(context)
 
@@ -43,13 +46,7 @@ export async function DELETE(
                 id: params.fileId
             },
             select: {
-                blobUrl: true,
-                OpenAIFile: {
-                    select: {
-                        id: true,
-                        openAIFileId: true
-                    }
-                }
+                blobUrl: true
             }
         })
 
@@ -57,34 +54,28 @@ export async function DELETE(
             return new Response(null, { status: 404 })
         }
 
-        // TODO: Delete OpenAI file
-        //import OpenAI from "openai"
-        //if (crawlerFile.OpenAIFile) {
-        //    const session = await getServerSession(authOptions)
-        //    const clientConfig = await db.openAIConfig.findFirst({
-        //        where: {
-        //            userId: session?.user?.id
-        //        }
-        //    })
-
-        //    const client = new OpenAI({
-        //        apiKey: clientConfig?.globalAPIKey,
-        //    })
-
-        //    console.log(crawlerFile.OpenAIFile)
-
-        //    await client.files.del(
-        //        fileId: crawlerFile.OpenAIFile.openAIFileId
-        //    )
-        //}
-
-
-        await del(crawlerFile.blobUrl)
-
-        await db.crawlerFile.delete({
-            where: {
-                id: params.fileId as string,
+        const openAIConfig = await db.openAIConfig.findUnique({
+            select: {
+                globalAPIKey: true,
+                id: true,
             },
+            where: {
+                userId: session?.user?.id
+            }
+        })
+        const openai = new OpenAI({
+            apiKey: openAIConfig?.globalAPIKey
+        })
+
+        const file = await openai.files.create(
+            { file: await fetch(crawlerFile.blobUrl), purpose: 'assistants' }
+        )
+
+        await db.openAIFile.create({
+            data: {
+                fileId: params.fileId,
+                openAIFileId: file.id
+            }
         })
 
         return new Response(null, { status: 204 })

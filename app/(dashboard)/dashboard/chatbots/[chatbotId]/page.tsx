@@ -1,5 +1,3 @@
-"use server"
-
 import { notFound, redirect } from "next/navigation"
 import { Chatbot, User } from "@prisma/client"
 
@@ -56,10 +54,23 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         const crawlerFiles = await db.crawlerFile.findMany({
             where: {
                 crawlerId: crawler.id,
-            }
+            },
         })
         files.push(...crawlerFiles)
     }
+
+    const openAIFiles = await db.openAIFile.findMany({
+        select: {
+            id: true,
+            fileId: true,
+            openAIFileId: true,
+        },
+        where: {
+            fileId: {
+                in: files.map((file) => file.id),
+            }
+        },
+    })
 
     return (
         <DashboardShell>
@@ -88,7 +99,13 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                             <p className="text-muted-foreground">
                                 Here&apos;s all of your files
                             </p>
-                            { /** <DataTable data={files} columns={columns} /> */}
+                            <div>
+                                {openAIFiles.map((file) => (
+                                    <div key={file.id}>
+                                        <p>{file.openAIFileId}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </>

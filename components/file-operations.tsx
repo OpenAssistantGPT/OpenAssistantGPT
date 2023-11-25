@@ -42,6 +42,22 @@ async function deleteCrawlerFile(crawlerId: string, fileId: string) {
     return true
 }
 
+async function publishFile(crawlerId: string, fileId: string) {
+    const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}/publish`, {
+        method: "POST",
+    })
+
+    if (!response?.ok) {
+        toast({
+            title: "Something went wrong.",
+            description: "Your file was not uploaded to openai. Please try again.",
+            variant: "destructive",
+        })
+    }
+
+    return true
+}
+
 interface CrawlerFileOperationsProps {
     file: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "crawlerId">
 }
@@ -63,6 +79,9 @@ export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
                         <Link href={file.blobUrl} className="flex w-full">
                             Download
                         </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onSelect={() => publishFile(file.crawlerId, file.id)}>
+                        Publish
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem

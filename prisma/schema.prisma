@@ -7,6 +7,23 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model OpenAIConfig {
+  id           String @id @default(cuid())
+  userId       String @unique
+  globalAPIKey String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OpenAIFile {
+  id           String   @id @default(cuid())
+  fileId       String   @unique
+  openAIFileId String   @unique
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+
+  crawlerFile CrawlerFile @relation(fields: [fileId], references: [id], onDelete: Cascade)
+}
+
 model Chatbot {
   id             String        @id @default(cuid())
   name           String
@@ -57,9 +74,10 @@ model CrawlerFile {
   blobUrl   String
   crawlerId String
 
-  crawler   Crawler  @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
-  Chatbot   Chatbot? @relation(fields: [chatbotId], references: [id])
-  chatbotId String?
+  crawler    Crawler      @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
+  Chatbot    Chatbot?     @relation(fields: [chatbotId], references: [id])
+  chatbotId  String?
+  OpenAIFile OpenAIFile[]
 }
 
 model Account {
@@ -90,15 +108,16 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   Chatbot       Chatbot[]
   Crawler       Crawler[]
+  OpenAIConfig  OpenAIConfig[]
 }
 
 model VerificationToken {
