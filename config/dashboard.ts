@@ -11,8 +11,13 @@ export const dashboardConfig: DashboardConfig = {
     ],
     sidebarNav: [
         {
-            title: "Chatbots",
+            title: "Dashboard",
             href: "/dashboard",
+            icon: "dashboard",
+        },
+        {
+            title: "Chatbots",
+            href: "/dashboard/chatbots",
             icon: "bot",
         },
         {

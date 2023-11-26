@@ -11,7 +11,6 @@ import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { db } from "@/lib/db"
 
 
 export default async function ChatbotCreatePage() {
@@ -20,8 +19,6 @@ export default async function ChatbotCreatePage() {
     if (!user) {
         redirect(authOptions?.pages?.signIn || "/login")
     }
-
-    const models = await db.chatbotModel.findMany()
 
     return (
         <DashboardShell>

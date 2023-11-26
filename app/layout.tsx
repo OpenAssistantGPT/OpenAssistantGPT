@@ -13,7 +13,7 @@ const fontSans = FontSans({
   variable: "--font-sans",
 })
 
-const title = "BLA BLA";
+const title = "Welcome to chatbot";
 const description = "test";
 
 export const metadata: Metadata = {

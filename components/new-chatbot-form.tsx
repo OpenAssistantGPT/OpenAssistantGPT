@@ -84,7 +84,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
         })
 
         router.refresh()
-        router.push("/dashboard")
+        router.push("/dashboard/chatbots")
     }
 
     return (

@@ -37,6 +37,34 @@ async function deleteChatbot(chatbotId: string) {
             description: "Your chatbot was not deleted. Please try again.",
             variant: "destructive",
         })
+    } else {
+        toast({
+            title: "Chatbot deleted.",
+            description: "Your chatbot was successfully deleted.",
+            variant: "default",
+        })
+    }
+
+    return true
+}
+
+async function publishChatbot(chatbotId: string) {
+    const response = await fetch(`/api/chatbots/${chatbotId}/publish`, {
+        method: "POST",
+    })
+
+    if (!response?.ok) {
+        toast({
+            title: "Something went wrong.",
+            description: "Your chatbot was not published. Please try again.",
+            variant: "destructive",
+        })
+    } else {
+        toast({
+            title: "Chatbot published.",
+            description: "Your chatbot was successfully published.",
+            variant: "default",
+        })
     }
 
     return true
@@ -68,6 +96,11 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                             Settings
                         </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem
+                        onSelect={() => publishChatbot(chatbot.id)}
+                    >
+                        Publish
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                         className="flex cursor-pointer items-center text-destructive focus:text-destructive"
@@ -76,7 +109,7 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                         Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu >
             <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                 <AlertDialogContent>
                     <AlertDialogHeader>

@@ -7,6 +7,7 @@ import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { UserNameForm } from "@/components/user-name-form"
 import { OpenAIForm } from "@/components/openai-config-form"
+import { GithubCard } from "@/components/github-card"
 
 export const metadata = {
     title: "Settings",
@@ -34,6 +35,7 @@ export default async function SettingsPage() {
                     <OpenAIForm user={{ id: user.id, name: user.name || "" }} />
                 </div>
 
+                <GithubCard />
             </div>
         </DashboardShell>
     )

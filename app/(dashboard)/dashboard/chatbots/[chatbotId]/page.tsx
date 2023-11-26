@@ -76,7 +76,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         <DashboardShell>
             <DashboardHeader heading="Chatbot" text="Configure your chatbot here">
                 <Link
-                    href="/dashboard"
+                    href="/dashboard/chatbots"
                     className={cn(
                         buttonVariants({ variant: "ghost" }),
                         "md:left-8 md:top-8"
