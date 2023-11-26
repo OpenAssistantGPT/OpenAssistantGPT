@@ -24,6 +24,7 @@ import {
   User,
   X,
   BotIcon,
+  FolderClosed,
   LucideIcon,
 } from "lucide-react"
 
@@ -31,6 +32,7 @@ export type Icon = LucideIcon
 
 export const Icons = {
   logo: Command,
+  folder: FolderClosed,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
