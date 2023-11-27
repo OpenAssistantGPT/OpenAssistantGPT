@@ -69,10 +69,8 @@ async function crawl(url: string, selector: string, maxPagesToCrawl: number, url
 
         // Now apply the selector for specific content
         const title = $('title').text();
-        //const selectedHtml = $(selector).html() || '';
-        const selectedHtml = $(selector).text() || '';
-        console.log(selectedHtml)
-
+        //const selectedHtml = $(selector).text() || '';
+        const selectedHtml = $(selector).html() || '';
 
         const result = [{ title, url, html: selectedHtml }];
 
