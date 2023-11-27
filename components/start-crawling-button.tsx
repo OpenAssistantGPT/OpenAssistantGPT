@@ -9,10 +9,6 @@ import { Icons } from "@/components/icons"
 import { Crawler } from "@prisma/client"
 import { useState } from "react"
 
-
-
-
-
 interface CrawlingProps extends React.HTMLAttributes<HTMLFormElement> {
     crawler: Pick<Crawler, "id" | "name" | "crawlUrl" | "selector" | "urlMatch">
 }

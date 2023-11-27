@@ -32,6 +32,12 @@ export async function POST(
     context: z.infer<typeof routeContextSchema>
 ) {
 
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+        return new Response("Unauthorized", { status: 403 })
+    }
+
     const { params } = routeContextSchema.parse(context)
     try {
         const count = verifyCurrentUserHasAccessToChatbot(params.chatbotId)
@@ -39,7 +45,6 @@ export async function POST(
             return new Response(null, { status: 403 })
         }
 
-        const session = await getServerSession(authOptions)
 
         const json = await req.json()
         const body = crawlerCreateSchema.parse(json)

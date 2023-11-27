@@ -22,7 +22,6 @@ export default async function FilePage() {
         redirect(authOptions?.pages?.signIn || "/login")
     }
 
-
     const crawlers = await db.crawler.findMany({
         select: {
             id: true,

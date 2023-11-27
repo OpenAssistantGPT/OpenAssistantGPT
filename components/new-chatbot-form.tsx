@@ -22,6 +22,7 @@ import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChatbotModel } from "@prisma/client"
+import { PublishedFile } from "@/types"
 
 
 type FormData = z.infer<typeof chatbotSchema>
@@ -33,6 +34,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
     })
 
     const [models, setModels] = useState<ChatbotModel[]>([])
+    const [files, setFiles] = useState<PublishedFile[]>([])
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
     useEffect(() => {
@@ -43,13 +45,27 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                     "Content-Type": "application/json",
                 },
             })
-
             const models = await response.json()
             setModels(models)
+
+            const filesResponse = await getPublishedFiles()
+            setFiles(filesResponse)
         }
         init()
-
     }, [])
+
+    async function getPublishedFiles() {
+        const response = await fetch('/api/files/published', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+
+        const files = await response.json()
+        console.log(files)
+        return files
+    }
 
     async function onSubmit(data: FormData) {
         setIsSaving(true)
@@ -65,7 +81,8 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                 prompt: data.prompt,
                 openAIKey: data.openAIKey,
                 welcomeMessage: data.welcomeMessage,
-                modelId: data.modelId
+                modelId: data.modelId,
+                files: data.files
             }),
         })
 
@@ -198,6 +215,38 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                     />
                                     <FormDescription>
                                         The Open AI API key that will be used to connect to the API
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="files"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        Choose your file for retrival
+                                    </FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a file" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {
+                                                    files.map((file: PublishedFile) => (
+                                                        <SelectItem key={file.crawlerFileId} value={file.crawlerFileId}>
+                                                            {file.name}
+                                                        </SelectItem>
+                                                    ))
+                                                }
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        The Open AI model will use this file to search for specific content.
+                                        If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

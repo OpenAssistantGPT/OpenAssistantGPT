@@ -42,11 +42,14 @@ async function crawl(url: string, selector: string, maxPagesToCrawl: number, url
         }
     }
 
-    async function crawl(url: string, selector: string, urlMatch: string, visited = new Set()) {
-        if (visited.has(url) || !url.includes(urlMatch)) return [];
+    async function crawl(url: string, selector: string, urlMatch: string, visited = new Set(), pageCount = 0) {
+        if (visited.has(url) || !url.includes(urlMatch) || pageCount >= maxPagesToCrawl) return [];
+
         console.log('Crawling URL:', url);
 
         visited.add(url);
+        pageCount++;
+
 
         const html = await fetchHtml(url);
         if (!html) return [];
@@ -66,13 +69,20 @@ async function crawl(url: string, selector: string, maxPagesToCrawl: number, url
 
         // Now apply the selector for specific content
         const title = $('title').text();
-        const selectedHtml = $(selector).html() || '';
+        //const selectedHtml = $(selector).html() || '';
+        const selectedHtml = $(selector).text() || '';
+        console.log(selectedHtml)
+
 
         const result = [{ title, url, html: selectedHtml }];
 
         // Recursively crawl the extracted links
         for (const link of validLinks) {
-            result.push(...await crawl(link, selector, urlMatch, visited));
+            if (pageCount < maxPagesToCrawl) {
+                const newResults = await crawl(link, selector, urlMatch, visited, pageCount);
+                result.push(...newResults);
+                pageCount += newResults.length; // Update pageCount based on new pages crawled
+            }
         }
 
         return result;
@@ -113,6 +123,9 @@ export async function GET(
         }
 
         const content = await crawl(crawler.crawlUrl, crawler.selector, crawler.maxPagesToCrawl, crawler.urlMatch)
+        if (!content) {
+            return new Response(null, { status: 500 })
+        }
 
         const date = new Date()
         const fileName = crawler.name.toLowerCase().replace(/\s/g, "-") + '-' + date.toISOString() + ".json"

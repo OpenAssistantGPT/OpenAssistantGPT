@@ -24,20 +24,38 @@ model OpenAIFile {
   crawlerFile CrawlerFile @relation(fields: [fileId], references: [id], onDelete: Cascade)
 }
 
+model OpenAIChatbot {
+  id              String   @id @default(cuid())
+  chatbotId       String   @unique
+  openAIChatbotId String   @unique
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+
+  chatbot Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+}
+
+model ChatbotFiles {
+  id            String @id @default(cuid())
+  chatbotId     String
+  crawlerFileId String
+
+  chatbot     Chatbot     @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  crawlerFile CrawlerFile @relation(fields: [crawlerFileId], references: [id], onDelete: Cascade)
+}
+
 model Chatbot {
-  id             String        @id @default(cuid())
+  id             String   @id @default(cuid())
   name           String
   userId         String
-  createdAt      DateTime      @default(now()) @map(name: "created_at")
+  createdAt      DateTime @default(now()) @map(name: "created_at")
   openaiKey      String
   modelId        String
-  draft          Boolean
   prompt         String
   welcomeMessage String
-  crawlerFile    CrawlerFile[]
 
-  user  User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  model ChatbotModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  model         ChatbotModel   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  OpenAIChatbot OpenAIChatbot?
+  ChatbotFiles  ChatbotFiles[]
 
   @@map(name: "chatbots")
 }
@@ -74,10 +92,9 @@ model CrawlerFile {
   blobUrl   String
   crawlerId String
 
-  crawler    Crawler      @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
-  Chatbot    Chatbot?     @relation(fields: [chatbotId], references: [id])
-  chatbotId  String?
-  OpenAIFile OpenAIFile[]
+  crawler      Crawler        @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
+  OpenAIFile   OpenAIFile[]
+  ChatbotFiles ChatbotFiles[]
 }
 
 model Account {

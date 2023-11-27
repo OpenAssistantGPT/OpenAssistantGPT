@@ -70,7 +70,7 @@ export async function POST(req: Request) {
                 crawlUrl: body.crawlUrl,
                 urlMatch: body.urlMatch,
                 selector: body.selector,
-                maxPagesToCrawl: 100,
+                maxPagesToCrawl: 25,
                 userId: session?.user?.id,
             },
             select: {

@@ -56,3 +56,10 @@ export type UserSubscriptionPlan = SubscriptionPlan &
 export type MarketingConfig = {
   mainNav: MainNavItem[]
 }
+
+export type PublishedFile = {
+  crawlerFileId: string
+  openAIFileId: string
+  name: string
+}
+

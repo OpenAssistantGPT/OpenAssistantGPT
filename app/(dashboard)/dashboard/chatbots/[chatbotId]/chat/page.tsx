@@ -1,9 +1,15 @@
 import { getCurrentUser } from "@/lib/session"
 import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
-import { db } from "@/lib/db"
 import { Chat } from "@/components/chat"
 import { Chatbot, User } from "@prisma/client"
+import { db } from "@/lib/db"
+import Link from "next/link"
+import { DashboardHeader } from "@/components/header"
+import { DashboardShell } from "@/components/shell"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -17,7 +23,6 @@ async function getChatbotForUser(chatbotId: Chatbot["id"], userId: User["id"]) {
         },
     })
 }
-
 
 export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
 
@@ -34,6 +39,22 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
     }
 
     return (
-        <Chat chatbot={chatbot}></Chat>
+        <DashboardShell>
+            <DashboardHeader heading="Chat" text="Start chatting with your chatbot">
+                <Link
+                    href={`/dashboard/chatbots`}
+                    className={cn(
+                        buttonVariants({ variant: "ghost" }),
+                        "md:left-8 md:top-8"
+                    )}
+                >
+                    <>
+                        <Icons.chevronLeft className="mr-2 h-4 w-4" />
+                        Back
+                    </>
+                </Link>
+            </DashboardHeader>
+            <Chat chatbot={chatbot}></Chat>
+        </DashboardShell >
     )
 }

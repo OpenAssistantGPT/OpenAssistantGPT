@@ -76,7 +76,6 @@ export async function POST(req: Request) {
         name: body.name,
         prompt: body.prompt,
         openaiKey: body.openAIKey,
-        draft: true,
         modelId: model.id,
         userId: user?.id,
         welcomeMessage: body.welcomeMessage,
@@ -85,6 +84,27 @@ export async function POST(req: Request) {
         id: true,
       },
     })
+
+    if (body.files) {
+      const crawlerFile = await db.crawlerFile.findUnique({
+        select: {
+          id: true,
+          name: true,
+        },
+        where: {
+          id: body.files
+        }
+      })
+
+      console.log(crawlerFile)
+      // Create chatbotfiles
+      await db.chatbotFiles.create({
+        data: {
+          chatbotId: chatbot.id,
+          crawlerFileId: crawlerFile?.id || "",
+        }
+      })
+    }
 
     return new Response(JSON.stringify({ chatbot }))
   } catch (error) {

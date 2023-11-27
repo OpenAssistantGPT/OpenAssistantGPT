@@ -67,8 +67,6 @@ export async function PATCH(
 ) {
   const { params } = routeContextSchema.parse(context)
 
-  console.log(params)
-
   if (!(await verifyCurrentUserHasAccessToChatbot(params.chatbotId))) {
     return new Response(null, { status: 403 })
   }

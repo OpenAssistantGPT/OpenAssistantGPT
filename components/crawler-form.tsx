@@ -96,7 +96,6 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                         defaultValue={crawler?.name || ""}
                                         onChange={field.onChange}
                                         id="name"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard

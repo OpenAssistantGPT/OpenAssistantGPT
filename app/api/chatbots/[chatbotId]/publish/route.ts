@@ -28,6 +28,10 @@ const routeContextSchema = z.object({
 export async function POST(req: Request, context: z.infer<typeof routeContextSchema>) {
     const session = await getServerSession(authOptions)
 
+    if (!session) {
+        return new Response("Unauthorized", { status: 403 })
+    }
+
     const { params } = routeContextSchema.parse(context)
     try {
         const count = verifyCurrentUserHasAccessToChatbot(params.chatbotId)
@@ -59,29 +63,72 @@ export async function POST(req: Request, context: z.infer<typeof routeContextSch
                         name: true
                     }
                 },
-                crawlerFile: {
+                ChatbotFiles: {
                     select: {
                         id: true,
-                        name: true,
+                        crawlerFile: {
+                            select: {
+                                id: true,
+                                OpenAIFile: {
+                                    select: {
+                                        id: true,
+                                        openAIFileId: true,
+                                    }
+                                }
+                            }
+                        }
                     }
-                },
+
+                }
             },
             where: {
                 id: params.chatbotId,
             },
         })
 
-        await openai.beta.assistants.create({
+        // if chatbot already deployed, delete it in openai
+        const openAIChatbot = await db.openAIChatbot.findUnique({
+            select: {
+                id: true,
+                openAIChatbotId: true,
+            },
+            where: {
+                chatbotId: params.chatbotId,
+            },
+        })
+        console.log(openAIChatbot)
+
+        if (openAIChatbot) {
+            await openai.beta.assistants.del(openAIChatbot.openAIChatbotId)
+            await db.openAIChatbot.delete({
+                where: {
+                    id: openAIChatbot.id,
+                }
+            })
+        }
+
+        const openAIFileslist = chatbot?.ChatbotFiles.map((chatbotFile) => {
+            return chatbotFile.crawlerFile.OpenAIFile.map((openAIFile) => {
+                return openAIFile.openAIFileId
+            })
+        })
+
+        const createdChatbot = await openai.beta.assistants.create({
             name: chatbot?.name,
             instructions: chatbot?.prompt,
             model: chatbot?.model.name || '',
             tools: [{ type: "retrieval" }],
-            file_ids: ['file-37WHt3Bid0NoyB442IHwLKm3']
+            file_ids: openAIFileslist?.flat() || []
         })
 
-        // TODO INSERT CHATBOT ID IN DB
+        await db.openAIChatbot.create({
+            data: {
+                chatbotId: params.chatbotId,
+                openAIChatbotId: createdChatbot.id,
+            }
+        })
 
-        return new Response(null, { status: 204 })
+        return new Response(null, { status: 201 })
     } catch (error) {
         console.log(error)
         if (error instanceof z.ZodError) {

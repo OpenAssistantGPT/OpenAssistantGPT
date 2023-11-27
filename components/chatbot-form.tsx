@@ -24,7 +24,7 @@ import { Icons } from "@/components/icons"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
-    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "draft">
+    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt">
 }
 
 type FormData = z.infer<typeof chatbotSchema>
@@ -47,7 +47,7 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
             },
             body: JSON.stringify({
                 name: data.name,
-                openaiKey: data.openAIKey,
+                openAIKey: data.openAIKey,
                 modelId: data.modelId,
                 welcomeMessage: data.welcomeMessage,
                 prompt: data.prompt
@@ -97,8 +97,8 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
 
                                     <Input
                                         defaultValue={chatbot.name}
+                                        onChange={field.onChange}
                                         id="name"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
@@ -117,9 +117,9 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                     </FormLabel>
                                     <Input
                                         defaultValue={chatbot.openaiKey}
+                                        onChange={field.onChange}
                                         id="openAIKey"
                                         type="password"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
@@ -138,6 +138,7 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                     </FormLabel>
                                     <Input
                                         defaultValue={chatbot.modelId}
+                                        onChange={field.onChange}
                                         id="modelId"
                                         size={32}
                                     />
@@ -158,6 +159,7 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                     </FormLabel >
                                     <Input
                                         defaultValue={chatbot.welcomeMessage}
+                                        onChange={field.onChange}
                                         id="welcomeMessage"
                                         size={32}
                                     />
@@ -178,6 +180,7 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                     </FormLabel>
                                     <Input
                                         defaultValue={chatbot.prompt}
+                                        onChange={field.onChange}
                                         id="prompt"
                                         size={32}
                                     />

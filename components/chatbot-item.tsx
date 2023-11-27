@@ -6,11 +6,12 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ChatbotOperations } from "./chatbot-operations"
 
 interface ChatbotProps {
-    chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "draft" | "modelId">
-    model: ChatbotModel
+    chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId">
+    model: ChatbotModel,
+    isPublished: boolean
 }
 
-export function ChatbotItem({ chatbot, model }: ChatbotProps) {
+export function ChatbotItem({ chatbot, model, isPublished }: ChatbotProps) {
     return (
         <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
@@ -24,6 +25,17 @@ export function ChatbotItem({ chatbot, model }: ChatbotProps) {
                     <p className="text-sm text-muted-foreground">
                         {model.name}
                     </p>
+                    {
+                        isPublished ? (
+                            <p className="text-green-600 text-sm text-muted-foreground">
+                                Is Published
+                            </p>
+                        ) : (
+                            <p className="text-red-600 text-sm text-muted-foreground">
+                                Not published
+                            </p>
+                        )
+                    }
                     <p className="text-sm text-muted-foreground">
                         {formatDate(chatbot.createdAt?.toDateString())}
                     </p>

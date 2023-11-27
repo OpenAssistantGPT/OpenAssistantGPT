@@ -28,12 +28,16 @@ export default async function DashboardPage() {
     select: {
       id: true,
       name: true,
-      draft: true,
       createdAt: true,
       model: {
         select: {
           id: true,
           name: true,
+        }
+      },
+      OpenAIChatbot: {
+        select: {
+          id: true,
         }
       }
     },
@@ -51,7 +55,7 @@ export default async function DashboardPage() {
         {bots?.length ? (
           <div className="divide-y divide-border rounded-md border">
             {bots.map((bot) => (
-              <ChatbotItem key={bot.id} chatbot={bot} model={bot.model} />
+              <ChatbotItem key={bot.id} chatbot={bot} model={bot.model} isPublished={bot.OpenAIChatbot} />
             ))}
           </div>
         ) : (

@@ -26,27 +26,7 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-async function deleteChatbot(chatbotId: string) {
-    const response = await fetch(`/api/chatbots/${chatbotId}`, {
-        method: "DELETE",
-    })
 
-    if (!response?.ok) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your chatbot was not deleted. Please try again.",
-            variant: "destructive",
-        })
-    } else {
-        toast({
-            title: "Chatbot deleted.",
-            description: "Your chatbot was successfully deleted.",
-            variant: "default",
-        })
-    }
-
-    return true
-}
 
 async function publishChatbot(chatbotId: string) {
     const response = await fetch(`/api/chatbots/${chatbotId}/publish`, {
@@ -78,6 +58,28 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
     const router = useRouter()
     const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+
+    async function deleteChatbot(chatbotId: string) {
+        const response = await fetch(`/api/chatbots/${chatbotId}`, {
+            method: "DELETE",
+        })
+
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong.",
+                description: "Your chatbot was not deleted. Please try again.",
+                variant: "destructive",
+            })
+        } else {
+            toast({
+                title: "Chatbot deleted.",
+                description: "Your chatbot was successfully deleted.",
+                variant: "default",
+            })
+        }
+        router.refresh()
+        return true
+    }
 
     return (
         <>
