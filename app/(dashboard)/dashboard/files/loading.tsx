@@ -7,7 +7,7 @@ export default function FilesLoading() {
         <DashboardShell>
             <DashboardHeader
                 heading="Files"
-                text="List of all of your crawled file."
+                text="List of all of your imported and crawled files."
             />
             <div className="grid gap-10">
                 <CardSkeleton />

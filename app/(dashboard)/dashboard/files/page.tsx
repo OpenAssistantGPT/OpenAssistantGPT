@@ -62,7 +62,7 @@ export default async function FilePage() {
 
     return (
         <DashboardShell>
-            <DashboardHeader heading="Files" text="List of all of your crawled file">
+            <DashboardHeader heading="Files" text="List of all of your imported and crawled files.">
             </DashboardHeader>
             <div className="flex flex-col">
                 <div className="mb-4 flex items-center justify-between px-2">
