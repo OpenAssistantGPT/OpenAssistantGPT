@@ -63,18 +63,6 @@ export default async function FilePage() {
     return (
         <DashboardShell>
             <DashboardHeader heading="Files" text="List of all of your crawled file">
-                <Link
-                    href="/dashboard/crawlers"
-                    className={cn(
-                        buttonVariants({ variant: "ghost" }),
-                        "md:left-8 md:top-8"
-                    )}
-                >
-                    <>
-                        <Icons.chevronLeft className="mr-2 h-4 w-4" />
-                        Back
-                    </>
-                </Link>
             </DashboardHeader>
             <div className="flex flex-col">
                 <div className="mb-4 flex items-center justify-between px-2">
