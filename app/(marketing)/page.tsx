@@ -137,8 +137,8 @@ export default function Home() {
             Chatbot is open source and powered by open source software. <br />{" "}
             The code is available on{" "}
           </p>
-          <GithubCard />
         </div>
+        <GithubCard />
       </section>
     </>
   );
