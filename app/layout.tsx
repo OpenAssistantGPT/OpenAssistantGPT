@@ -1,6 +1,7 @@
 // These styles apply to every route in the application
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google"
+import localFont from "next/font/local"
 
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,12 @@ import { Toaster } from "@/components/ui/toaster";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+})
+
+// Font files can be colocated inside of `pages`
+const fontHeading = localFont({
+  src: "../assets/fonts/CalSans-SemiBold.woff2",
+  variable: "--font-heading",
 })
 
 const title = "Welcome to chatbot";
@@ -33,13 +40,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en suppressHydrationWarning">
       <head />
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
-          fontSans.variable
+          fontHeading.variable
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
