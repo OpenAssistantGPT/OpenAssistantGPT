@@ -1,6 +1,7 @@
 // These styles apply to every route in the application
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google"
+import localFont from "next/font/local"
 
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
