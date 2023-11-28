@@ -35,6 +35,9 @@ export default function PricingPage() {
                             <Icons.check className="mr-2 h-4 w-4" /> 2 Files
                         </li>
                         <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> 30 messages
+                        </li>
+                        <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> Dashboard Analytics
                         </li>
                         <li className="flex items-center">
@@ -70,6 +73,9 @@ export default function PricingPage() {
                             <Icons.check className="mr-2 h-4 w-4" /> 9 Files
                         </li>
                         <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> Unlimited messages
+                        </li>
+                        <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> Dashboard Analytics
                         </li>
                         <li className="flex items-center">
@@ -102,6 +108,9 @@ export default function PricingPage() {
                             <Icons.check className="mr-2 h-4 w-4" /> 12 Crawlers
                         </li>
                         <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> Unlimited messages
+                        </li>
+                        <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> 26 Files
                         </li>
                         <li className="flex items-center">
@@ -132,6 +141,9 @@ export default function PricingPage() {
                         </li>
                         <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> X Crawlers
+                        </li>
+                        <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> Unlimited messages
                         </li>
                         <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> X Files
