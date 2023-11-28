@@ -37,6 +37,12 @@ async function deleteCrawlerFile(crawlerId: string, fileId: string) {
             description: "Your file was not deleted. Please try again.",
             variant: "destructive",
         })
+    } else {
+        toast({
+            title: "File deleted.",
+            description: "Your file was successfully deleted.",
+            variant: "default",
+        })
     }
 
     return true
@@ -52,6 +58,12 @@ async function deleteUploadFile(fileId: string) {
             title: "Something went wrong.",
             description: "Your file was not deleted. Please try again.",
             variant: "destructive",
+        })
+    } else {
+        toast({
+            title: "File deleted.",
+            description: "Your file was successfully deleted.",
+            variant: "default",
         })
     }
 
@@ -69,6 +81,12 @@ async function publishCrawlerFile(crawlerId: string, fileId: string) {
             description: "Your file was not uploaded to openai. Please try again.",
             variant: "destructive",
         })
+    } else {
+        toast({
+            title: "File published to OpenAI.",
+            description: "Your file was successfully published.",
+            variant: "default",
+        })
     }
 
     return true
@@ -84,6 +102,12 @@ async function publishUploadFile(fileId: string) {
             title: "Something went wrong.",
             description: "Your file was not uploaded to openai. Please try again.",
             variant: "destructive",
+        })
+    } else {
+        toast({
+            title: "File published to OpenAI.",
+            description: "Your file was successfully published.",
+            variant: "default",
         })
     }
 
