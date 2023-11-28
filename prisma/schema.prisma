@@ -17,11 +17,14 @@ model OpenAIConfig {
 
 model OpenAIFile {
   id           String   @id @default(cuid())
-  fileId       String   @unique
   openAIFileId String   @unique
   createdAt    DateTime @default(now()) @map(name: "created_at")
 
-  crawlerFile CrawlerFile @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  crawlerFile  CrawlerFile? @relation(fields: [fileId], references: [id])
+  fileId       String?  @unique
+  
+  UploadFile   UploadFile?  @relation(fields: [uploadFileId], references: [id])
+  uploadFileId String?      @unique
 }
 
 model OpenAIChatbot {
@@ -42,6 +45,15 @@ model ChatbotFiles {
   crawlerFile CrawlerFile @relation(fields: [crawlerFileId], references: [id], onDelete: Cascade)
 }
 
+model ChatbotUploadFiles {
+  id           String @id @default(cuid())
+  chatbotId    String
+  uploadFileId String
+
+  chatbot    Chatbot    @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  uploadFile UploadFile @relation(fields: [uploadFileId], references: [id], onDelete: Cascade)
+}
+
 model Chatbot {
   id             String   @id @default(cuid())
   name           String
@@ -52,10 +64,11 @@ model Chatbot {
   prompt         String
   welcomeMessage String
 
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  model         ChatbotModel   @relation(fields: [modelId], references: [id], onDelete: Cascade)
-  OpenAIChatbot OpenAIChatbot?
-  ChatbotFiles  ChatbotFiles[]
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  model              ChatbotModel         @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  OpenAIChatbot      OpenAIChatbot?
+  ChatbotFiles       ChatbotFiles[]
+  ChatbotUploadFiles ChatbotUploadFiles[]
 
   @@map(name: "chatbots")
 }
@@ -97,6 +110,18 @@ model CrawlerFile {
   ChatbotFiles ChatbotFiles[]
 }
 
+model UploadFile {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  name      String
+  blobUrl   String
+
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  OpenAIFile         OpenAIFile[]
+  ChatbotUploadFiles ChatbotUploadFiles[]
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -135,6 +160,7 @@ model User {
   Chatbot       Chatbot[]
   Crawler       Crawler[]
   OpenAIConfig  OpenAIConfig[]
+  UploadFile    UploadFile[]
 }
 
 model VerificationToken {

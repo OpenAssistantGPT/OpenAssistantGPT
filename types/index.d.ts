@@ -57,9 +57,14 @@ export type MarketingConfig = {
   mainNav: MainNavItem[]
 }
 
-export type PublishedFile = {
+export type CrawlerPublishedFile = {
   crawlerFileId: string
   openAIFileId: string
   name: string
 }
 
+export type UploadPublishedFile = {
+  uploadFileId: string
+  openAIFileId: string
+  name: string
+}

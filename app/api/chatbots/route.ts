@@ -85,8 +85,10 @@ export async function POST(req: Request) {
       },
     })
 
+    let file = null
+
     if (body.files) {
-      const crawlerFile = await db.crawlerFile.findUnique({
+      file = await db.crawlerFile.findUnique({
         select: {
           id: true,
           name: true,
@@ -96,14 +98,33 @@ export async function POST(req: Request) {
         }
       })
 
-      console.log(crawlerFile)
-      // Create chatbotfiles
-      await db.chatbotFiles.create({
-        data: {
-          chatbotId: chatbot.id,
-          crawlerFileId: crawlerFile?.id || "",
-        }
-      })
+      console.log(`crawlerFile: ${file}`)
+      if (file == null) {
+        file = await db.uploadFile.findUnique({
+          select: {
+            id: true,
+            name: true,
+          },
+          where: {
+            id: body.files
+          }
+        })
+        await db.chatbotUploadFiles.create({
+          data: {
+            chatbotId: chatbot.id,
+            uploadFileId: file?.id || "",
+          }
+        })
+      } else {
+        await db.chatbotFiles.create({
+          data: {
+            chatbotId: chatbot.id,
+            crawlerFileId: file?.id || "",
+          }
+        })
+      }
+
+
     }
 
     return new Response(JSON.stringify({ chatbot }))

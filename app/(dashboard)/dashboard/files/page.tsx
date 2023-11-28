@@ -1,6 +1,5 @@
 
 import { notFound, redirect } from "next/navigation"
-import { Crawler, User } from "@prisma/client"
 
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
@@ -12,7 +11,12 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
-import { CrawlerFileItem } from "@/components/file-items"
+import { CrawlerFileItem } from "@/components/crawler-file-items"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import { CrawlerCreateButton } from "@/components/crawler-create-button"
+import { FileUploadButton } from "@/components/file-upload-button"
+import { UploadFileItem } from "@/components/upload-file-items"
 
 
 export default async function FilePage() {
@@ -42,6 +46,19 @@ export default async function FilePage() {
         },
     })
 
+    const uploadedFiles = await db.uploadFile.findMany({
+        select: {
+            id: true,
+            name: true,
+            blobUrl: true,
+            createdAt: true,
+            userId: true,
+        },
+        where: {
+            userId: user.id,
+        },
+    })
+
 
     return (
         <DashboardShell>
@@ -59,29 +76,58 @@ export default async function FilePage() {
                     </>
                 </Link>
             </DashboardHeader>
-            {crawlers?.length ?
-                <>
+            <div className="flex flex-col">
+                <div className="mb-4 flex items-center justify-between px-2">
+                    <Label className="text-lg">Uploaded files</Label>
+                    <FileUploadButton variant={"outline"} />
+                </div>
+                {uploadedFiles.length ?
                     <div className="divide-y divide-border rounded-md border">
-                        {crawlers.map((crawler) => (
-                            crawler.crawlerFile.map((file) => (
-                                <CrawlerFileItem file={file} key={file.id} />
-                            ))
+                        {uploadedFiles.map((file) => (
+                            <UploadFileItem key={file.id} file={file} />
                         ))
                         }
                     </div>
-                </>
-
-                : <div className="grid gap-10">
-                    <EmptyPlaceholder>
-                        <EmptyPlaceholder.Icon name="laptop" />
-                        <EmptyPlaceholder.Title>Start crawling now to import files</EmptyPlaceholder.Title>
-                        <EmptyPlaceholder.Description>
-                            You don&apos;t have any files yet. Start crawling.
-                        </EmptyPlaceholder.Description>
-                    </EmptyPlaceholder>
+                    : <div className="grid gap-10">
+                        <EmptyPlaceholder>
+                            <EmptyPlaceholder.Icon name="folder" />
+                            <EmptyPlaceholder.Title>Import a file now</EmptyPlaceholder.Title>
+                            <EmptyPlaceholder.Description>
+                                You don&apos;t have any files yet. Start crawling or import a file.
+                                <FileUploadButton variant={"outline"} />
+                            </EmptyPlaceholder.Description>
+                        </EmptyPlaceholder>
+                    </div>
+                }
+                <Separator className="my-4" />
+                <div className="mb-4 flex items-center justify-between px-2">
+                    <Label className="text-lg">Crawlers&apos; files</Label>
+                    <CrawlerCreateButton variant={"outline"} />
                 </div>
+                {crawlers?.length ?
+                    <div className="divide-y divide-border rounded-md border">
+                        {
+                            crawlers.map((crawler) => (
+                                crawler.crawlerFile.map((file) => (
+                                    <CrawlerFileItem file={file} key={file.id} />
+                                ))
+                            ))
+                        }
+                    </div>
+                    :
+                    <div className="grid gap-10">
+                        <EmptyPlaceholder>
+                            <EmptyPlaceholder.Icon name="laptop" />
+                            <EmptyPlaceholder.Title>Start crawling now to import files</EmptyPlaceholder.Title>
+                            <EmptyPlaceholder.Description>
+                                You don&apos;t have any files yet. Start crawling.
+                                <CrawlerCreateButton variant={"outline"} />
+                            </EmptyPlaceholder.Description>
+                        </EmptyPlaceholder>
+                    </div>
 
-            }
+                }
+            </div>
         </DashboardShell>
     )
 }

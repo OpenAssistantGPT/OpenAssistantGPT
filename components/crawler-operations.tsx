@@ -81,7 +81,7 @@ export function CrawlerOperations({ crawler }: CrawlerOperationsProps) {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Are you sure you want to delete this crawler?
+                            Are you sure you want to delete this crawler, it will also delete all the files crawled by this crawler?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             This action cannot be undone.

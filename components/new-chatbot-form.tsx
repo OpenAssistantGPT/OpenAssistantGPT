@@ -22,8 +22,11 @@ import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChatbotModel } from "@prisma/client"
-import { PublishedFile } from "@/types"
 
+interface PublishedFiles {
+    crawlerPublishedFiles: []
+    uploadPublishedFiles: []
+}
 
 type FormData = z.infer<typeof chatbotSchema>
 
@@ -34,7 +37,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
     })
 
     const [models, setModels] = useState<ChatbotModel[]>([])
-    const [files, setFiles] = useState<PublishedFile[]>([])
+    const [files, setFiles] = useState<PublishedFiles>({ "crawlerPublishedFiles": [], "uploadPublishedFiles": [] })
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
     useEffect(() => {
@@ -235,7 +238,16 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                         <SelectContent>
                                             <SelectGroup>
                                                 {
-                                                    files.map((file: PublishedFile) => (
+                                                    files["uploadPublishedFiles"].map((file: any) => (
+                                                        <SelectItem key={file.uploadFileId} value={file.uploadFileId}>
+                                                            {file.name}
+                                                        </SelectItem>
+                                                    ))
+                                                }
+                                            </SelectGroup>
+                                            <SelectGroup>
+                                                {
+                                                    files["crawlerPublishedFiles"].map((file: any) => (
                                                         <SelectItem key={file.crawlerFileId} value={file.crawlerFileId}>
                                                             {file.name}
                                                         </SelectItem>

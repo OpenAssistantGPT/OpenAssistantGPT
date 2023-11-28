@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { StartCrawlingButton } from "@/components/start-crawling-button"
-import { CrawlerFileItem } from "@/components/file-items"
+import { CrawlerFileItem } from "@/components/crawler-file-items"
 
 interface CrawlerSettingsProps {
     params: { crawlerId: string }

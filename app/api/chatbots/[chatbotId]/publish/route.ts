@@ -79,6 +79,22 @@ export async function POST(req: Request, context: z.infer<typeof routeContextSch
                         }
                     }
 
+                },
+                ChatbotUploadFiles: {
+                    select: {
+                        id: true,
+                        uploadFile: {
+                            select: {
+                                id: true,
+                                OpenAIFile: {
+                                    select: {
+                                        id: true,
+                                        openAIFileId: true,
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             },
             where: {
@@ -113,12 +129,20 @@ export async function POST(req: Request, context: z.infer<typeof routeContextSch
             })
         })
 
+        const openAIUploadFileslist = chatbot?.ChatbotUploadFiles.map((chatbotUploadFile) => {
+            return chatbotUploadFile.uploadFile.OpenAIFile.map((openAIFile) => {
+                return openAIFile.openAIFileId
+            })
+        })
+
+        const files = openAIFileslist?.flat().concat(openAIUploadFileslist?.flat() || [])
+
         const createdChatbot = await openai.beta.assistants.create({
             name: chatbot?.name,
             instructions: chatbot?.prompt,
             model: chatbot?.model.name || '',
             tools: [{ type: "retrieval" }],
-            file_ids: openAIFileslist?.flat() || []
+            file_ids: files
         })
 
         await db.openAIChatbot.create({

@@ -1,24 +1,24 @@
 import Link from "next/link"
-import { CrawlerFile } from "@prisma/client"
+import { UploadFile } from "@prisma/client"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
-import { CrawlerFileOperations } from "@/components/file-operations"
 
 import { db } from "@/lib/db"
+import { FileOperations } from "@/components/file-operations"
 
-interface CrawlFileProps {
-    file: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "createdAt" | "crawlerId">
+interface UploadFileProps {
+    file: Pick<UploadFile, "id" | "name" | "blobUrl" | "createdAt">
 }
 
-export async function CrawlerFileItem({ file }: CrawlFileProps) {
+export async function UploadFileItem({ file }: UploadFileProps) {
 
     const openAIFile = await db.openAIFile.findUnique({
         select: {
             id: true,
         },
         where: {
-            fileId: file.id
+            uploadFileId: file.id
         }
     })
 
@@ -48,12 +48,12 @@ export async function CrawlerFileItem({ file }: CrawlFileProps) {
                     </p>
                 </div>
             </div>
-            <CrawlerFileOperations file={file} />
+            <FileOperations crawlerFile={undefined} uploadFile={file} />
         </div>
     )
 }
 
-CrawlerFileItem.Skeleton = function CrawledFileItemSkeleton() {
+UploadFileItem.Skeleton = function CrawledFileItemSkeleton() {
     return (
         <div className="p-4">
             <div className="space-y-3">

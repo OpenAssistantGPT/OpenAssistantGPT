@@ -4,7 +4,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { CrawlerFile } from "@prisma/client"
+import { CrawlerFile, UploadFile } from "@prisma/client"
 
 import {
     AlertDialog,
@@ -42,7 +42,23 @@ async function deleteCrawlerFile(crawlerId: string, fileId: string) {
     return true
 }
 
-async function publishFile(crawlerId: string, fileId: string) {
+async function deleteUploadFile(fileId: string) {
+    const response = await fetch(`/api/files/${fileId}`, {
+        method: "DELETE",
+    })
+
+    if (!response?.ok) {
+        toast({
+            title: "Something went wrong.",
+            description: "Your file was not deleted. Please try again.",
+            variant: "destructive",
+        })
+    }
+
+    return true
+}
+
+async function publishCrawlerFile(crawlerId: string, fileId: string) {
     const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}/publish`, {
         method: "POST",
     })
@@ -58,11 +74,28 @@ async function publishFile(crawlerId: string, fileId: string) {
     return true
 }
 
-interface CrawlerFileOperationsProps {
-    file: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "crawlerId">
+async function publishUploadFile(fileId: string) {
+    const response = await fetch(`/api/files/upload/${fileId}/publish`, {
+        method: "POST",
+    })
+
+    if (!response?.ok) {
+        toast({
+            title: "Something went wrong.",
+            description: "Your file was not uploaded to openai. Please try again.",
+            variant: "destructive",
+        })
+    }
+
+    return true
 }
 
-export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
+interface FileOperationsProps {
+    crawlerFile: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "crawlerId"> | undefined
+    uploadFile: Pick<UploadFile, "id" | "name" | "blobUrl"> | undefined
+}
+
+export function FileOperations({ crawlerFile, uploadFile }: FileOperationsProps) {
     const router = useRouter()
     const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
@@ -76,11 +109,17 @@ export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem>
-                        <Link href={file.blobUrl} className="flex w-full">
+                        <Link href={crawlerFile != undefined ? crawlerFile.blobUrl : uploadFile ? uploadFile.blobUrl : {}} className="flex w-full">
                             Download
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => publishFile(file.crawlerId, file.id)}>
+                    <DropdownMenuItem onSelect={() => {
+                        if (crawlerFile) {
+                            publishCrawlerFile(crawlerFile.crawlerId, crawlerFile.id)
+                        } else {
+                            publishUploadFile(uploadFile!.id)
+                        }
+                    }}>
                         Publish
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -109,7 +148,13 @@ export function CrawlerFileOperations({ file }: CrawlerFileOperationsProps) {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
 
-                                const deleted = await deleteCrawlerFile(file.crawlerId, file.id)
+                                let deleted = false
+                                if (crawlerFile) {
+                                    deleted = await deleteCrawlerFile(crawlerFile.crawlerId, crawlerFile.id)
+                                }
+                                else {
+                                    deleted = await deleteUploadFile(uploadFile!.id)
+                                }
 
                                 if (deleted) {
                                     setIsDeleteLoading(false)
