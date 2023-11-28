@@ -48,7 +48,7 @@ export async function CrawlerFileItem({ file }: CrawlFileProps) {
                     </p>
                 </div>
             </div>
-            <FileOperations file={file} uploadFile={undefined} />
+            <FileOperations crawlerFile={file} uploadFile={undefined} />
         </div>
     )
 }
