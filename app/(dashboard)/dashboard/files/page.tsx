@@ -93,13 +93,13 @@ export default async function FilePage() {
                             <EmptyPlaceholder.Icon name="folder" />
                             <EmptyPlaceholder.Title>Import a file now</EmptyPlaceholder.Title>
                             <EmptyPlaceholder.Description>
-                                You don&apos;t have any files yet. Start crawling or import a file.
-                                <FileUploadButton variant={"outline"} />
+                                You don&apos;t have any files yet. Import a file.
                             </EmptyPlaceholder.Description>
+                            <FileUploadButton variant={"outline"} />
                         </EmptyPlaceholder>
                     </div>
                 }
-                <Separator className="my-4" />
+                <div className="my-4" />
                 <div className="mb-4 flex items-center justify-between px-2">
                     <Label className="text-lg">Crawlers&apos; files</Label>
                     <CrawlerCreateButton variant={"outline"} />
@@ -121,8 +121,8 @@ export default async function FilePage() {
                             <EmptyPlaceholder.Title>Start crawling now to import files</EmptyPlaceholder.Title>
                             <EmptyPlaceholder.Description>
                                 You don&apos;t have any files yet. Start crawling.
-                                <CrawlerCreateButton variant={"outline"} />
                             </EmptyPlaceholder.Description>
+                            <CrawlerCreateButton variant={"outline"} />
                         </EmptyPlaceholder>
                     </div>
 
