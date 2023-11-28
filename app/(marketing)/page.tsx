@@ -80,6 +80,36 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <div className="space-y-2">
+                <h3 className="font-bold">Fully open source</h3>
+                <p className="text-sm">
+                  You can find the code on Github
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <div className="space-y-2">
+                <h3 className="font-bold">Bring your OpenAI api key</h3>
+                <p className="text-sm">
+                  No extra charge, you get billed directly by OpenAI.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-lg border bg-background p-2">
+            <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <div className="space-y-2">
+                <h3 className="font-bold">Contribute yourself</h3>
+                <p className="text-sm">
+                  You can open PR yourself on our repo
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="mx-auto text-center md:max-w-[58rem]">
           <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
