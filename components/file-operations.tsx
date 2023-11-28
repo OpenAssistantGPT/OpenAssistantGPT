@@ -26,93 +26,6 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-async function deleteCrawlerFile(crawlerId: string, fileId: string) {
-    const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}`, {
-        method: "DELETE",
-    })
-
-    if (!response?.ok) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your file was not deleted. Please try again.",
-            variant: "destructive",
-        })
-    } else {
-        toast({
-            title: "File deleted.",
-            description: "Your file was successfully deleted.",
-            variant: "default",
-        })
-    }
-
-    return true
-}
-
-async function deleteUploadFile(fileId: string) {
-    const response = await fetch(`/api/files/${fileId}`, {
-        method: "DELETE",
-    })
-
-    if (!response?.ok) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your file was not deleted. Please try again.",
-            variant: "destructive",
-        })
-    } else {
-        toast({
-            title: "File deleted.",
-            description: "Your file was successfully deleted.",
-            variant: "default",
-        })
-    }
-
-    return true
-}
-
-async function publishCrawlerFile(crawlerId: string, fileId: string) {
-    const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}/publish`, {
-        method: "POST",
-    })
-
-    if (!response?.ok) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your file was not uploaded to openai. Please try again.",
-            variant: "destructive",
-        })
-    } else {
-        toast({
-            title: "File published to OpenAI.",
-            description: "Your file was successfully published.",
-            variant: "default",
-        })
-    }
-
-    return true
-}
-
-async function publishUploadFile(fileId: string) {
-    const response = await fetch(`/api/files/upload/${fileId}/publish`, {
-        method: "POST",
-    })
-
-    if (!response?.ok) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your file was not uploaded to openai. Please try again.",
-            variant: "destructive",
-        })
-    } else {
-        toast({
-            title: "File published to OpenAI.",
-            description: "Your file was successfully published.",
-            variant: "default",
-        })
-    }
-
-    return true
-}
 
 interface FileOperationsProps {
     crawlerFile: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "crawlerId"> | undefined
@@ -124,6 +37,98 @@ export function FileOperations({ crawlerFile, uploadFile }: FileOperationsProps)
     const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
+    async function deleteCrawlerFile(crawlerId: string, fileId: string) {
+        const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}`, {
+            method: "DELETE",
+        })
+    
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong.",
+                description: "Your file was not deleted. Please try again.",
+                variant: "destructive",
+            })
+        } else {
+            toast({
+                title: "File deleted.",
+                description: "Your file was successfully deleted.",
+                variant: "default",
+            })
+        }
+        
+        router.refresh()
+        return true
+    }
+    
+    async function deleteUploadFile(fileId: string) {
+        const response = await fetch(`/api/files/${fileId}`, {
+            method: "DELETE",
+        })
+    
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong.",
+                description: "Your file was not deleted. Please try again.",
+                variant: "destructive",
+            })
+        } else {
+            toast({
+                title: "File deleted.",
+                description: "Your file was successfully deleted.",
+                variant: "default",
+            })
+        }
+
+        router.refresh()
+        return true
+    }
+    
+    async function publishCrawlerFile(crawlerId: string, fileId: string) {
+        const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}/publish`, {
+            method: "POST",
+        })
+    
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong.",
+                description: "Your file was not uploaded to openai. Please try again.",
+                variant: "destructive",
+            })
+        } else {
+            toast({
+                title: "File published to OpenAI.",
+                description: "Your file was successfully published.",
+                variant: "default",
+            })
+        }
+
+        router.refresh()
+        return true
+    }
+    
+    async function publishUploadFile(fileId: string) {
+        const response = await fetch(`/api/files/upload/${fileId}/publish`, {
+            method: "POST",
+        })
+    
+        if (!response?.ok) {
+            toast({
+                title: "Something went wrong.",
+                description: "Your file was not uploaded to openai. Please try again.",
+                variant: "destructive",
+            })
+        } else {
+            toast({
+                title: "File published to OpenAI.",
+                description: "Your file was successfully published.",
+                variant: "default",
+            })
+        }
+
+        router.refresh()
+        return true
+    }
+        
     return (
         <>
             <DropdownMenu>
