@@ -16,6 +16,9 @@ const routeContextSchema = z.object({
     }),
 })
 
+export const maxDuration = 180;
+
+
 async function verifyCurrentUserHasAccessToCrawler(crawlerId: string) {
     const session = await getServerSession(authOptions)
 

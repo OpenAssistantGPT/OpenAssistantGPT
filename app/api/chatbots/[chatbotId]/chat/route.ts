@@ -20,6 +20,7 @@ async function verifyCurrentUserHasAccessToChatbot(chatbotId: string) {
     return count > 0
 }
 
+export const maxDuration = 180;
 
 const routeContextSchema = z.object({
     params: z.object({
