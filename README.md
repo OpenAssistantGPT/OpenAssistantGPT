@@ -14,7 +14,7 @@ TODO:
 
 
 - Delete specific uploaded file
-
+- Add maximum file size while uploading and crawling
 
 
 
