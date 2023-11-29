@@ -20,6 +20,13 @@ export function ChatbotItem({ chatbot, model, isPublished }: ChatbotProps) {
                     href={`/dashboard/chatbots/${chatbot.id}`}
                     className="font-semibold hover:underline"
                 >
+                    {
+                        isPublished ?
+                            <div class="rounded-full border border-black bg-black px-2"></div>
+                            :
+                            <div class="rounded-full border border-zinc-700 px-2"></div>
+
+                    }
                     {chatbot.name}
                     {
                         isPublished ?

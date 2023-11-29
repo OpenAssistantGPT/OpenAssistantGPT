@@ -67,7 +67,7 @@ export async function POST(req: Request, context: z.infer<typeof routeContextSch
         //        id: params.chatbotId,
         //    },
         //})
-
+        // TODO USE PUBLIC ENDPOINT FOR CHAT
         const openai = new OpenAI({
             // TODO chatbot?.openaiKey ||
             apiKey: openAIConfig?.globalAPIKey
