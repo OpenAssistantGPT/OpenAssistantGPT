@@ -6,16 +6,17 @@ TODO:
 - DONE! For each crawler create a tabs for your crawled files files
 - DONE! Upload files to vercel blob storage then when you deploy chatbot to openAI use thoses files
 - DONE! Create table for files with storage url linked with owner id and link them to a bot
-- When bot is deployed store all openai bot info in other table (model id)
-- Add option for the welcome line
+- Done! When bot is deployed store all openai bot info in other table (model id)
+- Done! Add option for the welcome line
 - When deleting crawler also delete files in blob storage
-- When your bot is deployed put on the main page a chat window with him
-- Add a tab to see all of you files without going to a specific bot
+- Done! When your bot is deployed put on the main page a chat window with him
+- Done! Add a tab to see all of you files without going to a specific bot
 
-Pricing:
-- Bring you openAI key, Always infinite messages
-- x/$ per month for each bot (Free 1 free bot for 3 days max of 15 messages, Basic 3 bot max for 9$/month, Pro up to 10 bots for 30$/month)
-- max number of files that can be imported (Free import 1 file, Basic 3 import files, Pro 10 files)
+
+- Delete specific uploaded file
+
+
+
 
 Landing page:
 
