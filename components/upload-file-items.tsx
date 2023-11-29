@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 import { db } from "@/lib/db"
 import { FileOperations } from "@/components/file-operations"
+import { Badge } from "./ui/badge"
 
 interface UploadFileProps {
     file: Pick<UploadFile, "id" | "name" | "blobUrl" | "createdAt">
@@ -30,19 +31,14 @@ export async function UploadFileItem({ file }: UploadFileProps) {
                     className="font-semibold hover:underline"
                 >
                     {file.name}
+                    {
+                        openAIFile ?
+                            <Badge className="ml-2" variant={"default"}> Published </Badge>
+                            :
+                            <Badge className="ml-2" variant={"secondary"}> Not published </Badge>
+                    }
                 </Link>
                 <div>
-                    {
-                        openAIFile ? (
-                            <p className="text-sm text-muted-foreground">
-                                <span className="text-green-600">Is published</span>
-                            </p>
-                        ) : (
-                            <p className="text-sm text-muted-foreground">
-                                <span className="text-red-600">Not published</span>
-                            </p>
-                        )
-                    }
                     <p className="text-sm text-muted-foreground">
                         {formatDate(file.createdAt?.toDateString())}
                     </p>

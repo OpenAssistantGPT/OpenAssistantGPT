@@ -4,6 +4,7 @@ import { Chatbot, ChatbotModel } from "@prisma/client"
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChatbotOperations } from "./chatbot-operations"
+import { Badge } from "./ui/badge"
 
 interface ChatbotProps {
     chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId">
@@ -20,22 +21,17 @@ export function ChatbotItem({ chatbot, model, isPublished }: ChatbotProps) {
                     className="font-semibold hover:underline"
                 >
                     {chatbot.name}
+                    {
+                        isPublished ?
+                            <Badge className="ml-2" variant={"default"}> Published </Badge>
+                            :
+                            <Badge className="ml-2" variant={"secondary"}> Not published </Badge>
+                    }
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
                         {model.name}
                     </p>
-                    {
-                        isPublished ? (
-                            <p className="text-green-600 text-sm text-muted-foreground">
-                                Is Published
-                            </p>
-                        ) : (
-                            <p className="text-red-600 text-sm text-muted-foreground">
-                                Not published
-                            </p>
-                        )
-                    }
                     <p className="text-sm text-muted-foreground">
                         {formatDate(chatbot.createdAt?.toDateString())}
                     </p>

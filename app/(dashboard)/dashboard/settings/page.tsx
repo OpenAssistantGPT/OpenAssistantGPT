@@ -34,8 +34,6 @@ export default async function SettingsPage() {
                 <div className="grid gap-10">
                     <OpenAIForm user={{ id: user.id, name: user.name || "" }} />
                 </div>
-
-                <GithubCard />
             </div>
         </DashboardShell>
     )
