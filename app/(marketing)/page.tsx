@@ -138,7 +138,10 @@ export default function Home() {
             The code is available on{" "}
           </p>
         </div>
-        <GithubCard />
+        <div className="md:w-2/4 w-3/4 mx-auto">
+
+          <GithubCard />
+        </div>
       </section>
     </>
   );
