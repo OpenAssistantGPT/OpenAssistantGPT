@@ -93,11 +93,12 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                             Chat
                         </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    {/**<DropdownMenuItem>
                         <Link href={`/dashboard/chatbots/${chatbot.id}`} className="flex w-full">
                             Settings
                         </Link>
                     </DropdownMenuItem>
+                    **/}
                     <DropdownMenuItem
                         onSelect={() => publishChatbot(chatbot.id)}
                     >

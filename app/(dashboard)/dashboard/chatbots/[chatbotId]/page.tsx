@@ -20,6 +20,52 @@ interface ChatbotSettingsProps {
 
 async function getChatbotForUser(chatbotId: Chatbot["id"], userId: User["id"]) {
     return await db.chatbot.findFirst({
+        select: {
+            id: true,
+            name: true,
+            createdAt: true,
+            openaiKey: true,
+            welcomeMessage: true,
+            prompt: true,
+            model: {
+                select: {
+                    id: true,
+                    name: true,
+                }
+            },
+            ChatbotFiles: {
+                select: {
+                    id: true,
+                    crawlerFile: {
+                        select: {
+                            id: true,
+                            OpenAIFile: {
+                                select: {
+                                    id: true,
+                                    openAIFileId: true,
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            ChatbotUploadFiles: {
+                select: {
+                    id: true,
+                    uploadFile: {
+                        select: {
+                            id: true,
+                            OpenAIFile: {
+                                select: {
+                                    id: true,
+                                    openAIFileId: true,
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+        },
         where: {
             id: chatbotId,
             userId: userId,
@@ -62,7 +108,6 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
     const openAIFiles = await db.openAIFile.findMany({
         select: {
             id: true,
-            fileId: true,
             openAIFileId: true,
         },
         where: {
@@ -71,6 +116,26 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
             }
         },
     })
+
+    const uploadFiles = await db.uploadFile.findMany({
+        select: {
+            id: true,
+            userId: true,
+            OpenAIFile: {
+                select: {
+                    id: true,
+                    openAIFileId: true,
+                }
+            }
+        },
+        where: {
+            userId: user.id,
+            OpenAIFile: {
+                some: {}
+            }
+        },
+    })
+    const allFiles = [...openAIFiles, ...uploadFiles.map((file) => file.OpenAIFile)]
 
     return (
         <DashboardShell>
@@ -89,7 +154,20 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                 </Link>
             </DashboardHeader>
             <div className="grid gap-10">
-                <ChatbotForm chatbot={chatbot} />
+                <ChatbotForm
+                    chatbotFileId={
+                        chatbot.ChatbotFiles[0] ? chatbot.ChatbotFiles[0].crawlerFile.OpenAIFile.id : chatbot.ChatbotUploadFiles[0].uploadFile.OpenAIFile.id
+                    }
+                    publishedFiles={allFiles.flat()}
+                    chatbot={{
+                        id: chatbot.id,
+                        name: chatbot.name,
+                        createdAt: chatbot.createdAt,
+                        openaiKey: chatbot.openaiKey,
+                        modelId: chatbot.model.id,
+                        welcomeMessage: chatbot.welcomeMessage,
+                        prompt: chatbot.prompt,
+                    }} />
             </div>
 
             {files?.length ?

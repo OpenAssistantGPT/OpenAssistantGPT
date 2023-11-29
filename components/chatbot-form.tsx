@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Chatbot } from "@prisma/client"
+import { Chatbot, OpenAIFile } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -22,14 +22,17 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
     chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt">
+    chatbotFileId: Pick<OpenAIFile, "id">
+    publishedFiles: Pick<OpenAIFile, "id" | "openAIFileId">[]
 }
 
 type FormData = z.infer<typeof chatbotSchema>
 
-export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) {
+export function ChatbotForm({ chatbot, chatbotFileId, publishedFiles, className, ...props }: ChatbotFormProps) {
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(chatbotSchema),
@@ -50,7 +53,8 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                 openAIKey: data.openAIKey,
                 modelId: data.modelId,
                 welcomeMessage: data.welcomeMessage,
-                prompt: data.prompt
+                prompt: data.prompt,
+                files: data.files,
             }),
         })
 
@@ -140,7 +144,6 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                         defaultValue={chatbot.modelId}
                                         onChange={field.onChange}
                                         id="modelId"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
@@ -161,7 +164,6 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                         defaultValue={chatbot.welcomeMessage}
                                         onChange={field.onChange}
                                         id="welcomeMessage"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
@@ -182,10 +184,41 @@ export function ChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) 
                                         defaultValue={chatbot.prompt}
                                         onChange={field.onChange}
                                         id="prompt"
-                                        size={32}
                                     />
                                     <FormDescription>
                                         The name that will be displayed in the dashboard
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="files"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        Choose your file for retrival
+                                    </FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a file" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {
+                                                    publishedFiles.map((file: any) => (
+                                                        <SelectItem key={file.id} value={file.id}>
+                                                            {file.id}
+                                                        </SelectItem>
+                                                    ))
+                                                }
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        The Open AI model will use this file to search for specific content.
+                                        If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
