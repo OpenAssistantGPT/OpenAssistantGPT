@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react'
 // These styles apply to every route in the application
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google"
@@ -52,6 +53,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Toaster />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
