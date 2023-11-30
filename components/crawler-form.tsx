@@ -33,6 +33,12 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(crawlerSchema),
+        defaultValues: {
+            name: crawler?.name || "",
+            crawlUrl: crawler?.crawlUrl || "",
+            selector: crawler?.selector || "",
+            urlMatch: crawler?.urlMatch || "",
+        },
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
 

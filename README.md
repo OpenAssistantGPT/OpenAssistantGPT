@@ -13,7 +13,6 @@ TODO:
 - Make sure that people import a file before create a chatbot
 - Create include js to implement in website
 - Finish the Update chatbot form
-- Delete specific uploaded file
 - Add maximum file size while uploading and crawling
 - Add a "how to" on the dashboard when there is nothing 
 

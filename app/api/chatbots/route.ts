@@ -73,6 +73,7 @@ export async function POST(req: Request) {
 
     const file = await db.file.findUnique({
       select: {
+        id: true,
         openAIFileId: true,
       },
       where: {
@@ -93,7 +94,6 @@ export async function POST(req: Request) {
       file_ids: [file?.openAIFileId!]
     })
 
-
     const chatbot = await db.chatbot.create({
       data: {
         name: body.name,
@@ -107,6 +107,21 @@ export async function POST(req: Request) {
       select: {
         id: true,
       },
+    })
+
+    await db.chatbotFiles.create({
+      data: {
+        chatbot: {
+          connect: {
+            id: chatbot.id,
+          },
+        },
+        file: {
+          connect: {
+            id: file.id,
+          },
+        },
+      }
     })
 
     return new Response(JSON.stringify({ chatbot }))

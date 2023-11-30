@@ -2,6 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { chatbotSchema } from "@/lib/validations/chatbot";
 import { getServerSession } from "next-auth";
+import OpenAI from "openai";
 import { z } from "zod";
 
 const routeContextSchema = z.object({
@@ -40,14 +41,6 @@ export async function GET(
         id: true,
         name: true,
         createdAt: true,
-        crawlerFile: {
-          select: {
-            id: true,
-            name: true,
-            blobUrl: true,
-            createdAt: true,
-          }
-        },
       },
       where: {
         id: params.chatbotId,
@@ -91,8 +84,37 @@ export async function PATCH(
       },
     })
 
+    console.log(payload.files)
+    console.log(chatbot.id)
+
+    const currentFile = await db.chatbotFiles.findFirst({
+      where: {
+        chatbotId: chatbot.id,
+      },
+      select: {
+        id: true,
+        fileId: true,
+      }
+    })
+
+    console.log(currentFile)
+
+    await db.chatbotFiles.delete({
+      where: {
+        id: currentFile?.id
+      }
+    })
+
+    await db.chatbotFiles.create({
+      data: {
+        chatbotId: params.chatbotId,
+        fileId: payload.files,
+      },
+    })
+
     return new Response(JSON.stringify(chatbot))
   } catch (error) {
+    console.log(error)
     return new Response(null, { status: 500 })
   }
 }
@@ -109,7 +131,35 @@ export async function DELETE(
   }
 
   try {
-    // TODO Add delete in openAI platform 
+    const session = await getServerSession(authOptions)
+
+    const chatbot = await db.chatbot.findUnique({
+      select: {
+        id: true,
+        name: true,
+        openaiId: true,
+      },
+      where: {
+        id: params.chatbotId
+      }
+    })
+
+    const openAIConfig = await db.openAIConfig.findUnique({
+      select: {
+        globalAPIKey: true,
+        id: true,
+      },
+      where: {
+        userId: session?.user?.id
+      }
+    })
+
+    const openai = new OpenAI({
+      apiKey: openAIConfig?.globalAPIKey
+    })
+
+    await openai.beta.assistants.del(chatbot?.openaiId || '')
+
     await db.chatbot.delete({
       where: {
         id: params.chatbotId
@@ -118,6 +168,7 @@ export async function DELETE(
 
     return new Response(null, { status: 204 })
   } catch (error) {
+    console.log(error)
     return new Response(null, { status: 500 })
   }
 }

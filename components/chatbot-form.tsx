@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Chatbot, OpenAIFile } from "@prisma/client"
+import { Chatbot, File, ChatbotModel } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -26,16 +26,25 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
     chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt">
-    chatbotFileId: Pick<OpenAIFile, "id">
-    publishedFiles: Pick<OpenAIFile, "id" | "openAIFileId">[]
+    currentFileId: File["id"]
+    models: ChatbotModel[]
+    files: File[]
 }
 
 type FormData = z.infer<typeof chatbotSchema>
 
-export function ChatbotForm({ chatbot, chatbotFileId, publishedFiles, className, ...props }: ChatbotFormProps) {
+export function ChatbotForm({ chatbot, currentFileId, models, files, className, ...props }: ChatbotFormProps) {
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(chatbotSchema),
+        defaultValues: {
+            name: chatbot.name,
+            openAIKey: chatbot.openaiKey,
+            modelId: chatbot.modelId,
+            welcomeMessage: chatbot.welcomeMessage,
+            prompt: chatbot.prompt,
+            files: currentFileId,
+        },
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
@@ -74,6 +83,7 @@ export function ChatbotForm({ chatbot, chatbotFileId, publishedFiles, className,
 
         router.refresh()
     }
+    console.log(currentFileId)
 
     return (
         <Form {...form}>
@@ -137,16 +147,28 @@ export function ChatbotForm({ chatbot, chatbotFileId, publishedFiles, className,
                             name="modelId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="modelId">
-                                        Model ID
+                                    <FormLabel htmlFor="model">
+                                        Open AI Model
                                     </FormLabel>
-                                    <Input
-                                        defaultValue={chatbot.modelId}
-                                        onChange={field.onChange}
-                                        id="modelId"
-                                    />
+                                    <Select onValueChange={field.onChange} defaultValue={chatbot.modelId}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a model" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {
+                                                    models.map((model: ChatbotModel) => (
+                                                        <SelectItem key={model.id} value={model.id}>
+                                                            {model.name}
+                                                        </SelectItem>
+                                                    ))
+                                                }
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The Open AI model that will be used to generate responses
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -200,16 +222,16 @@ export function ChatbotForm({ chatbot, chatbotFileId, publishedFiles, className,
                                     <FormLabel>
                                         Choose your file for retrival
                                     </FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} defaultValue={currentFileId}>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select a file" />
+                                            <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
                                                 {
-                                                    publishedFiles.map((file: any) => (
+                                                    files.map((file: any) => (
                                                         <SelectItem key={file.id} value={file.id}>
-                                                            {file.id}
+                                                            {file.name}
                                                         </SelectItem>
                                                     ))
                                                 }

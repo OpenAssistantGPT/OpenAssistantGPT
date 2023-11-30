@@ -33,38 +33,6 @@ async function getChatbotForUser(chatbotId: Chatbot["id"], userId: User["id"]) {
                     name: true,
                 }
             },
-            ChatbotFiles: {
-                select: {
-                    id: true,
-                    crawlerFile: {
-                        select: {
-                            id: true,
-                            OpenAIFile: {
-                                select: {
-                                    id: true,
-                                    openAIFileId: true,
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            ChatbotUploadFiles: {
-                select: {
-                    id: true,
-                    uploadFile: {
-                        select: {
-                            id: true,
-                            OpenAIFile: {
-                                select: {
-                                    id: true,
-                                    openAIFileId: true,
-                                }
-                            }
-                        }
-                    }
-                }
-            },
         },
         where: {
             id: chatbotId,
@@ -88,54 +56,29 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         notFound()
     }
 
-    const crawlers = await db.crawler.findMany({
+    const files = await db.file.findMany({
         where: {
             userId: user.id,
         },
     })
 
-    const files = []
-
-    for (const crawler of crawlers) {
-        const crawlerFiles = await db.crawlerFile.findMany({
-            where: {
-                crawlerId: crawler.id,
-            },
-        })
-        files.push(...crawlerFiles)
-    }
-
-    const openAIFiles = await db.openAIFile.findMany({
+    const currentFile = await db.chatbotFiles.findFirst({
         select: {
             id: true,
-            openAIFileId: true,
-        },
-        where: {
-            fileId: {
-                in: files.map((file) => file.id),
-            }
-        },
-    })
-
-    const uploadFiles = await db.uploadFile.findMany({
-        select: {
-            id: true,
-            userId: true,
-            OpenAIFile: {
+            chatbotId: true,
+            file: {
                 select: {
                     id: true,
-                    openAIFileId: true,
+                    name: true,
                 }
-            }
+            },
         },
         where: {
-            userId: user.id,
-            OpenAIFile: {
-                some: {}
-            }
+            chatbotId: chatbot.id,
         },
     })
-    const allFiles = [...openAIFiles, ...uploadFiles.map((file) => file.OpenAIFile)]
+
+    const models = await db.chatbotModel.findMany({})
 
     return (
         <DashboardShell>
@@ -155,10 +98,9 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
             </DashboardHeader>
             <div className="grid gap-10">
                 <ChatbotForm
-                    chatbotFileId={
-                        chatbot.ChatbotFiles[0] ? chatbot.ChatbotFiles[0].crawlerFile.OpenAIFile.id : chatbot.ChatbotUploadFiles[0].uploadFile.OpenAIFile.id
-                    }
-                    publishedFiles={allFiles.flat()}
+                    files={files}
+                    currentFileId={currentFile?.file.id || ""}
+                    models={models}
                     chatbot={{
                         id: chatbot.id,
                         name: chatbot.name,
@@ -169,37 +111,6 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                         prompt: chatbot.prompt,
                     }} />
             </div>
-
-            {files?.length ?
-                <>
-                    <div className="">
-                        <div>
-                            <p className="text-muted-foreground">
-                                Here&apos;s all of your files
-                            </p>
-                            <div>
-                                {openAIFiles.map((file) => (
-                                    <div key={file.id}>
-                                        <p>{file.openAIFileId}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </>
-
-                : <div className="grid gap-10">
-                    <EmptyPlaceholder>
-                        <EmptyPlaceholder.Icon name="laptop" />
-                        <EmptyPlaceholder.Title>Start crawling now to import files</EmptyPlaceholder.Title>
-                        <EmptyPlaceholder.Description>
-                            You don&apos;t have any files yet. Start crawling.
-                        </EmptyPlaceholder.Description>
-                        <MoveToCrawlersButton />
-                    </EmptyPlaceholder>
-                </div>
-
-            }
         </DashboardShell>
     )
 }

@@ -16,12 +16,14 @@ model OpenAIConfig {
 }
 
 model ChatbotFiles {
-  id        String @id @default(cuid())
-  chatbotId String
-  fileId    String
+  id         String   @id @default(cuid())
+  assignedAt DateTime @default(now())
 
-  chatbot Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
-  file    File    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  chatbotId String
+  chatbot   Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+
+  fileId String
+  file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
 }
 
 model Chatbot {
@@ -35,8 +37,8 @@ model Chatbot {
   prompt         String
   welcomeMessage String
 
-  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  model        ChatbotModel   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  user         User           @relation(fields: [userId], references: [id])
+  model        ChatbotModel   @relation(fields: [modelId], references: [id])
   ChatbotFiles ChatbotFiles[]
 
   @@map(name: "chatbots")

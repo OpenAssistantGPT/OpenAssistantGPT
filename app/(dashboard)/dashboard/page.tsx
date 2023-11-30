@@ -15,6 +15,15 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
 
 export const metadata = {
   title: "Dashboard",
@@ -27,38 +36,19 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const bots: any[] = await db.chatbot.findMany({
-    where: {
-      userId: user.id,
-    },
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-      model: {
-        select: {
-          id: true,
-          name: true,
-        }
-      }
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  })
-
-  const crawlers = await db.crawler.findMany({
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-    },
+  const bots = await db.chatbot.count({
     where: {
       userId: user.id,
     },
   })
 
-  const files = await db.file.findMany({
+  const crawlers = await db.crawler.count({
+    where: {
+      userId: user.id,
+    },
+  })
+
+  const files = await db.file.count({
     where: {
       userId: user.id,
     },
@@ -79,7 +69,7 @@ export default async function DashboardPage() {
               <Icons.bot className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{bots.length}</div>
+              <div className="text-2xl font-bold">{bots}</div>
             </CardContent>
           </Card>
           <Card>
@@ -90,7 +80,7 @@ export default async function DashboardPage() {
               <Icons.post className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{crawlers.length}</div>
+              <div className="text-2xl font-bold">{crawlers}</div>
             </CardContent>
           </Card>
           <Card>
@@ -101,11 +91,11 @@ export default async function DashboardPage() {
               <Icons.folder className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{files.length}</div>
+              <div className="text-2xl font-bold">{files}</div>
             </CardContent>
           </Card>
         </div>
       </div>
-    </DashboardShell >
+    </DashboardShell>
   )
 }

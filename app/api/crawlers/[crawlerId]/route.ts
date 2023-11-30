@@ -38,7 +38,7 @@ export async function DELETE(
             return new Response(null, { status: 403 })
         }
 
-        const crawlerFiles = await db.crawlerFile.findMany({
+        const crawlerFiles = await db.file.findMany({
             where: {
                 crawlerId: params.crawlerId
             }
