@@ -75,10 +75,9 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
             >
                 <Card>
                     <CardHeader>
-                        <CardTitle>Configure your OpenAI settings</CardTitle>
+                        <CardTitle>Configure your account</CardTitle>
                         <CardDescription>
-                            Please enter your full name or a display name you are comfortable
-                            with.
+                            Your global api key for OpenAI will be used for all your global configurations. It is very important to set it before creating a chatbot.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">

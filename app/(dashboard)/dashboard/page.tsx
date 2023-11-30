@@ -23,6 +23,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { OpenAIForm } from "@/components/openai-config-form"
 
 
 export const metadata = {
@@ -48,11 +49,28 @@ export default async function DashboardPage() {
     },
   })
 
+  const dbuser = await db.user.findFirst({
+    where: {
+      id: user.id,
+    },
+  })
+
   const files = await db.file.count({
     where: {
       userId: user.id,
     },
   })
+
+  const openaiConfig = await db.openAIConfig.findFirst({
+    select: {
+      id: true,
+      globalAPIKey: true,
+    },
+    where: {
+      userId: user.id,
+    },
+  })
+  console.log(openaiConfig)
 
   return (
     <DashboardShell>
@@ -60,41 +78,45 @@ export default async function DashboardPage() {
         <ChatbotCreateButton />
       </DashboardHeader>
       <div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Number of chatbot
-              </CardTitle>
-              <Icons.bot className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{bots}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Number of crawlers
-              </CardTitle>
-              <Icons.post className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{crawlers}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Number of files
-              </CardTitle>
-              <Icons.folder className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{files}</div>
-            </CardContent>
-          </Card>
-        </div>
+        {!openaiConfig ?
+          <OpenAIForm user={{ id: user.id }} />
+          :
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Number of chatbot
+                </CardTitle>
+                <Icons.bot className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{bots}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Number of crawlers
+                </CardTitle>
+                <Icons.post className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{crawlers}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Number of files
+                </CardTitle>
+                <Icons.folder className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{files}</div>
+              </CardContent>
+            </Card>
+          </div>
+        }
       </div>
     </DashboardShell>
   )

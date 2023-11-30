@@ -7,14 +7,16 @@
 
 TODO:
 - DONE! Do DB update
-- Add a alert at  the start if user doesnt have an API key
-- update crawlers
+- DONE! Add a alert at  the start if user doesnt have an API key
+- DONE! update crawlers
+
 - -------------------
 - Make sure that people import a file before create a chatbot
 - Create include js to implement in website
 - Finish the Update chatbot form
 - Add maximum file size while uploading and crawling
 - Add a "how to" on the dashboard when there is nothing 
+- Validate on all api call that the user has an api key
 
 
 Landing page:
