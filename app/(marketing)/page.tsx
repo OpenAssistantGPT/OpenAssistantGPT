@@ -136,7 +136,7 @@ export default function Home() {
             Infinite messages
           </h2>
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Since the app is built over the model "Bring your own API key" <br />{" "}
+            Since the app is built over the model &quot;Bring your own API key&quot; <br />{" "}
             We don&apos;t put message limits on plan over Basic{" "}
           </p>
         </div>
