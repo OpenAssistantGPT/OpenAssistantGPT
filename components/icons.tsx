@@ -27,6 +27,10 @@ import {
   FolderClosed,
   LayoutDashboard,
   LucideIcon,
+  Layout,
+  Key,
+  Brain,
+  Wallet,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -35,6 +39,10 @@ export const Icons = {
   logo: Command,
   folder: FolderClosed,
   dashboard: LayoutDashboard,
+  website: Layout,
+  key: Key,
+  brain: Brain,
+  wallet: Wallet,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,

@@ -53,6 +53,7 @@ export default function Home() {
         <div className="mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Icons.Brain/>
               <div className="space-y-2">
                 <h3 className="font-bold">OpenAI CustomGPTs</h3>
                 <p className="text-sm text-muted-foreground">
@@ -63,6 +64,7 @@ export default function Home() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Icons.Website/>
               <div className="space-y-2">
                 <h3 className="font-bold">Easy integration in your website</h3>
                 <p className="text-sm">
@@ -73,6 +75,7 @@ export default function Home() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Icons.Wallet/>
               <div className="space-y-2">
                 <h3 className="font-bold">Low cost</h3>
                 <p className="text-sm text-muted-foreground">
@@ -94,6 +97,7 @@ export default function Home() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Icons.Key/>
               <div className="space-y-2">
                 <h3 className="font-bold">Bring your OpenAI api key</h3>
                 <p className="text-sm">
@@ -104,6 +108,7 @@ export default function Home() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Icons.Key/>
               <div className="space-y-2">
                 <h3 className="font-bold">Contribute yourself</h3>
                 <p className="text-sm">
@@ -141,7 +146,6 @@ export default function Home() {
           </p>
         </div>
         <div className="md:w-2/4 w-3/4 mx-auto">
-
           <GithubCard />
         </div>
       </section>
