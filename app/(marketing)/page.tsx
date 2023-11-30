@@ -2,6 +2,7 @@ import { GithubCard } from "@/components/github-card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { Icons } from "@/components/icons"
 
 export default function Home() {
   return (
@@ -82,6 +83,7 @@ export default function Home() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
+              <Icons.gitHub/>
               <div className="space-y-2">
                 <h3 className="font-bold">Fully open source</h3>
                 <p className="text-sm">
@@ -131,11 +133,11 @@ export default function Home() {
       <section id="open-source" className="container bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Proudly Open Source
+            Infinite messages
           </h2>
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Chatbot is open source and powered by open source software. <br />{" "}
-            The code is available on{" "}
+            Since the app is built over the model "Bring your own API key" <br />{" "}
+            We don&apos;t put message limits on plan over Basic{" "}
           </p>
         </div>
         <div className="md:w-2/4 w-3/4 mx-auto">
