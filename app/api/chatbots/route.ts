@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 
 import { db } from "@/lib/db"
 import { chatbotSchema } from "@/lib/validations/chatbot";
+import OpenAI from "openai";
 
 export async function GET(request: Request) {
   try {
@@ -40,23 +41,8 @@ export async function POST(req: Request) {
     }
 
     const { user } = session
-    // If user is on a free plan.
-    // Check if user has reached limit of 3 posts.
-    //if (!subscriptionPlan?.isPro) {
-    //    const count = await db.post.count({
-    //        where: {
-    //            authorId: user.id,
-    //        },
-    //    })
 
-    //    if (count >= 3) {
-    //        throw new RequiresProPlanError()
-    //    }
-    //}
-
-    // Validate the request body.
     const json = await req.json()
-
     const body = chatbotSchema.parse(json)
     console.log(body)
 
@@ -71,11 +57,49 @@ export async function POST(req: Request) {
       return new Response(null, { status: 404 })
     }
 
+    const openAIConfig = await db.openAIConfig.findUnique({
+      select: {
+        globalAPIKey: true,
+        id: true,
+      },
+      where: {
+        userId: session?.user?.id
+      }
+    })
+
+    const openai = new OpenAI({
+      apiKey: openAIConfig?.globalAPIKey
+    })
+
+    const file = await db.file.findUnique({
+      select: {
+        openAIFileId: true,
+      },
+      where: {
+        id: body.files,
+      },
+    })
+
+    if (!file) {
+      console.log("File not found")
+      return new Response(null, { status: 404 })
+    }
+
+    const createdChatbot = await openai.beta.assistants.create({
+      name: body.name,
+      instructions: body.prompt,
+      model: model.name,
+      tools: [{ type: "retrieval" }],
+      file_ids: [file?.openAIFileId!]
+    })
+
+
     const chatbot = await db.chatbot.create({
       data: {
         name: body.name,
         prompt: body.prompt,
         openaiKey: body.openAIKey,
+        openaiId: createdChatbot.id,
         modelId: model.id,
         userId: user?.id,
         welcomeMessage: body.welcomeMessage,
@@ -84,48 +108,6 @@ export async function POST(req: Request) {
         id: true,
       },
     })
-
-    let file = null
-
-    if (body.files) {
-      file = await db.crawlerFile.findUnique({
-        select: {
-          id: true,
-          name: true,
-        },
-        where: {
-          id: body.files
-        }
-      })
-
-      console.log(`crawlerFile: ${file}`)
-      if (file == null) {
-        file = await db.uploadFile.findUnique({
-          select: {
-            id: true,
-            name: true,
-          },
-          where: {
-            id: body.files
-          }
-        })
-        await db.chatbotUploadFiles.create({
-          data: {
-            chatbotId: chatbot.id,
-            uploadFileId: file?.id || "",
-          }
-        })
-      } else {
-        await db.chatbotFiles.create({
-          data: {
-            chatbotId: chatbot.id,
-            crawlerFileId: file?.id || "",
-          }
-        })
-      }
-
-
-    }
 
     return new Response(JSON.stringify({ chatbot }))
   } catch (error) {

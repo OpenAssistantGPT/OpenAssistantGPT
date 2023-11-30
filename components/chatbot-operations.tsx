@@ -99,11 +99,6 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                         </Link>
                     </DropdownMenuItem>
                     **/}
-                    <DropdownMenuItem
-                        onSelect={() => publishChatbot(chatbot.id)}
-                    >
-                        Publish
-                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                         className="flex cursor-pointer items-center text-destructive focus:text-destructive"

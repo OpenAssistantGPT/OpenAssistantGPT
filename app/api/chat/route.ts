@@ -14,34 +14,29 @@ export async function POST(req: Request) {
         const body = await req.json()
         const payload = chatSchema.parse(body)
 
-        const openAIChatbot = await db.openAIChatbot.findUnique({
+        const chatbot = await db.chatbot.findUnique({
             select: {
                 id: true,
-                openAIChatbotId: true,
-                chatbot: {
-                    select: {
-                        userId: true,
-                        openaiKey: true,
-                    }
-                }
+                openaiKey: true,
+                openaiId: true,
             },
             where: {
-                chatbotId: payload.chatbotId,
+                id: payload.chatbotId,
             },
         })
 
-        if (!openAIChatbot) {
+        if (!chatbot) {
             return new Response(null, { status: 404 })
         }
 
         const openai = new OpenAI({
-            apiKey: openAIChatbot.chatbot.openaiKey
+            apiKey: chatbot.openaiKey
         })
 
 
         const run = await openai.beta.threads.createAndRun(
             {
-                assistant_id: openAIChatbot?.openAIChatbotId || "",
+                assistant_id: chatbot.openaiId,
                 thread: {
                     messages: [
                         { role: "user", content: payload.message },

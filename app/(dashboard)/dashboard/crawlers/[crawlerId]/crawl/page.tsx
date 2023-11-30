@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { StartCrawlingButton } from "@/components/start-crawling-button"
-import { CrawlerFileItem } from "@/components/crawler-file-items"
+import { FileItem } from "@/components/file-items"
 
 interface CrawlerSettingsProps {
     params: { crawlerId: string }
@@ -42,7 +42,7 @@ export default async function CrawlingPage({ params }: CrawlerSettingsProps) {
         notFound()
     }
 
-    const files = await db.crawlerFile.findMany({
+    const files = await db.file.findMany({
         where: {
             crawlerId: crawler.id,
         },
@@ -68,7 +68,7 @@ export default async function CrawlingPage({ params }: CrawlerSettingsProps) {
                 <>
                     <div className="divide-y divide-border rounded-md border">
                         {files.map((file) => (
-                            <CrawlerFileItem file={file} key={file.id} />
+                            <FileItem file={file} key={file.id} />
                         ))}
                     </div>
                     <StartCrawlingButton crawler={crawler} />

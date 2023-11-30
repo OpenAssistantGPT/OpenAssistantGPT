@@ -52,27 +52,17 @@ export default async function DashboardPage() {
       id: true,
       name: true,
       createdAt: true,
-      crawlerFile: {
-        select: {
-          id: true,
-        }
-      }
     },
     where: {
       userId: user.id,
     },
   })
 
-  const uploadFiles = await db.uploadFile.findMany({
+  const files = await db.file.findMany({
     where: {
       userId: user.id,
     },
   })
-
-  let totalCrawlerFiles = 0
-  for (const crawler of crawlers) {
-    totalCrawlerFiles += crawler.crawlerFile.length
-  }
 
   return (
     <DashboardShell>
@@ -111,7 +101,7 @@ export default async function DashboardPage() {
               <Icons.folder className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{totalCrawlerFiles + uploadFiles.length}</div>
+              <div className="text-2xl font-bold">{files.length}</div>
             </CardContent>
           </Card>
         </div>

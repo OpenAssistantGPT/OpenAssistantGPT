@@ -9,6 +9,7 @@ import * as cheerio from 'cheerio';
 import URL from 'url';
 
 import { put } from '@vercel/blob';
+import OpenAI from "openai";
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -97,6 +98,7 @@ export async function GET(
     context: z.infer<typeof routeContextSchema>
 ) {
     try {
+        const session = await getServerSession(authOptions)
         // Validate the route params.
         const { params } = routeContextSchema.parse(context)
 
@@ -135,11 +137,31 @@ export async function GET(
             access: "public"
         })
 
-        await db.crawlerFile.create({
+        const openAIConfig = await db.openAIConfig.findUnique({
+            select: {
+                globalAPIKey: true,
+                id: true,
+            },
+            where: {
+                userId: session?.user?.id
+            }
+        })
+
+        const openai = new OpenAI({
+            apiKey: openAIConfig?.globalAPIKey
+        })
+
+        const file = await openai.files.create(
+            { file: await fetch(blob.url), purpose: 'assistants' }
+        )
+
+        await db.file.create({
             data: {
                 name: fileName,
+                blobUrl: blob.url,
+                openAIFileId: file.id,
+                userId: session?.user?.id,
                 crawlerId: crawler.id,
-                blobUrl: blob.url
             }
         })
 

@@ -6,5 +6,5 @@ export const chatbotSchema = z.object({
     prompt: z.string().min(1),
     welcomeMessage: z.string().min(1),
     modelId: z.string().min(1),
-    files: z.string().optional(),
+    files: z.string(),
 })

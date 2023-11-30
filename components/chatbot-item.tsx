@@ -4,15 +4,13 @@ import { Chatbot, ChatbotModel } from "@prisma/client"
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChatbotOperations } from "./chatbot-operations"
-import { Badge } from "./ui/badge"
 
 interface ChatbotProps {
-    chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId">
+    chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId" | "openaiId">
     model: ChatbotModel,
-    isPublished: boolean
 }
 
-export function ChatbotItem({ chatbot, model, isPublished }: ChatbotProps) {
+export function ChatbotItem({ chatbot, model }: ChatbotProps) {
     return (
         <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
@@ -21,16 +19,13 @@ export function ChatbotItem({ chatbot, model, isPublished }: ChatbotProps) {
                     className="font-semibold hover:underline"
                 >
                     {chatbot.name}
-                    {
-                        isPublished ?
-                            <Badge className="ml-2" variant={"default"}> Published </Badge>
-                            :
-                            <Badge className="ml-2" variant={"secondary"}> Not published </Badge>
-                    }
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
                         {model.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                        {chatbot.openaiId}
                     </p>
                     <p className="text-sm text-muted-foreground">
                         {formatDate(chatbot.createdAt?.toDateString())}
@@ -42,7 +37,7 @@ export function ChatbotItem({ chatbot, model, isPublished }: ChatbotProps) {
     )
 }
 
-ChatbotItem.Skeleton = function CrawledFileItemSkeleton() {
+ChatbotItem.Skeleton = function ChatbotFileItemSkeleton() {
     return (
         <div className="p-4">
             <div className="space-y-3">

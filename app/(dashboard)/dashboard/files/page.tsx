@@ -1,22 +1,15 @@
-
-import { notFound, redirect } from "next/navigation"
+import { redirect } from "next/navigation"
 
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
-import Link from "next/link"
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
-import { CrawlerFileItem } from "@/components/crawler-file-items"
 import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
 import { CrawlerCreateButton } from "@/components/crawler-create-button"
 import { FileUploadButton } from "@/components/file-upload-button"
-import { UploadFileItem } from "@/components/upload-file-items"
+import { FileItem } from "@/components/file-items"
 
 
 export default async function FilePage() {
@@ -26,18 +19,17 @@ export default async function FilePage() {
         redirect(authOptions?.pages?.signIn || "/login")
     }
 
-    const crawlers = await db.crawler.findMany({
+    const files = await db.file.findMany({
         select: {
             id: true,
             name: true,
             createdAt: true,
-            crawlerFile: {
+            openAIFileId: true,
+            blobUrl: true,
+            crawler: {
                 select: {
                     id: true,
                     name: true,
-                    blobUrl: true,
-                    createdAt: true,
-                    crawlerId: true,
                 }
             }
         },
@@ -46,17 +38,14 @@ export default async function FilePage() {
         },
     })
 
-    const uploadedFiles = await db.uploadFile.findMany({
-        select: {
-            id: true,
-            name: true,
-            blobUrl: true,
-            createdAt: true,
-            userId: true,
-        },
-        where: {
-            userId: user.id,
-        },
+    const uploadedFiles = files.filter((file) => !file.crawler)
+
+    const filesWithCrawler = files.filter((file) => {
+        console.log(file.crawler)
+        if (file.crawler) {
+            return true
+        }
+        return false
     })
 
 
@@ -72,7 +61,7 @@ export default async function FilePage() {
                 {uploadedFiles.length ?
                     <div className="divide-y divide-border rounded-md border">
                         {uploadedFiles.map((file) => (
-                            <UploadFileItem key={file.id} file={file} />
+                            <FileItem key={file.id} file={file} />
                         ))
                         }
                     </div>
@@ -92,13 +81,11 @@ export default async function FilePage() {
                     <Label className="text-lg">Crawlers&apos; files</Label>
                     <CrawlerCreateButton variant={"outline"} />
                 </div>
-                {crawlers?.length ?
+                {filesWithCrawler.length ?
                     <div className="divide-y divide-border rounded-md border">
                         {
-                            crawlers.map((crawler) => (
-                                crawler.crawlerFile.map((file) => (
-                                    <CrawlerFileItem file={file} key={file.id} />
-                                ))
+                            filesWithCrawler.map((file) => (
+                                <FileItem file={file} key={file.id} />
                             ))
                         }
                     </div>

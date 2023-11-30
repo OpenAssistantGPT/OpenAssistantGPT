@@ -15,62 +15,48 @@ model OpenAIConfig {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model OpenAIFile {
-  id           String   @id @default(cuid())
-  openAIFileId String   @unique
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-
-  crawlerFile  CrawlerFile? @relation(fields: [fileId], references: [id])
-  fileId       String?  @unique
-  
-  UploadFile   UploadFile?  @relation(fields: [uploadFileId], references: [id])
-  uploadFileId String?      @unique
-}
-
-model OpenAIChatbot {
-  id              String   @id @default(cuid())
-  chatbotId       String   @unique
-  openAIChatbotId String   @unique
-  createdAt       DateTime @default(now()) @map(name: "created_at")
+model ChatbotFiles {
+  id        String @id @default(cuid())
+  chatbotId String
+  fileId    String
 
   chatbot Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
-}
-
-model ChatbotFiles {
-  id            String @id @default(cuid())
-  chatbotId     String
-  crawlerFileId String
-
-  chatbot     Chatbot     @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
-  crawlerFile CrawlerFile @relation(fields: [crawlerFileId], references: [id], onDelete: Cascade)
-}
-
-model ChatbotUploadFiles {
-  id           String @id @default(cuid())
-  chatbotId    String
-  uploadFileId String
-
-  chatbot    Chatbot    @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
-  uploadFile UploadFile @relation(fields: [uploadFileId], references: [id], onDelete: Cascade)
+  file    File    @relation(fields: [fileId], references: [id], onDelete: Cascade)
 }
 
 model Chatbot {
   id             String   @id @default(cuid())
   name           String
   userId         String
+  openaiId       String   @unique
   createdAt      DateTime @default(now()) @map(name: "created_at")
   openaiKey      String
   modelId        String
   prompt         String
   welcomeMessage String
 
-  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  model              ChatbotModel         @relation(fields: [modelId], references: [id], onDelete: Cascade)
-  OpenAIChatbot      OpenAIChatbot?
-  ChatbotFiles       ChatbotFiles[]
-  ChatbotUploadFiles ChatbotUploadFiles[]
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  model        ChatbotModel   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  ChatbotFiles ChatbotFiles[]
 
   @@map(name: "chatbots")
+}
+
+model File {
+  id           String   @id @default(cuid())
+  userId       String
+  name         String
+  openAIFileId String   @unique
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  blobUrl      String
+
+  crawlerId String?
+  crawler   Crawler? @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
+
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ChatbotFiles ChatbotFiles[]
+
+  @@map(name: "files")
 }
 
 model ChatbotModel {
@@ -91,35 +77,10 @@ model Crawler {
   selector        String
   maxPagesToCrawl Int
 
-  crawlerFile CrawlerFile[]
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  File File[]
 
   @@map(name: "crawlers")
-}
-
-model CrawlerFile {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  name      String
-  blobUrl   String
-  crawlerId String
-
-  crawler      Crawler        @relation(fields: [crawlerId], references: [id], onDelete: Cascade)
-  OpenAIFile   OpenAIFile[]
-  ChatbotFiles ChatbotFiles[]
-}
-
-model UploadFile {
-  id        String   @id @default(cuid())
-  userId    String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  name      String
-  blobUrl   String
-
-  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  OpenAIFile         OpenAIFile[]
-  ChatbotUploadFiles ChatbotUploadFiles[]
 }
 
 model Account {
@@ -160,7 +121,7 @@ model User {
   Chatbot       Chatbot[]
   Crawler       Crawler[]
   OpenAIConfig  OpenAIConfig[]
-  UploadFile    UploadFile[]
+  File          File[]
 }
 
 model VerificationToken {

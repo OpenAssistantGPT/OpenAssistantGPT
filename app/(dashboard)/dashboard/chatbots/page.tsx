@@ -11,10 +11,10 @@ import { ChatbotCreateButton } from "@/components/chatbot-create-button"
 import { ChatbotItem } from "@/components/chatbot-item"
 
 export const metadata = {
-  title: "Dashboard",
+  title: "Chatbots",
 }
 
-export default async function DashboardPage() {
+export default async function ChatbotsPage() {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -29,17 +29,13 @@ export default async function DashboardPage() {
       id: true,
       name: true,
       createdAt: true,
+      openaiId: true,
       model: {
         select: {
           id: true,
           name: true,
         }
       },
-      OpenAIChatbot: {
-        select: {
-          id: true,
-        }
-      }
     },
     orderBy: {
       createdAt: "desc",
@@ -55,7 +51,7 @@ export default async function DashboardPage() {
         {bots?.length ? (
           <div className="divide-y divide-border rounded-md border">
             {bots.map((bot) => (
-              <ChatbotItem key={bot.id} chatbot={bot} model={bot.model} isPublished={bot.OpenAIChatbot} />
+              <ChatbotItem key={bot.id} chatbot={bot} model={bot.model} />
             ))}
           </div>
         ) : (

@@ -1,10 +1,9 @@
-
 "use client"
 
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { CrawlerFile, UploadFile } from "@prisma/client"
+import { File } from "@prisma/client"
 
 import {
     AlertDialog,
@@ -25,46 +24,24 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import { Url } from "next/dist/shared/lib/router/router"
 
 
 interface FileOperationsProps {
-    crawlerFile: Pick<CrawlerFile, "id" | "name" | "blobUrl" | "crawlerId"> | undefined
-    uploadFile: Pick<UploadFile, "id" | "name" | "blobUrl"> | undefined
+    file: Pick<File, "id" | "name" | "blobUrl"> | undefined
 }
 
-export function FileOperations({ crawlerFile, uploadFile }: FileOperationsProps) {
+export function FileOperations({ file }: FileOperationsProps) {
     const router = useRouter()
     const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
-    async function deleteCrawlerFile(crawlerId: string, fileId: string) {
-        const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}`, {
-            method: "DELETE",
-        })
-    
-        if (!response?.ok) {
-            toast({
-                title: "Something went wrong.",
-                description: "Your file was not deleted. Please try again.",
-                variant: "destructive",
-            })
-        } else {
-            toast({
-                title: "File deleted.",
-                description: "Your file was successfully deleted.",
-                variant: "default",
-            })
-        }
-        
-        router.refresh()
-        return true
-    }
-    
-    async function deleteUploadFile(fileId: string) {
+    async function deleteFile(fileId: string) {
+        console.log(fileId)
         const response = await fetch(`/api/files/${fileId}`, {
             method: "DELETE",
         })
-    
+
         if (!response?.ok) {
             toast({
                 title: "Something went wrong.",
@@ -82,53 +59,7 @@ export function FileOperations({ crawlerFile, uploadFile }: FileOperationsProps)
         router.refresh()
         return true
     }
-    
-    async function publishCrawlerFile(crawlerId: string, fileId: string) {
-        const response = await fetch(`/api/crawlers/${crawlerId}/files/${fileId}/publish`, {
-            method: "POST",
-        })
-    
-        if (!response?.ok) {
-            toast({
-                title: "Something went wrong.",
-                description: "Your file was not uploaded to openai. Please try again.",
-                variant: "destructive",
-            })
-        } else {
-            toast({
-                title: "File published to OpenAI.",
-                description: "Your file was successfully published.",
-                variant: "default",
-            })
-        }
 
-        router.refresh()
-        return true
-    }
-    
-    async function publishUploadFile(fileId: string) {
-        const response = await fetch(`/api/files/upload/${fileId}/publish`, {
-            method: "POST",
-        })
-    
-        if (!response?.ok) {
-            toast({
-                title: "Something went wrong.",
-                description: "Your file was not uploaded to openai. Please try again.",
-                variant: "destructive",
-            })
-        } else {
-            toast({
-                title: "File published to OpenAI.",
-                description: "Your file was successfully published.",
-                variant: "default",
-            })
-        }
-
-        router.refresh()
-        return true
-    }
-        
     return (
         <>
             <DropdownMenu>
@@ -138,18 +69,9 @@ export function FileOperations({ crawlerFile, uploadFile }: FileOperationsProps)
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem>
-                        <Link href={crawlerFile != undefined ? crawlerFile.blobUrl : uploadFile ? uploadFile.blobUrl : {}} className="flex w-full">
+                        <Link href={file?.blobUrl as Url} className="flex w-full">
                             Download
                         </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => {
-                        if (crawlerFile) {
-                            publishCrawlerFile(crawlerFile.crawlerId, crawlerFile.id)
-                        } else {
-                            publishUploadFile(uploadFile!.id)
-                        }
-                    }}>
-                        Publish
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
@@ -177,19 +99,11 @@ export function FileOperations({ crawlerFile, uploadFile }: FileOperationsProps)
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
 
-                                let deleted = false
-                                if (crawlerFile) {
-                                    deleted = await deleteCrawlerFile(crawlerFile.crawlerId, crawlerFile.id)
-                                }
-                                else {
-                                    deleted = await deleteUploadFile(uploadFile!.id)
-                                }
+                                await deleteFile(file?.id || "")
 
-                                if (deleted) {
-                                    setIsDeleteLoading(false)
-                                    setShowDeleteAlert(false)
-                                    router.refresh()
-                                }
+                                setIsDeleteLoading(false)
+                                setShowDeleteAlert(false)
+                                router.refresh()
                             }}
                             className="bg-red-600 focus:ring-red-600"
                         >

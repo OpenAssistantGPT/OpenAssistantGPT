@@ -49,9 +49,14 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
 
       e.target.reset()
 
-      const response = await fetch(`/api/chatbots/${chatbot.id}/chat`, {
+      const body = {
+        message: data.message,
+        chatbotId: chatbot.id,
+      }
+
+      const response = await fetch(`/api/chat`, {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       })
 
       const botResponse = await response.json();

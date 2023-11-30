@@ -1,29 +1,4 @@
-Create only one Files schema
 
-id
-name
-userId
-openAIId  @unique
-bloblUrl
-crawlerId?
-
-When crawling publish automaticly to openai and when uploading also publish
-Remove the two other schemas + openAI files
-
-
-Chatbot schema:
-
-id
-name
-userId         String
-createdAt      DateTime @default(now()) @map(name: "created_at")
-openaiKey      String
-modelId        String
-prompt         String
-welcomeMessage String
-FilesIds[]
-
-When we create a Chatbot we automaticly publish
 
 1. Flow when we don't have ur API key put a big popup at the start!
 2. Upload a file
@@ -31,7 +6,8 @@ When we create a Chatbot we automaticly publish
 
 
 TODO:
-- Do DB update
+- DONE! Do DB update
+- Add a alert at  the start if user doesnt have an API key
 - update crawlers
 - -------------------
 - Make sure that people import a file before create a chatbot

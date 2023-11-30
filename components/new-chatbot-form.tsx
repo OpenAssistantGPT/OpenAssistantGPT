@@ -21,12 +21,8 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChatbotModel } from "@prisma/client"
+import { ChatbotModel, File } from "@prisma/client"
 
-interface PublishedFiles {
-    crawlerPublishedFiles: []
-    uploadPublishedFiles: []
-}
 
 type FormData = z.infer<typeof chatbotSchema>
 
@@ -37,7 +33,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
     })
 
     const [models, setModels] = useState<ChatbotModel[]>([])
-    const [files, setFiles] = useState<PublishedFiles>({ "crawlerPublishedFiles": [], "uploadPublishedFiles": [] })
+    const [files, setFiles] = useState<File[]>([])
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
     useEffect(() => {
@@ -51,14 +47,14 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
             const models = await response.json()
             setModels(models)
 
-            const filesResponse = await getPublishedFiles()
+            const filesResponse = await getFiles()
             setFiles(filesResponse)
         }
         init()
     }, [])
 
-    async function getPublishedFiles() {
-        const response = await fetch('/api/files/published', {
+    async function getFiles() {
+        const response = await fetch('/api/files', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -238,17 +234,8 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                         <SelectContent>
                                             <SelectGroup>
                                                 {
-                                                    files["uploadPublishedFiles"].map((file: any) => (
-                                                        <SelectItem key={file.uploadFileId} value={file.uploadFileId}>
-                                                            {file.name}
-                                                        </SelectItem>
-                                                    ))
-                                                }
-                                            </SelectGroup>
-                                            <SelectGroup>
-                                                {
-                                                    files["crawlerPublishedFiles"].map((file: any) => (
-                                                        <SelectItem key={file.crawlerFileId} value={file.crawlerFileId}>
+                                                    files.map((file: any) => (
+                                                        <SelectItem key={file.uploadFileId} value={file.id}>
                                                             {file.name}
                                                         </SelectItem>
                                                     ))

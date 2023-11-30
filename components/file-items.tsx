@@ -1,27 +1,16 @@
 import Link from "next/link"
-import { UploadFile } from "@prisma/client"
+import { File } from "@prisma/client"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 
-import { db } from "@/lib/db"
 import { FileOperations } from "@/components/file-operations"
-import { Badge } from "./ui/badge"
 
 interface UploadFileProps {
-    file: Pick<UploadFile, "id" | "name" | "blobUrl" | "createdAt">
+    file: Pick<File, "id" | "name" | "blobUrl" | "createdAt" | "openAIFileId">
 }
 
-export async function UploadFileItem({ file }: UploadFileProps) {
-
-    const openAIFile = await db.openAIFile.findUnique({
-        select: {
-            id: true,
-        },
-        where: {
-            uploadFileId: file.id
-        }
-    })
+export async function FileItem({ file }: UploadFileProps) {
 
     return (
         <div className="flex items-center justify-between p-4">
@@ -31,25 +20,22 @@ export async function UploadFileItem({ file }: UploadFileProps) {
                     className="font-semibold hover:underline"
                 >
                     {file.name}
-                    {
-                        openAIFile ?
-                            <Badge className="ml-2" variant={"default"}> Published </Badge>
-                            :
-                            <Badge className="ml-2" variant={"secondary"}> Not published </Badge>
-                    }
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
                         {formatDate(file.createdAt?.toDateString())}
                     </p>
+                    <p className="text-sm text-muted-foreground">
+                        {file.openAIFileId}
+                    </p>
                 </div>
             </div>
-            <FileOperations crawlerFile={undefined} uploadFile={file} />
+            <FileOperations file={file} />
         </div>
     )
 }
 
-UploadFileItem.Skeleton = function CrawledFileItemSkeleton() {
+FileItem.Skeleton = function FileItemSkeleton() {
     return (
         <div className="p-4">
             <div className="space-y-3">

@@ -45,7 +45,7 @@ export function UploadFileForm({ className, ...props }: UploadFileFormProps) {
 
         const file = inputFileRef.current.files[0];
 
-        const response = await fetch(`/api/files/upload?filename=${file.name}`, {
+        const response = await fetch(`/api/upload?filename=${file.name}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
