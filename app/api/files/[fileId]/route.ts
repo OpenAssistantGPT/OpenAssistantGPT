@@ -30,8 +30,10 @@ async function verifyCurrentUserHasAccessToFile(fileId: string) {
 }
 
 
-
-export async function DELETE(request: Request) {
+export async function DELETE(
+    request: Request,
+    context: z.infer<typeof routeContextSchema>
+) {
     try {
         const session = await getServerSession(authOptions)
 
@@ -39,7 +41,7 @@ export async function DELETE(request: Request) {
             return new Response("Unauthorized", { status: 403 })
         }
 
-        const { params } = routeContextSchema.parse(request)
+        const { params } = routeContextSchema.parse(context)
 
         if (!(await verifyCurrentUserHasAccessToFile(params.fileId))) {
             return new Response(null, { status: 403 })
@@ -59,6 +61,7 @@ export async function DELETE(request: Request) {
             select: {
                 id: true,
                 openAIFileId: true,
+                blobUrl: true,
                 name: true,
             },
             where: {
@@ -70,7 +73,7 @@ export async function DELETE(request: Request) {
             return new Response(null, { status: 404 })
         }
 
-        await del(file.name);
+        await del(file.blobUrl);
 
         const openai = new OpenAI({
             apiKey: openAIConfig?.globalAPIKey

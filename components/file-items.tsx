@@ -23,10 +23,10 @@ export async function FileItem({ file }: UploadFileProps) {
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
-                        {formatDate(file.createdAt?.toDateString())}
+                        {file.openAIFileId}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                        {file.openAIFileId}
+                        {formatDate(file.createdAt?.toDateString())}
                     </p>
                 </div>
             </div>
