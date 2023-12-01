@@ -108,7 +108,7 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
               if (message.from === "bot") {
                 return (
                   <div key={message.number} className="flex items-end gap-2">
-                    <div className="rounded-lg bg-zinc-200 dark:bg-zinc-700 p-2">
+                    <div className="rounded-lg bg-zinc-200 p-2">
                       <p className="text-sm">{message.message}</p>
                     </div>
                   </div>
