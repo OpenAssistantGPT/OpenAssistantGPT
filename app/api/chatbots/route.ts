@@ -1,10 +1,11 @@
-
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 import { db } from "@/lib/db"
 import { chatbotSchema } from "@/lib/validations/chatbot";
 import OpenAI from "openai";
+
+export const maxDuration = 60;
 
 export async function GET(request: Request) {
   try {

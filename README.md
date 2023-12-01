@@ -11,6 +11,7 @@ TODO:
 - DONE! update crawlers
 
 - -------------------
+- When update chatbot also update openAI
 - Make sure that people import a file before create a chatbot
 - Create include js to implement in website
 - Finish the Update chatbot form
