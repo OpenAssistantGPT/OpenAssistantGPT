@@ -84,9 +84,6 @@ export async function PATCH(
       },
     })
 
-    console.log(payload.files)
-    console.log(chatbot.id)
-
     const currentFile = await db.chatbotFiles.findFirst({
       where: {
         chatbotId: chatbot.id,
@@ -96,8 +93,6 @@ export async function PATCH(
         fileId: true,
       }
     })
-
-    console.log(currentFile)
 
     await db.chatbotFiles.delete({
       where: {

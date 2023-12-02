@@ -7,7 +7,7 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { Chatbot, User } from "@prisma/client"
+import { Chatbot } from "@prisma/client"
 import * as z from "zod"
 
 import { Icons } from "./icons"
@@ -19,7 +19,7 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
 
 interface ChatbotProps {
-  chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId" | "welcomeMessage">
+  chatbot: Pick<Chatbot, "id" | "name" | "welcomeMessage">
 }
 
 type FormData = z.infer<typeof messageSchema>

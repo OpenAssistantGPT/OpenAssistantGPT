@@ -27,6 +27,7 @@ import {
   FolderClosed,
   LayoutDashboard,
   LucideIcon,
+  MessageSquare,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -73,6 +74,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
+  message: MessageSquare,
   twitter: Twitter,
   check: Check,
 }
