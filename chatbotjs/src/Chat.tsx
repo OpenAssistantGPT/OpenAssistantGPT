@@ -8,31 +8,93 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
+import { useForm } from "react-hook-form"
+import { messageSchema } from "@/lib/validations/message"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface ChatbotConfig {
   id: number;
   welcomeMessage: string;
 }
 
+interface Messages {
+  number: number
+  message: string
+  from: "user" | "bot"
+}
+
 export default function ChatBox() {
+  const [config, setConfig] = useState<ChatbotConfig>()
+  const [chatbotId, setChatbotId] = useState<string>()
   const [isChatVisible, setIsChatVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const [messages, setMessages] = useState<Messages[]>([])
+  const [newMessage, setNewMessage] = useState<string>("")
+
+  async function onSubmit(e: any) {
+    e.preventDefault();
+
+    if (newMessage === "") {
+      console.log("No message")
+      return
+    }
+
+    setIsLoading(true)
+
+    setMessages(messages => [...messages, {
+      number: messages.length + 1,
+      message: newMessage,
+      from: "user",
+    }])
+
+    setNewMessage("")
+
+    const message = await fetch(`http://localhost:3000/api/chat`, {
+      method: "POST",
+      body: JSON.stringify({
+        message: newMessage,
+        chatbotId: chatbotId,
+      }),
+    })
+
+    const value = await message.json()
+    console.log(value)
+
+    setMessages(messages => [...messages, {
+      number: messages.length + 1,
+      message: value.value,
+      from: "bot",
+    }])
+
+    setIsLoading(false)
+  }
 
   const toggleChatVisibility = () => {
     setIsChatVisible(!isChatVisible);
   };
 
   useEffect(() => {
-    (async () => {
-      // Load Chatbot
-      //const config: ChatbotConfig = await fetch('http://localhost:3000/api/chatbots/clpl60296000qhoqiqwkmn0y5/config')
-    })();
-  })
+    console.log("Loading Chatbot")
+    const init = async () => {
+      const id = window.chatbotConfig.chatbotId
+      setChatbotId(id)
 
-  const chatbot = {
-    id: 1,
-    name: "Chatbot",
-    welcomeMessage: "Hello! How can I assist you today?",
-  }
+      const config = await fetch(`http://localhost:3000/api/chatbots/${id}/config`)
+      const chatbotConfig: ChatbotConfig = await config.json()
+      setConfig(chatbotConfig)
+
+
+      if (messages.length === 0) {
+        setMessages(messages => [...messages, {
+          number: messages.length + 1,
+          message: chatbotConfig?.welcomeMessage,
+          from: "bot",
+        }])
+      }
+    };
+    init();
+  }, [])
 
   return (
     <div className="fixed right-4 bottom-4">
@@ -47,41 +109,49 @@ export default function ChatBox() {
               </Button>
             </div>
             <div className="p-4 space-y-4">
-              <div className="flex items-start space-x-2">
-                <div className="flex-shrink-0">
-                </div>
-                <div className="bg-gray-200 dark:bg-gray-800 rounded-lg p-2">
-                  <p className="text-sm">Hello! How can I assist you today?</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-2">
-                <div className="flex-shrink-0">
-                </div>
-                <div className="bg-blue-200 dark:bg-blue-800 rounded-lg p-2">
-                  <p className="text-sm">I need help with my order.</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-2">
-                <div className="flex-shrink-0">
-                </div>
-                <div className="bg-gray-200 dark:bg-gray-800 rounded-lg p-2">
-                  <p className="text-sm">
-                    Sure, I&apos;d be happy to help with that. Could you provide your order number, please?
-                  </p>
-                </div>
-              </div>
+              {
+                messages.map((message) => {
+                  if (message.from === "bot") {
+                    return (
+                      <div key={message.number} className="flex items-end gap-2">
+                        <div className="rounded-lg bg-zinc-200 p-2">
+                          <p className="text-sm">{message.message}</p>
+                        </div>
+                      </div>
+                    )
+                  } else {
+                    return (
+                      <div key={message.number} className="flex items-end gap-2 justify-end">
+                        <div className="rounded-lg bg-blue-500 text-white p-2">
+                          <p className="text-sm">{message.message}</p>
+                        </div>
+                      </div>
+                    )
+                  }
+                })
+              }
             </div>
             <div className="border-t border-gray-200 p-4">
-              <div className="flex items-center space-x-2">
-                <Input className="flex-grow border-0 focus:border-0" id="chat-input" placeholder="Type your message" />
-                <Button variant="outline border-0">
-                  <IconSend className="h-5 w-5" />
-                </Button>
+              <div className="space-x-2">
+                <form className="w-full flex-grow border-0 flex flex-row items-justify" onSubmit={onSubmit}>
+                  <Input className="focus:outline-none border-0 mr-2" onChange={value => setNewMessage(value.target.value)} id="chat-input" placeholder="Type your message" />
+                  <Button
+                    className="border-0 text-gray-500 focus:outline-none"
+                    type="submit"
+                    disabled={isLoading}
+                    variant="outline">
+                    {isLoading ? (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    ) :
+                      <IconSend className="h-5 w-5" />
+                    }
+                  </Button>
+                </form>
               </div>
             </div>
           </Card>
         }
-        <Button className="ml-2 shadow-lg border border-gray-200 rounded-full p-2"
+        <Button className="ml-2 shadow-lg border border-gray-200 rounded-full p-3"
           onClick={toggleChatVisibility} variant="ghost">
           <Icons.message />
         </Button>
@@ -90,8 +160,7 @@ export default function ChatBox() {
   )
 }
 
-
-function IconClose(props) {
+function IconClose(props: any) {
   return (
     <svg
       {...props}
@@ -113,7 +182,7 @@ function IconClose(props) {
 }
 
 
-function IconSend(props) {
+function IconSend(props: any) {
   return (
     <svg
       {...props}

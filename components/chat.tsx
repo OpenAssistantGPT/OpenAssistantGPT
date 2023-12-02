@@ -34,6 +34,7 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
   const form = useForm<FormData>({
     resolver: zodResolver(messageSchema),
   })
+
   const [messages, setMessages] = useState<Messages[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
