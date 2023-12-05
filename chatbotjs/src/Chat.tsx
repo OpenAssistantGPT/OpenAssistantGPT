@@ -8,9 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
-import { useForm } from "react-hook-form"
-import { messageSchema } from "@/lib/validations/message"
-import { zodResolver } from "@hookform/resolvers/zod"
 
 interface ChatbotConfig {
   id: number;
@@ -50,6 +47,8 @@ export default function ChatBox() {
 
     setNewMessage("")
 
+    setNewMessage("")
+
     const message = await fetch(`http://localhost:3000/api/chat`, {
       method: "POST",
       body: JSON.stringify({
@@ -75,7 +74,6 @@ export default function ChatBox() {
   };
 
   useEffect(() => {
-    console.log("Loading Chatbot")
     const init = async () => {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
@@ -97,66 +95,73 @@ export default function ChatBox() {
   }, [])
 
   return (
-    <div className="fixed right-4 bottom-4">
-      <div className="flex items-end">
-
-        {isChatVisible &&
-          <Card className="w-80 max-h-[80vh] overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4">
-            <div className="flex justify-between items-center p-4">
-              <h3 className="text-lg font-semibold">Chat with us</h3>
-              <Button onClick={toggleChatVisibility} variant="ghost">
-                <IconClose className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-              </Button>
-            </div>
-            <div className="p-4 space-y-4">
-              {
-                messages.map((message) => {
-                  if (message.from === "bot") {
-                    return (
-                      <div key={message.number} className="flex items-end gap-2">
-                        <div className="rounded-lg bg-zinc-200 p-2">
-                          <p className="text-sm">{message.message}</p>
-                        </div>
+    <div className="fixed bottom-0 right-0 mb-4 mr-4 z-50 flex items-end">
+      {isChatVisible &&
+        <Card className="w-80 mr-2 max-h-[80vh] overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4">
+          <div className="flex justify-between items-center p-4">
+            <h3 className="text-lg font-semibold">Chat with us</h3>
+            <Button onClick={toggleChatVisibility} variant="ghost">
+              <IconClose className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            </Button>
+          </div>
+          <div className="p-4 space-y-4">
+            {
+              messages.map((message) => {
+                if (message.from === "bot") {
+                  return (
+                    <div key={message.number} className="flex items-end gap-2">
+                      <div className="rounded-lg bg-zinc-200 p-2">
+                        <p className="text-sm">{message.message}</p>
                       </div>
-                    )
-                  } else {
-                    return (
-                      <div key={message.number} className="flex items-end gap-2 justify-end">
-                        <div className="rounded-lg bg-blue-500 text-white p-2">
-                          <p className="text-sm">{message.message}</p>
-                        </div>
+                    </div>
+                  )
+                } else {
+                  return (
+                    <div key={message.number} className="flex items-end gap-2 justify-end">
+                      <div className="rounded-lg bg-blue-500 text-white p-2">
+                        <p className="text-sm">{message.message}</p>
                       </div>
-                    )
-                  }
-                })
-              }
-            </div>
-            <div className="border-t border-gray-200 p-4">
-              <div className="space-x-2">
-                <form className="w-full flex-grow border-0 flex flex-row items-justify" onSubmit={onSubmit}>
-                  <Input className="focus:outline-none border-0 mr-2" onChange={value => setNewMessage(value.target.value)} id="chat-input" placeholder="Type your message" />
-                  <Button
-                    className="border-0 text-gray-500 focus:outline-none"
-                    type="submit"
-                    disabled={isLoading}
-                    variant="outline">
-                    {isLoading ? (
-                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                    ) :
-                      <IconSend className="h-5 w-5" />
-                    }
-                  </Button>
-                </form>
+                    </div>
+                  )
+                }
+              })
+            }
+            {
+              isLoading &&
+              <div className="flex justify-left items-center space-x-2">
+                <div className="dot h-4 w-4 bg-zinc-200 rounded-full"></div>
+                <div className="dot h-4 w-4 bg-zinc-200 rounded-full"></div>
+                <div className="dot h-4 w-4 bg-zinc-200 rounded-full"></div>
               </div>
+            }
+          </div>
+          <div className="text-center text-zinc-400 text-sm">
+            Powered by chatbot
+          </div>
+          <div className="border-t border-gray-200 p-4">
+            <div className="space-x-2">
+              <form className="w-full flex-grow border-0 flex flex-row items-justify" onSubmit={onSubmit}>
+                <Input className="focus:outline-none bg-transparent border-0 mr-2"
+                  value={newMessage}
+                  disabled={isLoading}
+                  onChange={value => setNewMessage(value.target.value)} id="chat-input" placeholder="Type your message" />
+                <Button
+                  className="border-0 text-gray-500 focus:outline-none"
+                  type="submit"
+                  disabled={isLoading}
+                  variant="outline">
+                  <IconSend className="h-5 w-5" />
+                </Button>
+              </form>
             </div>
-          </Card>
-        }
-        <Button className="ml-2 shadow-lg border border-gray-200 rounded-full p-3"
-          onClick={toggleChatVisibility} variant="ghost">
-          <Icons.message />
-        </Button>
-      </div>
-    </div >
+          </div>
+        </Card>
+      }
+      <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+        onClick={toggleChatVisibility} variant="ghost">
+        <Icons.message />
+      </Button>
+    </div>
   )
 }
 
