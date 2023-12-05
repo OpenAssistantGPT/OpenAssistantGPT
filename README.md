@@ -18,8 +18,11 @@ TODO:
 - Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
 - Validate on all api call that the user has an api key
 
+- Use threads to keep converstaion context
+
 - Add timeout after few minutes trying to get a reply a return "We could not awsner your question..."
 - Add parameter for "After x question the person can contact us"
+- Keep track of la conversations
 
 Landing page:
 
