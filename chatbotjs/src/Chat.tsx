@@ -78,7 +78,7 @@ export default function ChatBox() {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
-      const config = await fetch(`http://localhost:3000/api/chatbots/${id}/config`)
+      const config = await fetch(`https://chatbot-5a94.vercel.app/api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
 
