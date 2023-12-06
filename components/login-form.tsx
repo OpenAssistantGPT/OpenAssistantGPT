@@ -6,7 +6,7 @@ import LoadingDots from "@/components/loading-dots";
 import { useRouter } from "next/navigation";
 import { Icons } from "./icons";
 
-export default function Form({ type }: { type: "login" | "register" }) {
+export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 

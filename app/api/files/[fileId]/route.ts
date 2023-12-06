@@ -56,6 +56,9 @@ export async function DELETE(
                 userId: session?.user?.id
             }
         })
+        if (!openAIConfig?.globalAPIKey) {
+            return new Response("Missing OpenAI API key", { status: 403 })
+        }
 
         const file = await db.file.findUnique({
             select: {

@@ -1,4 +1,4 @@
-import Form from "@/components/form";
+import LoginForm from "@/components/login-form";
 import Link from "next/link";
 
 import { Metadata } from "next";
@@ -8,7 +8,6 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -45,7 +44,7 @@ export default async function Login() {
           <p className="text-sm text-muted-foreground">
             Use your Github account to sign in
           </p>
-          <Form type="login" />
+          <LoginForm />
         </div>
       </div>
     </div>

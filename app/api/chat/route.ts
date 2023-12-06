@@ -33,7 +33,6 @@ export async function POST(req: Request) {
             apiKey: chatbot.openaiKey
         })
 
-
         const run = await openai.beta.threads.createAndRun(
             {
                 assistant_id: chatbot.openaiId,

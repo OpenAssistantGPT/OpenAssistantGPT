@@ -146,6 +146,9 @@ export async function GET(
                 userId: session?.user?.id
             }
         })
+        if (!openAIConfig?.globalAPIKey) {
+            return new Response("Missing OpenAI API key", { status: 403 })
+        }
 
         const openai = new OpenAI({
             apiKey: openAIConfig?.globalAPIKey

@@ -73,6 +73,17 @@ export default function ChatBox() {
     setIsChatVisible(!isChatVisible);
   };
 
+  function resetChat() {
+    setMessages([])
+
+    setMessages(messages => [...messages, {
+      number: messages.length + 1,
+      message: config!.welcomeMessage,
+      from: "bot",
+    }])
+
+  }
+
   useEffect(() => {
     const init = async () => {
       const id = window.chatbotConfig.chatbotId
@@ -81,7 +92,6 @@ export default function ChatBox() {
       const config = await fetch(`https://chatbot-5a94.vercel.app/api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
-
 
       if (messages.length === 0) {
         setMessages(messages => [...messages, {
@@ -100,9 +110,14 @@ export default function ChatBox() {
         <Card className="w-80 mr-2 max-h-[80vh] overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4">
           <div className="flex justify-between items-center p-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
-            <Button onClick={toggleChatVisibility} variant="ghost">
-              <IconClose className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-            </Button>
+            <div>
+              <Button onClick={resetChat} className='mr-2'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="h-5 w-5 text-gray-500 lucide lucide-list-restart"><path d="M21 6H3" /><path d="M7 12H3" /><path d="M7 18H3" /><path d="M12 18a5 5 0 0 0 9-3 4.5 4.5 0 0 0-4.5-4.5c-1.33 0-2.54.54-3.41 1.41L11 14" /><path d="M11 10v4h4" /></svg>
+              </Button>
+              <Button onClick={toggleChatVisibility} variant="ghost">
+                <IconClose className="h-5 w-5 text-gray-500" />
+              </Button>
+            </div>
           </div>
           <div className="p-4 space-y-4">
             {
