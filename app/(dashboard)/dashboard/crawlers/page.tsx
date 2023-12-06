@@ -40,7 +40,7 @@ export default async function CrawlersPage() {
       </DashboardHeader>
       <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
         <p className="font-bold text-md">Warning</p>
-        <p className="text-sm">Our crawlers don&apos;t website generated with javascript. If the website is made in React we won&apos;t be able to fetch the content.</p>
+        <p className="text-sm">Our crawlers don&apos;t website generated with javascript. If the website is made with React we won&apos;t be able to fetch the content.</p>
         <p className="text-sm">We recommend use <a className="underline" href="https://github.com/BuilderIO/gpt-crawler">gpt-crawler</a> to crawl your website localy and then upload your file to {siteConfig.name}.</p>
       </div>
       <div>

@@ -24,6 +24,9 @@ TODO:
 
 - Use threads to keep converstaion context
 
+
+CLIENT CHATBOTJS:
+- After few seconds create a popup message "Hello, I'm a chatbot, how can I help you?"
 - Add timeout after few minutes trying to get a reply a return "We could not awsner your question..."
 - Add parameter for "After x question the person can contact us"
 - Keep track of la conversations
