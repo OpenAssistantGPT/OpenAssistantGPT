@@ -12,6 +12,7 @@ TODO:
 - DONE! Create include js to implement in website
 - -------------------
 - DONE! Add clear chat on chatbotjs
+- Add minimify in chatbotjs build.sh
 - When update chatbot also update openAI
 - Make sure that people import a file before create a chatbot
 - Finish the Update chatbot form
