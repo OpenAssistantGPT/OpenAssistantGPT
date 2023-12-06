@@ -4,6 +4,18 @@ import type { Icon } from "lucide-react"
 
 import { Icons } from "@/components/icons"
 
+import { DefaultUser } from 'next-auth';
+
+declare module 'next-auth' {
+  interface Session {
+    user?: DefaultUser & { id: string; stripeCustomerId: string; isActive: boolean };
+  }
+  interface User extends DefaultUser {
+    stripeCustomerId: string;
+    isActive: boolean;
+  }
+}
+
 export type NavItem = {
   title: string
   href: string
@@ -68,3 +80,15 @@ export type UploadPublishedFile = {
   openAIFileId: string
   name: string
 }
+
+export type SubscriptionPlan = {
+  name: string
+  description: string
+  stripePriceId: string
+}
+
+export type UserSubscriptionPlan = SubscriptionPlan &
+  Pick<User, "stripeCustomerId" | "stripeSubscriptionId"> & {
+    stripeCurrentPeriodEnd: number
+    isPro: boolean
+  }
