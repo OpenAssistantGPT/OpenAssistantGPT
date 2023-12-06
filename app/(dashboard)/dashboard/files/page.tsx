@@ -10,7 +10,11 @@ import { Label } from "@/components/ui/label"
 import { CrawlerCreateButton } from "@/components/crawler-create-button"
 import { FileUploadButton } from "@/components/file-upload-button"
 import { FileItem } from "@/components/file-items"
+import { siteConfig } from "@/config/site"
 
+export const metadata = {
+    title: `${siteConfig.name} - Files`,
+}
 
 export default async function FilePage() {
     const user = await getCurrentUser()

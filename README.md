@@ -20,6 +20,7 @@ TODO:
 - DONE! Validate on all api call that the user has an api key
 
 
+- SECURITY: CREATE LIMIT RATE
 - SECURITY: VALIDATE THAT THE CHATBOT REQUEST COMES FROM THE GOOD WEBSITE
 
 - Use threads to keep converstaion context

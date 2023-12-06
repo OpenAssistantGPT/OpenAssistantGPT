@@ -9,9 +9,10 @@ import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { ChatbotCreateButton } from "@/components/chatbot-create-button"
 import { ChatbotItem } from "@/components/chatbot-item"
+import { siteConfig } from "@/config/site"
 
 export const metadata = {
-  title: "Chatbots",
+  title: `${siteConfig.name} - Chatbots`,
 }
 
 export default async function ChatbotsPage() {

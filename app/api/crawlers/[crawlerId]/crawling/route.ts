@@ -106,7 +106,24 @@ export async function GET(
             return new Response(null, { status: 403 })
         }
 
-        // Delete the crawler.
+        const openAIConfig = await db.openAIConfig.findUnique({
+            select: {
+                globalAPIKey: true,
+                id: true,
+            },
+            where: {
+                userId: session?.user?.id
+            }
+        })
+
+        if (!openAIConfig?.globalAPIKey) {
+            return new Response("Missing OpenAI API key", { status: 403 })
+        }
+
+        const openai = new OpenAI({
+            apiKey: openAIConfig?.globalAPIKey
+        })
+
         const crawler = await db.crawler.findFirst({
             select: {
                 id: true,
@@ -133,31 +150,17 @@ export async function GET(
         const date = new Date()
         const fileName = crawler.name.toLowerCase().replace(/\s/g, "-") + '-' + date.toISOString() + ".json"
 
+        // Add file to blob
         const blob = await put(fileName, JSON.stringify(content), {
             access: "public"
         })
 
-        const openAIConfig = await db.openAIConfig.findUnique({
-            select: {
-                globalAPIKey: true,
-                id: true,
-            },
-            where: {
-                userId: session?.user?.id
-            }
-        })
-        if (!openAIConfig?.globalAPIKey) {
-            return new Response("Missing OpenAI API key", { status: 403 })
-        }
-
-        const openai = new OpenAI({
-            apiKey: openAIConfig?.globalAPIKey
-        })
-
+        // Add file to OpenAI
         const file = await openai.files.create(
             { file: await fetch(blob.url), purpose: 'assistants' }
         )
 
+        // Add file to database
         await db.file.create({
             data: {
                 name: fileName,

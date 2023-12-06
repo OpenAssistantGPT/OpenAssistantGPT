@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 import { OpenAIForm } from "@/components/openai-config-form"
+import { siteConfig } from "@/config/site"
 
 
 export const metadata = {
-  title: "Dashboard",
+  title: `${siteConfig.name} - Dashboard`,
 }
 
 export default async function DashboardPage() {

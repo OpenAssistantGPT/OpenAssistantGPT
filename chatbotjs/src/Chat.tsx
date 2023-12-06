@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
+import { siteConfig } from "@/config/site"
 
 interface ChatbotConfig {
   id: number;
@@ -49,7 +50,7 @@ export default function ChatBox() {
 
     setNewMessage("")
 
-    const message = await fetch(`http://localhost:3000/api/chat`, {
+    const message = await fetch(`${siteConfig.url}/api/chat`, {
       method: "POST",
       body: JSON.stringify({
         message: newMessage,
@@ -89,7 +90,7 @@ export default function ChatBox() {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
-      const config = await fetch(`https://chatbot-5a94.vercel.app/api/chatbots/${id}/config`)
+      const config = await fetch(`${siteConfig.url}api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
 
@@ -151,7 +152,7 @@ export default function ChatBox() {
             }
           </div>
           <div className="text-center text-zinc-400 text-sm">
-            Powered by chatbot
+            Powered by {siteConfig.name}
           </div>
           <div className="border-t border-gray-200 p-4">
             <div className="space-x-2">

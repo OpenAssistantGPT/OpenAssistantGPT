@@ -3,9 +3,10 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { siteConfig } from "@/config/site"
 
 export const metadata = {
-    title: "Pricing",
+    title: `${siteConfig.name} - Pricing`,
 }
 
 export default function PricingPage() {

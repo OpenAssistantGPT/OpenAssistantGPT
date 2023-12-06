@@ -6,9 +6,10 @@ import { getCurrentUser } from "@/lib/session"
 import { BillingForm } from "@/components/billing-form"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
+import { siteConfig } from "@/config/site"
 
 export const metadata = {
-    title: "Billing",
+    title: `${siteConfig.name} - Billing`,
     description: "Manage billing and your subscription plan.",
 }
 

@@ -7,10 +7,10 @@ import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { UserNameForm } from "@/components/user-name-form"
 import { OpenAIForm } from "@/components/openai-config-form"
-import { GithubCard } from "@/components/github-card"
+import { siteConfig } from "@/config/site"
 
 export const metadata = {
-    title: "Settings",
+    title: `${siteConfig.name} - Settings`,
     description: "Manage account and website settings.",
 }
 
