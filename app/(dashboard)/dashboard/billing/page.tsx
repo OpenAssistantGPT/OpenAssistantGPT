@@ -33,7 +33,6 @@ export default async function BillingPage() {
         isCanceled = stripePlan.cancel_at_period_end
     }
 
-
     return (
         <DashboardShell>
             <DashboardHeader
@@ -41,7 +40,6 @@ export default async function BillingPage() {
                 text="Manage billing and your subscription plan."
             />
             <div className="grid gap-8">
-
                 <BillingForm
                     subscriptionPlan={{
                         ...subscriptionPlan,
