@@ -1,7 +1,7 @@
 import { SiteConfig } from "@/types"
 
 export const siteConfig: SiteConfig = {
-  name: "Chatbotly",
+  name: "OpenAssistantGPT",
   description:
     "An open source application built using OpenAI custom gpts.",
   url: "https://chatbot-5a94.vercel.app/",
