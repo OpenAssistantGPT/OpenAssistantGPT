@@ -29,7 +29,7 @@ export function BillingForm({
 }: BillingFormProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    async function onSubmit(event: any) {
+    async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setIsLoading(!isLoading)
 
