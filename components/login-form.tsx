@@ -12,7 +12,7 @@ export default function LoginForm() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
         await signIn("github")
