@@ -4,7 +4,7 @@ export const siteConfig: SiteConfig = {
   name: "Chatbotly",
   description:
     "An open source application built using OpenAI custom gpts.",
-  url: "https://chatbot-5a94.vercel.app/",
+  url: "http://localhost:3000/",
   ogImage: "https://chatbot-5a94.vercel.app/",
   links: {
     twitter: "https://twitter.com/marcolivierbouch",

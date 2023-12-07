@@ -7,7 +7,7 @@ import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
 
-const billingUrl = absoluteUrl("/dashboard/billing")
+const billingUrl = absoluteUrl("dashboard/billing")
 
 export async function GET(req: Request) {
     try {
@@ -32,6 +32,7 @@ export async function GET(req: Request) {
 
         // The user is on the free plan.
         // Create a checkout session to upgrade.
+        console.log("creating checkout session")
         const stripeSession = await stripe.checkout.sessions.create({
             success_url: billingUrl,
             cancel_url: billingUrl,
@@ -45,13 +46,14 @@ export async function GET(req: Request) {
                     quantity: 1,
                 },
             ],
+            client_reference_id: session.user.id,
             metadata: {
                 userId: session.user.id,
             },
         })
-
         return new Response(JSON.stringify({ url: stripeSession.url }))
     } catch (error) {
+        console.log(error)
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 })
         }

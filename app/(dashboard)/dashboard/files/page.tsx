@@ -45,7 +45,6 @@ export default async function FilePage() {
     const uploadedFiles = files.filter((file) => !file.crawler)
 
     const filesWithCrawler = files.filter((file) => {
-        console.log(file.crawler)
         if (file.crawler) {
             return true
         }

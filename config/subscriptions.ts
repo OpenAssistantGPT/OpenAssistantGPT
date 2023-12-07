@@ -10,5 +10,5 @@ export const freePlan: SubscriptionPlan = {
 export const proPlan: SubscriptionPlan = {
     name: "PRO",
     description: "The PRO plan has unlimited chatbot.",
-    stripePriceId: "1"//env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
+    stripePriceId: "price_1OKgFsKS6OWmFI3nAY6ZpjLJ"//env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
 }

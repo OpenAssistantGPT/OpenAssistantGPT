@@ -7,6 +7,8 @@ import { BillingForm } from "@/components/billing-form"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { siteConfig } from "@/config/site"
+import { stripe } from "@/lib/stripe"
+import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 export const metadata = {
     title: `${siteConfig.name} - Billing`,
@@ -41,6 +43,10 @@ export default async function BillingPage() {
             <div className="grid gap-8">
 
                 <BillingForm
+                    subscriptionPlan={{
+                        ...subscriptionPlan,
+                        isCanceled,
+                    }}
                 />
             </div>
         </DashboardShell>

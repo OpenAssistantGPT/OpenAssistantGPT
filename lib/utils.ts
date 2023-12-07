@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -16,4 +17,8 @@ export function formatDate(input: string | number): string {
 
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function absoluteUrl(path: string) {
+  return `${siteConfig.url}${path}`
 }
