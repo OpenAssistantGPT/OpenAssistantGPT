@@ -45,7 +45,6 @@ export async function DELETE(
         })
 
         for (const crawlerFile of crawlerFiles) {
-            console.log(crawlerFile.blobUrl)
             await del(crawlerFile.blobUrl)
         }
 

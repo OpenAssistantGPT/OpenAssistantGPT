@@ -45,7 +45,6 @@ export async function POST(req: Request) {
 
     const json = await req.json()
     const body = chatbotSchema.parse(json)
-    console.log(body)
 
     const model = await db.chatbotModel.findUnique({
       where: {

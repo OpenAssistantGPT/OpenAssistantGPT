@@ -31,8 +31,6 @@ export default async function CrawlersPage() {
     },
   })
 
-  console.log(crawlers)
-
   return (
     <DashboardShell>
       <DashboardHeader heading="Crawlers" text="Manage your crawlers and crawling configuration.">
