@@ -12,10 +12,10 @@ export default function LoginForm() {
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        signIn("github")
+        await signIn("github")
 
         router.refresh()
         router.push("/dashboard")
@@ -34,8 +34,7 @@ export default function LoginForm() {
         ) : (
           <div className="flex flex-row">
             <Icons.gitHub className="mr-2 h-4 w-4" />
-            <p>
-              Sign In With GitHub</p>
+            <p>Sign In With GitHub</p>
           </div>
         )}
       </button>
