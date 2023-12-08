@@ -8,7 +8,7 @@ import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-
+import { siteConfig } from "@/config/site"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,7 +21,7 @@ const fontHeading = localFont({
   variable: "--font-heading",
 })
 
-const title = "Welcome to chatbot";
+const title = `Welcome to ${siteConfig.name}`;
 const description = "test";
 
 export const metadata: Metadata = {

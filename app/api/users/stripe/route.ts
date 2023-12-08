@@ -50,7 +50,6 @@ export async function POST(req: Request) {
                     quantity: 1,
                 },
             ],
-            client_reference_id: session.user.id,
             metadata: {
                 userId: session.user.id,
             },

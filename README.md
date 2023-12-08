@@ -13,6 +13,8 @@ TODO:
 - -------------------
 - DONE! Add clear chat on chatbotjs
 - DONE! When update chatbot also update openAI
+- Add minimify in chatbotjs build.sh
+- DONE! When update chatbot also update openAI
 - Make sure that people import a file before create a chatbot
 - DONE! Finish the Update chatbot form
 - DONE! Add maximum file size while uploading and crawling

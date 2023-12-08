@@ -20,7 +20,7 @@ export default function Home() {
             Build your own chatbot with customGPTs
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            An open source platform for building chatbots with customGPTs, using OpenAI customGPTs.
+            An open source platform for building chatbot assistants with customGPTs, using the OpenAI platform.
           </p>
           <div className="space-x-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
@@ -56,7 +56,7 @@ export default function Home() {
               <div className="space-y-2">
                 <h3 className="font-bold">OpenAI CustomGPTs</h3>
                 <p className="text-sm text-muted-foreground">
-                  Use OpenAI CustomGPTs
+                  We use OpenAI CustomGPTs
                 </p>
               </div>
             </div>
