@@ -11,8 +11,6 @@ import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { EmptyPlaceholder } from "@/components/empty-placeholder"
-import { MoveToCrawlersButton } from "@/components/move-to-crawlers-button"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }

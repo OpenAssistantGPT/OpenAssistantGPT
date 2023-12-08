@@ -88,6 +88,13 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
         setIsSaving(false)
 
         if (!response?.ok) {
+            if (response.status === 402) {
+                return toast({
+                    title: "Chatbot limit reached.",
+                    description: "Please upgrade to the a higher plan.",
+                    variant: "destructive",
+                })
+            }
             return toast({
                 title: "Something went wrong.",
                 description: "Your chatbot was not saved. Please try again.",

@@ -26,7 +26,7 @@ export default async function BillingPage() {
 
     // If user has a pro plan, check cancel status on Stripe.
     let isCanceled = false
-    if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
+    if (subscriptionPlan.stripeSubscriptionId) {
         const stripePlan = await stripe.subscriptions.retrieve(
             subscriptionPlan.stripeSubscriptionId
         )
@@ -39,14 +39,12 @@ export default async function BillingPage() {
                 heading="Billing"
                 text="Manage billing and your subscription plan."
             />
-            <div className="grid gap-8">
-                <BillingForm
-                    subscriptionPlan={{
-                        ...subscriptionPlan,
-                        isCanceled,
-                    }}
-                />
-            </div>
+            <BillingForm
+                subscriptionPlan={{
+                    ...subscriptionPlan,
+                    isCanceled,
+                }}
+            />
         </DashboardShell>
     )
 }

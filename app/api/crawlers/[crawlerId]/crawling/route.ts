@@ -1,6 +1,6 @@
 
 import { getServerSession } from "next-auth/next"
-import { date, z } from "zod"
+import { z } from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -10,6 +10,8 @@ import URL from 'url';
 
 import { put } from '@vercel/blob';
 import OpenAI from "openai";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
+import { RequiresHigherPlanError } from "@/lib/exceptions";
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -106,6 +108,19 @@ export async function GET(
             return new Response(null, { status: 403 })
         }
 
+        const { user } = session
+        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
+        const count = await db.file.count({
+            where: {
+                userId: user.id,
+            },
+        })
+
+        if (count >= subscriptionPlan.maxFiles) {
+            throw new RequiresHigherPlanError()
+        }
+
         const openAIConfig = await db.openAIConfig.findUnique({
             select: {
                 globalAPIKey: true,
@@ -173,10 +188,14 @@ export async function GET(
 
         return new Response(null, { status: 204 })
     } catch (error) {
+        console.log(error)
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 })
         }
-        console.log(error)
+
+        if (error instanceof RequiresHigherPlanError) {
+            return new Response("Requires Higher Plan", { status: 402 })
+        }
 
         return new Response(null, { status: 500 })
     }

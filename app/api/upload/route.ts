@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { db } from '@/lib/db';
 import OpenAI from 'openai';
+import { getUserSubscriptionPlan } from '@/lib/subscription';
+import { RequiresHigherPlanError } from '@/lib/exceptions';
 
 export async function POST(request: Request) {
     try {
@@ -12,6 +14,20 @@ export async function POST(request: Request) {
 
         if (!session) {
             return new Response("Unauthorized", { status: 403 })
+        }
+
+        // Validate user subscription plan
+        const { user } = session
+        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
+        const count = await db.file.count({
+            where: {
+                userId: user.id,
+            },
+        })
+
+        if (count >= subscriptionPlan.maxFiles) {
+            throw new RequiresHigherPlanError()
         }
 
         const { searchParams } = new URL(request.url);
@@ -61,8 +77,13 @@ export async function POST(request: Request) {
         })
 
         return NextResponse.json({ url: blob.url }, { status: 201 });
-    } catch (e) {
-        console.error(e);
+    } catch (error) {
+        console.error(error);
+
+        if (error instanceof RequiresHigherPlanError) {
+            return new Response("Requires Pro Plan", { status: 402 })
+        }
+
         return new Response(null, { status: 500 })
     }
 }

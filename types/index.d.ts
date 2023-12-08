@@ -49,7 +49,6 @@ export type SiteConfig = {
 export type UserSubscriptionPlan = SubscriptionPlan &
   Pick<User, "stripeCustomerId" | "stripeSubscriptionId"> & {
     stripeCurrentPeriodEnd: number
-    isPro: boolean
   }
 
 
@@ -73,6 +72,18 @@ export type SubscriptionPlan = {
   name: string
   description: string
   stripePriceId: string
+
+  // Specs
+  maxChatbots: number
+
+  unlimitedMessages: boolean
+  maxMessagesPerMonth: number | undefined
+
+  maxFiles: number
+
+  maxCrawlers: number
+
+  price: number | undefined
 }
 
 export type UserSubscriptionPlan = SubscriptionPlan &

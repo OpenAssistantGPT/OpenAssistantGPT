@@ -5,6 +5,8 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 
+import { freePlan, basicPlan, hobbyPlan, proPlan } from "@/config/subscriptions"
+
 export const metadata = {
     title: `${siteConfig.name} - Pricing`,
 }
@@ -23,23 +25,20 @@ export default function PricingPage() {
             <div className="grid w-full items-start gap-10 rounded-lg border p-10 md:grid-cols-[1fr_200px]">
                 <div className="grid gap-6">
                     <h3 className="text-xl font-bold sm:text-2xl">
-                        What&apos;s included in the FREE plan
+                        What&apos;s included in the {freePlan.name} plan
                     </h3>
                     <ul className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 1 Chatbot
+                            <Icons.check className="mr-2 h-4 w-4" /> {freePlan.maxChatbots} Chatbot
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 1 Crawler
+                            <Icons.check className="mr-2 h-4 w-4" /> {freePlan.maxCrawlers} Crawler
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 2 Files
+                            <Icons.check className="mr-2 h-4 w-4" /> {freePlan.maxFiles} Files
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 30 messages
-                        </li>
-                        <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> Dashboard Analytics
+                            <Icons.check className="mr-2 h-4 w-4" /> {freePlan.maxMessagesPerMonth} messages
                         </li>
                         <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> Support
@@ -61,23 +60,55 @@ export default function PricingPage() {
             <div className="grid w-full items-start gap-10 rounded-lg border p-10 md:grid-cols-[1fr_200px]">
                 <div className="grid gap-6">
                     <h3 className="text-xl font-bold sm:text-2xl">
-                        What&apos;s included in the Basic plan
+                        What&apos;s included in the {hobbyPlan.name} plan
                     </h3>
                     <ul className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 3 Bots
+                            <Icons.check className="mr-2 h-4 w-4" /> {hobbyPlan.maxChatbots} Chatbot
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 5 Crawlers
+                            <Icons.check className="mr-2 h-4 w-4" /> {hobbyPlan.maxCrawlers} Crawler
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 9 Files
+                            <Icons.check className="mr-2 h-4 w-4" /> {hobbyPlan.maxFiles} Files
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> Unlimited messages
+                            <Icons.check className="mr-2 h-4 w-4" /> {hobbyPlan.maxMessagesPerMonth} messages
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> Dashboard Analytics
+                            <Icons.check className="mr-2 h-4 w-4" /> Support
+                        </li>
+                    </ul>
+                </div>
+                <div className="flex flex-col gap-4 text-center">
+                    <div>
+                        <h4 className="text-7xl font-bold">$3</h4>
+                        <p className="text-sm font-medium text-muted-foreground">
+                            Billed Monthly
+                        </p>
+                    </div>
+                    <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
+                        Get Started
+                    </Link>
+                </div>
+            </div>
+            <div className="grid w-full items-start gap-10 rounded-lg border p-10 md:grid-cols-[1fr_200px]">
+                <div className="grid gap-6">
+                    <h3 className="text-xl font-bold sm:text-2xl">
+                        What&apos;s included in the {basicPlan.name} plan
+                    </h3>
+                    <ul className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
+                        <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> {basicPlan.maxChatbots} Bots
+                        </li>
+                        <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> {basicPlan.maxCrawlers} Crawlers
+                        </li>
+                        <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> {basicPlan.maxFiles} Files
+                        </li>
+                        <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> unlimited messages
                         </li>
                         <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> Premium Support
@@ -99,20 +130,20 @@ export default function PricingPage() {
             <div className="grid w-full items-start gap-10 rounded-lg border p-10 md:grid-cols-[1fr_200px]">
                 <div className="grid gap-6">
                     <h3 className="text-xl font-bold sm:text-2xl">
-                        What&apos;s included in the PRO plan
+                        What&apos;s included in the {proPlan.name} plan
                     </h3>
                     <ul className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 9 Bots
+                            <Icons.check className="mr-2 h-4 w-4" /> {proPlan.maxChatbots} Bots
                         </li>
                         <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 12 Crawlers
+                            <Icons.check className="mr-2 h-4 w-4" /> {proPlan.maxCrawlers} Crawlers
+                        </li>
+                        <li className="flex items-center">
+                            <Icons.check className="mr-2 h-4 w-4" /> {proPlan.maxFiles} Files
                         </li>
                         <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> Unlimited messages
-                        </li>
-                        <li className="flex items-center">
-                            <Icons.check className="mr-2 h-4 w-4" /> 26 Files
                         </li>
                         <li className="flex items-center">
                             <Icons.check className="mr-2 h-4 w-4" /> Premium Support
@@ -121,7 +152,7 @@ export default function PricingPage() {
                 </div>
                 <div className="flex flex-col gap-4 text-center">
                     <div>
-                        <h4 className="text-7xl font-bold">$27</h4>
+                        <h4 className="text-7xl font-bold">$36</h4>
                         <p className="text-sm font-medium text-muted-foreground">
                             Billed Monthly
                         </p>
