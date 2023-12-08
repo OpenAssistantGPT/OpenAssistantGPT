@@ -31,7 +31,8 @@ export function BillingForm({
 }: BillingFormProps) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    async function openSession(priceId: string) {
+    async function openSession(event: any, priceId: string) {
+        event.preventDefault()
         setIsLoading(!isLoading)
 
         // Get a Stripe session URL.
@@ -44,7 +45,8 @@ export function BillingForm({
                 body: JSON.stringify({
                     priceId: priceId,
                 }),
-            })
+            }
+        )
 
         if (!response?.ok) {
             return toast({
@@ -58,6 +60,7 @@ export function BillingForm({
         // This could be a checkout page for initial upgrade.
         // Or portal to manage existing subscription.
         const session = await response.json()
+        console.log(session.url)
         if (session) {
             window.location.href = session.url
         }
@@ -76,8 +79,7 @@ export function BillingForm({
                 <CardContent>{subscriptionPlan.description}</CardContent>
                 <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
                     <button
-                        onClick={() => openSession(subscriptionPlan.stripePriceId)}
-                        type="submit"
+                        onClick={(e) => openSession(e, subscriptionPlan.stripePriceId)}
                         className={cn(buttonVariants())}
                         disabled={isLoading}
                     >
@@ -100,7 +102,6 @@ export function BillingForm({
                 <div className="flex flex-wrap gap-6 mt-8 md:gap-8">
                     {plans.map((plan) => {
                         if (plan.stripePriceId !== subscriptionPlan.stripePriceId) {
-                            console.log(plan)
                             return (
                                 <Card key={plan.name}>
                                     <CardHeader>
@@ -132,8 +133,7 @@ export function BillingForm({
                                     </CardContent>
                                     <CardFooter>
                                         <Button
-                                            onClick={() => openSession(plan.stripePriceId)}
-                                            type="submit"
+                                            onClick={(e) => openSession(e, plan.stripePriceId)}
                                             className="w-full">
                                             {isLoading && (
                                                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
