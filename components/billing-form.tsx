@@ -65,6 +65,7 @@ export function BillingForm({
             window.location.href = session.url
         }
     }
+    console.log(subscriptionPlan)
 
     return (
         <form className={cn(className)} {...props}>
@@ -78,17 +79,19 @@ export function BillingForm({
                 </CardHeader>
                 <CardContent>{subscriptionPlan.description}</CardContent>
                 <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
-                    <button
-                        onClick={(e) => openSession(e, subscriptionPlan.stripePriceId)}
-                        className={cn(buttonVariants())}
-                        disabled={isLoading}
-                    >
-                        {isLoading && (
-                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                        )}
-                        {subscriptionPlan.name ? "Manage Subscription" : "Upgrade to PRO"}
-                    </button>
-                    {subscriptionPlan ? (
+                    {subscriptionPlan.name !== "FREE" &&
+                        <button
+                            onClick={(e) => openSession(e, subscriptionPlan.stripePriceId)}
+                            className={cn(buttonVariants())}
+                            disabled={isLoading}
+                        >
+                            {isLoading && (
+                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                            )}
+                            Manage Subscription
+                        </button>
+                    }
+                    {subscriptionPlan.name !== "FREE" ? (
                         <p className="rounded-full text-xs font-medium">
                             {subscriptionPlan.isCanceled
                                 ? "Your plan will be canceled on "
