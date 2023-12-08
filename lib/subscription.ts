@@ -34,11 +34,11 @@ export async function getUserSubscriptionPlan(
         const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId)
 
         console.log(subscription)
-        if (subscription.plan.nickname === "Pro") {
+        if (subscription.plan.nickname === "Pro plan") {
             plan = proPlan
-        } else if (subscription.plan.nickname === "Hobby") {
+        } else if (subscription.plan.nickname === "Hobby plan") {
             plan = hobbyPlan
-        } else if (subscription.plan.nickname === "Basic") {
+        } else if (subscription.plan.nickname === "Basic plan") {
             plan = basicPlan
         }
     }
