@@ -58,11 +58,27 @@ export async function PATCH(
   req: Request,
   context: z.infer<typeof routeContextSchema>
 ) {
+  const session = await getServerSession(authOptions)
   const { params } = routeContextSchema.parse(context)
 
   if (!(await verifyCurrentUserHasAccessToChatbot(params.chatbotId))) {
     return new Response(null, { status: 403 })
   }
+
+  const openAIConfig = await db.openAIConfig.findUnique({
+    select: {
+      globalAPIKey: true,
+      id: true,
+    },
+    where: {
+      userId: session?.user?.id
+    }
+  })
+
+  if (!openAIConfig?.globalAPIKey) {
+    return new Response("Missing OpenAI API key", { status: 403 })
+  }
+
   const body = await req.json()
   const payload = chatbotSchema.parse(body)
 
@@ -81,6 +97,9 @@ export async function PATCH(
       select: {
         id: true,
         name: true,
+        openaiId: true,
+        prompt: true,
+        modelId: true,
       },
     })
 
@@ -106,6 +125,41 @@ export async function PATCH(
         fileId: payload.files,
       },
     })
+
+    const openai = new OpenAI({
+      apiKey: openAIConfig?.globalAPIKey
+    })
+
+    const model = await db.chatbotModel.findFirst({
+      where: {
+        id: chatbot.modelId,
+      },
+      select: {
+        id: true,
+        name: true,
+      }
+    })
+
+    const file = await db.file.findUnique({
+      where: {
+        id: payload.files,
+      },
+      select: {
+        id: true,
+        name: true,
+        openAIFileId: true,
+      }
+    })
+
+    await openai.beta.assistants.update(
+      chatbot.openaiId,
+      {
+        name: chatbot.name,
+        instructions: chatbot.prompt,
+        model: model?.name,
+        file_ids: [file?.openAIFileId || ''],
+      }
+    )
 
     return new Response(JSON.stringify(chatbot))
   } catch (error) {

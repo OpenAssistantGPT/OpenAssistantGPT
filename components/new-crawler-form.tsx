@@ -52,6 +52,14 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
         setIsSaving(false)
 
         if (!response?.ok) {
+            if (response.status === 402) {
+                return toast({
+                    title: "Limit your crawler limit.",
+                    description: "Please upgrade to the a higher plan.",
+                    variant: "destructive",
+                })
+            }
+
             return toast({
                 title: "Something went wrong.",
                 description: "Your crawler was not saved. Please try again.",
@@ -150,7 +158,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                         onChange={field.onChange}
                                     />
                                     <FormDescription>
-                                        The selector will be used by the query selector to get the content from a specific part of the website. 
+                                        The selector will be used by the query selector to get the content from a specific part of the website.
                                         You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;)
                                     </FormDescription>
                                     <FormMessage />

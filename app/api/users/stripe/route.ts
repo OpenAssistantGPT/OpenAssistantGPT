@@ -6,16 +6,20 @@ import { authOptions } from "@/lib/auth"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
+import { stripeCheckoutSchema } from "@/lib/validations/stripeCheckout"
 
 const billingUrl = absoluteUrl("dashboard/billing")
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
     try {
         const session = await getServerSession(authOptions)
 
         if (!session?.user || !session?.user.email) {
             return new Response(null, { status: 403 })
         }
+
+        const body = await req.json()
+        const payload = stripeCheckoutSchema.parse(body)
 
         const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
 
@@ -42,7 +46,7 @@ export async function GET(req: Request) {
             customer_email: session.user.email,
             line_items: [
                 {
-                    price: proPlan.stripePriceId,
+                    price: payload.priceId,
                     quantity: 1,
                 },
             ],

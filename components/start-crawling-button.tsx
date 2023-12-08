@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { Crawler } from "@prisma/client"
 import { useState } from "react"
+import { toast } from "./ui/use-toast"
 
 interface CrawlingProps extends React.HTMLAttributes<HTMLFormElement> {
     crawler: Pick<Crawler, "id" | "name" | "crawlUrl" | "selector" | "urlMatch">
@@ -24,7 +25,26 @@ export function StartCrawlingButton({
     async function onClick() {
         setIsLoading(true)
 
-        await fetch(`/api/crawlers/${crawler.id}/crawling`)
+        const response = await fetch(`/api/crawlers/${crawler.id}/crawling`)
+
+        if (!response?.ok) {
+            if (response.status === 402) {
+                return toast({
+                    title: "File limit reached.",
+                    description: "Please upgrade to the a higher plan.",
+                    variant: "destructive",
+                })
+            }
+            return toast({
+                title: "Something went wrong.",
+                description: "Your crawling failed. Please try again.",
+                variant: "destructive",
+            })
+        }
+
+        toast({
+            description: "Crawling finished.",
+        })
 
         setIsLoading(false)
         router.refresh()

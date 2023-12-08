@@ -3,6 +3,8 @@ import { authOptions } from "@/lib/auth";
 import * as z from "zod"
 
 import { db } from "@/lib/db"
+import { getUserSubscriptionPlan } from "@/lib/subscription";
+import { RequiresHigherPlanError } from "@/lib/exceptions";
 
 const crawlerCreateSchema = z.object({
     name: z.string(),
@@ -46,20 +48,19 @@ export async function POST(req: Request) {
             return new Response("Unauthorized", { status: 403 })
         }
 
-        // const { user } = session
-        // If user is on a free plan.
-        // Check if user has reached limit of 3 posts.
-        //if (!subscriptionPlan?.isPro) {
-        //    const count = await db.post.count({
-        //        where: {
-        //            authorId: user.id,
-        //        },
-        //    })
+        // Validate user subscription plan
+        const { user } = session
+        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
-        //    if (count >= 3) {
-        //        throw new RequiresProPlanError()
-        //    }
-        //}
+        const count = await db.crawler.count({
+            where: {
+                userId: user.id,
+            },
+        })
+
+        if (count >= subscriptionPlan.maxCrawlers) {
+            throw new RequiresHigherPlanError()
+        }
 
         const json = await req.json()
         const body = crawlerCreateSchema.parse(json)
@@ -80,13 +81,14 @@ export async function POST(req: Request) {
 
         return new Response(JSON.stringify(crawler))
     } catch (error) {
+        console.log(error)
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 })
         }
 
-        //if (error instanceof RequiresProPlanError) {
-        //    return new Response("Requires Pro Plan", { status: 402 })
-        //}
+        if (error instanceof RequiresHigherPlanError) {
+            return new Response("Requires Pro Plan", { status: 402 })
+        }
 
         return new Response(null, { status: 500 })
     }

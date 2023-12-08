@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db"
 import { chatbotSchema } from "@/lib/validations/chatbot";
 import OpenAI from "openai";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
+import { RequiresHigherPlanError } from "@/lib/exceptions";
 
 export const maxDuration = 60;
 
@@ -41,7 +43,19 @@ export async function POST(req: Request) {
       return new Response("Unauthorized", { status: 403 })
     }
 
+    // Validate user subscription plan
     const { user } = session
+    const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
+    const count = await db.chatbot.count({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    if (count >= subscriptionPlan.maxChatbots) {
+      throw new RequiresHigherPlanError()
+    }
 
     const json = await req.json()
     const body = chatbotSchema.parse(json)
@@ -131,6 +145,11 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ chatbot }))
   } catch (error) {
     console.log(error)
+
+    if (error instanceof RequiresHigherPlanError) {
+      return new Response("Upgrade to higher plan", { status: 402 })
+    }
+
     return new Response(null, { status: 500 })
   }
 }
