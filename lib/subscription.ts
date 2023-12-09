@@ -28,7 +28,6 @@ export async function getUserSubscriptionPlan(
     const hasPlan = user.stripePriceId &&
         user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
 
-    console.log(hasPlan)
     let plan = freePlan
     if (hasPlan) {
         const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId)

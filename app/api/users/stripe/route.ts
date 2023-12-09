@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth/next"
 import { z } from "zod"
 
-import { proPlan } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
@@ -25,7 +24,7 @@ export async function POST(req: Request) {
 
         // The user is on the pro plan.
         // Create a portal session to manage subscription.
-        if (subscriptionPlan.isPro && subscriptionPlan.stripeCustomerId) {
+        if (subscriptionPlan.stripeCustomerId) {
             const stripeSession = await stripe.billingPortal.sessions.create({
                 customer: subscriptionPlan.stripeCustomerId,
                 return_url: billingUrl,
