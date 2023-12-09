@@ -22,7 +22,6 @@ interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
         isCanceled: boolean
     }
 }
-const plans = [freePlan, hobbyPlan, basicPlan, proPlan]
 
 export function BillingForm({
     subscriptionPlan,
@@ -103,10 +102,10 @@ export function BillingForm({
             </Card>
             <Card className="border-0">
                 <div className="flex flex-wrap gap-6 mt-8 md:gap-8">
-                    {plans.map((plan) => {
+                    {[freePlan, hobbyPlan, basicPlan, proPlan].map((plan, i) => {
                         if (plan.stripePriceId !== subscriptionPlan.stripePriceId) {
                             return (
-                                <Card key={plan.name}>
+                                <Card key={i}>
                                     <CardHeader>
                                         <CardTitle>{plan.name}</CardTitle>
                                         <CardDescription>${plan.price}/ month</CardDescription>
@@ -129,7 +128,7 @@ export function BillingForm({
                                                     </li>
                                                     :
                                                     <li className="flex items-center">
-                                                        - {plan.maxMessagesPerMonth} Messages per month
+                                                        - {plan.maxMessagesPerMonth} Messages / Month
                                                     </li>
                                             }
                                         </ul>
