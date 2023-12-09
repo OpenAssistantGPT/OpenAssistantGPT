@@ -50,7 +50,7 @@ export default function ChatBox() {
 
     setNewMessage("")
 
-    const message = await fetch(`${siteConfig.url}/api/chat`, {
+    const message = await fetch(`${siteConfig.url}api/chat`, {
       method: "POST",
       body: JSON.stringify({
         message: newMessage,
