@@ -15,7 +15,7 @@ document.body.appendChild(rootDiv);
 const root = createRoot(document.getElementById('chatbot-root'));
 
 root.render(
-    <ShadowRootComponent styleUrl="https://openassistantgpt.vercel.app/chatbot.css">
+    <ShadowRootComponent styleUrl="https://dev-openassistantgpt.vercel.app/chatbot.css">
         <ChatBox />
     </ShadowRootComponent>
 );
