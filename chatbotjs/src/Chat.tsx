@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
-import { siteConfig } from "@/config/site"
 
 interface ChatbotConfig {
   id: number;
@@ -50,7 +49,7 @@ export default function ChatBox() {
 
     setNewMessage("")
 
-    const message = await fetch(`${siteConfig.url}api/chat`, {
+    const message = await fetch(`https://dev-openassistantgpt.vercel.app/api/chat`, {
       method: "POST",
       body: JSON.stringify({
         message: newMessage,
@@ -90,7 +89,7 @@ export default function ChatBox() {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
-      const config = await fetch(`${siteConfig.url}api/chatbots/${id}/config`)
+      const config = await fetch(`https://dev-openassistantgpt.vercel.app/api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
 
