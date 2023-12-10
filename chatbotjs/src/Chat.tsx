@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
+import { siteConfig } from '@/config/site';
 
 interface ChatbotConfig {
   id: number;
