@@ -83,7 +83,6 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
 
         router.refresh()
     }
-    console.log(currentFileId)
 
     return (
         <Form {...form}>

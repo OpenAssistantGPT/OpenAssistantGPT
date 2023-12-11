@@ -4,6 +4,7 @@ import OpenAI from "openai"
 import { z } from "zod"
 import { sleep } from "@/lib/utils";
 import { chatSchema } from "@/lib/validations/chat";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
 
 
 export const maxDuration = 120;
@@ -18,6 +19,7 @@ export async function POST(req: Request) {
             select: {
                 id: true,
                 openaiKey: true,
+                userId: true,
                 openaiId: true,
             },
             where: {
@@ -28,6 +30,27 @@ export async function POST(req: Request) {
         if (!chatbot) {
             return new Response(null, { status: 404 })
         }
+
+        const plan = await getUserSubscriptionPlan(chatbot.userId)
+        console.log(plan)
+        if (plan.unlimitedMessages === false) {
+            console.log("Checking message count")
+            const messageCount = await db.message.count({
+                where: {
+                    chatbotId: payload.chatbotId,
+                    createdAt: {
+                        gte: new Date(new Date().setDate(new Date().getDate() - 30))
+                    }
+                }
+            })
+            console.log(`Message count: ${messageCount}`)
+
+            if (messageCount >= plan.maxMessagesPerMonth!) {
+                console.log("Message limit reached")
+                return new Response("Message limit reached", { status: 402 })
+            }
+        }
+
 
         const openai = new OpenAI({
             apiKey: chatbot.openaiKey
@@ -65,7 +88,14 @@ export async function POST(req: Request) {
 
         // get message from id
         const message = await openai.beta.threads.messages.retrieve(run.thread_id, lastmessageId!.step_details.message_creation.message_id)
-        console.log(message.content[0].text)
+
+        await db.message.create({
+            data: {
+                chatbotId: payload.chatbotId,
+                message: payload.message,
+                response: message.content[0].text.value,
+            }
+        })
 
         return new Response(JSON.stringify(message.content[0].text), { status: 200 })
     } catch (error) {

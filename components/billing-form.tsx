@@ -148,6 +148,7 @@ export function BillingForm({
                         }
                     }
                     )}
+                    {/** 
                     <Card key="enterprise">
                         <CardHeader>
                             <CardTitle>Enterprise</CardTitle>
@@ -177,6 +178,7 @@ export function BillingForm({
                             </Button>
                         </CardFooter>
                     </Card>
+                    **/}
                 </div>
             </Card>
 

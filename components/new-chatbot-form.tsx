@@ -62,7 +62,6 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
         })
 
         const files = await response.json()
-        console.log(files)
         return files
     }
 

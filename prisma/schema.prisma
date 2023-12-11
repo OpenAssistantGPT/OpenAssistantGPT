@@ -40,6 +40,7 @@ model Chatbot {
   user         User           @relation(fields: [userId], references: [id])
   model        ChatbotModel   @relation(fields: [modelId], references: [id])
   ChatbotFiles ChatbotFiles[]
+  Message      Message[]
 
   @@map(name: "chatbots")
 }
@@ -67,6 +68,18 @@ model ChatbotModel {
   Chatbot Chatbot[]
 
   @@map(name: "models")
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  message   String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  response  String
+
+  chatbotId String
+  chatbot   Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+
+  @@map(name: "messages")
 }
 
 model Crawler {

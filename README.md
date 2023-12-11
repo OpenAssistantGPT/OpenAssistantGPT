@@ -1,26 +1,24 @@
 
-
-1. Flow when we don't have ur API key put a big popup at the start!
-2. Upload a file
-3. Create chatbot
-
-
-TODO:
 - DONE! Do DB update
 - DONE! Add a alert at  the start if user doesnt have an API key
 - DONE! update crawlers
 - DONE! Create include js to implement in website
-- -------------------
 - DONE! Add clear chat on chatbotjs
 - DONE! When update chatbot also update openAI
-- Add minimify in chatbotjs build.sh
+- DONE! Add minimify in chatbotjs build.sh
 - DONE! When update chatbot also update openAI
-- Make sure that people import a file before create a chatbot
 - DONE! Finish the Update chatbot form
 - DONE! Add maximum file size while uploading and crawling
 - DONE! create subscriptions
-- Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
 - DONE! Validate on all api call that the user has an api key
+
+TODO:
+- track messages and count the number of messages
+- If the user has more than 20 messages this month, ask him to upgrade to a paid plan
+- Display to home page the number of messages this month and if limit is reached
+- Create documentation with gitbooks and implement our own chatbot with it
+- Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
+
 
 
 - SECURITY: CREATE LIMIT RATE
