@@ -124,7 +124,7 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                         id="crawlUrl"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The URL that we will start the crawling on.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -144,7 +144,7 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                         id="urlmatch"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        When we crawl we will make sure to always match with this string.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -164,7 +164,7 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                         id="selector"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The selector will be used by the query selector to get the content from a specific part of the website. You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;)
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

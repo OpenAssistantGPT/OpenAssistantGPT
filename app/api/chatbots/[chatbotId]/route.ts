@@ -113,11 +113,15 @@ export async function PATCH(
       }
     })
 
-    await db.chatbotFiles.delete({
-      where: {
-        id: currentFile?.id
-      }
-    })
+    try {
+      await db.chatbotFiles.delete({
+        where: {
+          id: currentFile?.id
+        }
+      })
+    } catch (error) {
+      console.log("No file to delete")
+    }
 
     await db.chatbotFiles.create({
       data: {

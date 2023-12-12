@@ -28,6 +28,8 @@ import {
   LayoutDashboard,
   LucideIcon,
   MessageSquare,
+  Key,
+  Coins
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -37,6 +39,8 @@ export const Icons = {
   folder: FolderClosed,
   dashboard: LayoutDashboard,
   close: X,
+  key: Key,
+  coin: Coins,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,

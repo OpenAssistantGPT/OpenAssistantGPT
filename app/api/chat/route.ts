@@ -32,9 +32,7 @@ export async function POST(req: Request) {
         }
 
         const plan = await getUserSubscriptionPlan(chatbot.userId)
-        console.log(plan)
         if (plan.unlimitedMessages === false) {
-            console.log("Checking message count")
             const messageCount = await db.message.count({
                 where: {
                     chatbotId: payload.chatbotId,

@@ -149,7 +149,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                         id="welcomemessage"
                                     />
                                     <FormDescription>
-                                        The message that will be sent when a user starts a conversation
+                                        The welcome message that will be sent to the user when they start a conversation
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>)}
@@ -167,7 +167,8 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                         id="prompt"
                                     />
                                     <FormDescription>
-                                        The default prompt that will be sent to the Open AI API
+                                        The prompt that will be sent to OpenAI for every messages, here&apos;s and example:
+                                        &quot;You are a assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -219,7 +220,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                         type="password"
                                     />
                                     <FormDescription>
-                                        The Open AI API key that will be used to connect to the API
+                                        The Open AI API key that will be used to generate responses
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

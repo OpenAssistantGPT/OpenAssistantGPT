@@ -135,7 +135,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                         type="password"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The API key that will be used to generate responses
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -187,7 +187,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                         id="welcomeMessage"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        The first message that will be sent to the user when they start a conversation with your chatbot.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -207,7 +207,8 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                         id="prompt"
                                     />
                                     <FormDescription>
-                                        The name that will be displayed in the dashboard
+                                        This is the prompt that will be sent to OpenAI, here&apos;s and example:
+                                        &quot;You are a assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
