@@ -43,7 +43,7 @@ export default async function DashboardLayout({
                     {children}
                 </main>
             </div>
-            <SiteFooter className="border-t" />
+            <SiteFooter simpleFooter={true} />
         </div>
     )
 }
