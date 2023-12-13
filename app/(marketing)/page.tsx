@@ -26,7 +26,7 @@ export default function Home() {
           </p>
           <div className="space-x-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
-              Get Started
+              Get Started for Free
             </Link>
             <Link
               href={"/"}
