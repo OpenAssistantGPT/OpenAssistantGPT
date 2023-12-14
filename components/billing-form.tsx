@@ -136,7 +136,7 @@ export function BillingForm({
                                     <CardFooter>
                                         <Button
                                             onClick={(e) => openSession(e, plan.stripePriceId)}
-                                            className="w-full">
+                                            className={cn(buttonVariants())}>
                                             {isLoading && (
                                                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                                             )}
@@ -148,6 +148,7 @@ export function BillingForm({
                         }
                     }
                     )}
+                    {/** 
                     <Card key="enterprise">
                         <CardHeader>
                             <CardTitle>Enterprise</CardTitle>
@@ -172,14 +173,12 @@ export function BillingForm({
                         <CardFooter>
                             <Button
                                 type="submit"
-                                className="w-full">
-                                {isLoading && (
-                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                )}
+                                className={cn(buttonVariants())}>
                                 Contact Sales
                             </Button>
                         </CardFooter>
                     </Card>
+                    **/}
                 </div>
             </Card>
 

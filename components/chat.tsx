@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form"
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { useEffect, useState } from "react"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
+import { toast } from "./ui/use-toast"
 
 interface ChatbotProps {
   chatbot: Pick<Chatbot, "id" | "name" | "welcomeMessage">
@@ -39,38 +40,45 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   async function onSubmit(data: FormData, e: any) {
-    try {
-      setIsLoading(true)
+    setIsLoading(true)
 
-      setMessages(messages => [...messages, {
-        number: messages.length + 1,
-        message: data.message,
-        from: "user",
-      }])
+    setMessages(messages => [...messages, {
+      number: messages.length + 1,
+      message: data.message,
+      from: "user",
+    }])
 
-      e.target.reset()
+    e.target.reset()
 
-      const body = {
-        message: data.message,
-        chatbotId: chatbot.id,
-      }
-
-      const response = await fetch(`/api/chat`, {
-        method: "POST",
-        body: JSON.stringify(body),
-      })
-
-      const botResponse = await response.json();
-
-      setMessages(messages => [...messages, {
-        number: messages.length + 1,
-        message: botResponse.value,
-        from: "bot",
-      }])
-
-    } catch (error) {
-      console.error(error)
+    const body = {
+      message: data.message,
+      chatbotId: chatbot.id,
     }
+
+    const response = await fetch(`/api/chat`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    })
+
+    if (!response?.ok) {
+      if (response.status === 402) {
+        setIsLoading(false)
+        return toast({
+          title: "Message limit reached.",
+          description: "Please upgrade to higher plan to unlock unlimited messages.",
+          variant: "destructive",
+        })
+      }
+    }
+
+    const botResponse = await response.json();
+
+    setMessages(messages => [...messages, {
+      number: messages.length + 1,
+      message: botResponse.value,
+      from: "bot",
+    }])
+
 
     setIsLoading(false)
   }
@@ -110,7 +118,29 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
                 return (
                   <div key={message.number} className="flex items-end gap-2">
                     <div className="rounded-lg bg-zinc-200 p-2">
-                      <p className="text-sm">{message.message}</p>
+                      {message.message.replace(/\【\d+†source】/g, '') // Remove citation markers
+                        .split('```').map((block, blockIdx) => {
+                          // Check if the block is a code block or normal text
+                          if (blockIdx % 2 === 1) {
+                            // Render code block
+                            return <pre key={blockIdx}><code>{block}</code></pre>;
+                          } else {
+                            // Process normal text for ** and \n
+                            return block.split('\n').map((line, lineIndex, lineArray) => (
+                              <p key={`${blockIdx}-${lineIndex}`} className={`text-sm ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
+                                {line.split('**').map((segment, segmentIndex) => {
+                                  // Render bold text for segments surrounded by **
+                                  if (segmentIndex % 2 === 1) {
+                                    return <strong key={segmentIndex}>{segment}</strong>;
+                                  } else {
+                                    // Render normal text for other segments
+                                    return <span key={segmentIndex}>{segment}</span>;
+                                  }
+                                })}
+                              </p>
+                            ));
+                          }
+                        })}
                     </div>
                   </div>
                 )

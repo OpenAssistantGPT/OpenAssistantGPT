@@ -1,18 +1,54 @@
 import * as React from "react"
 
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
+import Link from "next/link"
 
-export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
+interface SiteFooterProps {
+  simpleFooter?: boolean
+}
+
+export function SiteFooter({ simpleFooter }: SiteFooterProps) {
   return (
-    <footer className={cn(className)}>
-      <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
-        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-          <Icons.bot />
-          <p className="text-center text-sm leading-loose md:text-left">
-            {siteConfig.name}
-          </p>
+    <footer className="p-2 m-5">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {!simpleFooter &&
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-gray-700">Explore</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link className="text-base text-gray-500 hover:text-blue-500" href="">
+                    Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-base text-gray-500 hover:text-blue-500" href="">
+                    App
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-gray-700">Social</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link target="_blank" className="text-base text-gray-500 hover:text-blue-500" href="">
+                    ProductHunt
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        }
+        <div className="flex justify-between items-center border-t border-gray-200 mt-8 pt-4">
+          <div className="text-sm text-gray-500 flex flex-row"> <Icons.bot className="mr-2" /> © 2023 {siteConfig.name}. All rights reserved.</div>
+          <div className="flex items-center space-x-4">
+            <Link className="text-sm text-gray-500 hover:text-blue-500" href="#">
+            </Link>
+            <Link className="text-sm text-gray-500 hover:text-blue-500" href="#">
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -1,6 +1,6 @@
 // @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
-import { UserSubscriptionPlan } from "types"
+import { UserSubscriptionPlan } from "@/types"
 import { basicPlan, freePlan, hobbyPlan, proPlan } from "@/config/subscriptions"
 import { db } from "@/lib/db"
 import { stripe } from "@/lib/stripe"
@@ -32,7 +32,6 @@ export async function getUserSubscriptionPlan(
     if (hasPlan) {
         const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId)
 
-        console.log(subscription)
         if (subscription.plan.nickname === "Pro plan") {
             plan = proPlan
         } else if (subscription.plan.nickname === "Hobby plan") {

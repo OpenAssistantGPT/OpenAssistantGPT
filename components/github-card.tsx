@@ -2,7 +2,6 @@
 import {
     ChevronDownIcon,
     CircleIcon,
-    PlusIcon,
     StarIcon,
 } from "@radix-ui/react-icons"
 
@@ -16,28 +15,25 @@ import {
 } from "@/components/ui/card"
 import {
     DropdownMenu,
-    DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
-import { Icon } from "@radix-ui/react-select"
 import { Icons } from "./icons"
+import { siteConfig } from "@/config/site"
 
 export function GithubCard() {
     return (
         <Card>
             <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
                 <div className="space-y-1">
-                    <CardTitle>marcolivierbouch/chatbot</CardTitle>
+                    <CardTitle>marcolivierbouch/{siteConfig.name}</CardTitle>
                     <CardDescription>
-                        Chatbot using custom gpts
+                        {siteConfig.description}
                     </CardDescription>
                 </div>
-                <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
+                <div className="flex hidden items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
                     <Button variant="secondary" className="px-3 shadow-none">
                         <StarIcon className="mr-2 h-4 w-4" />
                         Star
@@ -72,7 +68,7 @@ export function GithubCard() {
                         <StarIcon className="mr-1 h-3 w-3" />
                         20k
                     </div>
-                    <div>Updated April 2023</div>
+                    <div>Updated 2023</div>
                 </div>
             </CardContent>
         </Card>

@@ -47,6 +47,24 @@ export default async function DashboardPage() {
     },
   })
 
+  const messageCountLast30Days = await db.message.count({
+    where: {
+      chatbotId: {
+        in: await db.chatbot.findMany({
+          select: {
+            id: true,
+          },
+          where: {
+            userId: user.id,
+          },
+        }).then(chatbots => chatbots.map(chatbot => chatbot.id))
+      },
+      createdAt: {
+        gte: new Date(new Date().setDate(new Date().getDate() - 30))
+      }
+    }
+  })
+
   const openaiConfig = await db.openAIConfig.findFirst({
     select: {
       id: true,
@@ -98,6 +116,17 @@ export default async function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{files}</div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Messages last 30 days
+                </CardTitle>
+                <Icons.message className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{messageCountLast30Days}</div>
               </CardContent>
             </Card>
           </div>

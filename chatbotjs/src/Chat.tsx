@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
-import { siteConfig } from "@/config/site"
+import { siteConfig } from '@/config/site';
 
 interface ChatbotConfig {
   id: number;
@@ -50,7 +50,7 @@ export default function ChatBox() {
 
     setNewMessage("")
 
-    const message = await fetch(`${siteConfig.url}api/chat`, {
+    const message = await fetch(`https://dev-openassistantgpt.vercel.app/api/chat`, {
       method: "POST",
       body: JSON.stringify({
         message: newMessage,
@@ -90,7 +90,7 @@ export default function ChatBox() {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
-      const config = await fetch(`${siteConfig.url}api/chatbots/${id}/config`)
+      const config = await fetch(`https://dev-openassistantgpt.vercel.app/api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
 
@@ -127,7 +127,29 @@ export default function ChatBox() {
                   return (
                     <div key={message.number} className="flex items-end gap-2">
                       <div className="rounded-lg bg-zinc-200 p-2">
-                        <p className="text-sm">{message.message}</p>
+                        {message.message.replace(/\【\d+†source】/g, '') // Remove citation markers
+                          .split('```').map((block, blockIdx) => {
+                            // Check if the block is a code block or normal text
+                            if (blockIdx % 2 === 1) {
+                              // Render code block
+                              return <pre key={blockIdx}><code>{block}</code></pre>;
+                            } else {
+                              // Process normal text for ** and \n
+                              return block.split('\n').map((line, lineIndex, lineArray) => (
+                                <p key={`${blockIdx}-${lineIndex}`} className={`text-sm ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
+                                  {line.split('**').map((segment, segmentIndex) => {
+                                    // Render bold text for segments surrounded by **
+                                    if (segmentIndex % 2 === 1) {
+                                      return <strong key={segmentIndex}>{segment}</strong>;
+                                    } else {
+                                      // Render normal text for other segments
+                                      return <span key={segmentIndex}>{segment}</span>;
+                                    }
+                                  })}
+                                </p>
+                              ));
+                            }
+                          })}
                       </div>
                     </div>
                   )

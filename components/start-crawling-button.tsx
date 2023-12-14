@@ -28,6 +28,7 @@ export function StartCrawlingButton({
         const response = await fetch(`/api/crawlers/${crawler.id}/crawling`)
 
         if (!response?.ok) {
+            setIsLoading(false)
             if (response.status === 402) {
                 return toast({
                     title: "File limit reached.",
