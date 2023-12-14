@@ -54,13 +54,13 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
         if (!response?.ok) {
             return toast({
                 title: "Something went wrong.",
-                description: "Your OpenAi configuration was not updated. Please try again.",
+                description: "Your OpenAI configuration was not updated. Please try again.",
                 variant: "destructive",
             })
         }
 
         toast({
-            description: "Your OpenAi configuration has been updated.",
+            description: "Your OpenAI configuration has been updated.",
         })
 
         router.refresh()

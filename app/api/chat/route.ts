@@ -90,6 +90,7 @@ export async function POST(req: Request) {
         await db.message.create({
             data: {
                 chatbotId: payload.chatbotId,
+                userId: chatbot.userId,
                 message: payload.message,
                 response: message.content[0].text.value,
             }

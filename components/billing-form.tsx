@@ -100,52 +100,99 @@ export function BillingForm({
                     ) : null}
                 </CardFooter>
             </Card>
-            <Card className="border-0">
+            <Card className="border-0 shadow-0">
                 <div className="flex flex-wrap gap-6 mt-8 md:gap-8">
                     {[freePlan, hobbyPlan, basicPlan, proPlan].map((plan, i) => {
-                        if (plan.stripePriceId !== subscriptionPlan.stripePriceId) {
+                        if (plan.name === basicPlan.name) {
                             return (
-                                <Card key={i}>
-                                    <CardHeader>
-                                        <CardTitle>{plan.name}</CardTitle>
-                                        <CardDescription>${plan.price}/ month</CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <ul className="mt-4 space-y-2">
-                                            <li className="flex items-center">
-                                                - {plan.maxChatbots} Chatbots
-                                            </li>
-                                            <li className="flex items-center">
-                                                - {plan.maxCrawlers} Crawlers
-                                            </li>
-                                            <li className="flex items-center">
-                                                - {plan.maxFiles} Files
-                                            </li>
-                                            {
-                                                plan.unlimitedMessages ?
-                                                    <li className="flex items-center">
-                                                        - Unlimited Messages
-                                                    </li>
-                                                    :
-                                                    <li className="flex items-center">
-                                                        - {plan.maxMessagesPerMonth} Messages / Month
-                                                    </li>
-                                            }
-                                        </ul>
-                                    </CardContent>
-                                    <CardFooter>
-                                        <Button
-                                            onClick={(e) => openSession(e, plan.stripePriceId)}
-                                            className={cn(buttonVariants())}>
-                                            {isLoading && (
-                                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                            )}
-                                            Upgrade
-                                        </Button>
-                                    </CardFooter>
-                                </Card>
-                            )
+                            <div key={i} className="hover:shadow-xl relative flex flex-col p-2 bg-white shadow-lg rounded-lg  bg-zinc-850 justify-between border border-purple-500">
+                            <div className="px-3 py-1 text-sm text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-full inline-block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                              Popular
+                            </div>
+                            <Card className="shadow-none border-0 p-0 m-0"key={i}>
+                                <CardHeader>
+                                    <CardTitle>{plan.name}</CardTitle>
+                                    <CardDescription>${plan.price}/ month</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <ul className="mt-4 space-y-2">
+                                        <li className="flex items-center">
+                                            - {plan.maxChatbots} Chatbots
+                                        </li>
+                                        <li className="flex items-center">
+                                            - {plan.maxCrawlers} Crawlers
+                                        </li>
+                                        <li className="flex items-center">
+                                            - {plan.maxFiles} Files
+                                        </li>
+                                        {
+                                            plan.unlimitedMessages ?
+                                                <li className="flex items-center">
+                                                    - Unlimited Messages
+                                                </li>
+                                                :
+                                                <li className="flex items-center">
+                                                    - {plan.maxMessagesPerMonth} Messages / Month
+                                                </li>
+                                        }
+                                    </ul>
+                                </CardContent>
+                                <CardFooter>
+                                    <Button
+                                        onClick={(e) => openSession(e, plan.stripePriceId)}
+                                        className={cn(buttonVariants())}>
+                                        {isLoading && (
+                                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                        )}
+                                        Upgrade
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                            </div>)
                         }
+                        return (
+                            <div key={i} className="hover:shadow-xl relative flex flex-col p-2 bg-white shadow-lg rounded-lg bg-zinc-850 justify-between border ">
+                            <Card className="shadow-none border-0 p-0 m-0"key={i}>
+                                <CardHeader>
+                                    <CardTitle>{plan.name}</CardTitle>
+                                    <CardDescription>${plan.price}/ month</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <ul className="mt-4 space-y-2">
+                                        <li className="flex items-center">
+                                            - {plan.maxChatbots} Chatbots
+                                        </li>
+                                        <li className="flex items-center">
+                                            - {plan.maxCrawlers} Crawlers
+                                        </li>
+                                        <li className="flex items-center">
+                                            - {plan.maxFiles} Files
+                                        </li>
+                                        {
+                                            plan.unlimitedMessages ?
+                                                <li className="flex items-center">
+                                                    - Unlimited Messages
+                                                </li>
+                                                :
+                                                <li className="flex items-center">
+                                                    - {plan.maxMessagesPerMonth} Messages / Month
+                                                </li>
+                                        }
+                                    </ul>
+                                </CardContent>
+                                <CardFooter>
+                                    <Button
+                                        onClick={(e) => openSession(e, plan.stripePriceId)}
+                                        className={cn(buttonVariants())}>
+                                        {isLoading && (
+                                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                        )}
+                                        Upgrade
+                                    </Button>
+                                </CardFooter>
+                            </Card>
+                            </div>
+                        )
                     }
                     )}
                     {/** 
