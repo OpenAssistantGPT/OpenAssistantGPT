@@ -7,8 +7,8 @@ export const marketingConfig: MarketingConfig = {
       href: "/#features",
     },
     {
-      title: "Pricing",
-      href: "/pricing",
+      title: "Documentation",
+      href: "https://gitbooks.io",
     }
   ],
 }

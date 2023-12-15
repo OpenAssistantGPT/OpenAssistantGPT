@@ -16,21 +16,28 @@ TODO:
 - DONE! track messages and count the number of messages
 - DONE! If the user has more than 20 messages this month, ask him to upgrade to a paid plan
 - DONE! Display to home page the number of messages this month and if limit is reached
-- Display markdown correctly in chat
+- DONE! Display markdown correctly in chat
+- DONE! Add user ID on messages and remove delete cascade on messages when deleting a chatbot
 
-- After X message ask the user to contact you directly by email
-- Get the url from the citation and display it as a link in the chat
 
 - Create documentation with gitbooks and implement our own chatbot with it
 
-- Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
+- Create production pricing on stripe and set variable in env
+- Create support page
+  - email
+  - questions
+  - add to db
 
+- Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
 
 
 - SECURITY: CREATE LIMIT RATE
 - SECURITY: VALIDATE THAT THE CHATBOT REQUEST COMES FROM THE GOOD WEBSITE
 
+After release:
 - Use threads to keep converstaion context
+- After X message ask the user to contact you directly by email
+- Get the url from the citation and display it as a link in the chat
 
 
 CLIENT CHATBOTJS:

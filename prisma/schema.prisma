@@ -40,7 +40,6 @@ model Chatbot {
   user         User           @relation(fields: [userId], references: [id])
   model        ChatbotModel   @relation(fields: [modelId], references: [id])
   ChatbotFiles ChatbotFiles[]
-  Message      Message[]
 
   @@map(name: "chatbots")
 }
@@ -76,8 +75,10 @@ model Message {
   createdAt DateTime @default(now()) @map(name: "created_at")
   response  String
 
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   chatbotId String
-  chatbot   Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
 
   @@map(name: "messages")
 }
@@ -143,6 +144,7 @@ model User {
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  Message                Message[]
 }
 
 model VerificationToken {

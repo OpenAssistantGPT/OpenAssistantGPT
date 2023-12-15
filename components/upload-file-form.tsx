@@ -63,6 +63,7 @@ export function UploadFileForm({ className, ...props }: UploadFileFormProps) {
                     variant: "destructive",
                 })
             }
+
             return toast({
                 title: "Something went wrong.",
                 description: "Your file was not uploaded. Please try again.",

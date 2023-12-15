@@ -49,16 +49,7 @@ export default async function DashboardPage() {
 
   const messageCountLast30Days = await db.message.count({
     where: {
-      chatbotId: {
-        in: await db.chatbot.findMany({
-          select: {
-            id: true,
-          },
-          where: {
-            userId: user.id,
-          },
-        }).then(chatbots => chatbots.map(chatbot => chatbot.id))
-      },
+      userId: user.id,
       createdAt: {
         gte: new Date(new Date().setDate(new Date().getDate() - 30))
       }

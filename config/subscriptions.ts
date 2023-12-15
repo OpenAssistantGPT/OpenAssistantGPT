@@ -9,7 +9,7 @@ export const freePlan: SubscriptionPlan = {
     maxCrawlers: 1,
     maxFiles: 2,
     unlimitedMessages: false,
-    maxMessagesPerMonth: 20,
+    maxMessagesPerMonth: 10,
 
     price: 0,
 }
@@ -22,8 +22,8 @@ export const hobbyPlan: SubscriptionPlan = {
     maxChatbots: 1,
     maxCrawlers: 1,
     maxFiles: 2,
-    unlimitedMessages: true,
-    maxMessagesPerMonth: undefined,
+    unlimitedMessages: false,
+    maxMessagesPerMonth: 100,
 
     price: 3,
 }
@@ -39,7 +39,7 @@ export const basicPlan: SubscriptionPlan = {
     unlimitedMessages: true,
     maxMessagesPerMonth: undefined,
 
-    price: 9,
+    price: 8,
 }
 
 export const proPlan: SubscriptionPlan = {
@@ -53,5 +53,5 @@ export const proPlan: SubscriptionPlan = {
     unlimitedMessages: true,
     maxMessagesPerMonth: undefined,
 
-    price: 36,
+    price: 30,
 }
