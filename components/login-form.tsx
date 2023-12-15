@@ -3,12 +3,10 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import LoadingDots from "@/components/loading-dots";
-import { useRouter } from "next/navigation";
 import { Icons } from "./icons";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   return (
     <form
@@ -16,9 +14,6 @@ export default function LoginForm() {
         e.preventDefault();
         setLoading(true);
         await signIn("github")
-
-        router.refresh()
-        router.push("/dashboard")
       }}
       className="flex flex-col space-y-4 px-4 py-8 sm:px-16"
     >
