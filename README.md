@@ -1,63 +1,23 @@
+# Welcome to OpenAssistantGPT
 
-- DONE! Do DB update
-- DONE! Add a alert at  the start if user doesnt have an API key
-- DONE! update crawlers
-- DONE! Create include js to implement in website
-- DONE! Add clear chat on chatbotjs
-- DONE! When update chatbot also update openAI
-- DONE! Add minimify in chatbotjs build.sh
-- DONE! When update chatbot also update openAI
-- DONE! Finish the Update chatbot form
-- DONE! Add maximum file size while uploading and crawling
-- DONE! create subscriptions
-- DONE! Validate on all api call that the user has an api key
+OpenAssistantGPT is an open source platform for building chatbot assistants using OpenAI's CustomGPTs. It offers features like easy website integration, low cost, and an open source codebase available on GitHub. 
 
-TODO:
-- DONE! track messages and count the number of messages
-- DONE! If the user has more than 20 messages this month, ask him to upgrade to a paid plan
-- DONE! Display to home page the number of messages this month and if limit is reached
-- DONE! Display markdown correctly in chat
-- DONE! Add user ID on messages and remove delete cascade on messages when deleting a chatbot
+Users can build their chatbot with minimal coding required, and OpenAssistantGPT supports direct billing through OpenAI without extra charges. The platform is particularly user-friendly and cost-effective, appealing to those seeking to integrate AI chatbot functionalities into their websites.
+
+For more detailed information and implementation guidelines, you can visit our [website](https://openassistantgpt.io/).
 
 
-- Create documentation with gitbooks and implement our own chatbot with it
+## How to create my Chatbot
 
-- Create production pricing on stripe and set variable in env
-- Create support page
-  - email
-  - questions
-  - add to db
+1. Open [OpenAI](https://openai.com/) and create an account.
+2. Open [OpenAssistantGPT](https://openassistantgpt.io/) and create an account.
+3. Set your OpenAI API key in your [OpenAssistantGPT dashboard](https://openassistantgpt.io/dashboard).
+4. Create a crawler or upload your own file.
+5. Create your chatbot with the file you uploaded.
+6. Test your chatbot!
 
-- Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
-
-
-- SECURITY: CREATE LIMIT RATE
-- SECURITY: VALIDATE THAT THE CHATBOT REQUEST COMES FROM THE GOOD WEBSITE
-
-After release:
-- Use threads to keep converstaion context
-- After X message ask the user to contact you directly by email
-- Get the url from the citation and display it as a link in the chat
-
-
-CLIENT CHATBOTJS:
-- After few seconds create a popup message "Hello, I'm a chatbot, how can I help you?"
-- Add timeout after few minutes trying to get a reply a return "We could not awsner your question..."
-- Add parameter for "After x question the person can contact us"
-- Keep track of la conversations
-
-Landing page:
-
-- Open source alternative to all chatbots
-- Bring your own api, don't get charged more than what open AI do
-- Low code required
-- Powered by custom gpts
-- Unlimited message
-- Implement on unlimited websites
-
-
-How to implement chatbot on your website:
-
+## How to implement chatbot on your website:
+HTML 
 ```html
 <!doctype html>
 <html>
@@ -109,3 +69,6 @@ export default function Home() {
   )
 }
 ```
+
+## Documentation
+For full documentation, visit [docs.openassistantgpt.io](https://docs.openassistantgpt.io/)
