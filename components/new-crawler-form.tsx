@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -54,7 +53,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
         if (!response?.ok) {
             if (response.status === 402) {
                 return toast({
-                    title: "Limit your crawler limit.",
+                    title: "Crawler limit reached.",
                     description: "Please upgrade to the a higher plan.",
                     variant: "destructive",
                 })
