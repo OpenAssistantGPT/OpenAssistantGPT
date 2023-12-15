@@ -43,7 +43,7 @@ export default function Home() {
               Get Started for Free
             </Link>
             <Link
-              href={"/"}
+              href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}

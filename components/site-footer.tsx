@@ -33,6 +33,11 @@ export function SiteFooter({ simpleFooter }: SiteFooterProps) {
               <h3 className="text-lg font-semibold text-gray-700">Social</h3>
               <ul className="space-y-2">
                 <li>
+                  <Link target="_blank" className="text-base text-gray-500 hover:text-blue-500" href={siteConfig.links.github}>
+                    Github
+                  </Link>
+                </li>
+                <li>
                   <Link target="_blank" className="text-base text-gray-500 hover:text-blue-500" href="">
                     ProductHunt
                   </Link>
