@@ -22,7 +22,7 @@ const fontHeading = localFont({
 })
 
 const title = `Welcome to ${siteConfig.name}`;
-const description = "test";
+const description = "OpenAssistantGPT is an open source platform for building chatbot assistants using OpenAI's CustomGPTs.";
 
 export const metadata: Metadata = {
   title,
@@ -32,7 +32,6 @@ export const metadata: Metadata = {
     title,
     description,
   },
-  metadataBase: new URL("https://nextjs-postgres-auth.vercel.app"),
 };
 
 export default async function RootLayout({
