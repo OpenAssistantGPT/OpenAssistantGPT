@@ -22,6 +22,12 @@ TODO:
 
 - Create documentation with gitbooks and implement our own chatbot with it
 
+- Create production pricing on stripe and set variable in env
+- Create support page
+  - email
+  - questions
+  - add to db
+
 - Add a "how to" on the dashboard when there is nothing only add the button create chatbot on main page when there is at least one file
 
 

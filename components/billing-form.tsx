@@ -112,7 +112,7 @@ export function BillingForm({
                             <Card className="shadow-none border-0 p-0 m-0"key={i}>
                                 <CardHeader>
                                     <CardTitle>{plan.name}</CardTitle>
-                                    <CardDescription>${plan.price}/ month</CardDescription>
+                                    <CardDescription>${plan.price}/month</CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <ul className="mt-4 space-y-2">
@@ -155,7 +155,7 @@ export function BillingForm({
                             <Card className="shadow-none border-0 p-0 m-0"key={i}>
                                 <CardHeader>
                                     <CardTitle>{plan.name}</CardTitle>
-                                    <CardDescription>${plan.price}/ month</CardDescription>
+                                    <CardDescription>${plan.price}/month</CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <ul className="mt-4 space-y-2">
