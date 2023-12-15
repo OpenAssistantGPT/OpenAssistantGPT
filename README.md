@@ -39,7 +39,7 @@ HTML
   <h1 class="text-3xl font-bold underline">
     Hello world!
   </h1>
-  <script src="http://localhost:3000/chatbot.js"></script>
+  <script src="https://openassistantgpt.io/chatbot.js"></script>
   <!-- ... other body elements ... -->
 </body>
 
@@ -65,7 +65,7 @@ export default function Home() {
 
   return (
     <main className="">
-      <Script src="https://chatbot-5a94.vercel.app/chatbot.js" strategy="afterInteractive" />
+      <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
 
     </main>
   )
