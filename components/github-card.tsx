@@ -26,9 +26,9 @@ import { siteConfig } from "@/config/site"
 export function GithubCard() {
     return (
         <Card>
-            <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
+            <CardHeader className="grid items-start gap-4 space-y-0">
                 <div className="space-y-1">
-                    <CardTitle><a href={siteConfig.links.github}>marcolivierbouch/{siteConfig.name}</a></CardTitle>
+                    <CardTitle><a className="break-all" href={siteConfig.links.github}>marcolivierbouch/{siteConfig.name}</a></CardTitle>
                     <CardDescription>
                         {siteConfig.description}
                     </CardDescription>
@@ -59,7 +59,7 @@ export function GithubCard() {
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="flex space-x-4 text-sm text-muted-foreground">
+                <div className="flex flex-col sm:flex-row space-y-2 space-x-4 text-sm text-muted-foreground">
                     <div className="flex items-center">
                         <CircleIcon className="mr-1 h-3 w-3 fill-sky-400 text-sky-400" />
                         TypeScript

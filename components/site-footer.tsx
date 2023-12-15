@@ -38,7 +38,7 @@ export function SiteFooter({ simpleFooter }: SiteFooterProps) {
                   </Link>
                 </li>
                 <li>
-                  <Link target="_blank" className="text-base text-gray-500 hover:text-blue-500" href="">
+                  <Link target="_blank" className="text-base text-gray-500 hover:text-blue-500" href={siteConfig.links.productHunt}>
                     ProductHunt
                   </Link>
                 </li>
