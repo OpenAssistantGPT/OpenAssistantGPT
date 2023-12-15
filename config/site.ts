@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   ogImage: typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_VERCEL_URL || "" : "",
   links: {
     twitter: "https://twitter.com/marcolivierbouch",
-    github: "https://github.com/marcolivierbouch",
+    github: "https://github.com/marcolivierbouch/OpenAssistantGPT",
     productHunt: "https://www.producthunt.com/posts/openassistantgpt",
   },
 }
