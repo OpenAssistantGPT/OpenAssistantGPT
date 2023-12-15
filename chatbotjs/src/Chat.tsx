@@ -50,7 +50,7 @@ export default function ChatBox() {
 
     setNewMessage("")
 
-    const message = await fetch(`https://dev-openassistantgpt.vercel.app/api/chat`, {
+    const message = await fetch(`https://openassistantgpt.vercel.app/api/chat`, {
       method: "POST",
       body: JSON.stringify({
         message: newMessage,
@@ -90,7 +90,7 @@ export default function ChatBox() {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
-      const config = await fetch(`https://dev-openassistantgpt.vercel.app/api/chatbots/${id}/config`)
+      const config = await fetch(`https://openassistantgpt.vercel.app/api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
 
@@ -174,7 +174,7 @@ export default function ChatBox() {
             }
           </div>
           <div className="text-center text-zinc-400 text-sm">
-            Powered by {siteConfig.name}
+            Powered by <a href="https://openassistantgpt.io/">{siteConfig.name}</a>
           </div>
           <div className="border-t border-gray-200 p-4">
             <div className="space-x-2">

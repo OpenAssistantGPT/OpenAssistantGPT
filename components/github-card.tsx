@@ -66,7 +66,7 @@ export function GithubCard() {
                     </div>
                     <div className="flex items-center">
                         <StarIcon className="mr-1 h-3 w-3" />
-                        20k
+                        1
                     </div>
                     <div>Updated 2023</div>
                 </div>
