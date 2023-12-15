@@ -26,30 +26,6 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-
-
-async function publishChatbot(chatbotId: string) {
-    const response = await fetch(`/api/chatbots/${chatbotId}/publish`, {
-        method: "POST",
-    })
-
-    if (!response?.ok) {
-        toast({
-            title: "Something went wrong.",
-            description: "Your chatbot was not published. Please try again.",
-            variant: "destructive",
-        })
-    } else {
-        toast({
-            title: "Chatbot published.",
-            description: "Your chatbot was successfully published.",
-            variant: "default",
-        })
-    }
-
-    return true
-}
-
 interface ChatbotOperationsProps {
     chatbot: Pick<Chatbot, "id" | "name" | "modelId">
 }

@@ -1,3 +1,8 @@
+"use client"
+
+import Script from 'next/script'
+import React, { useEffect } from 'react';
+
 import { GithubCard } from "@/components/github-card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -7,8 +12,17 @@ import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 
 export default function Home() {
+  useEffect(() => {
+    // Set your global variable here
+    window.chatbotConfig = {
+      chatbotId: "clq6m06gc000114hm42s838g2"
+    };
+
+  }, []);
+
   return (
     <>
+      <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <Link
@@ -24,7 +38,7 @@ export default function Home() {
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             An open source platform for building chatbot assistants with customGPTs, using the OpenAI platform.
           </p>
-          <div className="space-x-4">
+          <div className="space-x-4 space-y-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
               Get Started for Free
             </Link>
