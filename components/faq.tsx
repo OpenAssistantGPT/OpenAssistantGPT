@@ -49,7 +49,7 @@ export function FAQ() {
               What kind of questions can I ask OpenAssistantGPT?
             </AccordionTrigger>
             <AccordionContent>
-              OpenAssistantGPT complements our human customer service by handling straightforward questions and issues, allowing our human team to focus on more complex inquiries.
+              You can ask OpenAssistantGPT about website navigation, services offered, troubleshooting, and more. It's here to ensure you find the information you need.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem className="border-b-0" value="item-5">
@@ -57,8 +57,7 @@ export function FAQ() {
               Does OpenAssistantGPT replace human customer service?
             </AccordionTrigger>
             <AccordionContent>
-              Devices can generate heat during operation, especially when running intensive tasks. This is normal, but
-              if it gets too hot, it may indicate a problem.
+              OpenAssistantGPT complements our human customer service by handling straightforward questions and issues, allowing our human team to focus on more complex inquiries.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
