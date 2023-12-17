@@ -49,7 +49,7 @@ export function FAQ() {
               What kind of questions can I ask OpenAssistantGPT?
             </AccordionTrigger>
             <AccordionContent>
-              You can ask OpenAssistantGPT about website navigation, services offered, troubleshooting, and more. It's here to ensure you find the information you need.
+              You can ask OpenAssistantGPT about website navigation, services offered, troubleshooting, and more. It&apos;s here to ensure you find the information you need.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem className="border-b-0" value="item-5">
