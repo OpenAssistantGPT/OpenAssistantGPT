@@ -159,7 +159,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                     <FormDescription>
                                         The selector will be used by the query selector to get the content from a specific part of the website.
                                         You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;)
-                                        To simply get all the content simply use: 'html'
+                                        To simply get all the content simply use: &apos;html&apos;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
