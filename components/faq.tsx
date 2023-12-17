@@ -7,7 +7,7 @@ import { CardContent, Card } from "@/components/ui/card"
 
 export function FAQ() {
   return (
-    <Card className="shadow-lg w-[550px]">
+    <Card className="shadow-lg">
       <CardContent className="p-6">
         <h2 className="text-2xl font-semibold">Frequently Asked Questions</h2>
         <Accordion className="w-full mt-4" type="multiple">
@@ -45,7 +45,7 @@ export function FAQ() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4">
-            <AccordionTrigger className="hover:underline-none">
+            <AccordionTrigger className="hover:underline-none text-left">
               What kind of questions can I ask OpenAssistantGPT?
             </AccordionTrigger>
             <AccordionContent>
@@ -53,7 +53,7 @@ export function FAQ() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem className="border-b-0" value="item-5">
-            <AccordionTrigger className="hover:underline-none">
+            <AccordionTrigger className="hover:underline-none text-left">
               Does OpenAssistantGPT replace human customer service?
             </AccordionTrigger>
             <AccordionContent>
