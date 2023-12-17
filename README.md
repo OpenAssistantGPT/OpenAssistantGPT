@@ -6,6 +6,8 @@ Users can build their chatbot with minimal coding required, and OpenAssistantGPT
 
 For more detailed information and implementation guidelines, you can visit our [website](https://openassistantgpt.io/).
 
+![image](https://github.com/marcolivierbouch/OpenAssistantGPT/assets/29548847/2c7d0684-0edf-4e9e-bd60-271efb8f8d22)
+
 
 ## How to create my Chatbot
 
@@ -17,4 +19,4 @@ For more detailed information and implementation guidelines, you can visit our [
 6. Test your chatbot!
 
 ## Documentation
-For full documentation, visit [docs.openassistantgpt.io](https://docs.openassistantgpt.io/)
+For full documentation, visit our [gitbook](https://openassistantgpt.gitbook.io/openassistantgpt/)
