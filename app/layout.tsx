@@ -22,7 +22,7 @@ const fontHeading = localFont({
 })
 
 const title = `Welcome to ${siteConfig.name}`;
-const description = "OpenAssistantGPT is an open source platform for building chatbot assistants using OpenAI's CustomGPTs.";
+const description = "OpenAssistantGPT is an open source platform for building chatbot using OpenAI's assitants.";
 
 export const metadata: Metadata = {
   title,
@@ -31,6 +31,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
+  },
+  metadataBase: new URL('https://openassitantgpt.io/'),
+  openGraph: {
+    title: title,
+    description: description,
+    url: new URL('https://openassitantgpt.io/'),
+    siteName: 'OpenAssistantGPT',
+    type: 'website',
   },
 };
 

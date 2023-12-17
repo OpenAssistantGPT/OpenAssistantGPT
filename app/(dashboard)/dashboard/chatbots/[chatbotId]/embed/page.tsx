@@ -80,7 +80,7 @@ import React, { useEffect } from 'react';
 export default function Home() {
   useEffect(() => {
     // Set your global variable here
-    window.chatbotConfig = {
+    (window as any).chatbotConfig = {
       chatbotId: "${params.chatbotId}"
     };
 
