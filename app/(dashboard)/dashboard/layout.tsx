@@ -1,4 +1,3 @@
-
 import { notFound } from "next/navigation"
 
 import { dashboardConfig } from "@/config/dashboard"

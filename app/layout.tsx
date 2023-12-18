@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site"
+import Chatbot from '@/components/chatbot';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -49,7 +50,9 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en suppressHydrationWarning">
-      <head />
+      <head>
+        <Chatbot />
+      </head>
       <body
         id='root'
         className={cn(
