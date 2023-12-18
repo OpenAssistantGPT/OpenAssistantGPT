@@ -3,7 +3,6 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Crawler } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -28,7 +27,10 @@ type FormData = z.infer<typeof crawlerSchema>
 export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
     const router = useRouter()
     const form = useForm<FormData>({
-        resolver: zodResolver(crawlerSchema)
+        resolver: zodResolver(crawlerSchema),
+        defaultValues: {
+            selector: "html"
+        }
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
@@ -139,6 +141,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                     />
                                     <FormDescription>
                                         When we crawl we will make sure to always match with this string.
+                                        If you want to crawl everything put the same value as the Crawling URL.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -155,11 +158,12 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                     <Input
                                         id="selector"
                                         onChange={field.onChange}
+                                        value={field.value}
                                     />
                                     <FormDescription>
                                         The selector will be used by the query selector to get the content from a specific part of the website.
-                                        You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;)
-                                        To simply get all the content simply use: &apos;html&apos;
+                                        You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;).
+                                        If you want to extract all the content simply use: &apos;html&apos;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
