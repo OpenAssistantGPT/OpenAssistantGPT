@@ -29,7 +29,10 @@ type FormData = z.infer<typeof chatbotSchema>
 export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
     const router = useRouter()
     const form = useForm<FormData>({
-        resolver: zodResolver(chatbotSchema)
+        resolver: zodResolver(chatbotSchema),
+        defaultValues: {
+            prompt: "You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.",
+        }
     })
 
     const [models, setModels] = useState<ChatbotModel[]>([])
@@ -164,11 +167,12 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                     </FormLabel >
                                     <Input
                                         onChange={field.onChange}
+                                        value={field.value}
                                         id="prompt"
                                     />
                                     <FormDescription>
                                         The prompt that will be sent to OpenAI for every messages, here&apos;s and example:
-                                        &quot;You are a assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
+                                        &quot;You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

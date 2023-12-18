@@ -61,7 +61,9 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
           <Toaster />
-          <Analytics />
+          {
+            process.env.VERCEL_ENV === "production" ? <Analytics /> : <></>
+          }
         </ThemeProvider>
       </body>
     </html>

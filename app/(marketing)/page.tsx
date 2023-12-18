@@ -163,17 +163,15 @@ export default function Home() {
             The code is available on GitHub.
           </p>
         </div>
-        <div className="md:w-2/4 w-3/4 mx-auto pt-10">
+        <div className="mt-10 mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-left">
           <GithubCard />
         </div>
       </section>
       <section
         id="faq"
-        className="container space-y-6 py-8 md:py-12 lg:py-24"
+        className="w-3/4 container space-y-6 py-8 md:py-12 lg:py-24"
       >
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
-          <FAQ />
-        </div>
+        <FAQ />
       </section>
     </>
   );

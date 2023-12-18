@@ -208,7 +208,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                     />
                                     <FormDescription>
                                         This is the prompt that will be sent to OpenAI, here&apos;s and example:
-                                        &quot;You are a assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
+                                        &quot;You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
