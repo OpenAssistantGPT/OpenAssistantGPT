@@ -30,6 +30,8 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<Messages[]>([])
   const [newMessage, setNewMessage] = useState<string>("")
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
   async function onSubmit(e: any) {
     e.preventDefault();
 
@@ -86,6 +88,15 @@ export default function ChatBox() {
   }
 
   useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 640);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
     const init = async () => {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
@@ -105,10 +116,12 @@ export default function ChatBox() {
     init();
   }, [])
 
+  const chatboxClassname = isMobile ? "w-full h-full" : "w-80 max-h-[80vh]"
+
   return (
     <div className="fixed bottom-0 right-0 mb-4 mr-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className="w-80 mr-2 max-h-[80vh] overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4">
+        <Card className={chatboxClassname + " mr-2 overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
           <div className="flex justify-between items-center p-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
@@ -195,11 +208,21 @@ export default function ChatBox() {
           </div>
         </Card>
       }
-      <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
-        onClick={toggleChatVisibility} variant="ghost">
-        <Icons.message />
-      </Button>
-    </div>
+      {!isChatVisible &&
+        <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+          onClick={toggleChatVisibility} variant="ghost">
+          {!isChatVisible && <Icons.message />}
+          {isChatVisible && <Icons.close />}
+        </Button>
+      }
+      {isChatVisible && !isMobile &&
+        <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+          onClick={toggleChatVisibility} variant="ghost">
+          {!isChatVisible && <Icons.message />}
+          {isChatVisible && <Icons.close />}
+        </Button>
+      }
+    </div >
   )
 }
 
