@@ -164,7 +164,8 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                         id="selector"
                                     />
                                     <FormDescription>
-                                        The selector will be used by the query selector to get the content from a specific part of the website. You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;)
+                                        The selector will be used by the query selector to get the content from a specific part of the website. You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;).
+                                        If you want to extract all the content simply use: &apos;body&apos;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

@@ -15,8 +15,6 @@ import {
 import { Icons } from "@/components/icons"
 import { OpenAIForm } from "@/components/openai-config-form"
 import { siteConfig } from "@/config/site"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 
 export const metadata = {

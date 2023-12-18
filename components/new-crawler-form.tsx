@@ -29,7 +29,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
     const form = useForm<FormData>({
         resolver: zodResolver(crawlerSchema),
         defaultValues: {
-            selector: "html"
+            selector: "body"
         }
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
@@ -163,7 +163,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                     <FormDescription>
                                         The selector will be used by the query selector to get the content from a specific part of the website.
                                         You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;).
-                                        If you want to extract all the content simply use: &apos;html&apos;
+                                        If you want to extract all the content simply use: &apos;body&apos;
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

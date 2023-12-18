@@ -1,8 +1,3 @@
-"use client"
-
-import Script from 'next/script'
-import React, { useEffect } from 'react';
-
 import { GithubCard } from "@/components/github-card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,17 +8,8 @@ import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
 
 export default function Home() {
-  useEffect(() => {
-    // Set your global variable here
-    (window as any).chatbotConfig = {
-      chatbotId: "clq6m06gc000114hm42s838g2"
-    };
-
-  }, []);
-
   return (
     <>
-      <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <Link
@@ -169,7 +155,7 @@ export default function Home() {
       </section>
       <section
         id="faq"
-        className="w-3/4 container space-y-6 py-8 md:py-12 lg:py-24"
+        className="w-full md:w-3/4 container space-y-6 py-8 md:py-12 lg:py-24"
       >
         <FAQ />
       </section>
