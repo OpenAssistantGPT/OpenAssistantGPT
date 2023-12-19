@@ -135,7 +135,7 @@ export default function ChatBox() {
   return (
     <div className="fixed bottom-0 right-0 mb-4 mr-4 z-50 flex items-end">
       {showWelcomePopup &&
-        <Card className={chatboxClassname + " relative p-2 mr-2 overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
+        <Card className={chatboxClassname + " relative p-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
           {/* Flex container */}
           <div className="flex justify-between items-start">
             {/* Placeholder for left side alignment */}
@@ -154,7 +154,7 @@ export default function ChatBox() {
         </Card>
       }
       {isChatVisible &&
-        <Card className={chatboxClassname + " mr-2 overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
+        <Card className={chatboxClassname + " mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
           <div className="flex justify-between items-center p-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
