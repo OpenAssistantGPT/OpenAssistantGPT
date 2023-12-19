@@ -30,6 +30,8 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<Messages[]>([])
   const [newMessage, setNewMessage] = useState<string>("")
 
+  const [showWelcomePopup, setShowWelcomePopup] = useState(false);
+
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
   async function onSubmit(e: any) {
@@ -74,6 +76,7 @@ export default function ChatBox() {
 
   const toggleChatVisibility = () => {
     setIsChatVisible(!isChatVisible);
+    setShowWelcomePopup(false); // Hide welcome popup when chat is opened
   };
 
   function resetChat() {
@@ -86,6 +89,7 @@ export default function ChatBox() {
     }])
 
   }
+
 
   useEffect(() => {
     function handleResize() {
@@ -116,10 +120,39 @@ export default function ChatBox() {
     init();
   }, [])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isChatVisible) {
+        setShowWelcomePopup(true);
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const chatboxClassname = isMobile ? "w-full h-full" : "w-80 max-h-[80vh]"
 
   return (
     <div className="fixed bottom-0 right-0 mb-4 mr-4 z-50 flex items-end">
+      {showWelcomePopup &&
+        <Card className={chatboxClassname + " relative p-2 mr-2 overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
+          {/* Flex container */}
+          <div className="flex justify-between items-start">
+            {/* Placeholder for left side alignment */}
+            <div></div>
+
+            {/* Close button */}
+            <Button onClick={() => setShowWelcomePopup(false)} variant="ghost" className="p-1 opacity-0 hover:opacity-100 transition-opacity duration-200">
+              <Icons.close className="h-5 w-5 text-gray-500" />
+            </Button>
+          </div>
+
+          {/* Rest of the content inside Card */}
+          <div className="rounded-lg bg-zinc-200 p-2">
+            {messages[0].message}
+          </div>
+        </Card>
+      }
       {isChatVisible &&
         <Card className={chatboxClassname + " mr-2 overflow-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
           <div className="flex justify-between items-center p-4">
