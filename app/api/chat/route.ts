@@ -29,23 +29,23 @@ export async function POST(req: Request) {
             return new Response(null, { status: 404 })
         }
 
-        //const plan = await getUserSubscriptionPlan(chatbot.userId)
-        //if (plan.unlimitedMessages === false) {
-        //    const messageCount = await db.message.count({
-        //        where: {
-        //            chatbotId: payload.chatbotId,
-        //            createdAt: {
-        //                gte: new Date(new Date().setDate(new Date().getDate() - 30))
-        //            }
-        //        }
-        //    })
-        //    console.log(`Message count: ${messageCount}`)
+        const plan = await getUserSubscriptionPlan(chatbot.userId)
+        if (plan.unlimitedMessages === false) {
+            const messageCount = await db.message.count({
+                where: {
+                    chatbotId: payload.chatbotId,
+                    createdAt: {
+                        gte: new Date(new Date().setDate(new Date().getDate() - 30))
+                    }
+                }
+            })
+            console.log(`Message count: ${messageCount}`)
 
-        //    if (messageCount >= plan.maxMessagesPerMonth!) {
-        //        console.log("Message limit reached")
-        //        return new Response("Message limit reached", { status: 402 })
-        //    }
-        //}
+            if (messageCount >= plan.maxMessagesPerMonth!) {
+                console.log("Message limit reached")
+                return new Response("Message limit reached", { status: 402 })
+            }
+        }
 
         const openai = new OpenAI({
             apiKey: chatbot.openaiKey
@@ -90,7 +90,7 @@ export async function POST(req: Request) {
                 userId: chatbot.userId,
                 message: payload.message,
                 response: message.content[0].text.value,
-                from: req.headers.get("origin") || "unknown",
+                from: req.headers.get("referer") || "unknown",
             }
         })
 
