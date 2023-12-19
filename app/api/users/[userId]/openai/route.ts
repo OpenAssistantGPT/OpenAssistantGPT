@@ -11,35 +11,6 @@ const routeContextSchema = z.object({
     }),
 })
 
-export async function GET(request: Request) {
-    try {
-        const session = await getServerSession(authOptions);
-
-        if (!session) {
-            return new Response("Unauthorized", { status: 403 })
-        }
-
-        const { user } = session
-
-        const openAIConfig = await db.openAIConfig.findUnique({
-            select: {
-                id: true,
-                globalAPIKey: true,
-            },
-            where: {
-                userId: user.id,
-            }
-        })
-
-        return new Response(JSON.stringify(openAIConfig), { status: 200 })
-    } catch (error) {
-        console.error(error)
-
-        return new Response(null, { status: 500 })
-    }
-
-}
-
 export async function PATCH(
     req: Request,
     context: z.infer<typeof routeContextSchema>

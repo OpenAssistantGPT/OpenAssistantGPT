@@ -3,15 +3,6 @@
 @tailwind utilities;
 
 
-@keyframes ping {
-
-    75%,
-    100% {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
-
 /* Add this to your styles.css or equivalent file */
 @keyframes bounce {
 
