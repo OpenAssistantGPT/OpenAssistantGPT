@@ -6,9 +6,7 @@ import { sleep } from "@/lib/utils";
 import { chatSchema } from "@/lib/validations/chat";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 
-
 export const maxDuration = 120;
-
 
 export async function POST(req: Request) {
     try {
@@ -48,7 +46,6 @@ export async function POST(req: Request) {
                 return new Response("Message limit reached", { status: 402 })
             }
         }
-
 
         const openai = new OpenAI({
             apiKey: chatbot.openaiKey
@@ -93,6 +90,7 @@ export async function POST(req: Request) {
                 userId: chatbot.userId,
                 message: payload.message,
                 response: message.content[0].text.value,
+                from: req.headers.get("origin") || "unknown",
             }
         })
 

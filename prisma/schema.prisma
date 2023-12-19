@@ -75,6 +75,8 @@ model Message {
   createdAt DateTime @default(now()) @map(name: "created_at")
   response  String
 
+  from String @default("unknown")
+
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
