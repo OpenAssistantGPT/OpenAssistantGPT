@@ -90,7 +90,7 @@ export async function POST(req: Request) {
                 userId: chatbot.userId,
                 message: payload.message,
                 response: message.content[0].text.value,
-                from: req.headers.get("referer") || "unknown",
+                from: req.headers.get("origin") || "unknown",
             }
         })
 
