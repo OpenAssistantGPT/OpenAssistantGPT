@@ -18,8 +18,25 @@ export function ChatbotCreateButton({
     const router = useRouter()
     const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
+    async function GetFiles() {
+        const files = await fetch(`/api/files`)
+        return await files.json()
+    }
+
     async function onClick() {
         setIsLoading(true)
+
+        const files = await GetFiles()
+
+        if (files.length === 0) {
+            toast({
+                title: "No file found.",
+                description: "Please upload a file first or create a crawler to import content.",
+                variant: "destructive",
+            })
+            setIsLoading(false)
+            return
+        }
 
         router.refresh()
 
