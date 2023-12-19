@@ -142,7 +142,7 @@ export default function ChatBox() {
             <div></div>
 
             {/* Close button */}
-            <Button onClick={() => setShowWelcomePopup(false)} variant="ghost" className="p-1 opacity-0 hover:opacity-100 transition-opacity duration-200">
+            <Button onClick={() => setShowWelcomePopup(false)} variant="ghost" className="p-1">
               <Icons.close className="h-5 w-5 text-gray-500" />
             </Button>
           </div>
