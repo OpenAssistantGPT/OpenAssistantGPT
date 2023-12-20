@@ -15,8 +15,7 @@ import {
 import { Icons } from "@/components/icons"
 import { OpenAIForm } from "@/components/openai-config-form"
 import { siteConfig } from "@/config/site"
-import { MessagesOverview, Overview } from "@/components/message-overview"
-import { object } from "zod"
+import { MessagesOverview } from "@/components/message-overview"
 
 export const metadata = {
   title: `${siteConfig.name} - Dashboard`,
