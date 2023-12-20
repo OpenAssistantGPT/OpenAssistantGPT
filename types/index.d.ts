@@ -84,6 +84,8 @@ export type SubscriptionPlan = {
 
   maxCrawlers: number
 
+  premiumSupport?: boolean
+
   price: number | undefined
 }
 

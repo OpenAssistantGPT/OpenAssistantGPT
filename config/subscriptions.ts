@@ -39,6 +39,8 @@ export const basicPlan: SubscriptionPlan = {
     unlimitedMessages: true,
     maxMessagesPerMonth: undefined,
 
+    premiumSupport: true,
+
     price: 8,
 }
 
@@ -52,6 +54,8 @@ export const proPlan: SubscriptionPlan = {
     maxFiles: 24,
     unlimitedMessages: true,
     maxMessagesPerMonth: undefined,
+
+    premiumSupport: true,
 
     price: 30,
 }
