@@ -23,6 +23,7 @@ export function UpgradePlanButton({
         router.refresh()
 
         router.push(`/dashboard/billing`)
+        setIsLoading(false)
     }
 
     return (
