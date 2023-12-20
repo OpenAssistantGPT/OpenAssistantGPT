@@ -15,7 +15,8 @@ import {
 import { Icons } from "@/components/icons"
 import { OpenAIForm } from "@/components/openai-config-form"
 import { siteConfig } from "@/config/site"
-
+import { MessagesOverview, Overview } from "@/components/message-overview"
+import { object } from "zod"
 
 export const metadata = {
   title: `${siteConfig.name} - Dashboard`,
@@ -64,6 +65,40 @@ export default async function DashboardPage() {
       userId: user.id,
     },
   })
+
+  // get message for each day for the last 7 days
+  const messages = await db.message.findMany({
+    where: {
+      userId: user.id,
+      createdAt: {
+        gte: new Date(new Date().setDate(new Date().getDate() - 30))
+      }
+    },
+    select: {
+      createdAt: true,
+    },
+  })
+
+
+  const data: any = [];
+  for (let i = 0; i < 30; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    const formattedDate = date.toISOString().split('T')[0]; // Format date as 'YYYY-MM-DD'
+    data.push({ name: formattedDate, total: 0 });
+  }
+
+  // Count messages for each day
+  messages.forEach(message => {
+    const messageDate = message.createdAt.toISOString().split('T')[0];
+    const dataEntry = data.find(entry => entry.name === messageDate);
+    if (dataEntry) {
+      dataEntry.total++;
+    }
+  });
+
+  // Reverse the data array to start from the oldest date
+  data.reverse();
 
   return (
     <DashboardShell>
@@ -120,8 +155,17 @@ export default async function DashboardPage() {
               </CardContent>
             </Card>
           </div>
+
         }
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Messages per day</CardTitle>
+        </CardHeader>
+        <CardContent className="pl-2">
+          <MessagesOverview items={data} />
+        </CardContent>
+      </Card>
     </DashboardShell>
   )
 }
