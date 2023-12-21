@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import LoadingDots from "@/components/loading-dots";
 import { Icons } from "./icons";
 
-export default function LoginForm() {
+export default function GithubLoginForm() {
   const [loading, setLoading] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ export default function LoginForm() {
         setLoading(true);
         await signIn("github")
       }}
-      className="flex flex-col space-y-4 px-4 py-8 sm:px-16"
+      className="flex flex-col space-y-4 px-4 mb-4 sm:px-16"
     >
       <button
         disabled={loading}
