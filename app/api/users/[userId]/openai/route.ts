@@ -4,6 +4,7 @@ import { z } from "zod"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { openAIConfigSchema } from "@/lib/validations/openaiConfig"
+import OpenAI from "openai"
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -28,6 +29,15 @@ export async function PATCH(
         // Get the request body and validate it.
         const body = await req.json()
         const payload = openAIConfigSchema.parse(body)
+
+        try {
+            const openai = new OpenAI({
+                apiKey: payload.globalAPIKey
+            })
+            await openai.models.list()
+        } catch (error) {
+            return new Response("Invalid OpenAI API key", { status: 400 })
+        }
 
         // Update the user.
         await db.openAIConfig.upsert({

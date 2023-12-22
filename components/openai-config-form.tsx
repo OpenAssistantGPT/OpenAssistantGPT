@@ -52,6 +52,14 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
         setIsSaving(false)
 
         if (!response?.ok) {
+            if (response.status === 400) {
+                return toast({
+                    title: "Invalid API key.",
+                    description: "Your API key was invalid, try to generate a new one.",
+                    variant: "destructive",
+                })
+            }
+
             return toast({
                 title: "Something went wrong.",
                 description: "Your OpenAI configuration was not updated. Please try again.",
