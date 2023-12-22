@@ -5,7 +5,7 @@ export const siteConfig: SiteConfig = {
   description:
     "An open source SaaS to create chatbots using OpenAI's Assistant.",
   url: "https://www.openassistantgpt.io/",
-  ogImage: "/dashboard.png",
+  ogImage: "https://www.openassistantgpt.io/dashboard.png",
   links: {
     twitter: "https://twitter.com/marcolivierbouch",
     github: "https://github.com/marcolivierbouch/OpenAssistantGPT",
