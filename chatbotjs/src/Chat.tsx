@@ -61,7 +61,6 @@ export default function ChatBox() {
     })
 
     const value = await message.json()
-    console.log(value)
 
     setMessages(messages => [...messages, {
       number: messages.length + 1,
@@ -86,7 +85,6 @@ export default function ChatBox() {
     }])
 
   }
-
 
   useEffect(() => {
     function handleResize() {
@@ -117,13 +115,13 @@ export default function ChatBox() {
     init();
   }, [])
 
-  const chatboxClassname = isMobile ? "w-full h-full" : "w-80 max-h-[80vh]"
+  const chatboxClassname = isMobile ? "w-full h-full" : "max-w-md max-h-[80vh]"
 
   return (
-    <div className="fixed bottom-0 right-0 mb-4 mr-4 z-50 flex items-end">
+    <div className="fixed bottom-0 right-0 ml-4 mb-4 mr-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
-          <div className="flex justify-between items-center p-4">
+        <Card className={chatboxClassname + " ml-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
+          <div className="flex shadow justify-between items-center p-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
               <Button onClick={resetChat} className='mr-2'>
@@ -140,13 +138,13 @@ export default function ChatBox() {
                 if (message.from === "bot") {
                   return (
                     <div key={message.number} className="flex items-end gap-2">
-                      <div className="rounded-lg bg-zinc-200 p-2">
+                      <div className="rounded-lg text-wrap bg-zinc-200 p-2">
                         {message.message.replace(/\【\d+†source】/g, '') // Remove citation markers
                           .split('```').map((block, blockIdx) => {
                             // Check if the block is a code block or normal text
                             if (blockIdx % 2 === 1) {
                               // Render code block
-                              return <pre key={blockIdx}><code>{block}</code></pre>;
+                              return <pre key={blockIdx}><code className='text-wrap'>{block}</code></pre>;
                             } else {
                               // Process normal text for ** and \n
                               return block.split('\n').map((line, lineIndex, lineArray) => (
