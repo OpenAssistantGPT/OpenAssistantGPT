@@ -41,6 +41,9 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
 
         const response = await fetch(`/api/users/${user.id}/openai`, {
             method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify({
                 globalAPIKey: data.globalAPIKey,
             }),
