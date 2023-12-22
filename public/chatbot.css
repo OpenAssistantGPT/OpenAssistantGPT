@@ -554,6 +554,14 @@ video {
   margin-bottom: 1rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-4 {
+  margin-left: 1rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -594,12 +602,12 @@ video {
   width: 1.25rem;
 }
 
-.w-80 {
-  width: 20rem;
-}
-
 .w-full {
   width: 100%;
+}
+
+.max-w-md {
+  max-width: 28rem;
 }
 
 .flex-grow {
@@ -819,6 +827,31 @@ video {
 
 .dot:nth-child(2) {
   animation-delay: -0.16s;
+}
+
+/* width */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #d8d8d8;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c2c2c2;
 }
 
 .focus\:outline-none:focus {
