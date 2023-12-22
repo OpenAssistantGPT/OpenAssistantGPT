@@ -167,7 +167,8 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                     </Select>
 
                                     <FormDescription>
-                                        The Open AI model that will be used to generate responses
+                                        The Open AI model that will be used to generate responses. If you use gpt-4 it may not be available in your account.
+                                        <b> If you use gpt-4 it may not be available in your account.</b>
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

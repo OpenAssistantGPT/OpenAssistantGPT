@@ -23,14 +23,18 @@ import { chatbotSchema } from "@/lib/validations/chatbot"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChatbotModel, File } from "@prisma/client"
 
-
 type FormData = z.infer<typeof chatbotSchema>
 
-export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTMLFormElement>) {
+interface NewChatbotProps extends React.HTMLAttributes<HTMLElement> {
+    isOnboarding: boolean
+}
+
+export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbotProps) {
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(chatbotSchema),
         defaultValues: {
+            welcomeMessage: "Hello, how can I help you?",
             prompt: "You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.",
         }
     })
@@ -109,7 +113,9 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
         })
 
         router.refresh()
-        router.push("/dashboard/chatbots")
+        if (!isOnboarding) {
+            router.push("/dashboard/crawlers")
+        }
     }
 
     return (
@@ -149,6 +155,7 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                     </FormLabel>
                                     <Input
                                         onChange={field.onChange}
+                                        value={field.value}
                                         id="welcomemessage"
                                     />
                                     <FormDescription>
@@ -204,7 +211,8 @@ export function NewChatbotForm({ className, ...props }: React.HTMLAttributes<HTM
                                     </Select>
 
                                     <FormDescription>
-                                        The Open AI model that will be used to generate responses
+                                        The Open AI model that will be used to generate responses.
+                                        <b> If you use gpt-4 it may not be available in your account.</b>
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

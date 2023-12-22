@@ -30,7 +30,8 @@ import {
   MessageSquare,
   Key,
   Coins,
-  ArrowUp
+  ArrowUp,
+  CheckCheck
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -41,6 +42,7 @@ export const Icons = {
   dashboard: LayoutDashboard,
   close: X,
   key: Key,
+  checkcheck: CheckCheck,
   coin: Coins,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
