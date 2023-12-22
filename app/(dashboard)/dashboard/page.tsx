@@ -13,7 +13,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
-import { OpenAIForm } from "@/components/openai-config-form"
 import { siteConfig } from "@/config/site"
 import { MessagesOverview } from "@/components/message-overview"
 
@@ -55,16 +54,6 @@ export default async function DashboardPage() {
     }
   })
 
-  const openaiConfig = await db.openAIConfig.findFirst({
-    select: {
-      id: true,
-      globalAPIKey: true,
-    },
-    where: {
-      userId: user.id,
-    },
-  })
-
   // get message for each day for the last 7 days
   const messages = await db.message.findMany({
     where: {
@@ -77,7 +66,6 @@ export default async function DashboardPage() {
       createdAt: true,
     },
   })
-
 
   const data: any = [];
   for (let i = 0; i < 30; i++) {
@@ -105,57 +93,61 @@ export default async function DashboardPage() {
         <ChatbotCreateButton />
       </DashboardHeader>
       <div>
-        {!openaiConfig ?
-          <OpenAIForm user={{ id: user.id }} />
-          :
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Chatbots
-                </CardTitle>
-                <Icons.bot className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{bots}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Crawlers
-                </CardTitle>
-                <Icons.post className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{crawlers}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Files
-                </CardTitle>
-                <Icons.folder className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{files}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Messages last 30 days
-                </CardTitle>
-                <Icons.message className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{messageCountLast30Days}</div>
-              </CardContent>
-            </Card>
+        {bots === 0 &&
+          <div className="mb-4 bg-blue-100 border-l-4 border-blue-500 text-black p-4" role="info">
+            <p className="font-bold text-md">Welcome to {siteConfig.name}</p>
+            <p className="text-sm">You are probably new to this platform.</p>
+            <p className="text-sm">We recommend starting with our <a className="underline" href="/dashboard/onboarding">onboarding</a> for a step-by-step guide on how to create your first chatbot.</p>
+            <br />
+            <p className="borderinline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background" ><a className="" href="/dashboard/onboarding">Open Onboarding</a></p>
           </div>
-
         }
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Chatbots
+              </CardTitle>
+              <Icons.bot className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{bots}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Crawlers
+              </CardTitle>
+              <Icons.post className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{crawlers}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Files
+              </CardTitle>
+              <Icons.folder className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{files}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Messages last 30 days
+              </CardTitle>
+              <Icons.message className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{messageCountLast30Days}</div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
       <Card>
         <CardHeader>
@@ -165,6 +157,6 @@ export default async function DashboardPage() {
           <MessagesOverview items={data} />
         </CardContent>
       </Card>
-    </DashboardShell>
+    </DashboardShell >
   )
 }

@@ -1,8 +1,6 @@
 
 import { redirect } from "next/navigation"
 
-import { NewChatbotForm } from "@/components/new-chatbot-form"
-
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { authOptions } from "@/lib/auth"
