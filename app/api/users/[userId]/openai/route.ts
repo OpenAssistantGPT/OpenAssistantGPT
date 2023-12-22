@@ -56,10 +56,10 @@ export async function PATCH(
 
         return new Response(null, { status: 200 })
     } catch (error) {
+        console.error(error)
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 })
         }
-        console.error(error)
 
         return new Response(null, { status: 500 })
     }
