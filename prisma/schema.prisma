@@ -8,9 +8,10 @@ generator client {
 }
 
 model OpenAIConfig {
-  id           String @id @default(cuid())
-  userId       String @unique
+  id           String   @id @default(cuid())
+  userId       String   @unique
   globalAPIKey String
+  createdAt    DateTime @default(now()) @map(name: "created_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
