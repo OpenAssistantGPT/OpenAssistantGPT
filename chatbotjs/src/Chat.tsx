@@ -115,7 +115,7 @@ export default function ChatBox() {
     init();
   }, [])
 
-  const chatboxClassname = isMobile ? "w-full h-full" : "max-w-md max-h-[80vh]"
+  const chatboxClassname = isMobile ? "w-full max-h-[80vh]" : "max-w-md max-h-[80vh]"
 
   return (
     <div className="fixed bottom-0 right-0 ml-4 mb-4 mr-4 z-50 flex items-end">
