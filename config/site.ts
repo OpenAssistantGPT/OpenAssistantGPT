@@ -4,8 +4,8 @@ export const siteConfig: SiteConfig = {
   name: "OpenAssistantGPT",
   description:
     "An open source SaaS to create chatbots using OpenAI's Assistant.",
-  url: typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_VERCEL_URL || "" : "",
-  ogImage: typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_VERCEL_URL || "" : "",
+  url: "https://www.openassistantgpt.io/",
+  ogImage: "/dashboard.png",
   links: {
     twitter: "https://twitter.com/marcolivierbouch",
     github: "https://github.com/marcolivierbouch/OpenAssistantGPT",
