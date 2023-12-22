@@ -18,12 +18,12 @@ export function SiteFooter({ simpleFooter }: SiteFooterProps) {
               <h3 className="text-lg font-semibold text-gray-700">Explore</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link className="text-base text-gray-500 hover:text-blue-500" href="">
+                  <Link className="text-base text-gray-500 hover:text-blue-500" href="https://openassistantgpt.gitbook.io/openassistantgpt">
                     Documentation
                   </Link>
                 </li>
                 <li>
-                  <Link className="text-base text-gray-500 hover:text-blue-500" href="">
+                  <Link className="text-base text-gray-500 hover:text-blue-500" href="/login">
                     App
                   </Link>
                 </li>
