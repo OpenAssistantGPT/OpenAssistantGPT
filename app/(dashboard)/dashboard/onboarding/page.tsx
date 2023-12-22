@@ -69,7 +69,7 @@ export default async function OnboardingPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Onboarding" text="Assisted guide to create your first chatbot">
+      <DashboardHeader heading="Onboarding" text="Step-by-Step Guide for Building Your First Chatbot">
         <Link
           href="/dashboard"
           className={cn(
