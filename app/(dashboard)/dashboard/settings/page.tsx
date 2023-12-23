@@ -11,7 +11,7 @@ import { siteConfig } from "@/config/site"
 
 export const metadata = {
     title: `${siteConfig.name} - Settings`,
-    description: "Manage account and website settings.",
+    description: "Manage Account and Website Settings.",
 }
 
 export default async function SettingsPage() {
@@ -25,7 +25,7 @@ export default async function SettingsPage() {
         <DashboardShell>
             <DashboardHeader
                 heading="Settings"
-                text="Manage account and website settings."
+                text="Manage Account and Website Settings."
             />
             <div className="grid gap-10">
                 <div className="grid gap-10">

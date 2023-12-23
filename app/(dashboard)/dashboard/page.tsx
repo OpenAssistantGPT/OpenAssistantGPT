@@ -89,7 +89,7 @@ export default async function DashboardPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Dashboard" text="Welcome to your chatbot dashboard">
+      <DashboardHeader heading="Dashboard" text="Welcome to Your Chatbot Dashboard">
         <ChatbotCreateButton />
       </DashboardHeader>
       <div>
