@@ -157,7 +157,12 @@ export default function Home() {
         id="faq"
         className="w-full md:w-3/4 container space-y-6 py-8 md:py-12 lg:py-24"
       >
-        <FAQ />
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
+          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+            FAQ
+          </h2>
+          <FAQ />
+        </div>
       </section>
     </>
   );
