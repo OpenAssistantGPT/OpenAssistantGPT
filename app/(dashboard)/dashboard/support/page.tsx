@@ -14,7 +14,7 @@ export default async function SupportPage() {
 
     return (
         <DashboardShell>
-            <DashboardHeader heading="Support" text="Welcome to our support page.">
+            <DashboardHeader heading="Support" text="Welcome to Our Support Page.">
                 <Link
                     href="/dashboard"
                     className={cn(

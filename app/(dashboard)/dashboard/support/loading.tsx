@@ -6,8 +6,8 @@ export default function Loading() {
     return (
         <DashboardShell>
             <DashboardHeader
-                heading="Create crawler"
-                text="Create a crawler to start importing files."
+                heading="Support"
+                text="Welcome to Our Support Page."
             />
             <div className="grid gap-10">
                 <CardSkeleton />
