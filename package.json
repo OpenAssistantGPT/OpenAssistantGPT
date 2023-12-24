@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@stripe/stripe-js": "^2.2.0",
+    "@tanstack/react-table": "^8.11.2",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@vercel/analytics": "^1.1.1",
