@@ -37,3 +37,6 @@ yarn-error.log*
 # vercel
 .vercel
 .env*.local
+
+# Sentry Config File
+.sentryclirc
