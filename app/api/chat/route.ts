@@ -6,7 +6,7 @@ import { sleep } from "@/lib/utils";
 import { chatSchema } from "@/lib/validations/chat";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 
-export const maxDuration = 120;
+export const maxDuration = 300;
 
 export async function POST(req: Request) {
     try {
