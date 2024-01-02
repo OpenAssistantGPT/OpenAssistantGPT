@@ -34,6 +34,10 @@ export type DashboardConfig = {
   sidebarNav: SidebarNavItem[]
 }
 
+export type DocsConfig = {
+  mainNav: MainNavItem[]
+  sidebarNav: SidebarNavItem[]
+}
 
 export type SiteConfig = {
   name: string
