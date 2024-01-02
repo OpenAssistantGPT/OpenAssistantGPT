@@ -4,11 +4,11 @@ import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
 import Link from "next/link"
 
-interface SiteFooterProps {
+interface SiteFooterProps extends React.HTMLAttributes<HTMLElement> {
   simpleFooter?: boolean
 }
 
-export function SiteFooter({ simpleFooter }: SiteFooterProps) {
+export function SiteFooter({ simpleFooter, className }: SiteFooterProps) {
   return (
     <footer className="p-2 m-5">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +18,7 @@ export function SiteFooter({ simpleFooter }: SiteFooterProps) {
               <h3 className="text-lg font-semibold text-gray-700">Explore</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link className="text-base text-gray-500 hover:text-blue-500" href="https://openassistantgpt.gitbook.io/openassistantgpt">
+                  <Link className="text-base text-gray-500 hover:text-blue-500" href="https://openassistantgpt.io/docs">
                     Documentation
                   </Link>
                 </li>

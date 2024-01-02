@@ -19,4 +19,4 @@ For more detailed information and implementation guidelines, you can visit our [
 6. Test your chatbot!
 
 ## Documentation
-For full documentation, visit our [gitbook](https://openassistantgpt.gitbook.io/openassistantgpt/)
+For full documentation, visit our [documentation](https://openassistantgpt.io/docs)
