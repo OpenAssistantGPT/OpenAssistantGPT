@@ -8,7 +8,7 @@ export const marketingConfig: MarketingConfig = {
     },
     {
       title: "Documentation",
-      href: "https://openassistantgpt.gitbook.io/openassistantgpt/",
+      href: "/docs",
     }
   ],
 }
