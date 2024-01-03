@@ -4,7 +4,6 @@ import { docsConfig } from "@/config/docs"
 import { siteConfig } from "@/config/site"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
-import { DocsSearch } from "@/components/search"
 import { DocsSidebarNav } from "@/components/sidebar-nav"
 import { SiteFooter } from "@/components/site-footer"
 
@@ -21,9 +20,6 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
                         <DocsSidebarNav items={docsConfig.sidebarNav} />
                     </MainNav>
                     <div className="flex flex-1 items-center space-x-4 sm:justify-end">
-                        <div className="flex-1 sm:grow-0">
-                            <DocsSearch />
-                        </div>
                         <nav className="flex space-x-4">
                             <Link
                                 href={siteConfig.links.github}
