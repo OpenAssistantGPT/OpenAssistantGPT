@@ -37,23 +37,23 @@ export async function POST(req: Request,
             return new Response(null, { status: 404 })
         }
 
-        const plan = await getUserSubscriptionPlan(chatbot.userId)
-        if (plan.unlimitedMessages === false) {
-            const messageCount = await db.message.count({
-                where: {
-                    userId: chatbot.userId,
-                    createdAt: {
-                        gte: new Date(new Date().setDate(new Date().getDate() - 30))
-                    }
-                }
-            })
-            console.log(`Message count: ${messageCount}`)
+        //const plan = await getUserSubscriptionPlan(chatbot.userId)
+        //if (plan.unlimitedMessages === false) {
+        //    const messageCount = await db.message.count({
+        //        where: {
+        //            userId: chatbot.userId,
+        //            createdAt: {
+        //                gte: new Date(new Date().setDate(new Date().getDate() - 30))
+        //            }
+        //        }
+        //    })
+        //    console.log(`Message count: ${messageCount}`)
 
-            if (messageCount >= plan.maxMessagesPerMonth!) {
-                console.log("Message limit reached")
-                return new Response("Message limit reached", { status: 402 })
-            }
-        }
+        //    if (messageCount >= plan.maxMessagesPerMonth!) {
+        //        console.log("Message limit reached")
+        //        return new Response("Message limit reached", { status: 402 })
+        //    }
+        //}
 
         const openai = new OpenAI({
             apiKey: chatbot.openaiKey
@@ -110,6 +110,8 @@ export async function POST(req: Request,
                     })
                 ).data;
 
+
+
                 // Send the messages
                 for (const message of responseMessages) {
                     await db.message.create({
@@ -117,8 +119,7 @@ export async function POST(req: Request,
                             chatbotId: params.chatbotId,
                             userId: chatbot.userId,
                             message: input.message,
-                            response: message.content.filter(
-                                content => content.type === 'text').toString(),
+                            response: message.content[0].text.value,
                             from: req.headers.get("origin") || "unknown",
                         }
                     })
