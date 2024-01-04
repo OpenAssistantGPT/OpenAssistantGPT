@@ -36,7 +36,7 @@ export async function PATCH(
             })
             await openai.models.list()
         } catch (error) {
-            return new Response("Invalid OpenAI API key", { status: 400 })
+            return new Response("Invalid OpenAI API key", { status: 400, statusText: "Invalid OpenAI API key" })
         }
 
         // Update the user.

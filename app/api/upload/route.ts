@@ -19,13 +19,11 @@ export async function POST(request: Request) {
         // Validate user subscription plan
         const { user } = session
         const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-
         const count = await db.file.count({
             where: {
                 userId: user.id,
             },
         })
-
         if (count >= subscriptionPlan.maxFiles) {
             throw new RequiresHigherPlanError()
         }
@@ -34,11 +32,11 @@ export async function POST(request: Request) {
         const filename = searchParams.get('filename');
 
         if (!filename) {
-            return new Response('Missing filename', { status: 400 });
+            return new Response('Missing filename', { status: 400, statusText: "Missing filename" });
         }
 
         if (!request.body) {
-            return new Response('Missing body', { status: 400 });
+            return new Response('Missing body', { status: 400, statusText: "Missing body" });
         }
 
         const blob = await put(filename, request.body, {
@@ -56,7 +54,7 @@ export async function POST(request: Request) {
         })
 
         if (!openAIConfig?.globalAPIKey) {
-            return new Response("Missing OpenAI API key", { status: 400 })
+            return new Response("Missing OpenAI API key. Add your API key in the Settings tab.", { status: 400, statusText: "Missing OpenAI API key" })
         }
 
         const openai = new OpenAI({
