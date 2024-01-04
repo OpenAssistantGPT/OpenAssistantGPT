@@ -31,7 +31,7 @@ export function StartCrawlingButton({
             setIsLoading(false)
             if (response.status === 400) {
                 return toast({
-                    title: "Something went wrong.",
+                    title: "Invalid request",
                     description: response.statusText,
                     variant: "destructive",
                 })
