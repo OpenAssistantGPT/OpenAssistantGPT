@@ -56,7 +56,7 @@ export async function POST(request: Request) {
         })
 
         if (!openAIConfig?.globalAPIKey) {
-            return new Response("Missing OpenAI API key", { status: 400 })
+            return new Response("Missing OpenAI API key", { status: 400, statusText: "Missing OpenAI API key" })
         }
 
         const openai = new OpenAI({

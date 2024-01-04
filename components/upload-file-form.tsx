@@ -57,13 +57,13 @@ export function UploadFileForm({ className, ...props }: UploadFileFormProps) {
 
         if (!response?.ok) {
             if (response.status === 400) {
-                const { error } = await response.json()
                 return toast({
-                    title: "Something went wrong.",
-                    description: error,
+                    title: "Invalid request",
+                    description: response.statusText,
                     variant: "destructive",
                 })
             }
+
             if (response.status === 402) {
                 return toast({
                     title: "File limit reached.",
