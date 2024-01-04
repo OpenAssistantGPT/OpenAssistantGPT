@@ -15,6 +15,7 @@ import {
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import { MessagesOverview } from "@/components/message-overview"
+import { OpenAIForm } from "@/components/openai-config-form"
 
 export const metadata = {
   title: `${siteConfig.name} - Dashboard`,
@@ -52,6 +53,12 @@ export default async function DashboardPage() {
         gte: new Date(new Date().setDate(new Date().getDate() - 30))
       }
     }
+  })
+
+  const openaiConfig = await db.openAIConfig.findFirst({
+    where: {
+      userId: user.id,
+    },
   })
 
   // get message for each day for the last 7 days
@@ -100,6 +107,12 @@ export default async function DashboardPage() {
             <p className="text-sm">We recommend starting with our <a className="underline" href="/dashboard/onboarding">onboarding</a> for a step-by-step guide on how to create your first chatbot.</p>
             <br />
             <p className="borderinline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background" ><a className="" href="/dashboard/onboarding">Open Onboarding</a></p>
+          </div>
+        }
+        {
+          !openaiConfig &&
+          <div className="mb-4">
+            <OpenAIForm />
           </div>
         }
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
