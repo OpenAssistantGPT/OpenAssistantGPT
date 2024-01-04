@@ -1,3 +1,5 @@
+// deprecated will be replaced by /api/chatbots/:id/chat
+
 import { db } from "@/lib/db"
 import OpenAI from "openai"
 
@@ -33,7 +35,7 @@ export async function POST(req: Request) {
         if (plan.unlimitedMessages === false) {
             const messageCount = await db.message.count({
                 where: {
-                    chatbotId: payload.chatbotId,
+                    userId: chatbot.userId,
                     createdAt: {
                         gte: new Date(new Date().setDate(new Date().getDate() - 30))
                     }
