@@ -56,6 +56,14 @@ export function UploadFileForm({ className, ...props }: UploadFileFormProps) {
         setIsSaving(false)
 
         if (!response?.ok) {
+            if (response.status === 400) {
+                return toast({
+                    title: "Invalid request",
+                    description: response.body,
+                    variant: "destructive",
+                })
+            }
+
             if (response.status === 402) {
                 return toast({
                     title: "File limit reached.",
