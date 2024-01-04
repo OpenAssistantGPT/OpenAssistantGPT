@@ -74,7 +74,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
             if (response.status === 400) {
                 return toast({
                     title: "Something went wrong.",
-                    description: response.statusText,
+                    description: await response.text(),
                     variant: "destructive",
                 })
             }
