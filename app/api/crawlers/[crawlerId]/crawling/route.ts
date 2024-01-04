@@ -132,7 +132,7 @@ export async function GET(
         })
 
         if (!openAIConfig?.globalAPIKey) {
-            return new Response("Missing OpenAI API key", { status: 403 })
+            return new Response("Missing OpenAI API key", { status: 400 })
         }
 
         const openai = new OpenAI({

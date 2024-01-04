@@ -59,7 +59,7 @@ export function UploadFileForm({ className, ...props }: UploadFileFormProps) {
             if (response.status === 400) {
                 return toast({
                     title: "Invalid request",
-                    description: response.body,
+                    description: response.statusText,
                     variant: "destructive",
                 })
             }

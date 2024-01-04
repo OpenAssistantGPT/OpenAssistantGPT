@@ -57,7 +57,7 @@ export async function DELETE(
             }
         })
         if (!openAIConfig?.globalAPIKey) {
-            return new Response("Missing OpenAI API key", { status: 403 })
+            return new Response("Missing OpenAI API key", { status: 400 })
         }
 
         const file = await db.file.findUnique({
