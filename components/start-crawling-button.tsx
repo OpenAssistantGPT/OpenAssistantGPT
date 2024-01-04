@@ -30,13 +30,13 @@ export function StartCrawlingButton({
         if (!response?.ok) {
             setIsLoading(false)
             if (response.status === 400) {
+                const { error } = await response.json()
                 return toast({
-                    title: "Invalid request",
-                    description: response.statusText,
+                    title: "Something went wrong.",
+                    description: error,
                     variant: "destructive",
                 })
             }
-
             if (response.status === 402) {
                 return toast({
                     title: "File limit reached.",
