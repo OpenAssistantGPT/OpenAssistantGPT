@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ai": "^2.2.31",
     "esbuild": "^0.19.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
