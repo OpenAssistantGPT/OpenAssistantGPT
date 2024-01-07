@@ -18,9 +18,8 @@ export async function OPTIONS(req: Request) {
     return new Response('Ok', { status: 200 })
 }
 
-
-export async function POST(req: Request,
-
+export async function POST(
+    req: Request,
     context: z.infer<typeof routeContextSchema>
 ) {
     try {
@@ -114,8 +113,6 @@ export async function POST(req: Request,
                         order: 'asc',
                     })
                 ).data;
-
-
 
                 // Send the messages
                 for (const message of responseMessages) {
