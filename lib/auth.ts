@@ -9,7 +9,6 @@ import { db } from "@/lib/db"
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),
   secret: process.env.NEXTAUTH_SECRET,
-  useSecureCookies: false,
   session: {
     strategy: "jwt",
   },
