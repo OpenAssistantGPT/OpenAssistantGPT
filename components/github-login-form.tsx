@@ -17,6 +17,7 @@ export default function GithubLoginForm() {
         e.preventDefault();
         setLoading(true);
         await signIn("github", {
+          redirect: false,
           callbackUrl: searchParams?.get("from") || "/dashboard",
         })
       }}

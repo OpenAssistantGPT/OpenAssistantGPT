@@ -16,6 +16,7 @@ export default function GoogleLoginForm() {
         e.preventDefault();
         setLoading(true);
         await signIn("google", {
+          redirect: false,
           callbackUrl: searchParams?.get("from") || "/dashboard",
         })
       }}
