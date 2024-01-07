@@ -6,85 +6,35 @@ import React, { useEffect, useState } from 'react';
  */
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
-import { siteConfig } from '@/config/site';
+import { siteConfig } from "@/config/site"
+import {
+  Message,
+  // import as useAssistant:
+  experimental_useAssistant as useAssistant,
+} from 'ai/react';
 
 interface ChatbotConfig {
   id: number;
   welcomeMessage: string;
 }
 
-interface Messages {
-  number: number
-  message: string
-  from: "user" | "bot"
-}
-
 export default function ChatBox() {
   const [config, setConfig] = useState<ChatbotConfig>()
   const [chatbotId, setChatbotId] = useState<string>()
   const [isChatVisible, setIsChatVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-
-  const [messages, setMessages] = useState<Messages[]>([])
-  const [newMessage, setNewMessage] = useState<string>("")
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
-  async function onSubmit(e: any) {
-    e.preventDefault();
-
-    if (newMessage === "") {
-      console.log("No message")
-      return
-    }
-
-    setIsLoading(true)
-
-    setMessages(messages => [...messages, {
-      number: messages.length + 1,
-      message: newMessage,
-      from: "user",
-    }])
-
-    setNewMessage("")
-
-    setNewMessage("")
-
-    const message = await fetch(`https://www.openassistantgpt.io/api/chat`, {
-      method: "POST",
-      body: JSON.stringify({
-        message: newMessage,
-        chatbotId: chatbotId,
-      }),
-    })
-
-    const value = await message.json()
-
-    setMessages(messages => [...messages, {
-      number: messages.length + 1,
-      message: value.value,
-      from: "bot",
-    }])
-
-    setIsLoading(false)
-  }
+  const { status, messages, input, submitMessage, handleInputChange } =
+    useAssistant({
+      api: `${siteConfig.url}api/chatbots/${window.chatbotConfig.chatbotId}/chat`,
+    });
 
   const toggleChatVisibility = () => {
     setIsChatVisible(!isChatVisible);
   };
-
-  function resetChat() {
-    setMessages([])
-
-    setMessages(messages => [...messages, {
-      number: messages.length + 1,
-      message: config!.welcomeMessage,
-      from: "bot",
-    }])
-
-  }
 
   useEffect(() => {
     function handleResize() {
@@ -100,17 +50,9 @@ export default function ChatBox() {
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
-      const config = await fetch(`https://www.openassistantgpt.io/api/chatbots/${id}/config`)
+      const config = await fetch(`${siteConfig.url}api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
-
-      if (messages.length === 0) {
-        setMessages(messages => [...messages, {
-          number: messages.length + 1,
-          message: chatbotConfig?.welcomeMessage,
-          from: "bot",
-        }])
-      }
     };
     init();
   }, [])
@@ -120,106 +62,121 @@ export default function ChatBox() {
   return (
     <div className="fixed bottom-0 right-0 ml-4 mb-4 mr-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " ml-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
-          <div className="flex shadow justify-between items-center p-4">
+        <Card className={chatboxClassname + " ml-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-2"}>
+          <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
-              <Button onClick={resetChat} className='mr-2'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="h-5 w-5 text-gray-500 lucide lucide-list-restart"><path d="M21 6H3" /><path d="M7 12H3" /><path d="M7 18H3" /><path d="M12 18a5 5 0 0 0 9-3 4.5 4.5 0 0 0-4.5-4.5c-1.33 0-2.54.54-3.41 1.41L11 14" /><path d="M11 10v4h4" /></svg>
-              </Button>
               <Button onClick={toggleChatVisibility} variant="ghost">
-                <IconClose className="h-5 w-5 text-gray-500" />
+                <Icons.close className="h-5 w-5 text-gray-500" />
               </Button>
             </div>
           </div>
           <div className="p-4 space-y-4">
-            {
-              messages.map((message) => {
-                if (message.from === "bot") {
-                  return (
-                    <div key={message.number} className="flex items-end gap-2">
-                      <div className="rounded-lg text-wrap bg-zinc-200 p-2">
-                        {message.message.replace(/\【\d+†source】/g, '') // Remove citation markers
-                          .split('```').map((block, blockIdx) => {
-                            // Check if the block is a code block or normal text
-                            if (blockIdx % 2 === 1) {
-                              // Render code block
-                              return <pre key={blockIdx}><code className='text-wrap'>{block}</code></pre>;
-                            } else {
-                              // Process normal text for ** and \n
-                              return block.split('\n').map((line, lineIndex, lineArray) => (
-                                <p key={`${blockIdx}-${lineIndex}`} className={`text-sm ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
-                                  {line.split('**').map((segment, segmentIndex) => {
-                                    // Render bold text for segments surrounded by **
-                                    if (segmentIndex % 2 === 1) {
-                                      return <strong key={segmentIndex}>{segment}</strong>;
-                                    } else {
-                                      // Render normal text for other segments
-                                      return <span key={segmentIndex}>{segment}</span>;
-                                    }
-                                  })}
-                                </p>
-                              ));
-                            }
-                          })}
-                      </div>
-                    </div>
-                  )
-                } else {
-                  return (
-                    <div key={message.number} className="flex items-end gap-2 justify-end">
-                      <div className="rounded-lg bg-blue-500 text-white p-2">
-                        <p className="text-sm">{message.message}</p>
-                      </div>
-                    </div>
-                  )
-                }
-              })
-            }
-            {
-              isLoading &&
-              <div className="flex justify-left items-center space-x-2">
-                <div className="dot h-4 w-4 bg-zinc-200 rounded-full"></div>
-                <div className="dot h-4 w-4 bg-zinc-200 rounded-full"></div>
-                <div className="dot h-4 w-4 bg-zinc-200 rounded-full"></div>
+            <div className="space-y-4">
+              <div key="0" className="flex items-end gap-2">
+                <div className="rounded-lg bg-zinc-200 p-2">
+                  <p className="text-sm">{config!.welcomeMessage}</p>
+                </div>
               </div>
-            }
+              {
+                messages.map((message: Message) => {
+                  if (message.role === "assistant") {
+                    return (
+                      <div key={message.id} className="flex items-end gap-2">
+                        <div className="rounded-lg bg-zinc-200 p-2">
+                          {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
+                            .split('```').map((block, blockIdx) => {
+                              // Check if the block is a code block or normal text
+                              if (blockIdx % 2 === 1) {
+                                // Render code block
+                                return <pre key={blockIdx}><code>{block}</code></pre>;
+                              } else {
+                                // Process normal text for ** and \n
+                                return block.split('\n').map((line, lineIndex, lineArray) => (
+                                  <p key={`${blockIdx}-${lineIndex}`} className={`text-sm ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
+                                    {line.split('**').map((segment, segmentIndex) => {
+                                      // Render bold text for segments surrounded by **
+                                      if (segmentIndex % 2 === 1) {
+                                        return <strong key={segmentIndex}>{segment}</strong>;
+                                      } else {
+                                        // Render normal text for other segments
+                                        return <span key={segmentIndex}>{segment}</span>;
+                                      }
+                                    })}
+                                  </p>
+                                ));
+                              }
+                            })}
+                        </div>
+                      </div>
+                    )
+                  } else {
+                    return (
+                      <div key={message.id} className="flex items-end gap-2 justify-end">
+                        <div className="rounded-lg bg-blue-500 text-white p-2">
+                          <p className="text-sm">{message.content}</p>
+                        </div>
+                      </div>
+                    )
+                  }
+                })
+              }
+
+              {status === 'in_progress' && (
+                <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
+              )}
+            </div>
           </div>
           <div className="text-center text-zinc-400 text-sm">
             Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
           </div>
-          <div className="border-t border-gray-200 p-4">
-            <div className="space-x-2">
-              <form className="w-full flex-grow border-0 flex flex-row items-justify" onSubmit={onSubmit}>
-                <Input className="focus:outline-none bg-transparent border-0 mr-2"
-                  value={newMessage}
-                  disabled={isLoading}
-                  onChange={value => setNewMessage(value.target.value)} id="chat-input" placeholder="Type your message" />
-                <Button
-                  className="border-0 text-gray-500 focus:outline-none"
-                  type="submit"
-                  disabled={isLoading}
-                  variant="outline">
-                  <IconSend className="h-5 w-5" />
+
+          <div className="border-t border-gray-200 p-2">
+            <div
+              className='w-full flex items-center gap-2'
+            >
+              <form onSubmit={submitMessage}
+                className="flex align-right items-end w-full"
+              >
+                <Input
+                  disabled={status !== 'awaiting_message'}
+                  className="w-full border-0"
+                  value={input}
+                  placeholder="Type a message..."
+                  onChange={handleInputChange}
+                />
+                <Button type="submit"
+                  disabled={status !== 'awaiting_message'}
+                  className="flex-none w-1/6"
+                >
+                  {status !== 'awaiting_message' && (
+                    <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                  )}
+                  {status === 'awaiting_message' && (
+                    <IconSend className="mr-2 h-5 w-5 text-gray-500" />
+                  )}
                 </Button>
               </form>
             </div>
-          </div>
-        </Card>
+          </div >
+        </Card >
       }
-      {!isChatVisible &&
-        <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+      {
+        !isChatVisible &&
+        <button className="shadow-lg border bg-white border-gray-200 rounded-full p-4"
           onClick={toggleChatVisibility} variant="ghost">
           {!isChatVisible && <Icons.message />}
           {isChatVisible && <Icons.close />}
-        </Button>
+        </button>
+
       }
-      {isChatVisible && !isMobile &&
-        <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+      {
+        isChatVisible && !isMobile &&
+        <button className="shadow-lg border bg-white border-gray-200 rounded-full p-4"
           onClick={toggleChatVisibility} variant="ghost">
           {!isChatVisible && <Icons.message />}
           {isChatVisible && <Icons.close />}
-        </Button>
+        </button>
       }
     </div >
   )
