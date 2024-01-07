@@ -1,19 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react";
 import LoadingDots from "@/components/loading-dots";
 import { Icons } from "./icons";
 
 export default function GithubLoginForm() {
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams()
+
 
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        await signIn("github")
+        await signIn("github", {
+          redirect: false,
+          callbackUrl: searchParams?.get("from") || "/dashboard",
+        })
       }}
       className="flex flex-col space-y-4 px-4 mb-4 sm:px-16"
     >
