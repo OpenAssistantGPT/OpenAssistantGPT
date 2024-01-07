@@ -110,8 +110,6 @@ export async function POST(req: Request,
                     })
                 ).data;
 
-
-
                 // Send the messages
                 for (const message of responseMessages) {
                     await db.message.create({
