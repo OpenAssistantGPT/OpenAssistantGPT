@@ -14,6 +14,11 @@ const routeContextSchema = z.object({
     }),
 })
 
+export async function OPTIONS(req: Request) {
+    return new Response('Ok', { status: 200 })
+}
+
+
 export async function POST(req: Request,
 
     context: z.infer<typeof routeContextSchema>
