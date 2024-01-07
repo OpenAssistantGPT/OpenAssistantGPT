@@ -2,18 +2,22 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation"
 import LoadingDots from "@/components/loading-dots";
 import { Icons } from "./icons";
 
 export default function GoogleLoginForm() {
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams()
 
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
         setLoading(true);
-        await signIn("google")
+        await signIn("google", {
+          callbackUrl: searchParams?.get("from") || "/dashboard",
+        })
       }}
       className="flex flex-col space-y-4 px-4 sm:px-16"
     >
