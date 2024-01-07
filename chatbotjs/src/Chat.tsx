@@ -28,7 +28,9 @@ export default function ChatBox() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
   const { status, messages, input, submitMessage, handleInputChange } =
-    useAssistant({ api: `${siteConfig.url}api/chatbots/${window.chatbotConfig.chatbotId}/chat` });
+    useAssistant({
+      api: `${siteConfig.url}api/chatbots/${window.chatbotConfig.chatbotId}/chat`,
+    });
 
   const toggleChatVisibility = () => {
     setIsChatVisible(!isChatVisible);
@@ -60,12 +62,12 @@ export default function ChatBox() {
   return (
     <div className="fixed bottom-0 right-0 ml-4 mb-4 mr-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " ml-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-4"}>
-          <div className="flex shadow justify-between items-center p-4">
+        <Card className={chatboxClassname + " ml-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-2"}>
+          <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
               <Button onClick={toggleChatVisibility} variant="ghost">
-                <IconClose className="h-5 w-5 text-gray-500" />
+                <Icons.close className="h-5 w-5 text-gray-500" />
               </Button>
             </div>
           </div>
@@ -129,29 +131,30 @@ export default function ChatBox() {
             Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
           </div>
 
-          <div className="border-t border-gray-200 p-4">
-
+          <div className="border-t border-gray-200 p-2">
             <div
               className='w-full flex items-center gap-2'
             >
               <form onSubmit={submitMessage}
-                className="flex align-right gap-2 items-end w-full"
+                className="flex align-right items-end w-full"
               >
                 <Input
                   disabled={status !== 'awaiting_message'}
-                  className="w-full border border-gray-300 rounded shadow-sm"
+                  className="w-full border-0"
                   value={input}
                   placeholder="Type a message..."
                   onChange={handleInputChange}
                 />
                 <Button type="submit"
                   disabled={status !== 'awaiting_message'}
-                  className="flex-none w-1/3"
+                  className="flex-none w-1/6"
                 >
                   {status !== 'awaiting_message' && (
-                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
                   )}
-                  Send
+                  {status === 'awaiting_message' && (
+                    <IconSend className="mr-2 h-5 w-5 text-gray-500" />
+                  )}
                 </Button>
               </form>
             </div>
@@ -160,19 +163,20 @@ export default function ChatBox() {
       }
       {
         !isChatVisible &&
-        <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+        <button className="shadow-lg border bg-white border-gray-200 rounded-full p-4"
           onClick={toggleChatVisibility} variant="ghost">
           {!isChatVisible && <Icons.message />}
           {isChatVisible && <Icons.close />}
-        </Button>
+        </button>
+
       }
       {
         isChatVisible && !isMobile &&
-        <Button className="shadow-lg border bg-white border-gray-200 rounded-full p-3"
+        <button className="shadow-lg border bg-white border-gray-200 rounded-full p-4"
           onClick={toggleChatVisibility} variant="ghost">
           {!isChatVisible && <Icons.message />}
           {isChatVisible && <Icons.close />}
-        </Button>
+        </button>
       }
     </div >
   )
