@@ -52,6 +52,10 @@ export const docsConfig: DocsConfig = {
                 {
                     title: "Build a good prompt",
                     href: "/guides/how-to-build-a-good-prompt-for-your-chatbot",
+                },
+                {
+                    title: "See your chatbot's threads",
+                    href: "/guides/how-to-see-all-your-chatbot-threads",
                 }
             ],
         },
