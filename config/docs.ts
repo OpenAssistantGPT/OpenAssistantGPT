@@ -52,11 +52,7 @@ export const docsConfig: DocsConfig = {
                 {
                     title: "Build a good prompt",
                     href: "/guides/how-to-build-a-good-prompt-for-your-chatbot",
-                },
-                {
-                    title: "All guides",
-                    href: "/guides",
-                },
+                }
             ],
         },
     ],
