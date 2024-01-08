@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
   url: "https://www.openassistantgpt.io/",
   ogImage: "https://www.openassistantgpt.io/dashboard.png",
   links: {
-    twitter: "https://twitter.com/marcolivierbouch",
+    twitter: "https://twitter.com/oassistantgpt",
     github: "https://github.com/marcolivierbouch/OpenAssistantGPT",
     productHunt: "https://www.producthunt.com/posts/openassistantgpt",
   },
