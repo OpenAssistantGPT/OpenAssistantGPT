@@ -22,7 +22,7 @@ const fontHeading = localFont({
   variable: "--font-heading",
 })
 
-const title = `Welcome to ${siteConfig.name}`;
+const title = `Build chatbot using OpenAI Assistant - ${siteConfig.name}`;
 const description = "OpenAssistantGPT is an open source platform for building chatbot using OpenAI's assitants.";
 
 export const metadata: Metadata = {

@@ -114,7 +114,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
 
         router.refresh()
         if (!isOnboarding) {
-            router.push("/dashboard/crawlers")
+            router.push("/dashboard/chatbots")
         }
     }
 
