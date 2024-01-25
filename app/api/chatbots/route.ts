@@ -67,8 +67,7 @@ export async function POST(req: Request) {
     })
 
     if (!model) {
-      console.log("model not found")
-      return new Response(null, { status: 404 })
+      return new Response("Invalid Model", { status: 400 })
     }
 
     const openAIConfig = await db.openAIConfig.findUnique({
@@ -82,7 +81,7 @@ export async function POST(req: Request) {
     })
 
     if (!openAIConfig?.globalAPIKey) {
-      return new Response("Missing OpenAI API key", { status: 400 })
+      return new Response("Missing your global OpenAI API key, please configure your account.", { status: 400 })
     }
 
     const openai = new OpenAI({
@@ -100,8 +99,16 @@ export async function POST(req: Request) {
     })
 
     if (!file) {
-      console.log("File not found")
-      return new Response(null, { status: 404 })
+      return new Response("Invalid file", { status: 400 })
+    }
+
+    try {
+      const openaiTest = new OpenAI({
+        apiKey: body.openAIKey
+      })
+      await openaiTest.models.list()
+    } catch (error) {
+      return new Response("Invalid OpenAI API key", { status: 400, statusText: "Invalid OpenAI API key" })
     }
 
     const createdChatbot = await openai.beta.assistants.create({
