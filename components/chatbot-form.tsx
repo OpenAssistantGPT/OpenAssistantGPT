@@ -156,7 +156,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel htmlFor="model">
-                                        Open AI Model
+                                        OpenAI Model
                                     </FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={chatbot.modelId}>
                                         <SelectTrigger>
@@ -176,7 +176,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                     </Select>
 
                                     <FormDescription>
-                                        The Open AI model that will be used to generate responses. If you use gpt-4 it may not be available in your account.
+                                        The OpenAI model that will be used to generate responses. If you use gpt-4 it may not be available in your account.
                                         <b> If you use gpt-4 it may not be available in your account.</b>
                                     </FormDescription>
                                     <FormMessage />
@@ -249,7 +249,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                         </SelectContent>
                                     </Select>
                                     <FormDescription>
-                                        The Open AI model will use this file to search for specific content.
+                                        The OpenAI model will use this file to search for specific content.
                                         If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
                                     </FormDescription>
                                     <FormMessage />

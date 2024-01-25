@@ -94,7 +94,13 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
         setIsSaving(false)
 
         if (!response?.ok) {
-            if (response.status === 402) {
+            if (response.status === 400) {
+                return toast({
+                    title: "Something went wrong.",
+                    description: await response.text(),
+                    variant: "destructive",
+                })
+            } else if (response.status === 402) {
                 return toast({
                     title: "Chatbot limit reached.",
                     description: "Please upgrade to the a higher plan.",
@@ -191,7 +197,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel htmlFor="model">
-                                        Open AI Model
+                                        OpenAI Model
                                     </FormLabel>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <SelectTrigger>
@@ -211,7 +217,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                     </Select>
 
                                     <FormDescription>
-                                        The Open AI model that will be used to generate responses.
+                                        The OpenAI model that will be used to generate responses.
                                         <b> If you use gpt-4 it may not be available in your account.</b>
                                     </FormDescription>
                                     <FormMessage />
@@ -224,7 +230,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel htmlFor="openAIKey">
-                                        Open AI API Key
+                                        OpenAI API Key
                                     </FormLabel>
                                     <Input
                                         onChange={field.onChange}
@@ -232,7 +238,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                         type="password"
                                     />
                                     <FormDescription>
-                                        The Open AI API key that will be used to generate responses
+                                        The OpenAI API key that will be used to generate responses
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -263,7 +269,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                         </SelectContent>
                                     </Select>
                                     <FormDescription>
-                                        The Open AI model will use this file to search for specific content.
+                                        The OpenAI model will use this file to search for specific content.
                                         If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
                                     </FormDescription>
                                     <FormMessage />

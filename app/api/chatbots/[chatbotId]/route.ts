@@ -76,11 +76,20 @@ export async function PATCH(
   })
 
   if (!openAIConfig?.globalAPIKey) {
-    return new Response("Missing OpenAI API key", { status: 403 })
+    return new Response("Missing your global OpenAI API key, please configure your account.", { status: 400 })
   }
 
   const body = await req.json()
   const payload = chatbotSchema.parse(body)
+
+  try {
+    const openaiTest = new OpenAI({
+      apiKey: payload.openAIKey
+    })
+    await openaiTest.models.list()
+  } catch (error) {
+    return new Response("Invalid OpenAI API key", { status: 400, statusText: "Invalid OpenAI API key" })
+  }
 
   try {
     const chatbot = await db.chatbot.update({
