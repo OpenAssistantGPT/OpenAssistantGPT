@@ -71,9 +71,8 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
         toast({
             description: "Your crawler has been saved.",
         })
-
-        router.refresh()
-        router.push("/dashboard/crawlers")
+        const json = await response.json()
+        router.push(`/dashboard/crawlers/${json.id}/crawl`)
     }
 
     return (
