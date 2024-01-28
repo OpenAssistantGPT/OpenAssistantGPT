@@ -7,56 +7,73 @@
 <url>
   <loc>https://www.openassistantgpt.io/</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/login</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/guides</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.64</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.70</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.64</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.69</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation/crawlers</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.64</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.68</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation/files</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.64</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.67</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation/chatbots</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.64</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.66</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/pricing</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.65</priority>
+</url>
+<url>
+  <loc>https://www.openassistantgpt.io/docs/licensing</loc>
+  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/guides/how-to-build-a-good-prompt-for-your-chatbot</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.51</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.63</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/guides/how-to-see-all-your-chatbot-threads</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
-  <priority>0.49</priority>
+  <changefreq>weekly</changefreq>
+  <priority>0.62</priority>
 </url>
 </urlset>
