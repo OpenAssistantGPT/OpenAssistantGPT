@@ -37,6 +37,7 @@ async function verifyCurrentUserHasAccessToCrawler(crawlerId: string) {
 
 
 async function crawl(url: string, selector: string, maxPagesToCrawl: number, urlMatch: string) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     async function fetchHtml(url: string) {
         try {

@@ -32,11 +32,16 @@ export async function POST(request: Request) {
         const filename = searchParams.get('filename');
 
         if (!filename) {
-            return new Response('Missing filename', { status: 400, statusText: "Missing filename" });
+            return new Response('Missing filename', { status: 400 });
+        }
+
+        const validExtensions = ['c', 'cpp', 'csv', 'docx', 'html', 'java', 'json', 'md', 'pdf', 'php', 'pptx', 'py', 'rb', 'tex', 'txt', 'css', 'jpeg', 'jpg', 'js', 'gif', 'png', 'tar', 'ts', 'xlsx', 'xml', 'zip']
+        if (!validExtensions.includes(filename.split('.').pop()!)) {
+            return new Response(`Invalid file extension, check the documentation for more information.`, { status: 400 });
         }
 
         if (!request.body) {
-            return new Response('Missing body', { status: 400, statusText: "Missing body" });
+            return new Response('Missing body', { status: 400 });
         }
 
         const blob = await put(filename, request.body, {
