@@ -57,6 +57,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             setModels(models)
 
             const supportedModels = await getAvailableModels()
+            console.log(supportedModels)
             setAvailablesModels(supportedModels)
 
             const filesResponse = await getFiles()
@@ -234,7 +235,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
 
                                     <FormDescription>
                                         The OpenAI model that will be used to generate responses.
-                                        <b> If you use gpt-4 it may not be available in your account.</b>
+                                        <b> If you don&apos;t have the gpt-4 option and want to use you it. You need to have an OpenAI account at least tier 1.</b>
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
