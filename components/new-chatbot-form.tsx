@@ -57,7 +57,6 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             setModels(models)
 
             const supportedModels = await getAvailableModels()
-            console.log(supportedModels)
             setAvailablesModels(supportedModels)
 
             const filesResponse = await getFiles()
