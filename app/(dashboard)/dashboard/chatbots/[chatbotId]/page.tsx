@@ -8,7 +8,7 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import Link from "next/link"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -99,6 +99,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
             </DashboardHeader>
             <div className="grid gap-10">
                 <ChatbotForm
+                    user={user}
                     files={files}
                     currentFileId={currentFile?.file.id || ""}
                     models={models}

@@ -2,9 +2,8 @@ import { getServerSession } from "next-auth/next"
 import { z } from "zod"
 
 import { authOptions } from "@/lib/auth"
-import { db } from "@/lib/db"
-import { openAIConfigSchema } from "@/lib/validations/openaiConfig"
 import OpenAI from "openai"
+import { db } from "@/lib/db"
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -12,7 +11,7 @@ const routeContextSchema = z.object({
     }),
 })
 
-export async function PATCH(
+export async function GET(
     req: Request,
     context: z.infer<typeof routeContextSchema>
 ) {
@@ -26,33 +25,28 @@ export async function PATCH(
             return new Response(null, { status: 403 })
         }
 
-        // Get the request body and validate it.
-        const body = await req.json()
-        const payload = openAIConfigSchema.parse(body)
-
-        try {
-            const openai = new OpenAI({
-                apiKey: payload.globalAPIKey
-            })
-            await openai.models.list()
-        } catch (error) {
-            return new Response("Invalid OpenAI API key", { status: 400, statusText: "Invalid OpenAI API key" })
-        }
-
-        // Update the user.
-        await db.openAIConfig.upsert({
+        const openAIConfig = await db.openAIConfig.findUnique({
+            select: {
+                globalAPIKey: true,
+            },
             where: {
                 userId: session.user.id,
-            },
-            create: {
-                userId: session.user.id,
-                ...payload
-            },
-            update: {
-                ...payload
             }
         })
-        return new Response(null, { status: 200 })
+
+        if (!openAIConfig?.globalAPIKey) {
+            return new Response("Missing OpenAI API key", { status: 400 })
+        }
+
+        const openai = new OpenAI({
+            apiKey: openAIConfig!.globalAPIKey
+        })
+        const models = await openai.models.list()
+
+        const idList: string[] = models.body.data.map(item => item.id);
+
+        return new Response(JSON.stringify(idList), { status: 200 })
+
     } catch (error) {
         console.error(error)
         if (error instanceof z.ZodError) {

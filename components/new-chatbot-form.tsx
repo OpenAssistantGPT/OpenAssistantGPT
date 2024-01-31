@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -21,12 +21,13 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ChatbotModel, File } from "@prisma/client"
+import { ChatbotModel, File, User } from "@prisma/client"
 
 type FormData = z.infer<typeof chatbotSchema>
 
 interface NewChatbotProps extends React.HTMLAttributes<HTMLElement> {
     isOnboarding: boolean
+    user: Pick<User, "id">
 }
 
 export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbotProps) {
@@ -40,6 +41,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
     })
 
     const [models, setModels] = useState<ChatbotModel[]>([])
+    const [availablesModels, setAvailablesModels] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
@@ -53,6 +55,9 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             })
             const models = await response.json()
             setModels(models)
+
+            const supportedModels = await getAvailableModels()
+            setAvailablesModels(supportedModels)
 
             const filesResponse = await getFiles()
             setFiles(filesResponse)
@@ -70,6 +75,17 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
 
         const files = await response.json()
         return files
+    }
+
+    async function getAvailableModels() {
+        const response = await fetch(`/api/users/${props.user.id}/openai/models`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const models = await response.json()
+        return models
     }
 
     async function onSubmit(data: FormData) {
@@ -206,7 +222,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                         <SelectContent>
                                             <SelectGroup>
                                                 {
-                                                    models.map((model: ChatbotModel) => (
+                                                    models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
                                                         <SelectItem key={model.id} value={model.id}>
                                                             {model.name}
                                                         </SelectItem>
