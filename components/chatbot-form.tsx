@@ -197,7 +197,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                     </Select>
 
                                     <FormDescription>
-                                        The OpenAI model that will be used to generate responses. If you don&apos;t have the gpt-4 option and want to use you it. You need to have an OpenAI account at least tier 1.
+                                        The OpenAI model that will be used to generate responses. If you don&apos;t have the gpt-4 option and want to use it. You need to have an OpenAI account at least tier 1.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
