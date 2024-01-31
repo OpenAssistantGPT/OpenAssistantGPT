@@ -30,7 +30,7 @@ interface NewChatbotProps extends React.HTMLAttributes<HTMLElement> {
     user: Pick<User, "id">
 }
 
-export async function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbotProps) {
+export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbotProps) {
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(chatbotSchema),
