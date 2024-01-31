@@ -1,9 +1,9 @@
 "use client"
 
-import * as React from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Chatbot, File, ChatbotModel } from "@prisma/client"
+import { Chatbot, File, ChatbotModel, User } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -29,6 +29,7 @@ interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
     currentFileId: File["id"]
     models: ChatbotModel[]
     files: File[]
+    user: Pick<User, "id">
 }
 
 type FormData = z.infer<typeof chatbotSchema>
@@ -46,7 +47,27 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
             files: currentFileId,
         },
     })
-    const [isSaving, setIsSaving] = React.useState<boolean>(false)
+    const [isSaving, setIsSaving] = useState<boolean>(false)
+    const [availablesModels, setAvailablesModels] = useState<string[]>([])
+
+    useEffect(() => {
+        const init = async () => {
+            const supportedModels = await getAvailableModels()
+            setAvailablesModels(supportedModels)
+        }
+        init()
+    }, [])
+
+    async function getAvailableModels() {
+        const response = await fetch(`/api/users/${props.user.id}/openai/models`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const models = await response.json()
+        return models
+    }
 
     async function onSubmit(data: FormData) {
         console.log(data)
@@ -165,7 +186,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                                         <SelectContent>
                                             <SelectGroup>
                                                 {
-                                                    models.map((model: ChatbotModel) => (
+                                                    models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
                                                         <SelectItem key={model.id} value={model.id}>
                                                             {model.name}
                                                         </SelectItem>
