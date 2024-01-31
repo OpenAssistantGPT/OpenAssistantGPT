@@ -37,7 +37,7 @@ export default async function ChatbotCreatePage() {
                 </Link>
             </DashboardHeader>
             <div className="grid gap-10">
-                <NewChatbotForm isOnboarding={false} />
+                <NewChatbotForm user={user} isOnboarding={false} />
             </div>
         </DashboardShell>
     )

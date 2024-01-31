@@ -11,7 +11,6 @@ export async function GET(request: Request) {
                 name: true,
             }
         })
-        console.log(models)
 
         return new Response(JSON.stringify(models))
     } catch (error) {

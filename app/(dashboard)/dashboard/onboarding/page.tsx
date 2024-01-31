@@ -162,7 +162,7 @@ export default async function OnboardingPage() {
             <UploadFileForm />
           }
           {currentStep == 3 &&
-            <NewChatbotForm isOnboarding={true} />
+            <NewChatbotForm user={user} isOnboarding={true} />
           }
           {currentStep == 4 &&
             <div>
