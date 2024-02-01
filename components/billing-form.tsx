@@ -150,7 +150,7 @@ export function BillingForm({
                                 </div>)
                         }
                         return (
-                            <div key={i} className="hover:shadow-xl relative flex flex-col p-2 bg-white shadow-lg rounded-lg bg-zinc-850 justify-between border ">
+                            <div key={i} className="hover:shadow-sm relative flex flex-col p-2 bg-white rounded-lg bg-zinc-850 justify-between border ">
                                 <Card className="shadow-none border-0 p-0 m-0" key={i}>
                                     <CardHeader>
                                         <CardTitle>{plan.name}</CardTitle>
