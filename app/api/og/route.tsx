@@ -94,7 +94,7 @@ export async function GET(req: Request) {
                             tw="flex text-xl"
                             style={{ fontFamily: "Inter", fontWeight: "normal" }}
                         >
-                            tx.shadcn.com
+                            openassistantgpt.io
                         </div>
                         <div
                             tw="flex items-center text-xl"
@@ -141,6 +141,7 @@ export async function GET(req: Request) {
             }
         )
     } catch (error) {
+        console.error(error)
         return new Response(`Failed to generate image`, {
             status: 500,
         })
