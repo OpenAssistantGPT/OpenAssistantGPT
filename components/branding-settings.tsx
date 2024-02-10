@@ -104,7 +104,7 @@ export function BrandingSettings({ chatbot }: ChatbotOperationsProps) {
                                             OpenAssistantGPT Branding Label
                                         </FormLabel>
                                         <FormDescription>
-                                            Removed "Powered by OpenAssistantGPT" from the chatbot.
+                                            Removed &quot;Powered by OpenAssistantGPT&quot; from the chatbot.
                                         </FormDescription>
                                     </div>
                                     <FormControl>
