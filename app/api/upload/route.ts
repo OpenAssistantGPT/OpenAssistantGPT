@@ -84,7 +84,7 @@ export async function POST(request: Request) {
         console.error(error);
 
         if (error instanceof RequiresHigherPlanError) {
-            return new Response("Requires Pro Plan", { status: 402 })
+            return new Response("Requires Higher plan", { status: 402 })
         }
 
         return new Response(null, { status: 500 })
