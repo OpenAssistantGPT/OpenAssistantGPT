@@ -192,14 +192,16 @@ export function BillingForm({
                                         </ul>
                                     </CardContent>
                                     <CardFooter>
-                                        <Button
-                                            onClick={(e) => openSession(e, plan.stripePriceId)}
-                                            className={cn(buttonVariants())}>
-                                            {isLoading && (
-                                                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                            )}
-                                            Upgrade
-                                        </Button>
+                                        {plan.name !== freePlan.name &&
+                                            <Button
+                                                onClick={(e) => openSession(e, plan.stripePriceId)}
+                                                className={cn(buttonVariants())}>
+                                                {isLoading && (
+                                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                                                )}
+                                                Upgrade
+                                            </Button>
+                                        }
                                     </CardFooter>
                                 </Card>
                             </div>
