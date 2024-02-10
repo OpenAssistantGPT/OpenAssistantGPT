@@ -18,6 +18,7 @@ import {
 interface ChatbotConfig {
   id: number;
   welcomeMessage: string;
+  displayBranding: boolean;
 }
 
 export default function ChatBox() {
@@ -127,9 +128,11 @@ export default function ChatBox() {
               )}
             </div>
           </div>
-          <div className="text-center text-zinc-400 text-sm">
-            Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
-          </div>
+          {config?.displayBranding === true &&
+            <div className="text-center text-zinc-400 text-sm pb-4">
+              Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
+            </div>
+          }
 
           <div className="border-t border-gray-200 p-2">
             <div

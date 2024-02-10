@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_DIRECT_URL")
 }
 
@@ -29,15 +29,16 @@ model ChatbotFiles {
 }
 
 model Chatbot {
-  id             String   @id @default(cuid())
-  name           String
-  userId         String
-  openaiId       String   @unique
-  createdAt      DateTime @default(now()) @map(name: "created_at")
-  openaiKey      String
-  modelId        String
-  prompt         String
-  welcomeMessage String
+  id              String   @id @default(cuid())
+  name            String
+  userId          String
+  openaiId        String   @unique
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+  openaiKey       String
+  modelId         String
+  prompt          String
+  welcomeMessage  String
+  displayBranding Boolean  @default(true)
 
   user         User           @relation(fields: [userId], references: [id])
   model        ChatbotModel   @relation(fields: [modelId], references: [id])

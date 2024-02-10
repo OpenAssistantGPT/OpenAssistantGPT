@@ -125,6 +125,12 @@ export function BillingForm({
                                                     - {plan.maxFiles} Files
                                                 </li>
                                                 {
+                                                    plan.disableBranding &&
+                                                    <li className="flex items-center">
+                                                        - Disable Branding
+                                                    </li>
+                                                }
+                                                {
                                                     plan.unlimitedMessages ?
                                                         <li className="flex items-center">
                                                             - Unlimited Messages
@@ -167,6 +173,12 @@ export function BillingForm({
                                             <li className="flex items-center">
                                                 - {plan.maxFiles} Files
                                             </li>
+                                            {
+                                                plan.disableBranding &&
+                                                <li className="flex items-center">
+                                                    - Disable Branding
+                                                </li>
+                                            }
                                             {
                                                 plan.unlimitedMessages ?
                                                     <li className="flex items-center">
