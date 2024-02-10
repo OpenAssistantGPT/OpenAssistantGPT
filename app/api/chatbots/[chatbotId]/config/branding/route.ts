@@ -29,23 +29,23 @@ export async function PATCH(
     req: Request,
     context: z.infer<typeof routeContextSchema>
 ) {
-    const session = await getServerSession(authOptions)
-    const { params } = routeContextSchema.parse(context)
-
-    if (!(await verifyCurrentUserHasAccessToChatbot(params.chatbotId))) {
-        return new Response(null, { status: 403 })
-    }
-
-    const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
-
-    if (subscriptionPlan.disableBranding === false) {
-        throw new RequiresHigherPlanError()
-    }
-
-    const body = await req.json()
-    const payload = brandingSchema.parse(body)
-
     try {
+        const session = await getServerSession(authOptions)
+        const { params } = routeContextSchema.parse(context)
+
+        if (!(await verifyCurrentUserHasAccessToChatbot(params.chatbotId))) {
+            return new Response(null, { status: 403 })
+        }
+
+        const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
+
+        if (subscriptionPlan.disableBranding === false) {
+            throw new RequiresHigherPlanError()
+        }
+
+        const body = await req.json()
+        const payload = brandingSchema.parse(body)
+
         const chatbot = await db.chatbot.update({
             where: {
                 id: params.chatbotId
@@ -63,6 +63,14 @@ export async function PATCH(
         return new Response(JSON.stringify(chatbot))
     } catch (error) {
         console.log(error)
+        if (error instanceof z.ZodError) {
+            return new Response(JSON.stringify(error.issues), { status: 422 })
+        }
+
+        if (error instanceof RequiresHigherPlanError) {
+            return new Response("Requires Higher Plan", { status: 402 })
+        }
+
         return new Response(null, { status: 500 })
     }
 }
