@@ -19,6 +19,7 @@ export async function GET(
             select: {
                 id: true,
                 welcomeMessage: true,
+                displayBranding: true
             },
             where: {
                 id: params.chatbotId,
