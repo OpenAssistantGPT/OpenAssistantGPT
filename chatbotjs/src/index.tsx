@@ -15,7 +15,7 @@ document.body.appendChild(rootDiv);
 const root = createRoot(document.getElementById('chatbot-root'));
 
 root.render(
-    <ShadowRootComponent styleUrl="https://www.openassistantgpt.io/chatbot.css">
+    <ShadowRootComponent styleUrl="https://www.openassistantgpt.io/chatbo.css">
         <ChatBox />
     </ShadowRootComponent>
 );

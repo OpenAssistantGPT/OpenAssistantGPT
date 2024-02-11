@@ -58,12 +58,14 @@ export default function ChatBox() {
     init();
   }, [])
 
-  const chatboxClassname = isMobile ? "w-full max-h-[80vh]" : "max-w-md max-h-[80vh]"
+  const chatboxClassname = isMobile ? "fixed inset-0" : "mr-4 max-w-md max-h-[80vh]";
+  const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
 
   return (
-    <div className="fixed bottom-0 right-0 ml-4 mb-4 mr-4 z-50 flex items-end">
+    <div className="fixed bottom-0 right-0 mb-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " ml-2 mr-2 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out mb-2"}>
+        <Card className={chatboxClassname + " m-1 overflow-auto bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out"}>
+
           <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
@@ -128,46 +130,47 @@ export default function ChatBox() {
               )}
             </div>
           </div>
-          {config?.displayBranding === true &&
-            <div className="text-center text-zinc-400 text-sm pb-4">
-              Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
-            </div>
-          }
-
-          <div className="border-t border-gray-200 p-2">
-            <div
-              className='w-full flex items-center gap-2'
-            >
-              <form onSubmit={submitMessage}
-                className="flex align-right items-end w-full"
+          <div className={inputContainerClassname}>
+            {config?.displayBranding === true && (
+              <div className="text-center text-zinc-400 text-sm mb-2">
+                Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
+              </div>
+            )}
+            <div className="border-t border-gray-200 p-2">
+              <div
+                className='w-full flex items-center gap-2'
               >
-                <Input
-                  disabled={status !== 'awaiting_message'}
-                  className="w-full border-0"
-                  value={input}
-                  placeholder="Type a message..."
-                  onChange={handleInputChange}
-                />
-                <Button type="submit"
-                  disabled={status !== 'awaiting_message'}
-                  className="flex-none w-1/6"
+                <form onSubmit={submitMessage}
+                  className="flex align-right items-end w-full"
                 >
-                  {status !== 'awaiting_message' && (
-                    <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
-                  )}
-                  {status === 'awaiting_message' && (
-                    <IconSend className="mr-2 h-5 w-5 text-gray-500" />
-                  )}
-                </Button>
-              </form>
+                  <Input
+                    disabled={status !== 'awaiting_message'}
+                    className="w-full border-0"
+                    value={input}
+                    placeholder="Type a message..."
+                    onChange={handleInputChange}
+                  />
+                  <Button type="submit"
+                    disabled={status !== 'awaiting_message'}
+                    className="flex-none w-1/6"
+                  >
+                    {status !== 'awaiting_message' && (
+                      <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                    )}
+                    {status === 'awaiting_message' && (
+                      <IconSend className="mr-2 h-5 w-5 text-gray-500" />
+                    )}
+                  </Button>
+                </form>
+              </div>
             </div>
           </div >
         </Card >
       }
       {
         !isChatVisible &&
-        <button className="shadow-lg border bg-white border-gray-200 rounded-full p-4"
-          onClick={toggleChatVisibility} variant="ghost">
+        <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4"
+          onClick={toggleChatVisibility}>
           {!isChatVisible && <Icons.message />}
           {isChatVisible && <Icons.close />}
         </button>
@@ -175,8 +178,8 @@ export default function ChatBox() {
       }
       {
         isChatVisible && !isMobile &&
-        <button className="shadow-lg border bg-white border-gray-200 rounded-full p-4"
-          onClick={toggleChatVisibility} variant="ghost">
+        <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4"
+          onClick={toggleChatVisibility}>
           {!isChatVisible && <Icons.message />}
           {isChatVisible && <Icons.close />}
         </button>
@@ -184,28 +187,6 @@ export default function ChatBox() {
     </div >
   )
 }
-
-function IconClose(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-      <line x1="3" x2="21" y1="9" y2="9" />
-      <path d="m9 16 3-3 3 3" />
-    </svg>
-  )
-}
-
 
 function IconSend(props: any) {
   return (
