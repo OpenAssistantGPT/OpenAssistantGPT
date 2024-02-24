@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ai": "^2.2.31",
+    "ai": "^2.2.33",
     "esbuild": "^0.19.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.49.3"
+    "react-hook-form": "^7.50.0"
   },
   "devDependencies": {
     "@types/react-dom": "^18.2.17",
