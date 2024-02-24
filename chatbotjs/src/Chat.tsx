@@ -58,7 +58,7 @@ export default function ChatBox() {
     init();
   }, [])
 
-  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-4 max-w-md max-h-[80vh]";
+  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-4 flex flex-col max-w-md max-h-[80vh]";
   const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
   const inputContainerHeight = 90; // Adjust this value based on your actual input container height
 
@@ -67,6 +67,7 @@ export default function ChatBox() {
     <div className="fixed bottom-0 right-0 mb-4 z-50 flex items-end">
       {isChatVisible &&
         <Card className={chatboxClassname + " m-1 bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
+
           <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
             <h3 className="text-lg font-semibold">Chat with us</h3>
             <div>
@@ -75,7 +76,7 @@ export default function ChatBox() {
               </Button>
             </div>
           </div>
-          <div className={isMobile ? "p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" : "p-4 space-y-4 flex flex-col-reverse flex-grow custom-scrollbar"} style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }}>
+          <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }}>
 
             <div className="space-y-4">
               <div key="0" className="flex items-end gap-2">
