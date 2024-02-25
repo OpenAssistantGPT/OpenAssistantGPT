@@ -9,7 +9,7 @@ import { DashboardShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { BrandingSettings } from "@/components/branding-settings"
+import { CustomizationSettings } from "@/components/customization-settings"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -24,7 +24,7 @@ async function getChatbotForUser(chatbotId: Chatbot["id"], userId: User["id"]) {
     })
 }
 
-export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) {
+export default async function CustomizationsPage({ params }: ChatbotSettingsProps) {
 
     const user = await getCurrentUser()
 
@@ -54,7 +54,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
-            <BrandingSettings chatbot={chatbot} />
+            <CustomizationSettings chatbot={chatbot} />
         </DashboardShell >
     )
 }

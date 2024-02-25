@@ -19,7 +19,9 @@ export async function GET(
             select: {
                 id: true,
                 welcomeMessage: true,
-                displayBranding: true
+                displayBranding: true,
+                chatTitle: true,
+                chatMessagePlaceHolder: true
             },
             where: {
                 id: params.chatbotId,
@@ -28,6 +30,7 @@ export async function GET(
 
         return new Response(JSON.stringify(chatbot))
     } catch (error) {
+        console.log(error)
         return new Response(null, { status: 500 })
     }
 }

@@ -2,7 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { RequiresHigherPlanError } from "@/lib/exceptions";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { brandingSchema } from "@/lib/validations/branding";
+import { customizationSchema } from "@/lib/validations/customization";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 
@@ -44,7 +44,7 @@ export async function PATCH(
         }
 
         const body = await req.json()
-        const payload = brandingSchema.parse(body)
+        const payload = customizationSchema.parse(body)
 
         const chatbot = await db.chatbot.update({
             where: {
@@ -52,6 +52,8 @@ export async function PATCH(
             },
             data: {
                 displayBranding: payload.displayBranding,
+                chatTitle: payload.chatTitle,
+                chatMessagePlaceHolder: payload.chatMessagePlaceHolder
             },
             select: {
                 id: true,
