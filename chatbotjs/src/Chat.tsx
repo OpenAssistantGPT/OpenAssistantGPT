@@ -19,6 +19,8 @@ interface ChatbotConfig {
   id: number;
   welcomeMessage: string;
   displayBranding: boolean;
+  chatTitle: string;
+  chatMessagePlaceHolder: string;
 }
 
 export default function ChatBox() {
@@ -69,7 +71,7 @@ export default function ChatBox() {
         <Card className={chatboxClassname + " m-1 bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
 
           <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
-            <h3 className="text-lg font-semibold">Chat with us</h3>
+            <h3 className="text-lg font-semibold">{config ? config!.chatTitle : ""}</h3>
             <div>
               <Button onClick={toggleChatVisibility} variant="ghost">
                 <Icons.close className="h-5 w-5 text-gray-500" />
@@ -150,7 +152,7 @@ export default function ChatBox() {
                     disabled={status !== 'awaiting_message'}
                     className="w-full border-0"
                     value={input}
-                    placeholder="Type a message..."
+                    placeholder={config ? config!.chatMessagePlaceHolder : ""}
                     onChange={handleInputChange}
                   />
                   <Button type="submit"

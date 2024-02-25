@@ -16,23 +16,26 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/use-toast"
 import { Chatbot } from "@prisma/client"
-import { brandingSchema } from "@/lib/validations/branding"
+import { customizationSchema } from "@/lib/validations/customization"
 import { useEffect, useState } from "react"
 import { Icons } from "./icons"
+import { Input } from "./ui/input"
 
 
 interface ChatbotOperationsProps {
     chatbot: Pick<Chatbot, "id" | "name" | "modelId">
 }
 
-export function BrandingSettings({ chatbot }: ChatbotOperationsProps) {
+export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
 
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
-    const form = useForm<z.infer<typeof brandingSchema>>({
-        resolver: zodResolver(brandingSchema),
+    const form = useForm<z.infer<typeof customizationSchema>>({
+        resolver: zodResolver(customizationSchema),
         defaultValues: {
             displayBranding: true,
+            chatTitle: "",
+            chatMessagePlaceHolder: "",
         },
     })
 
@@ -41,20 +44,23 @@ export function BrandingSettings({ chatbot }: ChatbotOperationsProps) {
             method: "GET",
         }).then((res) => res.json()).then((data) => {
             form.setValue("displayBranding", data.displayBranding)
+            form.setValue("chatTitle", data.chatTitle)
+            form.setValue("chatMessagePlaceHolder", data.chatMessagePlaceHolder)
         })
-
     }, [])
 
-    async function onSubmit(data: z.infer<typeof brandingSchema>) {
+    async function onSubmit(data: z.infer<typeof customizationSchema>) {
         setIsSaving(true)
 
-        const response = await fetch(`/api/chatbots/${chatbot.id}/config/branding`, {
+        const response = await fetch(`/api/chatbots/${chatbot.id}/config/customization`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 displayBranding: data.displayBranding,
+                chatTitle: data.chatTitle,
+                chatMessagePlaceHolder: data.chatMessagePlaceHolder,
             }),
         })
 
@@ -111,6 +117,52 @@ export function BrandingSettings({ chatbot }: ChatbotOperationsProps) {
                                         <Switch
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="chatTitle"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
+                                    <div className="space-y-0.5">
+                                        <FormLabel className="text-base">
+                                            Chatbox Title
+                                        </FormLabel>
+                                        <FormDescription>
+                                            Change the chatbox title.
+                                        </FormDescription>
+                                    </div>
+                                    <FormControl>
+                                        <Input
+                                            type="text"
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="chatMessagePlaceHolder"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
+                                    <div className="space-y-0.5">
+                                        <FormLabel className="text-base">
+                                            Chatbox Input Message Placeholder Text
+                                        </FormLabel>
+                                        <FormDescription>
+                                            Update the placeholder text in the chatbox input.
+                                        </FormDescription>
+                                    </div>
+                                    <FormControl>
+                                        <Input
+                                            type="text"
+                                            value={field.value}
+                                            onChange={field.onChange}
                                         />
                                     </FormControl>
                                 </FormItem>

@@ -29,16 +29,19 @@ model ChatbotFiles {
 }
 
 model Chatbot {
-  id              String   @id @default(cuid())
-  name            String
-  userId          String
-  openaiId        String   @unique
-  createdAt       DateTime @default(now()) @map(name: "created_at")
-  openaiKey       String
-  modelId         String
-  prompt          String
-  welcomeMessage  String
-  displayBranding Boolean  @default(true)
+  id                     String   @id @default(cuid())
+  name                   String
+  userId                 String
+  openaiId               String   @unique
+  createdAt              DateTime @default(now()) @map(name: "created_at")
+  openaiKey              String
+  modelId                String
+  prompt                 String
+  welcomeMessage         String
+  
+  displayBranding        Boolean  @default(true)
+  chatTitle              String   @default("Chat with us")
+  chatMessagePlaceHolder String   @default("Type a message...")
 
   user         User           @relation(fields: [userId], references: [id])
   model        ChatbotModel   @relation(fields: [modelId], references: [id])
