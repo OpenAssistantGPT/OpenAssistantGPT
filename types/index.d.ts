@@ -90,7 +90,7 @@ export type SubscriptionPlan = {
 
   premiumSupport?: boolean
 
-  disableBranding: boolean
+  basicCustomization: boolean
 
   price: number | undefined
 }
