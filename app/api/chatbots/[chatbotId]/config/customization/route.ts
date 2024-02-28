@@ -39,7 +39,7 @@ export async function PATCH(
 
         const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
 
-        if (subscriptionPlan.disableBranding === false) {
+        if (subscriptionPlan.basicCustomization === false) {
             throw new RequiresHigherPlanError()
         }
 

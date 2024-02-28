@@ -125,9 +125,9 @@ export function BillingForm({
                                                     - {plan.maxFiles} Files
                                                 </li>
                                                 {
-                                                    plan.disableBranding &&
+                                                    plan.basicCustomization &&
                                                     <li className="flex items-center">
-                                                        - Disable Branding
+                                                        - Customizations
                                                     </li>
                                                 }
                                                 {
@@ -174,9 +174,9 @@ export function BillingForm({
                                                 - {plan.maxFiles} Files
                                             </li>
                                             {
-                                                plan.disableBranding &&
+                                                plan.basicCustomization &&
                                                 <li className="flex items-center">
-                                                    - Disable Branding
+                                                    - Customizations
                                                 </li>
                                             }
                                             {
