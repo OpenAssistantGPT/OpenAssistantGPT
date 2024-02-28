@@ -9,7 +9,6 @@ export default function Chatbot() {
         (window as any).chatbotConfig = {
             chatbotId: "clq6m06gc000114hm42s838g2"
         };
-
     }, []);
 
     return (

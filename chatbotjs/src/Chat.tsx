@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
  */
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import {
