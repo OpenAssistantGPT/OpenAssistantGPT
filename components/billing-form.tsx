@@ -176,7 +176,7 @@ export function BillingForm({
                                             {
                                                 plan.basicCustomization &&
                                                 <li className="flex items-center">
-                                                    - Customization
+                                                    - Customizations
                                                 </li>
                                             }
                                             {
