@@ -116,28 +116,28 @@ export function BillingForm({
                                         <CardContent>
                                             <ul className="mt-4 space-y-2">
                                                 <li className="flex items-center">
-                                                    ✅ {plan.maxChatbots} Chatbots
+                                                    - {plan.maxChatbots} Chatbots
                                                 </li>
                                                 <li className="flex items-center">
-                                                    ✅ {plan.maxCrawlers} Crawlers
+                                                    - {plan.maxCrawlers} Crawlers
                                                 </li>
                                                 <li className="flex items-center">
-                                                    ✅ {plan.maxFiles} Files
+                                                    - {plan.maxFiles} Files
                                                 </li>
                                                 {
                                                     plan.basicCustomization &&
                                                     <li className="flex items-center">
-                                                        ✅ Customizations
+                                                        - Customizations
                                                     </li>
                                                 }
                                                 {
                                                     plan.unlimitedMessages ?
                                                         <li className="flex items-center">
-                                                            ✅ Unlimited Messages
+                                                            - Unlimited Messages
                                                         </li>
                                                         :
                                                         <li className="flex items-center">
-                                                            ✅ {plan.maxMessagesPerMonth} Messages / Month
+                                                            - {plan.maxMessagesPerMonth} Messages / Month
                                                         </li>
                                                 }
                                             </ul>
@@ -165,28 +165,28 @@ export function BillingForm({
                                     <CardContent>
                                         <ul className="mt-4 space-y-2">
                                             <li className="flex items-center">
-                                                ✅ {plan.maxChatbots} Chatbots
+                                                - {plan.maxChatbots} Chatbots
                                             </li>
                                             <li className="flex items-center">
-                                                ✅ {plan.maxCrawlers} Crawlers
+                                                - {plan.maxCrawlers} Crawlers
                                             </li>
                                             <li className="flex items-center">
-                                                ✅ {plan.maxFiles} Files
+                                                - {plan.maxFiles} Files
                                             </li>
                                             {
                                                 plan.basicCustomization &&
                                                 <li className="flex items-center">
-                                                    ✅ Customizations
+                                                    - Customization
                                                 </li>
                                             }
                                             {
                                                 plan.unlimitedMessages ?
                                                     <li className="flex items-center">
-                                                        ✅ Unlimited Messages
+                                                        - Unlimited Messages
                                                     </li>
                                                     :
                                                     <li className="flex items-center">
-                                                        ✅ {plan.maxMessagesPerMonth} Messages / Month
+                                                        - {plan.maxMessagesPerMonth} Messages / Month
                                                     </li>
                                             }
                                         </ul>
