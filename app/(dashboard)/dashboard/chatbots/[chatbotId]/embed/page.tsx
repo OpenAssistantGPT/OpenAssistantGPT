@@ -68,7 +68,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                             description="If you use HTML, you can use the following code to embed your chatbot."
                         >{`<script>
   window.chatbotConfig = {
-    chatbotId: 'clq6m06gc000114hm42s838g2',
+    chatbotId: '${params.chatbotId}',
   }
 </script>
 
