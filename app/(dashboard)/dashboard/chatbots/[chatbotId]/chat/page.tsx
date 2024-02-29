@@ -54,7 +54,9 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                     </>
                 </Link>
             </DashboardHeader>
-            <Chat chatbot={chatbot}></Chat>
+            <div>
+                <Chat chatbot={chatbot} defaultMessage=""></Chat>
+            </div>
         </DashboardShell >
     )
 }

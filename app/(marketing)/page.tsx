@@ -141,7 +141,9 @@ export default function IndexPage() {
           <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
             Ask any question about OpenAssistantGPT to our chatbot powered by OpenAI Assistant API and see how it responds. You can also try the chatbot buttom right of the window.
           </p>
-          <Chat chatbot={chatbot}></Chat>
+          <div className="min-w-[85%] min-h-[15rem] items-left">
+            <Chat chatbot={chatbot} defaultMessage="how do I get unlimited messages for my chatbot?"></Chat>
+          </div>
         </div>
       </section>
       <section id="low-code" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
