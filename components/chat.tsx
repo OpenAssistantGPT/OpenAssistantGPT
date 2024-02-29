@@ -17,18 +17,27 @@ import {
   // import as useAssistant:
   experimental_useAssistant as useAssistant,
 } from 'ai/react';
+import { useEffect } from "react"
 
 
 interface ChatbotProps {
   chatbot: Pick<Chatbot, "id" | "name" | "welcomeMessage">
+  defaultMessage: string
 }
 
-export function Chat({ chatbot, ...props }: ChatbotProps) {
+export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
   const { status, messages, input, submitMessage, handleInputChange } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat` });
 
+  useEffect(() => {
+    if (defaultMessage !== '') {
+      input === '' && handleInputChange({ target: { value: defaultMessage } } as React.ChangeEvent<HTMLInputElement>);
+    }
+  })
+
   return (
-    <Card className="flex border flex-col w-full overflow-hidden">
+    <Card className="flex border flex-col w-full overflow-hidden flex-grow">
+
       <CardHeader className="border-b p-4">
         <h2 className="text-xl font-bold flex items-center gap-2">
           <Avatar className="relative overflow-visible w-10 h-10">
@@ -42,7 +51,7 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
           </div>
         </h2>
       </CardHeader>
-      <CardContent className="border-b overflow-auto p-4">
+      <CardContent className="border-b overflow-auto p-4 flex-1">
         <div className="space-y-4">
           <div key="0" className="flex items-end gap-2">
             <div className="rounded-lg bg-zinc-200 p-2">
@@ -126,7 +135,7 @@ export function Chat({ chatbot, ...props }: ChatbotProps) {
             </Button>
           </form>
         </div>
-      </CardFooter >
-    </Card >
+      </CardFooter>
+    </Card>
   )
 }

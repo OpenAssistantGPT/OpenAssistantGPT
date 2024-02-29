@@ -177,7 +177,7 @@ export default async function OnboardingPage() {
                   </Link>
                 </p>
               </div>
-              <Chat chatbot={chatbot!}></Chat>
+              <Chat chatbot={chatbot!} defaultMessage=""></Chat>
             </div>
           }
 
