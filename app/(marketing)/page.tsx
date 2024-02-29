@@ -6,9 +6,17 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
-
+import { Chat } from "@/components/chat";
 
 export default function IndexPage() {
+
+  const chatbot = {
+    id: "clq6m06gc000114hm42s838g2",
+    name: "OpenAssistantGPT",
+    welcomeMessage: "Hello! I can help you with any questions you have about OpenAssistantGPT."
+  }
+
+
   return (
     <>
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
@@ -42,10 +50,7 @@ export default function IndexPage() {
           <Image className="mt-10 border shadow-lg" src="/dashboard.png" width={810} height={540} alt="Dashboard" />
         </div>
       </section>
-      <section
-        id="features"
-        className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24"
-      >
+      <section id="features" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Features
@@ -128,7 +133,18 @@ export default function IndexPage() {
           </p>
         </div>
       </section>
-      <section id="open-source" className="container py-8 md:py-12 lg:py-24">
+      <section id="chat" className="container py-8 md:py-12 lg:py-24">
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
+          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+            Test our chatbot assistant
+          </h2>
+          <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+            Ask any question about OpenAssistantGPT to our chatbot powered by OpenAI Assistant API and see how it responds. You can also try the chatbot buttom right of the window.
+          </p>
+          <Chat chatbot={chatbot}></Chat>
+        </div>
+      </section>
+      <section id="low-code" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Low code and easy to implement
@@ -140,7 +156,7 @@ export default function IndexPage() {
           <Image alt="code example" className="shadow-xl border rounded-lg" width={550} height={550} src="/code_example.png" />
         </div>
       </section>
-      <section id="open-source" className="container bg-slate-50 py-8 md:py-12 lg:py-24">
+      <section id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Proudly Open Source
@@ -154,10 +170,7 @@ export default function IndexPage() {
           <GithubCard />
         </div>
       </section>
-      <section
-        id="faq"
-        className="w-full md:w-3/4 container space-y-6 py-8 md:py-12 lg:py-24"
-      >
+      <section id="faq" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             FAQ

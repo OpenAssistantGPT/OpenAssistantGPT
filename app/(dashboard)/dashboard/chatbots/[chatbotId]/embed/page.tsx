@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { CodeBlock } from "@/components/code-block"
 import { siteConfig } from "@/config/site"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -55,10 +56,39 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
-            <CodeBlock
-                language="HTML"
-                description="If you use HTML, you can use the following code to embed your chatbot."
-            >{`<script>
+            <Tabs className="w-full" defaultValue="widget">
+                <TabsList className="mb-10 grid w-full grid-cols-5 gap-4">
+                    <TabsTrigger value="widget">Widget</TabsTrigger>
+                    <TabsTrigger value="window">Window</TabsTrigger>
+                </TabsList>
+                <TabsContent value="window">
+                    <div className="space-y-4">
+                        <CodeBlock
+                            language="HTML"
+                            description="If you use HTML, you can use the following code to embed your chatbot."
+                        >{`<script>
+  window.chatbotConfig = {
+    chatbotId: 'clq6m06gc000114hm42s838g2',
+  }
+</script>
+
+<body>
+  <script src="${siteConfig.url}chatwindow.js"></script>
+  <!-- ... elements ... -->
+  <div id="openassistantgpt-chatbot">
+  </div>
+  <!-- ... other body elements ... -->
+</body>
+`}
+                        </CodeBlock>
+                    </div>
+                </TabsContent>
+                <TabsContent value="widget">
+                    <div className="space-y-4">
+                        <CodeBlock
+                            language="HTML"
+                            description="If you use HTML, you can use the following code to embed your chatbot."
+                        >{`<script>
   window.chatbotConfig = {
     chatbotId: '${params.chatbotId}',
   }
@@ -68,11 +98,11 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
   <script src="${siteConfig.url}chatbot.js"></script>
 </body>
 `}
-            </CodeBlock>
-            <CodeBlock
-                language="NEXT.JS"
-                description="If you use Next.js, you can use the following code to embed your chatbot."
-            >{`"use client"
+                        </CodeBlock>
+                        <CodeBlock
+                            language="NEXT.JS"
+                            description="If you use Next.js, you can use the following code to embed your chatbot."
+                        >{`"use client"
 
 import Script from 'next/script'
 import React, { useEffect } from 'react';
@@ -93,7 +123,11 @@ export default function Home() {
   )
 }
 `}
-            </CodeBlock>
+                        </CodeBlock>
+                    </div>
+                </TabsContent>
+            </Tabs>
+
         </DashboardShell >
     )
 }
