@@ -109,30 +109,39 @@ export default function ChatBox() {
         </div>
       </CardContent>
       <CardFooter className="p-4">
-        <div
-          className='w-full flex items-center gap-2'
-        >
-          <form onSubmit={submitMessage}
-            className="flex align-right gap-2 items-end w-full"
+        <div className='flex flex-col w-full space-y-2'>
+
+          <div
+            className='w-full flex items-center gap-2'
           >
-            <Input
-              disabled={status !== 'awaiting_message'}
-              className="w-full border border-gray-300 rounded shadow-sm"
-              value={input}
-              placeholder="Type a message..."
-              onChange={handleInputChange}
-            />
-            <Button type="submit"
-              variant="outline"
-              disabled={status !== 'awaiting_message'}
-              className="flex-none w-1/3"
+
+            <form onSubmit={submitMessage}
+              className="flex align-right gap-2 items-end w-full"
             >
-              {status !== 'awaiting_message' && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Send
-            </Button>
-          </form>
+              <Input
+                disabled={status !== 'awaiting_message'}
+                className="w-full border border-gray-300 rounded shadow-sm"
+                value={input}
+                placeholder="Type a message..."
+                onChange={handleInputChange}
+              />
+              <Button type="submit"
+                variant="outline"
+                disabled={status !== 'awaiting_message'}
+                className="flex-none w-1/3"
+              >
+                {status !== 'awaiting_message' && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Send
+              </Button>
+            </form>
+          </div>
+          {config?.displayBranding === true && (
+            <div className="text-center text-zinc-400 text-sm mb-2">
+              Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
+            </div>
+          )}
         </div>
       </CardFooter >
     </Card >
