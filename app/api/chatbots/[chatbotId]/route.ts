@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth";
 import OpenAI from "openai";
 import { z } from "zod";
 
+export const maxDuration = 300;
+
 const routeContextSchema = z.object({
   params: z.object({
     chatbotId: z.string(),
