@@ -6,7 +6,7 @@ import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { experimental_AssistantResponse } from 'ai';
 import { MessageContentText } from 'openai/resources/beta/threads/messages/messages';
 
-export const maxDuration = 300;
+export const runtime = 'edge';
 
 const routeContextSchema = z.object({
     params: z.object({
