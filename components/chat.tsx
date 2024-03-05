@@ -18,6 +18,7 @@ import {
   experimental_useAssistant as useAssistant,
 } from 'ai/react';
 import { useEffect } from "react"
+import Link from "next/link"
 
 
 interface ChatbotProps {
@@ -79,8 +80,40 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
                                   if (segmentIndex % 2 === 1) {
                                     return <strong key={segmentIndex}>{segment}</strong>;
                                   } else {
-                                    // Render normal text for other segments
-                                    return <span key={segmentIndex}>{segment}</span>;
+                                    // Replace URLs with Next.js Link tags or standard <a> tags
+                                    const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s]+[^.])\)/g;
+                                    const regularLinkRegex = /(https?:\/\/[^\s]+[^.])/g;
+                                    const segments = segment.split(markdownLinkRegex);
+
+                                    return segments.map((seg, idx) => {
+                                      if (idx % 3 === 1) {
+                                        // Render markdown-style link
+                                        return (
+                                          <Link className="underline" target="_blank" key={idx} href={segments[idx + 1]}>
+                                            {segments[idx]}
+                                          </Link>
+                                        );
+                                      } else if (idx % 2 === 0) {
+                                        // Render normal text or regular link
+                                        const normalLinkSegments = seg.split(regularLinkRegex);
+                                        return normalLinkSegments.map((linkSeg, linkIdx) => {
+                                          if (linkIdx % 2 === 1) {
+                                            // Render regular link
+                                            return (
+                                              <Link className="underline" target="_blank" key={`${idx}-${linkIdx}`} href={linkSeg}>
+                                                {linkSeg}
+                                              </Link>
+                                            );
+                                          } else {
+                                            // Render normal text
+                                            return <span key={`${idx}-${linkIdx}`}>{linkSeg}</span>;
+                                          }
+                                        });
+                                      } else {
+                                        // Skip the URL itself, as it's already rendered inside the Link
+                                        return null;
+                                      }
+                                    });
                                   }
                                 })}
                               </p>
@@ -89,7 +122,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
                         })}
                     </div>
                   </div>
-                )
+                );
               } else {
                 return (
                   <div key={message.id} className="flex items-end gap-2 justify-end">
@@ -97,7 +130,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
                       <p className="text-sm">{message.content}</p>
                     </div>
                   </div>
-                )
+                );
               }
             })
           }

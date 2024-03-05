@@ -78,8 +78,40 @@ export default function ChatBox() {
                                   if (segmentIndex % 2 === 1) {
                                     return <strong key={segmentIndex}>{segment}</strong>;
                                   } else {
-                                    // Render normal text for other segments
-                                    return <span key={segmentIndex}>{segment}</span>;
+                                    // Replace URLs with Next.js Link tags or standard <a> tags
+                                    const markdownLinkRegex = /\[([^\]]+)\]\((https?:\/\/[^\s]+[^.])\)/g;
+                                    const regularLinkRegex = /(https?:\/\/[^\s]+[^.])/g;
+                                    const segments = segment.split(markdownLinkRegex);
+
+                                    return segments.map((seg, idx) => {
+                                      if (idx % 3 === 1) {
+                                        // Render markdown-style link
+                                        return (
+                                          <a className="underline" target="_blank" key={idx} href={segments[idx + 1]}>
+                                            {segments[idx]}
+                                          </a>
+                                        );
+                                      } else if (idx % 2 === 0) {
+                                        // Render normal text or regular link
+                                        const normalLinkSegments = seg.split(regularLinkRegex);
+                                        return normalLinkSegments.map((linkSeg, linkIdx) => {
+                                          if (linkIdx % 2 === 1) {
+                                            // Render regular link
+                                            return (
+                                              <a className="underline" target="_blank" key={`${idx}-${linkIdx}`} href={linkSeg}>
+                                                {linkSeg}
+                                              </a>
+                                            );
+                                          } else {
+                                            // Render normal text
+                                            return <span key={`${idx}-${linkIdx}`}>{linkSeg}</span>;
+                                          }
+                                        });
+                                      } else {
+                                        // Skip the URL itself, as it's already rendered inside the Link
+                                        return null;
+                                      }
+                                    });
                                   }
                                 })}
                               </p>
@@ -88,7 +120,7 @@ export default function ChatBox() {
                         })}
                     </div>
                   </div>
-                )
+                );
               } else {
                 return (
                   <div key={message.id} className="flex items-end gap-2 justify-end">
@@ -96,7 +128,7 @@ export default function ChatBox() {
                       <p className="text-sm">{message.content}</p>
                     </div>
                   </div>
-                )
+                );
               }
             })
           }
