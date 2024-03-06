@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 /**
  * v0 by Vercel.
@@ -39,6 +39,14 @@ export default function ChatBox() {
     setIsChatVisible(!isChatVisible);
   };
 
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll to the bottom of the container on messages update
+    if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
+  }, [messages]);
+
+
   useEffect(() => {
     function handleResize() {
       setIsMobile(window.innerWidth < 640);
@@ -60,37 +68,35 @@ export default function ChatBox() {
     init();
   }, [])
 
-  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-4 flex flex-col max-w-md max-h-[80vh]";
+  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[70vh] max-h-[70vh]";
   const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
-  const inputContainerHeight = 90; // Adjust this value based on your actual input container height
-
+  const inputContainerHeight = 75; // Adjust this value based on your actual input container height
 
   return (
     <div className="fixed bottom-0 right-0 mb-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " m-1 bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
+        <Card className={chatboxClassname + " bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
 
           <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
-            <h3 className="text-lg font-semibold">{config ? config!.chatTitle : ""}</h3>
+            <h3 className="text-2xl font-semibold">{config ? config!.chatTitle : ""}</h3>
             <div>
               <Button onClick={toggleChatVisibility} variant="ghost">
                 <Icons.close className="h-5 w-5 text-gray-500" />
               </Button>
             </div>
           </div>
-          <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }}>
-
+          <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
             <div className="space-y-4">
-              <div key="0" className="flex items-end gap-2">
+              <div key="0" className="flex w-5/6 items-end gap-2">
                 <div className="rounded-lg bg-zinc-200 p-2">
-                  <p className="text-sm">{config ? config!.welcomeMessage : ""}</p>
+                  <p className="text-md">{config ? config!.welcomeMessage : ""}</p>
                 </div>
               </div>
               {
                 messages.map((message: Message) => {
                   if (message.role === "assistant") {
                     return (
-                      <div key={message.id} className="flex items-end gap-2">
+                      <div key={message.id} className="flex w-5/6 items-end gap-2">
                         <div className="rounded-lg bg-zinc-200 p-2">
                           {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
                             .split('```').map((block, blockIdx) => {
@@ -101,7 +107,7 @@ export default function ChatBox() {
                               } else {
                                 // Process normal text for ** and \n
                                 return block.split('\n').map((line, lineIndex, lineArray) => (
-                                  <p key={`${blockIdx}-${lineIndex}`} className={`text-sm ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
+                                  <p key={`${blockIdx}-${lineIndex}`} className={`text-md ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
                                     {line.split('**').map((segment, segmentIndex) => {
                                       // Render bold text for segments surrounded by **
                                       if (segmentIndex % 2 === 1) {
@@ -152,9 +158,9 @@ export default function ChatBox() {
                     );
                   } else {
                     return (
-                      <div key={message.id} className="flex items-end gap-2 justify-end">
-                        <div className="rounded-lg bg-blue-500 text-white p-2">
-                          <p className="text-sm">{message.content}</p>
+                      <div key={message.id} className="flex max-w-5/6 items-end gap-2 justify-end">
+                        <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end">
+                          <p className="text-md">{message.content}</p>
                         </div>
                       </div>
                     );
@@ -162,13 +168,13 @@ export default function ChatBox() {
                 })
               }
               {status === 'in_progress' && (
-                <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
+                <div className="h-8 w-5/6 max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
               )}
             </div>
           </div>
           <div className={inputContainerClassname}>
             {config?.displayBranding === true && (
-              <div className="text-center text-zinc-400 text-sm mb-2">
+              <div className="text-center text-zinc-400 text-md mb-2">
                 Powered by <a href="https://www.openassistantgpt.io/">{siteConfig.name}</a>
               </div>
             )}
@@ -181,14 +187,14 @@ export default function ChatBox() {
                 >
                   <Input
                     disabled={status !== 'awaiting_message'}
-                    className="w-full border-0"
+                    className="w-full border-0 text-md"
                     value={input}
                     placeholder={config ? config!.chatMessagePlaceHolder : ""}
                     onChange={handleInputChange}
                   />
                   <Button type="submit"
                     disabled={status !== 'awaiting_message'}
-                    className="flex-none w-1/6"
+                    className="flex-none w-1/6 text-md"
                   >
                     {status !== 'awaiting_message' && (
                       <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
