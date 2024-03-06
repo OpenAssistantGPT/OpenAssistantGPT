@@ -76,9 +76,8 @@ export default function ChatBox() {
     <div className="fixed bottom-0 right-0 mb-4 z-50 flex items-end">
       {isChatVisible &&
         <Card className={chatboxClassname + " bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
-
-          <div className="flex shadow justify-between items-center pt-2 pb-2 pl-4 pr-4">
-            <h3 className="text-2xl font-semibold">{config ? config!.chatTitle : ""}</h3>
+          <div className="flex shadow justify-between items-center p-4">
+            <h3 className="text-xl font-semibold">{config ? config!.chatTitle : ""}</h3>
             <div>
               <Button onClick={toggleChatVisibility} variant="ghost">
                 <Icons.close className="h-5 w-5 text-gray-500" />
