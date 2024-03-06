@@ -120,7 +120,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                         id="crawlUrl"
                                     />
                                     <FormDescription>
-                                        The URL that we will start the crawling on.  Make sure the URL starts with the protocol https:// or http://
+                                        The URL that we will start the crawling on. Make sure the URL starts with the protocol https:// or http://
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
