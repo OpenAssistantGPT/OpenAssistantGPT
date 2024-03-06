@@ -1571,10 +1571,6 @@ video {
   padding-bottom: 0.25rem;
 }
 
-.pb-2 {
-  padding-bottom: 0.5rem;
-}
-
 .pb-32 {
   padding-bottom: 8rem;
 }
@@ -1605,10 +1601,6 @@ video {
 
 .pr-2 {
   padding-right: 0.5rem;
-}
-
-.pr-4 {
-  padding-right: 1rem;
 }
 
 .pr-8 {
