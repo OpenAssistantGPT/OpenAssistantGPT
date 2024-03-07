@@ -6,6 +6,8 @@ import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { experimental_AssistantResponse } from 'ai';
 import { MessageContentText } from 'openai/resources/beta/threads/messages/messages';
 
+export const maxDuration = 300;
+
 const routeContextSchema = z.object({
     params: z.object({
         chatbotId: z.string(),

@@ -124,7 +124,7 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                         id="crawlUrl"
                                     />
                                     <FormDescription>
-                                        The URL that we will start the crawling on.
+                                        The URL that we will start the crawling on. Make sure the URL starts with the protocol https:// or http://
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
