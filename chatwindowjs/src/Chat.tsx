@@ -3,10 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
-import { Chatbot } from "@prisma/client"
 
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
+
+interface ChatbotConfig {
+  id: number;
+  welcomeMessage: string;
+  displayBranding: boolean;
+  chatTitle: string;
+  chatMessagePlaceHolder: string;
+}
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import {
@@ -17,6 +24,7 @@ import {
 
 
 export default function ChatBox() {
+
   const [config, setConfig] = useState<ChatbotConfig>()
   const [chatbotId, setChatbotId] = useState<string>()
 
@@ -36,8 +44,8 @@ export default function ChatBox() {
   }, [])
 
   return (
-    <Card className="flex border flex-col w-full overflow-hidden">
-      <CardHeader className="border-b p-4">
+    <Card className="flex bg-white shadow-lg border flex-col w-full overflow-hidden">
+      <CardHeader className="shadow border-b p-4">
         <h2 className="text-xl font-bold flex items-center gap-2">
           <Avatar className="relative overflow-visible w-10 h-10">
             <span className="absolute right-0 top-0 flex h-3 w-3 rounded-full bg-green-600" />
