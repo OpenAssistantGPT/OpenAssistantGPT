@@ -145,7 +145,7 @@ export async function POST(
                     sendMessage({
                         id: "end",
                         role: 'assistant',
-                        content: [{ type: 'text', text: { value: "An error occurred. Please try again later." } }]
+                        content: [{ type: 'text', text: { value: "Oops! An error has occurred. Please ensure that your OpenAI account is configured correctly with a valid credit card. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!" } }]
                     });
                 }
             },
