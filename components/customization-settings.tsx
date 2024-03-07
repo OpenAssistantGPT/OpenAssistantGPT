@@ -20,13 +20,21 @@ import { customizationSchema } from "@/lib/validations/customization"
 import { useEffect, useState } from "react"
 import { Icons } from "./icons"
 import { Input } from "./ui/input"
-
+import { GradientPicker } from "@/components/gradient-picker"
 
 interface ChatbotOperationsProps {
     chatbot: Pick<Chatbot, "id" | "name" | "modelId">
 }
 
 export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
+
+    const [bubbleColor, setBubbleColor] = useState('#B4D455')
+    const [bubbleLogoColor, setBubbleLogoColor] = useState('#B4D455')
+    const [chatbotBubbleColor, setChatbotBubbleColor] = useState('#B4D455')
+    const [chatbotMessageColor, setChatbotMessageColor] = useState('#B4D455')
+    const [userBubbleColor, setUserBubbleColor] = useState('#B4D455')
+    const [userBubbleMessageColor, setUserBubbleMessageColor] = useState('#B4D455')
+
 
     const [isSaving, setIsSaving] = useState<boolean>(false)
 
@@ -51,6 +59,8 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
 
     async function onSubmit(data: z.infer<typeof customizationSchema>) {
         setIsSaving(true)
+
+        console.log('heheheheh')
 
         const response = await fetch(`/api/chatbots/${chatbot.id}/config/customization`, {
             method: "PATCH",
@@ -168,6 +178,114 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                 </FormItem>
                             )}
                         />
+                        <FormField
+                            name="bubbleColor"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
+                                    <div className="space-y-4">
+                                        <h1>Customize your chatbot colors</h1>
+                                        <div className="flex flex-row">
+                                            <div>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        Change chatbot bubble color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot bubble
+                                                    </FormDescription>
+                                                </div>
+                                                <FormControl>
+                                                    <GradientPicker background={bubbleColor} setBackground={setBubbleColor} />
+                                                </FormControl>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        Change chatbot logo bubble color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot bubble
+                                                    </FormDescription>
+                                                </div>
+                                                <FormControl>
+                                                    <GradientPicker withGradient={false} background={bubbleLogoColor} setBackground={setBubbleLogoColor} />
+                                                </FormControl>
+                                            </div>
+                                            <div className="flex w-full items-center text-center justify-center">
+                                                <div className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4" style={{ background: bubbleColor }}>
+                                                    <Icons.message style={{ color: bubbleLogoColor }} />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-row">
+                                            <div>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        Chatbot background message color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot bubble
+                                                    </FormDescription>
+                                                </div>
+                                                <FormControl>
+                                                    <GradientPicker background={chatbotBubbleColor} setBackground={setChatbotBubbleColor} />
+                                                </FormControl>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        Chatbot message text color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot bubble
+                                                    </FormDescription>
+                                                </div>
+                                                <FormControl>
+                                                    <GradientPicker background={chatbotMessageColor} setBackground={setChatbotMessageColor} />
+                                                </FormControl>
+                                            </div>
+                                            <div className="flex w-full items-center text-center justify-center">
+                                                <div key="0" className="flex w-5/6 items-end gap-2">
+                                                    <div className="rounded-lg bg-zinc-200 p-2" style={{ background: chatbotBubbleColor }}>
+                                                        <p className="text-md" style={{ color: chatbotMessageColor }}>Welcome to OpenAssitantGPT! How can we help you?</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row">
+                                            <div>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        User background message color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot bubble
+                                                    </FormDescription>
+                                                </div>
+                                                <FormControl>
+                                                    <GradientPicker background={userBubbleColor} setBackground={setUserBubbleColor} />
+                                                </FormControl>
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        User message text color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot bubble
+                                                    </FormDescription>
+                                                </div>
+                                                <FormControl>
+                                                    <GradientPicker background={userBubbleMessageColor} setBackground={setUserBubbleMessageColor} />
+                                                </FormControl>
+                                            </div>
+                                            <div className="flex w-full items-center text-center justify-center">
+                                                <div key="0" className="flex w-5/6 items-end gap-2">
+                                                    <div className="rounded-lg bg-zinc-200 p-2" style={{ background: userBubbleColor }}>
+                                                        <p className="text-md" style={{ color: userBubbleMessageColor }}>I need help with my customization what color should I choose?</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
                     </div>
                 </div>
                 <button
@@ -181,6 +299,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                     <span>Save</span>
                 </button>
             </form>
-        </Form>
+        </Form >
     )
 }
