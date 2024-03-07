@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site"
 import Chatbot from '@/components/chatbot';
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -69,6 +70,7 @@ export default async function RootLayout({
           }
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="AW-11267388324" />
     </html>
   );
 }
