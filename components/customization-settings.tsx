@@ -208,7 +208,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                             <div className="flex flex-col w-full justify space-y-4">
                                                 <div className="space-y-0.5">
                                                     <FormLabel className="text-base">
-                                                        Chatbot background bubble color
+                                                        Chatbot Background Bubble Color
                                                     </FormLabel>
                                                     <FormDescription>
                                                         Select the color you want to use for your chatbot bubble
@@ -220,7 +220,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
 
                                                 <div className="space-y-0.5">
                                                     <FormLabel className="text-base">
-                                                        Chatbot logo color
+                                                        Chatbot Logo Color
                                                     </FormLabel>
                                                     <FormDescription>
                                                         Select the color you want to use for your chatbot bubble
@@ -245,15 +245,15 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
                                     <div className="space-y-4">
-                                        <h1>Customize your chatbot reply</h1>
+                                        <h1 className="">Personalize Your Chatbot Responses</h1>
                                         <div className="flex">
                                             <div className="flex flex-col w-full justify space-y-4">
                                                 <div className="space-y-0.5">
                                                     <FormLabel className="text-base">
-                                                        Background message color
+                                                        Customize Chatbot Message Bubble Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Select the color you want to use for your chatbot bubble
+                                                        Choose the color for your chatbot's message bubble background.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker background={chatbotBubbleColor} setBackground={setChatbotBubbleColor} />
@@ -262,10 +262,10 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
 
                                                 <div className="space-y-0.5">
                                                     <FormLabel className="text-base">
-                                                        Message text color
+                                                        Customize Chatbot Text Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Select the color you want to use for your chatbot bubble
+                                                        Choose the color for the text in your chatbot's messages.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker withGradient={false} background={chatbotMessageColor} setBackground={setChatbotMessageColor} />
@@ -289,15 +289,15 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
                                     <div className="space-y-4">
-                                        <h1>Customize your user reply</h1>
+                                        <h1>Customize Your User Reply</h1>
                                         <div className="flex">
                                             <div className="flex flex-col w-full justify space-y-4">
                                                 <div className="space-y-0.5">
                                                     <FormLabel className="text-base">
-                                                        User background message color
+                                                        User Background Message Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Select the color you want to use for your chatbot bubble
+                                                        Choose the color for the background of your user's messages.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker background={userBubbleColor} setBackground={setUserBubbleColor} />
@@ -306,10 +306,10 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
 
                                                 <div className="space-y-0.5">
                                                     <FormLabel className="text-base">
-                                                        User message text color
+                                                        User Message Text Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Select the color you want to use for your chatbot bubble
+                                                        Choose the color for the text in your user's messages.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker withGradient={false} background={userBubbleMessageColor} setBackground={setUserBubbleMessageColor} />
