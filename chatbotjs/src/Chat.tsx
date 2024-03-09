@@ -21,6 +21,12 @@ interface ChatbotConfig {
   displayBranding: boolean;
   chatTitle: string;
   chatMessagePlaceHolder: string;
+  bubbleColor: string;
+  bubbleTextColor: string;
+  chatbotReplyBackgroundColor: string;
+  chatbotReplyTextColor: string;
+  userReplyBackgroundColor: string;
+  userReplyTextColor: string;
 }
 
 export default function ChatBox() {
@@ -87,8 +93,8 @@ export default function ChatBox() {
           <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
             <div className="space-y-4">
               <div key="0" className="flex w-5/6 items-end gap-2">
-                <div className="rounded-lg bg-zinc-200 p-2">
-                  <p className="text-md">{config ? config!.welcomeMessage : ""}</p>
+                <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
+                  <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
                 </div>
               </div>
               {
@@ -96,7 +102,7 @@ export default function ChatBox() {
                   if (message.role === "assistant") {
                     return (
                       <div key={message.id} className="flex w-5/6 items-end gap-2">
-                        <div className="rounded-lg bg-zinc-200 p-2">
+                        <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
                           {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
                             .split('```').map((block, blockIdx) => {
                               // Check if the block is a code block or normal text
@@ -158,8 +164,8 @@ export default function ChatBox() {
                   } else {
                     return (
                       <div key={message.id} className="flex max-w-5/6 items-end gap-2 justify-end">
-                        <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end">
-                          <p className="text-md">{message.content}</p>
+                        <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
+                          <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                         </div>
                       </div>
                     );
@@ -210,19 +216,19 @@ export default function ChatBox() {
       }
       {
         !isChatVisible &&
-        <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4"
+        <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4" style={{ background: config ? config!.bubbleColor : "" }}
           onClick={toggleChatVisibility}>
-          {!isChatVisible && <Icons.message />}
-          {isChatVisible && <Icons.close />}
+          {!isChatVisible && <Icons.message style={{ color: config ? config!.bubbleTextColor : "" }} />}
+          {isChatVisible && <Icons.close style={{ color: config ? config!.bubbleTextColor : "" }} />}
         </button>
 
       }
       {
         isChatVisible && !isMobile &&
-        <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4"
+        <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4" style={{ background: config ? config!.bubbleColor : "" }}
           onClick={toggleChatVisibility}>
-          {!isChatVisible && <Icons.message />}
-          {isChatVisible && <Icons.close />}
+          {!isChatVisible && <Icons.message style={{ color: config ? config!.bubbleTextColor : "" }} />}
+          {isChatVisible && <Icons.close style={{ color: config ? config!.bubbleTextColor : "" }} />}
         </button>
       }
     </div >
