@@ -223,7 +223,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                         Chatbot Logo Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Select the color you want to use for your chatbot bubble
+                                                        Select the color you want to use for your chatbot logo color
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker withGradient={false} background={bubbleLogoColor} setBackground={setBubbleLogoColor} />
