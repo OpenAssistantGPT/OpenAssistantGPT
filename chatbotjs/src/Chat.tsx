@@ -30,6 +30,7 @@ interface ChatbotConfig {
 }
 
 export default function ChatBox() {
+  const [loading, setLoading] = useState(true)
   const [config, setConfig] = useState<ChatbotConfig>()
   const [chatbotId, setChatbotId] = useState<string>()
   const [isChatVisible, setIsChatVisible] = useState(false);
@@ -64,12 +65,14 @@ export default function ChatBox() {
 
   useEffect(() => {
     const init = async () => {
+      setLoading(true)
       const id = window.chatbotConfig.chatbotId
       setChatbotId(id)
 
       const config = await fetch(`${siteConfig.url}api/chatbots/${id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
+      setLoading(false)
     };
     init();
   }, [])
@@ -215,7 +218,7 @@ export default function ChatBox() {
         </Card >
       }
       {
-        !isChatVisible &&
+        !loading && !isChatVisible &&
         <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4" style={{ background: config ? config!.bubbleColor : "" }}
           onClick={toggleChatVisibility}>
           {!isChatVisible && <Icons.message style={{ color: config ? config!.bubbleTextColor : "" }} />}
@@ -224,7 +227,7 @@ export default function ChatBox() {
 
       }
       {
-        isChatVisible && !isMobile &&
+        !loading && isChatVisible && !isMobile &&
         <button className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4" style={{ background: config ? config!.bubbleColor : "" }}
           onClick={toggleChatVisibility}>
           {!isChatVisible && <Icons.message style={{ color: config ? config!.bubbleTextColor : "" }} />}
