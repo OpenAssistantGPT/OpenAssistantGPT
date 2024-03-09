@@ -74,8 +74,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
     async function onSubmit(data: z.infer<typeof customizationSchema>) {
         setIsSaving(true)
 
-        console.log('heheheheh')
-
         const response = await fetch(`/api/chatbots/${chatbot.id}/config/customization`, {
             method: "PATCH",
             headers: {
