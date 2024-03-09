@@ -21,7 +21,14 @@ export async function GET(
                 welcomeMessage: true,
                 displayBranding: true,
                 chatTitle: true,
-                chatMessagePlaceHolder: true
+                chatMessagePlaceHolder: true,
+                bubbleColor: true,
+                bubbleTextColor: true,
+                chatbotReplyBackgroundColor: true,
+                chatbotReplyTextColor: true,
+                userReplyBackgroundColor: true,
+                userReplyTextColor: true
+
             },
             where: {
                 id: params.chatbotId,

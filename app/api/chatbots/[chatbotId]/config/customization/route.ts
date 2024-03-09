@@ -53,7 +53,13 @@ export async function PATCH(
             data: {
                 displayBranding: payload.displayBranding,
                 chatTitle: payload.chatTitle,
-                chatMessagePlaceHolder: payload.chatMessagePlaceHolder
+                chatMessagePlaceHolder: payload.chatMessagePlaceHolder,
+                bubbleColor: payload.bubbleColor,
+                bubbleTextColor: payload.bubbleTextColor,
+                chatbotReplyBackgroundColor: payload.chatbotReplyBackgroundColor,
+                chatbotReplyTextColor: payload.chatbotReplyTextColor,
+                userReplyBackgroundColor: payload.userReplyBackgroundColor,
+                userReplyTextColor: payload.userReplyTextColor,
             },
             select: {
                 id: true,
