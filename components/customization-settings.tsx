@@ -253,7 +253,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                         Customize Chatbot Message Bubble Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Choose the color for your chatbot's message bubble background.
+                                                        Choose the color for your chatbot&apos;s message bubble background.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker background={chatbotBubbleColor} setBackground={setChatbotBubbleColor} />
@@ -265,7 +265,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                         Customize Chatbot Text Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Choose the color for the text in your chatbot's messages.
+                                                        Choose the color for the text in your chatbot&apos;s messages.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker withGradient={false} background={chatbotMessageColor} setBackground={setChatbotMessageColor} />
@@ -297,7 +297,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                         User Background Message Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Choose the color for the background of your user's messages.
+                                                        Choose the color for the background of your user&apos;s messages.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker background={userBubbleColor} setBackground={setUserBubbleColor} />
@@ -309,7 +309,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                         User Message Text Color
                                                     </FormLabel>
                                                     <FormDescription>
-                                                        Choose the color for the text in your user's messages.
+                                                        Choose the color for the text in your user&apos;s messages.
                                                     </FormDescription>
                                                     <FormControl>
                                                         <GradientPicker withGradient={false} background={userBubbleMessageColor} setBackground={setUserBubbleMessageColor} />
