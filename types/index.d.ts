@@ -56,6 +56,20 @@ export type UserSubscriptionPlan = SubscriptionPlan &
     stripeCurrentPeriodEnd: number
   }
 
+export type ChatbotConfig = {
+  id: number
+  welcomeMessage: string
+  displayBranding: boolean
+  chatTitle: string
+  chatMessagePlaceHolder: string
+  bubbleColor: string
+  bubbleTextColor: string
+  chatbotReplyBackgroundColor: string
+  chatbotReplyTextColor: string
+  userReplyBackgroundColor: string
+  userReplyTextColor: string
+}
+
 
 export type MarketingConfig = {
   mainNav: MainNavItem[]
