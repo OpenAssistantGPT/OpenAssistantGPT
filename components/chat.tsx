@@ -64,7 +64,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
           <div>
-            {chatbot.name}
+            {config ? config!.chatTitle : ""}
             <span className="text-xs text-green-600 block">Online</span>
           </div>
         </h2>
@@ -171,7 +171,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               disabled={status !== 'awaiting_message'}
               className="w-full border border-gray-300 rounded shadow-sm"
               value={input}
-              placeholder="Type a message..."
+              placeholder={config ? config!.chatMessagePlaceHolder : ""}
               onChange={handleInputChange}
             />
             <Button type="submit"
