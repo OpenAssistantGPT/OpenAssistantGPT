@@ -14,20 +14,8 @@ import {
   // import as useAssistant:
   experimental_useAssistant as useAssistant,
 } from 'ai/react';
+import { ChatbotConfig } from '@/types';
 
-interface ChatbotConfig {
-  id: number;
-  welcomeMessage: string;
-  displayBranding: boolean;
-  chatTitle: string;
-  chatMessagePlaceHolder: string;
-  bubbleColor: string;
-  bubbleTextColor: string;
-  chatbotReplyBackgroundColor: string;
-  chatbotReplyTextColor: string;
-  userReplyBackgroundColor: string;
-  userReplyTextColor: string;
-}
 
 export default function ChatBox() {
   const [loading, setLoading] = useState(true)
