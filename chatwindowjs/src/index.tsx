@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   root.render(
     <ShadowRootComponent styleUrl="https://www.openassistantgpt.io/chatwindow.css">
+      <noscript>This chatbot is built using OpenAssistantGPT https://www.openassistantgpt.io/</noscript>
       <ChatBox />
     </ShadowRootComponent>
   );
