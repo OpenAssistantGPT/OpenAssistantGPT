@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 import { Chatbot } from "@prisma/client"
-
 import { Icons } from "./icons"
 
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
@@ -17,8 +16,10 @@ import {
   // import as useAssistant:
   experimental_useAssistant as useAssistant,
 } from 'ai/react';
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import { siteConfig } from "@/config/site"
+import { ChatbotConfig } from "@/types"
 
 
 interface ChatbotProps {
@@ -27,8 +28,24 @@ interface ChatbotProps {
 }
 
 export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
+
+  const [loading, setLoading] = useState(true)
+  const [config, setConfig] = useState<ChatbotConfig>()
+
   const { status, messages, input, submitMessage, handleInputChange } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat` });
+
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true)
+
+      const config = await fetch(`${siteConfig.url}api/chatbots/${chatbot.id}/config`)
+      const chatbotConfig: ChatbotConfig = await config.json()
+      setConfig(chatbotConfig)
+      setLoading(false)
+    };
+    init();
+  }, [])
 
   useEffect(() => {
     if (defaultMessage !== '') {
@@ -47,7 +64,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
           <div>
-            {chatbot.name}
+            {config ? config!.chatTitle : ""}
             <span className="text-xs text-green-600 block">Online</span>
           </div>
         </h2>
@@ -55,8 +72,8 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
       <CardContent className="border-b overflow-auto p-4 flex-1">
         <div className="space-y-4">
           <div key="0" className="flex items-end gap-2">
-            <div className="rounded-lg bg-zinc-200 p-2">
-              <p className="text-sm">{chatbot.welcomeMessage}</p>
+            <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
+              <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
             </div>
           </div>
           {
@@ -64,7 +81,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               if (message.role === "assistant") {
                 return (
                   <div key={message.id} className="flex items-end gap-2">
-                    <div className="rounded-lg bg-zinc-200 p-2">
+                    <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
                       {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
                         .split('```').map((block, blockIdx) => {
                           // Check if the block is a code block or normal text
@@ -126,8 +143,8 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               } else {
                 return (
                   <div key={message.id} className="flex items-end gap-2 justify-end">
-                    <div className="rounded-lg bg-blue-500 text-white p-2">
-                      <p className="text-sm">{message.content}</p>
+                    <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
+                      <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                     </div>
                   </div>
                 );
@@ -154,7 +171,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               disabled={status !== 'awaiting_message'}
               className="w-full border border-gray-300 rounded shadow-sm"
               value={input}
-              placeholder="Type a message..."
+              placeholder={config ? config!.chatMessagePlaceHolder : ""}
               onChange={handleInputChange}
             />
             <Button type="submit"

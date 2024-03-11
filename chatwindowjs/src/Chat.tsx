@@ -7,20 +7,13 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 
-interface ChatbotConfig {
-  id: number;
-  welcomeMessage: string;
-  displayBranding: boolean;
-  chatTitle: string;
-  chatMessagePlaceHolder: string;
-}
-
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import {
   Message,
   // import as useAssistant:
   experimental_useAssistant as useAssistant,
 } from 'ai/react';
+import { ChatbotConfig } from '@/types';
 
 
 export default function ChatBox() {
@@ -61,8 +54,8 @@ export default function ChatBox() {
       <CardContent className="border-b overflow-auto p-4">
         <div className="space-y-4">
           <div key="0" className="flex items-end gap-2">
-            <div className="rounded-lg bg-zinc-200 p-2">
-              <p className="text-sm">{config ? config!.welcomeMessage : ""}</p>
+            <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
+              <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
             </div>
           </div>
           {
@@ -70,7 +63,7 @@ export default function ChatBox() {
               if (message.role === "assistant") {
                 return (
                   <div key={message.id} className="flex items-end gap-2">
-                    <div className="rounded-lg bg-zinc-200 p-2">
+                    <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
                       {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
                         .split('```').map((block, blockIdx) => {
                           // Check if the block is a code block or normal text
@@ -132,8 +125,8 @@ export default function ChatBox() {
               } else {
                 return (
                   <div key={message.id} className="flex items-end gap-2 justify-end">
-                    <div className="rounded-lg bg-blue-500 text-white p-2">
-                      <p className="text-sm">{message.content}</p>
+                    <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
+                      <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                     </div>
                   </div>
                 );
@@ -162,7 +155,7 @@ export default function ChatBox() {
                 disabled={status !== 'awaiting_message'}
                 className="w-full border border-gray-300 rounded shadow-sm"
                 value={input}
-                placeholder="Type a message..."
+                placeholder={config ? config!.chatMessagePlaceHolder : ""}
                 onChange={handleInputChange}
               />
               <Button type="submit"
