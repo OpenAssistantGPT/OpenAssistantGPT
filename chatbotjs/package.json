@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "ai": "^2.2.34",
-    "esbuild": "^0.20.0",
+    "esbuild": "^0.20.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1"
