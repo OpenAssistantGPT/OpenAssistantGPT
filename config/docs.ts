@@ -64,6 +64,10 @@ export const docsConfig: DocsConfig = {
                 {
                     title: "See your chatbot's threads",
                     href: "/guides/how-to-see-all-your-chatbot-threads",
+                },
+                {
+                    title: "Build smart assistant chatbot for your website",
+                    href: "/guides/how-to-build-smart-chatbot-for-your-website",
                 }
             ],
         },
