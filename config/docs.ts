@@ -67,7 +67,7 @@ export const docsConfig: DocsConfig = {
                 },
                 {
                     title: "Build smart assistant chatbot for your website",
-                    href: "/guides/how-to-build-smart-chatbot-for-your-website",
+                    href: "/guides/how-to-build-smart-chatbot-for-your-webiste",
                 }
             ],
         },
