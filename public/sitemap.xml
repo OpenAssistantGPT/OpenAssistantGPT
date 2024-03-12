@@ -30,13 +30,13 @@
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.69</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation/crawlers</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.68</priority>
 </url>
@@ -48,32 +48,38 @@
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/documentation/chatbots</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.66</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/pricing</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.65</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/docs/licensing</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/guides/how-to-build-a-good-prompt-for-your-chatbot</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.63</priority>
 </url>
 <url>
   <loc>https://www.openassistantgpt.io/guides/how-to-see-all-your-chatbot-threads</loc>
-  <lastmod>2024-01-04T15:44:57+00:00</lastmod>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
   <priority>0.62</priority>
+</url>
+<url>
+  <loc>https://www.openassistantgpt.io/guides/how-to-see-all-your-chatbot-threads</loc>
+  <lastmod>2024-03-12T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.61</priority>
 </url>
 </urlset>
