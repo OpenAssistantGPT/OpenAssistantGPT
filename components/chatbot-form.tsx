@@ -22,11 +22,11 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Select from 'react-select';
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
     chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt">
-    currentFileId: File["id"]
+    currentFiles: File["id"][]
     models: ChatbotModel[]
     files: File[]
     user: Pick<User, "id">
@@ -34,7 +34,7 @@ interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
 
 type FormData = z.infer<typeof chatbotSchema>
 
-export function ChatbotForm({ chatbot, currentFileId, models, files, className, ...props }: ChatbotFormProps) {
+export function ChatbotForm({ chatbot, currentFiles, models, files, className, ...props }: ChatbotFormProps) {
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(chatbotSchema),
@@ -44,7 +44,7 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
             modelId: chatbot.modelId,
             welcomeMessage: chatbot.welcomeMessage,
             prompt: chatbot.prompt,
-            files: currentFileId,
+            files: currentFiles,
         },
     })
     const [isSaving, setIsSaving] = useState<boolean>(false)
@@ -152,59 +152,6 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                         />
                         <FormField
                             control={form.control}
-                            name="openAIKey"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="openAIKey">
-                                        OpenAI Key
-                                    </FormLabel>
-                                    <Input
-                                        defaultValue={chatbot.openaiKey}
-                                        onChange={field.onChange}
-                                        id="openAIKey"
-                                        type="password"
-                                    />
-                                    <FormDescription>
-                                        The API key that will be used to generate responses
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="modelId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="model">
-                                        OpenAI Model
-                                    </FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={chatbot.modelId}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a model" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                {
-                                                    models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
-                                                        <SelectItem key={model.id} value={model.id}>
-                                                            {model.name}
-                                                        </SelectItem>
-                                                    ))
-                                                }
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-
-                                    <FormDescription>
-                                        The OpenAI model that will be used to generate responses. If you don&apos;t have the gpt-4 option and want to use it. You need to have an OpenAI account at least tier 1.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
                             name="welcomeMessage"
                             render={({ field }) => (
                                 <FormItem>
@@ -249,28 +196,74 @@ export function ChatbotForm({ chatbot, currentFileId, models, files, className, 
                             name="files"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>
+                                    <FormLabel htmlFor="files">
                                         Choose your file for retrival
                                     </FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={currentFileId}>
-                                        <SelectTrigger>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                {
-                                                    files.map((file: any) => (
-                                                        <SelectItem key={file.id} value={file.id}>
-                                                            {file.name}
-                                                        </SelectItem>
-                                                    ))
-                                                }
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
+                                    <Select
+                                        isMulti
+                                        closeMenuOnSelect={false}
+                                        onChange={value => field.onChange(value.map((v) => v.value))}
+                                        defaultValue={files.filter((file) => currentFiles.includes(file.id)).map((file) => ({ value: file.id, label: file.name }))}
+                                        name="files"
+                                        id="files"
+                                        options={files.map((file) => ({ value: file.id, label: file.name }))}
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                    />
+
                                     <FormDescription>
                                         The OpenAI model will use this file to search for specific content.
                                         If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="modelId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="modelId">
+                                        OpenAI Model
+                                    </FormLabel>
+                                    <Select
+                                        onChange={value => field.onChange(value.value)}
+                                        defaultValue={models.filter((model: ChatbotModel) => model.id === chatbot.modelId).map((model: ChatbotModel) => ({ value: model.id, label: model.name }))[0]}
+                                        id="modelId"
+                                        options={
+                                            models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
+                                                { value: model.id, label: model.name }
+                                            ))
+                                        }
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                    />
+                                    <FormDescription>
+                                        The OpenAI model that will be used to generate responses.
+                                        <b> If you don&apos;t have the gpt-4 option and want to use it. You need to have an OpenAI account at least tier 1.</b>
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="openAIKey"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="openAIKey">
+                                        OpenAI Key
+                                    </FormLabel>
+                                    <Input
+                                        defaultValue={chatbot.openaiKey}
+                                        onChange={field.onChange}
+                                        id="openAIKey"
+                                        type="password"
+                                    />
+                                    <FormDescription>
+                                        The API key that will be used to generate responses
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
