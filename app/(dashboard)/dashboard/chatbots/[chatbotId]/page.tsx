@@ -63,7 +63,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         },
     })
 
-    const currentFile = await db.chatbotFiles.findFirst({
+    const currentFiles = await db.chatbotFiles.findMany({
         select: {
             id: true,
             chatbotId: true,
@@ -101,7 +101,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                 <ChatbotForm
                     user={user}
                     files={files}
-                    currentFileId={currentFile?.file.id || ""}
+                    currentFiles={currentFiles.map((file) => file.file.id)}
                     models={models}
                     chatbot={{
                         id: chatbot.id,
