@@ -88,18 +88,20 @@ export async function POST(req: Request) {
       apiKey: openAIConfig?.globalAPIKey
     })
 
-    const file = await db.file.findUnique({
+    const files = await db.file.findMany({
       select: {
         id: true,
         openAIFileId: true,
       },
       where: {
-        id: body.files,
+        id: {
+          in: body.files
+        },
       },
     })
 
-    if (!file) {
-      return new Response("Invalid file", { status: 400 })
+    if (!files) {
+      return new Response("Invalid files", { status: 400 })
     }
 
     try {
@@ -116,7 +118,7 @@ export async function POST(req: Request) {
       instructions: body.prompt,
       model: model.name,
       tools: [{ type: "retrieval" }],
-      file_ids: [file?.openAIFileId!]
+      file_ids: files.map((file) => file.openAIFileId),
     })
 
     const chatbot = await db.chatbot.create({
@@ -134,20 +136,14 @@ export async function POST(req: Request) {
       },
     })
 
-    await db.chatbotFiles.create({
-      data: {
-        chatbot: {
-          connect: {
-            id: chatbot.id,
-          },
-        },
-        file: {
-          connect: {
-            id: file.id,
-          },
-        },
+    await db.chatbotFiles.createMany(
+      {
+        data: files.map((file) => ({
+          chatbotId: chatbot.id,
+          fileId: file.id,
+        })),
       }
-    })
+    )
 
     return new Response(JSON.stringify({ chatbot }))
   } catch (error) {

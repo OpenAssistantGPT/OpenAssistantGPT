@@ -20,8 +20,8 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ChatbotModel, File, User } from "@prisma/client"
+import Select from 'react-select';
 
 type FormData = z.infer<typeof chatbotSchema>
 
@@ -209,29 +209,52 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                         />
                         <FormField
                             control={form.control}
+                            name="files"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="files">
+                                        Choose your file for retrival
+                                    </FormLabel>
+                                    <Select
+                                        isMulti
+                                        closeMenuOnSelect={false}
+                                        onChange={value => field.onChange(value.map((v) => v.value))}
+                                        defaultValue={field.value}
+                                        name="files"
+                                        id="files"
+                                        options={files.map((file) => ({ value: file.id, label: file.name }))}
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                    />
+
+                                    <FormDescription>
+                                        The OpenAI model will use this file to search for specific content.
+                                        If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
                             name="modelId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="model">
+                                    <FormLabel htmlFor="modelId">
                                         OpenAI Model
                                     </FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a model" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                {
-                                                    models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
-                                                        <SelectItem key={model.id} value={model.id}>
-                                                            {model.name}
-                                                        </SelectItem>
-                                                    ))
-                                                }
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-
+                                    <Select
+                                        onChange={value => field.onChange(value.value)}
+                                        defaultValue={field.value}
+                                        id="modelId"
+                                        options={
+                                            models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
+                                                { value: model.id, label: model.name }
+                                            ))
+                                        }
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                    />
                                     <FormDescription>
                                         The OpenAI model that will be used to generate responses.
                                         <b> If you don&apos;t have the gpt-4 option and want to use it. You need to have an OpenAI account at least tier 1.</b>
@@ -255,38 +278,6 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                     />
                                     <FormDescription>
                                         The OpenAI API key that will be used to generate responses
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="files"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>
-                                        Choose your file for retrival
-                                    </FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select a file" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                {
-                                                    files.map((file: any) => (
-                                                        <SelectItem key={file.uploadFileId} value={file.id}>
-                                                            {file.name}
-                                                        </SelectItem>
-                                                    ))
-                                                }
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-                                    <FormDescription>
-                                        The OpenAI model will use this file to search for specific content.
-                                        If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

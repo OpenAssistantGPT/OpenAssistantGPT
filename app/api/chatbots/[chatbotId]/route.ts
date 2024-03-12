@@ -114,7 +114,7 @@ export async function PATCH(
       },
     })
 
-    const currentFile = await db.chatbotFiles.findFirst({
+    const currentFiles = await db.chatbotFiles.findMany({
       where: {
         chatbotId: chatbot.id,
       },
@@ -125,20 +125,22 @@ export async function PATCH(
     })
 
     try {
-      await db.chatbotFiles.delete({
+      await db.chatbotFiles.deleteMany({
         where: {
-          id: currentFile?.id
+          id: {
+            in: currentFiles.map((file) => file.id)
+          }
         }
       })
     } catch (error) {
       console.log("No file to delete")
     }
 
-    await db.chatbotFiles.create({
-      data: {
-        chatbotId: params.chatbotId,
-        fileId: payload.files,
-      },
+    await db.chatbotFiles.createMany({
+      data: payload.files.map((fileId: string) => ({
+        chatbotId: chatbot.id,
+        fileId: fileId,
+      }))
     })
 
     const openai = new OpenAI({
@@ -155,9 +157,11 @@ export async function PATCH(
       }
     })
 
-    const file = await db.file.findUnique({
+    const files = await db.file.findMany({
       where: {
-        id: payload.files,
+        id: {
+          in: payload.files
+        },
       },
       select: {
         id: true,
@@ -172,7 +176,7 @@ export async function PATCH(
         name: chatbot.name,
         instructions: chatbot.prompt,
         model: model?.name,
-        file_ids: [file?.openAIFileId || ''],
+        file_ids: files.map((file) => file.openAIFileId),
       }
     )
 
