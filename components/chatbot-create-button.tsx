@@ -31,7 +31,7 @@ export function ChatbotCreateButton({
         if (files.length === 0) {
             toast({
                 title: "No file found.",
-                description: "Please upload a file first or create a crawler to import content.",
+                description: "Please upload a file or create a crawler to import content.",
                 variant: "destructive",
             })
             setIsLoading(false)

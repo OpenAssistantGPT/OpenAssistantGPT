@@ -16,6 +16,7 @@ import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import { MessagesOverview } from "@/components/message-overview"
 import { OpenAIForm } from "@/components/openai-config-form"
+import { Button } from "@/components/ui/button"
 
 export const metadata = {
   title: `${siteConfig.name} - Dashboard`,
@@ -102,17 +103,18 @@ export default async function DashboardPage() {
       <div>
         {bots === 0 &&
           <div className="mb-4 bg-blue-100 border-l-4 border-blue-500 text-black p-4" role="info">
-            <p className="font-bold text-md">Welcome to {siteConfig.name}</p>
+            <p className="font-bold text-md">Welcome to {siteConfig.name} 🎉</p>
             <p className="text-sm">You are probably new to this platform.</p>
             <p className="text-sm">We recommend starting with our <a className="underline" href="/dashboard/onboarding">onboarding</a> for a step-by-step guide on how to create your first chatbot.</p>
+            <p className="text-sm">If you prefer you can also start with our <a target="_blank" className="underline" href="/guides/how-to-build-smart-chatbot-for-your-webiste">tutorial</a>.</p>
             <br />
-            <p className="borderinline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background" ><a className="" href="/dashboard/onboarding">Open Onboarding</a></p>
+            <a href="/dashboard/onboarding"><Button><p className="pr-2">Open Onboarding</p>  <Icons.help className="h-4 w-4" /> ‍</Button></a>
           </div>
         }
         {
           !openaiConfig &&
           <div className="mb-4">
-            <OpenAIForm />
+            <OpenAIForm user={user} />
           </div>
         }
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

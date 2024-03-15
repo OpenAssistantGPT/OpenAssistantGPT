@@ -31,7 +31,7 @@ import {
   Key,
   Coins,
   ArrowUp,
-  CheckCheck
+  CheckCheck,
 } from "lucide-react"
 
 export type Icon = LucideIcon
