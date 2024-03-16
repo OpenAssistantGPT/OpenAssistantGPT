@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const root = createRoot(document.getElementById('chatbot-root'));
 
   root.render(
-    <ShadowRootComponent styleUrl="http://localhost:3000/output.css">
+    <ShadowRootComponent styleUrl="https://openassistantgpt.io/chatwindow.css">
       <noscript>This chatbot is built using OpenAssistantGPT https://www.openassistantgpt.io/</noscript>
       <ChatBox />
     </ShadowRootComponent>
