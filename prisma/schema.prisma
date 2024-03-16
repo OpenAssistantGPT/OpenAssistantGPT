@@ -45,6 +45,8 @@ model Chatbot {
 
   bubbleColor                 String @default("#FFFFFF")
   bubbleTextColor             String @default("#000000")
+  chatHeaderBackgroundColor   String @default("#FFFFFF")
+  chatHeaderTextColor         String @default("#000000")
   chatbotReplyBackgroundColor String @default("#e4e4e7")
   chatbotReplyTextColor       String @default("#000000")
   userReplyBackgroundColor    String @default("#3b82f6")

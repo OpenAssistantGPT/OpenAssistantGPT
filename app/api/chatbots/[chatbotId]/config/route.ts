@@ -24,6 +24,8 @@ export async function GET(
                 chatMessagePlaceHolder: true,
                 bubbleColor: true,
                 bubbleTextColor: true,
+                chatHeaderBackgroundColor: true,
+                chatHeaderTextColor: true,
                 chatbotReplyBackgroundColor: true,
                 chatbotReplyTextColor: true,
                 userReplyBackgroundColor: true,

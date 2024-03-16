@@ -64,6 +64,8 @@ export type ChatbotConfig = {
   chatMessagePlaceHolder: string
   bubbleColor: string
   bubbleTextColor: string
+  chatHeaderBackgroundColor: string
+  chatHeaderTextColor: string 
   chatbotReplyBackgroundColor: string
   chatbotReplyTextColor: string
   userReplyBackgroundColor: string

@@ -21,6 +21,7 @@ import { useEffect, useState } from "react"
 import { Icons } from "./icons"
 import { Input } from "./ui/input"
 import { GradientPicker } from "@/components/gradient-picker"
+import { Button } from "@/components/ui/button"
 
 interface ChatbotOperationsProps {
     chatbot: Pick<Chatbot, "id" | "name" | "modelId">
@@ -30,6 +31,8 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
 
     const [bubbleColor, setBubbleColor] = useState('')
     const [bubbleLogoColor, setBubbleLogoColor] = useState('')
+    const [chatHeaderBackgroundColor, setChatHeaderBackgroundColor] = useState('')
+    const [chatHeaderTextColor, setChatHeaderTextColor] = useState('')
     const [chatbotBubbleColor, setChatbotBubbleColor] = useState('')
     const [chatbotMessageColor, setChatbotMessageColor] = useState('')
     const [userBubbleColor, setUserBubbleColor] = useState('')
@@ -46,6 +49,8 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
             chatMessagePlaceHolder: "",
             bubbleColor: "",
             bubbleTextColor: "",
+            chatHeaderBackgroundColor: "",
+            chatHeaderTextColor: "",
             chatbotReplyBackgroundColor: "",
             chatbotReplyTextColor: "",
             userReplyBackgroundColor: "",
@@ -64,6 +69,8 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
             // get the colors from the chatbot
             setBubbleColor(data.bubbleColor)
             setBubbleLogoColor(data.bubbleTextColor)
+            setChatHeaderBackgroundColor(data.chatHeaderBackgroundColor)
+            setChatHeaderTextColor(data.chatHeaderTextColor)
             setChatbotBubbleColor(data.chatbotReplyBackgroundColor)
             setChatbotMessageColor(data.chatbotReplyTextColor)
             setUserBubbleColor(data.userReplyBackgroundColor)
@@ -85,6 +92,8 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                 chatMessagePlaceHolder: data.chatMessagePlaceHolder,
                 bubbleColor: bubbleColor,
                 bubbleTextColor: bubbleLogoColor,
+                chatHeaderBackgroundColor: chatHeaderBackgroundColor,
+                chatHeaderTextColor: chatHeaderTextColor,
                 chatbotReplyBackgroundColor: chatbotBubbleColor,
                 chatbotReplyTextColor: chatbotMessageColor,
                 userReplyBackgroundColor: userBubbleColor,
@@ -201,7 +210,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
                                     <div className="space-y-4">
-                                        <h1>Customize your chatbot widget</h1>
+                                        <h1>Customize Your Chatbot Widget</h1>
                                         <div className="flex">
                                             <div className="flex flex-col w-full justify space-y-4">
                                                 <div className="space-y-0.5">
@@ -231,6 +240,53 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                             <div className="flex w-full items-center text-center justify-center">
                                                 <div className="ml-4 mr-4 shadow-lg border bg-white border-gray-200 rounded-full p-4" style={{ background: bubbleColor }}>
                                                     <Icons.message style={{ color: bubbleLogoColor }} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            name="headerColor"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
+                                    <div className="space-y-4">
+                                        <h1>Customize Your Chatbox Header</h1>
+                                        <div className="flex">
+                                            <div className="flex flex-col w-full justify space-y-4">
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        Chatbot Header Background Color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbox header background
+                                                    </FormDescription>
+                                                    <FormControl>
+                                                        <GradientPicker background={chatHeaderBackgroundColor} setBackground={setChatHeaderBackgroundColor} />
+                                                    </FormControl>
+                                                </div>
+
+                                                <div className="space-y-0.5">
+                                                    <FormLabel className="text-base">
+                                                        Chatbot Header Text Color
+                                                    </FormLabel>
+                                                    <FormDescription>
+                                                        Select the color you want to use for your chatbot header text color
+                                                    </FormDescription>
+                                                    <FormControl>
+                                                        <GradientPicker withGradient={false} background={chatHeaderTextColor} setBackground={setChatHeaderTextColor} />
+                                                    </FormControl>
+                                                </div>
+                                            </div>
+                                            <div className="flex w-full items-center text-center justify-center">
+                                                <div style={{ background: chatHeaderBackgroundColor }} className="flex rounded-t-lg shadow justify-between items-center p-4">
+                                                    <h3 style={{ color: chatHeaderTextColor }} className="text-xl font-semibold">Chat with our AI</h3>
+                                                    <div>
+                                                        <Button variant="ghost">
+                                                            <Icons.close style={{ color: chatHeaderTextColor }} className="h-5 w-5 text-gray-500" />
+                                                        </Button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
