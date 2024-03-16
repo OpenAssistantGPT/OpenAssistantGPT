@@ -8,6 +8,7 @@ import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
 import { Chat } from "@/components/chat";
 
+
 export default function IndexPage() {
 
   const chatbot = {
@@ -16,26 +17,26 @@ export default function IndexPage() {
     welcomeMessage: "Hello! I can help you with any questions you have about OpenAssistantGPT."
   }
 
-
   return (
     <>
-      <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
+      <section data-aos="fade-up" className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <Link
             href={siteConfig.links.twitter}
             className="rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium"
             target="_blank"
           >
-            Find us on Twitter
+            Find us on 𝕏
           </Link>
           <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
             Build your own chatbot with OpenAI Assistant
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            An open source platform for building chatbot with assistants, using the OpenAI platform.
+            An open source platform for building chatbot with the Assistant API. We provide easiest to add a chatbot to your website.
           </p>
           <div className="space-x-4 space-y-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
+              <Icons.bot className="h-4 w-4 mr-2"></Icons.bot>
               Get Started for Free
             </Link>
             <Link
@@ -44,13 +45,13 @@ export default function IndexPage() {
               rel="noreferrer"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
             >
-              GitHub
+              <Icons.gitHub className="h-4 w-4 mr-2"></Icons.gitHub> GitHub
             </Link>
           </div>
-          <Image className="mt-10 border shadow-lg" src="/dashboard.png" width={810} height={540} alt="Dashboard" />
+          <Image data-aos="zoom-in" priority={false} className="mt-10 border shadow-lg" src="/dashboard.png" width={810} height={540} alt="Dashboard" />
         </div>
       </section>
-      <section id="features" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
+      <section data-aos="fade-up" id="features" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Features
@@ -133,7 +134,7 @@ export default function IndexPage() {
           </p>
         </div>
       </section>
-      <section id="chat" className="container py-8 md:py-12 lg:py-24">
+      <section data-aos="fade-up" id="chat" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Test our chatbot assistant
@@ -146,7 +147,7 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-      <section id="low-code" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
+      <section data-aos="fade-up" id="low-code" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Low code and easy to implement
@@ -158,7 +159,7 @@ export default function IndexPage() {
           <Image alt="code example" className="shadow-xl border rounded-lg" width={550} height={550} src="/code_example.png" />
         </div>
       </section>
-      <section id="open-source" className="container py-8 md:py-12 lg:py-24">
+      <section data-aos="fade-up" id="open-source" className="container py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Proudly Open Source
@@ -172,7 +173,7 @@ export default function IndexPage() {
           <GithubCard />
         </div>
       </section>
-      <section id="faq" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
+      <section data-aos="fade-up" id="faq" className="container space-y-6 bg-slate-50 py-8 md:py-12 lg:py-24">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             FAQ
