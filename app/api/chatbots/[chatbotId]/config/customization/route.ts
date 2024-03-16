@@ -56,6 +56,8 @@ export async function PATCH(
                 chatMessagePlaceHolder: payload.chatMessagePlaceHolder,
                 bubbleColor: payload.bubbleColor,
                 bubbleTextColor: payload.bubbleTextColor,
+                chatHeaderBackgroundColor: payload.chatHeaderBackgroundColor,
+                chatHeaderTextColor: payload.chatHeaderTextColor,
                 chatbotReplyBackgroundColor: payload.chatbotReplyBackgroundColor,
                 chatbotReplyTextColor: payload.chatbotReplyTextColor,
                 userReplyBackgroundColor: payload.userReplyBackgroundColor,

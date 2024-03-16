@@ -11,6 +11,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { siteConfig } from "@/config/site"
 import Chatbot from '@/components/chatbot';
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { AOSInit } from '@/components/aos-init';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -54,6 +55,7 @@ export default async function RootLayout({
       <head>
         <Chatbot />
       </head>
+      <AOSInit />
       <body
         id='root'
         className={cn(

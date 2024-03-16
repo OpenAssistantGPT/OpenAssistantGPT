@@ -38,8 +38,8 @@ export default function ChatBox() {
 
   return (
     <Card className="flex bg-white shadow-lg border flex-col w-full overflow-hidden">
-      <CardHeader className="shadow border-b p-4">
-        <h2 className="text-xl font-bold flex items-center gap-2">
+      <CardHeader style={{ background: config ? config!.chatHeaderBackgroundColor : "" }} className="shadow border-b p-4">
+        <h2 style={{ color: config ? config!.chatHeaderTextColor : "" }} className="text-xl font-bold flex items-center gap-2">
           <Avatar className="relative overflow-visible w-10 h-10">
             <span className="absolute right-0 top-0 flex h-3 w-3 rounded-full bg-green-600" />
             <AvatarImage alt="User Avatar" src="https://identicons.pgmichael.com/" />

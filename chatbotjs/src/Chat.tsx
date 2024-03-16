@@ -65,19 +65,19 @@ export default function ChatBox() {
     init();
   }, [])
 
-  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[70vh] max-h-[70vh]";
+  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[65vh] max-h-[65vh]";
   const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
-  const inputContainerHeight = 75; // Adjust this value based on your actual input container height
+  const inputContainerHeight = 70; // Adjust this value based on your actual input container height
 
   return (
     <div className="fixed bottom-0 right-0 mb-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " bg-white shadow-lg rounded-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
-          <div className="flex shadow justify-between items-center p-4">
-            <h3 className="text-xl font-semibold">{config ? config!.chatTitle : ""}</h3>
+        <Card className={chatboxClassname + " bg-white shadow-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
+          <div style={{ background: config ? config!.chatHeaderBackgroundColor : "" }} className="flex rounded-t-lg shadow justify-between items-center p-4">
+            <h3 style={{ color: config ? config!.chatHeaderTextColor : "" }} className="text-xl font-semibold">{config ? config!.chatTitle : ""}</h3>
             <div>
               <Button onClick={toggleChatVisibility} variant="ghost">
-                <Icons.close className="h-5 w-5 text-gray-500" />
+                <Icons.close style={{ color: config ? config!.chatHeaderTextColor : "" }} className="h-5 w-5 text-gray-500" />
               </Button>
             </div>
           </div>
