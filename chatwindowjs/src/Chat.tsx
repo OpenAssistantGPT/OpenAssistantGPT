@@ -7,7 +7,7 @@ import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import {
   Message,
   // import as useAssistant:
@@ -37,7 +37,7 @@ export default function ChatBox() {
   }, [])
 
   return (
-    <Card className="flex bg-white shadow-lg border flex-col w-full overflow-hidden">
+    <div className="rounded-lg bg-card text-card-foreground shadow-sm flex border-none bg-white shadow-lg flex-col w-full overflow-hidden">
       <CardHeader style={{ background: config ? config!.chatHeaderBackgroundColor : "" }} className="shadow border-b p-4">
         <h2 style={{ color: config ? config!.chatHeaderTextColor : "" }} className="text-xl font-bold flex items-center gap-2">
           <Avatar className="relative overflow-visible w-10 h-10">
@@ -51,7 +51,8 @@ export default function ChatBox() {
           </div>
         </h2>
       </CardHeader>
-      <CardContent className="border-b overflow-auto p-4">
+      <CardContent className="border-b overflow-auto p-4 flex-grow overflow-y-auto">
+
         <div className="space-y-4">
           <div key="0" className="flex items-end gap-2">
             <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
@@ -177,6 +178,6 @@ export default function ChatBox() {
           )}
         </div>
       </CardFooter >
-    </Card >
+    </div>
   )
 }
