@@ -61,7 +61,7 @@ export async function POST(
 
         return experimental_AssistantResponse(
             { threadId, messageId: createdMessage.id },
-            async ({ threadId, sendMessage, sendDataMessage }) => {
+            async ({ sendMessage, forwardStream, sendDataMessage }) => {
 
                 try {
                     const plan = await getUserSubscriptionPlan(chatbot.userId)
@@ -87,31 +87,11 @@ export async function POST(
                     }
 
                     // Run the assistant on the thread
-                    const run = await openai.beta.threads.runs.create(threadId, {
+                    const runStream = openai.beta.threads.runs.createAndStream(threadId, {
                         assistant_id: chatbot.openaiId,
                     });
 
-                    async function waitForRun(run: OpenAI.Beta.Threads.Runs.Run) {
-                        // Poll for status change
-                        while (run.status === 'queued' || run.status === 'in_progress') {
-                            // delay for 500ms:
-                            await new Promise(resolve => setTimeout(resolve, 500));
-
-                            run = await openai.beta.threads.runs.retrieve(threadId!, run.id);
-                        }
-
-                        // Check the run status
-                        if (
-                            run.status === 'cancelled' ||
-                            run.status === 'cancelling' ||
-                            run.status === 'failed' ||
-                            run.status === 'expired'
-                        ) {
-                            throw new Error(run.status);
-                        }
-                    }
-
-                    await waitForRun(run);
+                    let runResult = await forwardStream(runStream);
 
                     // Get new thread messages (after our message)
                     const responseMessages = (
@@ -121,7 +101,7 @@ export async function POST(
                         })
                     ).data;
 
-                    // Send the messages
+                    //// Send the messages
                     for (const message of responseMessages) {
                         await db.message.create({
                             data: {
@@ -132,13 +112,7 @@ export async function POST(
                                 from: req.headers.get("origin") || "unknown",
                             }
                         })
-                        sendMessage({
-                            id: message.id,
-                            role: 'assistant',
-                            content: message.content.filter(
-                                content => content.type === 'text',
-                            ) as Array<MessageContentText>,
-                        });
+
                     }
                 } catch (error) {
                     console.log(error)
