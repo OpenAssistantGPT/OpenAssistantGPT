@@ -151,12 +151,6 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               }
             })
           }
-
-          {status === 'in_progress' && (
-            <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
-          )}
-
-
         </div>
       </CardContent>
       <CardFooter className="p-4">

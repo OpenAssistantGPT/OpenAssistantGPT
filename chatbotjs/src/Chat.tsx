@@ -163,9 +163,6 @@ export default function ChatBox() {
                   }
                 })
               }
-              {status === 'in_progress' && (
-                <div className="h-8 w-5/6 max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
-              )}
             </div>
           </div>
           <div className={inputContainerClassname}>
@@ -202,8 +199,8 @@ export default function ChatBox() {
                 </form>
               </div>
             </div>
-          </div >
-        </Card >
+          </div>
+        </Card>
       }
       {
         !loading && !isChatVisible &&
