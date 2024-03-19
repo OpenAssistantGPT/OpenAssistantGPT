@@ -8,6 +8,8 @@ import OpenAI from 'openai';
 import { getUserSubscriptionPlan } from '@/lib/subscription';
 import { RequiresHigherPlanError } from '@/lib/exceptions';
 
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
     try {
         const session = await getServerSession(authOptions)
