@@ -35,12 +35,20 @@ export default function ChatBox() {
   };
 
   const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // Check if status has changed to "awaiting_message"
+    if (status === 'awaiting_message' && inputRef.current) {
+      // Focus on the input field
+      inputRef.current.focus();
+    }
+  }, [status]);
 
   useEffect(() => {
     // Scroll to the bottom of the container on messages update
     if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
   }, [messages]);
-
 
   useEffect(() => {
     function handleResize() {
@@ -179,6 +187,7 @@ export default function ChatBox() {
                   className="flex align-right items-end w-full"
                 >
                   <Input
+                    ref={inputRef} // Attach inputRef to the input field
                     disabled={status !== 'awaiting_message'}
                     className="w-full border-0 text-md"
                     value={input}
