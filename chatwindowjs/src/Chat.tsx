@@ -41,7 +41,6 @@ export default function ChatBox() {
         <h2 style={{ color: config ? config!.chatHeaderTextColor : "" }} className="text-xl font-bold flex items-center gap-2">
           <div>
             {config ? config!.chatTitle : ""}
-            <span className="text-xs text-green-600 block">Online</span>
           </div>
         </h2>
       </CardHeader>
