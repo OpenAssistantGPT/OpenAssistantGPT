@@ -232,7 +232,9 @@ export default function IndexPage() {
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             FAQ
           </h2>
-          <FAQ />
+          <div className="w-full text-left">
+            <FAQ />
+          </div>
         </div>
       </section>
     </>
