@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
@@ -40,11 +39,6 @@ export default function ChatBox() {
     <div className="rounded-lg bg-card text-card-foreground shadow-sm flex border-none bg-white shadow-lg flex-col w-full overflow-hidden">
       <CardHeader style={{ background: config ? config!.chatHeaderBackgroundColor : "" }} className="shadow border-b p-4">
         <h2 style={{ color: config ? config!.chatHeaderTextColor : "" }} className="text-xl font-bold flex items-center gap-2">
-          <Avatar className="relative overflow-visible w-10 h-10">
-            <span className="absolute right-0 top-0 flex h-3 w-3 rounded-full bg-green-600" />
-            <AvatarImage alt="User Avatar" src="https://identicons.pgmichael.com/" />
-            <AvatarFallback>U</AvatarFallback>
-          </Avatar>
           <div>
             {config ? config!.chatTitle : ""}
             <span className="text-xs text-green-600 block">Online</span>
@@ -134,12 +128,6 @@ export default function ChatBox() {
               }
             })
           }
-
-          {status === 'in_progress' && (
-            <div className="h-8 w-full max-w-md p-2 mb-8 bg-gray-300 dark:bg-gray-600 rounded-lg animate-pulse" />
-          )}
-
-
         </div>
       </CardContent>
       <CardFooter className="p-4">
