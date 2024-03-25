@@ -1,5 +1,5 @@
 import { GithubCard } from "@/components/github-card";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,7 +7,7 @@ import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
 import { Chat } from "@/components/chat";
-
+import { freePlan, basicPlan, hobbyPlan, proPlan } from "@/config/subscriptions";
 
 export default function IndexPage() {
 
@@ -227,7 +227,139 @@ export default function IndexPage() {
           <GithubCard />
         </div>
       </section>
-      <section data-aos="fade-up" id="faq" className="container space-y-6 py-12 md:py-24 lg:py-32">
+      <section data-aos="fade-up" id="pricing" className="container py-12 md:py-24 lg:py-32">
+        <div className="container px-4 md:px-6">
+          <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Pick the perfect plan for you</h2>
+              <p className="max-w-[800px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+                All plans include everything that is required to build a chatbot.
+              </p>
+            </div>
+          </div>
+          <div className="mx-auto mt-10 grid max-w-sm items-start gap-12 sm:max-w-4xl sm:grid-cols-2 lg:max-w-5xl lg:grid-cols-4">
+            <div className="flex flex-col space-y-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">{freePlan.name}</h3>
+                <p className="text-2xl font-bold tracking-tighter">${freePlan.price}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Perfect for personal projects, experiments, or simply getting familiar with our powerful tools.</p>
+              </div>
+              <ul className="grid gap-2 py-4">
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {freePlan.maxChatbots} Chatbot
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {freePlan.maxCrawlers} Crawlers
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {freePlan.maxFiles} Files
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {freePlan.maxMessagesPerMonth} Messages per Month
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">{hobbyPlan.name}</h3>
+                <p className="text-2xl font-bold tracking-tighter">${hobbyPlan.price}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Ideal for teams and collaborators who are serious about building and deploying multiple projects.
+                </p>
+              </div>
+              <ul className="grid gap-2 py-4">
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {hobbyPlan.maxChatbots} Chatbot
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {hobbyPlan.maxCrawlers} Crawlers
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {hobbyPlan.maxFiles} Files
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Unlimited Messages
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Customizations
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">{basicPlan.name}</h3>
+                <p className="text-2xl font-bold tracking-tighter">${basicPlan.price}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  For organizations that require collaboration and deploy multiple chatbots.
+                </p>
+              </div>
+              <ul className="grid gap-2 py-4">
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {basicPlan.maxChatbots} Chatbot
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {basicPlan.maxCrawlers} Crawlers
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {basicPlan.maxFiles} Files
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Customizations
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Unlimited Messages
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">{proPlan.name}</h3>
+                <p className="text-2xl font-bold tracking-tighter">${proPlan.price}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Tailored solutions for large-scale operations and advanced requirements.
+                </p>
+              </div>
+              <ul className="grid gap-2 py-4">
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {proPlan.maxChatbots} Chatbot
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {proPlan.maxCrawlers} Crawlers
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  {proPlan.maxFiles} Files
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Customizations
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Unlimited Messages
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section data-aos="fade-up" id="faq" className="container bg-slate-50 space-y-6 py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             FAQ
