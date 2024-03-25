@@ -20,6 +20,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { siteConfig } from "@/config/site"
 import { ChatbotConfig } from "@/types"
+import { toast } from "@/components/ui/use-toast"
 
 
 interface ChatbotProps {
@@ -32,8 +33,19 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
   const [loading, setLoading] = useState(true)
   const [config, setConfig] = useState<ChatbotConfig>()
 
-  const { status, messages, input, submitMessage, handleInputChange } =
+  const { status, messages, input, submitMessage, handleInputChange, error } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat` });
+
+  useEffect(() => {
+    if (error) {
+      console.log(error)
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'destructive',
+      })
+    }
+  }, [error])
 
   useEffect(() => {
     const init = async () => {
@@ -71,7 +83,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
       </CardHeader>
       <CardContent className="border-b overflow-auto p-4 flex-1">
         <div className="space-y-4">
-          <div key="0" className="flex items-end gap-2">
+          <div key="welcomemessage" className="flex items-end gap-2">
             <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
               <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
             </div>

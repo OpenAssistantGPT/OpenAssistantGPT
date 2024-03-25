@@ -93,6 +93,17 @@ export async function POST(
 
                     let runResult = await forwardStream(runStream);
 
+                    // validate if there is any error
+                    if (runResult === undefined) {
+                        console.log(`Error running assistant ${chatbot.openaiId} on thread ${threadId}`)
+                        sendMessage({
+                            id: "end",
+                            role: 'assistant',
+                            content: [{ type: 'text', text: { value: "Oops! An error has occurred. Please ensure that your OpenAI account is configured correctly with a valid credit card and you have credit left. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!" } }]
+                        });
+                        return;
+                    }
+
                     // Get new thread messages (after our message)
                     const responseMessages = (
                         await openai.beta.threads.messages.list(threadId, {
@@ -129,6 +140,10 @@ export async function POST(
         console.log(error)
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 })
+        }
+
+        if (error instanceof OpenAI.APIError) {
+            return new Response(error.message, { status: 401 })
         }
 
         return new Response(null, { status: 500 })
