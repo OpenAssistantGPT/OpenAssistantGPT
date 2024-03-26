@@ -286,11 +286,11 @@ export default function IndexPage() {
                 </li>
                 <li>
                   <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Unlimited Messages
+                  Customizations
                 </li>
                 <li>
                   <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Customizations
+                  Unlimited Messages
                 </li>
               </ul>
             </div>
