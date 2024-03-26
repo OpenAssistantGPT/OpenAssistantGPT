@@ -119,6 +119,7 @@ export async function POST(
                                 chatbotId: params.chatbotId,
                                 userId: chatbot.userId,
                                 message: input.message,
+                                threadId: threadId,
                                 response: message.content[0].text.value,
                                 from: req.headers.get("origin") || "unknown",
                             }
