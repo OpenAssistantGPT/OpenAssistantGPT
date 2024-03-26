@@ -32,7 +32,7 @@ export default function IndexPage() {
             Build your own chatbot with OpenAI Assistant
           </h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            An open source platform for building chatbot with the Assistant API. We provide easiest to add a chatbot to your website.
+            An open source platform for building chatbot with the Assistant API. We provide the easiest integration to add a chatbot to your website.
           </p>
           <div className="space-x-4 space-y-4">
             <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
