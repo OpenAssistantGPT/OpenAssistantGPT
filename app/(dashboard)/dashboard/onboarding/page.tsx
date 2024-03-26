@@ -17,6 +17,7 @@ import { OpenAIForm } from "@/components/openai-config-form"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Chat } from "@/components/chat"
+import { Button } from "@/components/ui/button"
 
 
 export const metadata = {
@@ -173,7 +174,9 @@ export default async function OnboardingPage() {
                 <br />
                 <p className="borderinline-flex items-center text-sm justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background" >
                   <Link href={`/dashboard/chatbots/${chatbot!.id}/embed`} className="flex w-full">
-                    See how to embed our chatbot on your website
+                    <Button>
+                      See how to embed our chatbot on your website
+                    </Button>
                   </Link>
                 </p>
               </div>
