@@ -89,6 +89,7 @@ model Message {
   message   String
   createdAt DateTime @default(now()) @map(name: "created_at")
   response  String
+  threadId  String   @default("")
 
   from String @default("unknown")
 
