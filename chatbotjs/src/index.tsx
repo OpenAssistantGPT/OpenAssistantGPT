@@ -3,7 +3,6 @@ import ChatBox from './Chat'; // Import your main component
 import { createRoot } from 'react-dom/client'; // Import createRoot
 import ShadowRootComponent from './ShadowRoot';
 
-
 // Create a new div element
 const rootDiv = document.createElement('div');
 rootDiv.id = 'chatbot-root'; // Give it an ID for easy reference
@@ -15,7 +14,7 @@ document.body.appendChild(rootDiv);
 const root = createRoot(document.getElementById('chatbot-root'));
 
 root.render(
-    <ShadowRootComponent styleUrl="https://www.openassistantgpt.io/chatbot.css">
+    <ShadowRootComponent styleUrl="http://localhost:3000/output.css">
         <noscript>This chatbot is built using OpenAssistantGPT https://www.openassistantgpt.io/</noscript>
         <ChatBox />
     </ShadowRootComponent>

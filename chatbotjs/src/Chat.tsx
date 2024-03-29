@@ -6,7 +6,9 @@ import React, { useEffect, useState, useRef } from 'react';
  */
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import {
@@ -22,10 +24,11 @@ export default function ChatBox() {
   const [config, setConfig] = useState<ChatbotConfig>()
   const [chatbotId, setChatbotId] = useState<string>()
   const [isChatVisible, setIsChatVisible] = useState(false);
+  const [sendInquiry, setSendInquiry] = useState(false);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
-  const { status, messages, input, submitMessage, handleInputChange } =
+  const { status, messages, input, submitMessage, handleInputChange, threadId } =
     useAssistant({
       api: `${siteConfig.url}api/chatbots/${window.chatbotConfig.chatbotId}/chat`,
     });
@@ -36,6 +39,7 @@ export default function ChatBox() {
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+  const inquiryRef = useRef(null);
 
   useEffect(() => {
     // Check if status has changed to "awaiting_message"
@@ -49,6 +53,12 @@ export default function ChatBox() {
     // Scroll to the bottom of the container on messages update
     if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
   }, [messages]);
+
+  useEffect(() => {
+    if (sendInquiry && inquiryRef.current) {
+      inquiryRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [sendInquiry]);
 
   useEffect(() => {
     function handleResize() {
@@ -89,13 +99,68 @@ export default function ChatBox() {
               </Button>
             </div>
           </div>
-          <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
-            <div className="space-y-4">
-              <div key="0" className="flex w-5/6 items-end gap-2">
-                <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
-                  <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
+
+          {
+            <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
+              <div className="space-y-4">
+                <div key="0" className="flex w-5/6 items-end gap-2">
+                  <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
+                    <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
+                    <button className='mt-4 flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
+                      Contact our support team {sendInquiry ? <Icons.close className="h-4 w-4" /> : <Icons.chevronRight className="h-4 w-4" />}
+                    </button>
+                    {/**sendInquiry &&
+                      <Card className='border-0 h-full shadow-none'>
+                        <CardHeader>
+                          <CardTitle>Contact our support team</CardTitle>
+                          <CardDescription>Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="space-y-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="email">Email</Label>
+                              <Input className="bg-white" id="email" placeholder="Email" type="email" />
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="message">Message</Label>
+                              <Textarea className="min-h-[100px]" id="message" placeholder="Your message" />
+                            </div>
+                          </div>
+                        </CardContent>
+                        <CardFooter>
+                          <Button type="submit" className='bg-black text-white'>Send message</Button>
+                        </CardFooter>
+                      </Card>
+                    **/}
+                  </div>
                 </div>
               </div>
+              {sendInquiry &&
+                <div ref={inquiryRef} className="bg-white border-blue-600 border-t-2 rounded-lg shadow-md w-5/6">
+                  <Card className='border-0 h-full shadow-none'>
+                    <CardHeader>
+                      <CardTitle>Contact our support team</CardTitle>
+                      <CardDescription>Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="email">Email</Label>
+                          <Input className="bg-white" id="email" placeholder="Email" type="email" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="message">Message</Label>
+                          <Textarea className="min-h-[100px]" id="message" placeholder="Your message" />
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button type="submit" className='bg-black text-white'>Send message</Button>
+                    </CardFooter>
+                  </Card>
+                </div>
+              }
+
               {
                 messages.map((message: Message) => {
                   if (message.role === "assistant") {
@@ -157,6 +222,12 @@ export default function ChatBox() {
                                 ));
                               }
                             })}
+                          {
+                            status === 'awaiting_message' &&
+                            <button className="text-sm" onClick={() => setSendInquiry(!sendInquiry)}>
+                              Contact our support team {sendInquiry ? <Icons.arrowUp className="h-4 w-4" /> : <Icons.arrowDown className="h-4 w-4" />}
+                            </button>
+                          }
                         </div>
                       </div>
                     );
@@ -166,13 +237,14 @@ export default function ChatBox() {
                         <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
                           <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                         </div>
+
                       </div>
                     );
                   }
                 })
               }
             </div>
-          </div>
+          }
           <div className={inputContainerClassname}>
             {config?.displayBranding === true && (
               <div className="text-center text-zinc-400 text-md mb-2">
