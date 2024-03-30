@@ -90,6 +90,12 @@ export default function ChatBox() {
   async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
+    // validate email
+    if (!userEmail || !userEmail.includes('@')) {
+      console.error('Invalid email')
+      return
+    }
+
     const response = await fetch(`http://localhost:3000/api/chatbots/${chatbotId}/inquiry`, {
       method: 'POST',
       headers: {
@@ -97,14 +103,21 @@ export default function ChatBox() {
       },
       body: JSON.stringify({
         chatbotId: chatbotId,
-        threadId: "1245",//threadId,
-        email: "test@gmail.com",//userEmail,
-        inquiry: "test"//userMessage,
+        threadId: threadId || '',
+        email: userEmail,
+        inquiry: userMessage,
       }),
     })
 
     if (response.ok) {
       setSendInquiry(false)
+      messages.push({
+        id: String(messages.length + 1),
+        role: 'assistant',
+        content: 'Your inquiry has been sent. Our team will get back to you shortly.',
+      })
+    } else {
+      console.error(`Failed to send inquiry: ${response}`)
     }
   }
 
@@ -132,7 +145,7 @@ export default function ChatBox() {
                   <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
                     <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
                     <button className='mt-4 underline flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
-                      Contact our support team {sendInquiry ? <Icons.close className="h-4 w-4" /> : <Icons.chevronRight className="h-4 w-4" />}
+                      Contact our support team
                     </button>
                     {/**sendInquiry &&
                       <Card className='border-0 h-full shadow-none'>
@@ -172,11 +185,11 @@ export default function ChatBox() {
                         <div className="space-y-4">
                           <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input className="bg-white" id="email" placeholder="Email" type="email" />
+                            <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" placeholder="Email" type="email" />
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="message">Message</Label>
-                            <Textarea className="min-h-[100px]" id="message" placeholder="Your message" />
+                            <Textarea onChange={(e) => setUserMessage(e.target.value)} className="min-h-[100px]" id="message" placeholder="Your message" />
                           </div>
                         </div>
                       </CardContent>
@@ -249,12 +262,6 @@ export default function ChatBox() {
                                 ));
                               }
                             })}
-                          {
-                            status === 'awaiting_message' &&
-                            <button className="text-sm" onClick={() => setSendInquiry(!sendInquiry)}>
-                              Contact our support team {sendInquiry ? <Icons.arrowUp className="h-4 w-4" /> : <Icons.arrowDown className="h-4 w-4" />}
-                            </button>
-                          }
                         </div>
                       </div>
                     );
@@ -264,7 +271,6 @@ export default function ChatBox() {
                         <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
                           <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                         </div>
-
                       </div>
                     );
                   }
