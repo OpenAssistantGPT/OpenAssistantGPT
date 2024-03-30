@@ -9,9 +9,7 @@ import { DashboardShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { CodeBlock } from "@/components/code-block"
-import { siteConfig } from "@/config/site"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Inquiries } from "@/components/inquiries"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -44,6 +42,9 @@ export default async function UserInquiryPage({ params }: ChatbotSettingsProps) 
         where: {
             chatbotId: chatbot.id,
         },
+        orderBy: {
+            createdAt: "desc",
+        },
     })
 
     return (
@@ -62,6 +63,7 @@ export default async function UserInquiryPage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
+            <Inquiries inquiries={inquiries} />
         </DashboardShell >
     )
 }
