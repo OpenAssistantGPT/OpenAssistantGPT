@@ -90,12 +90,6 @@ export default function ChatBox() {
   async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    // validate email
-    if (!userEmail || !userEmail.includes('@')) {
-      console.error('Invalid email')
-      return
-    }
-
     const response = await fetch(`http://localhost:3000/api/chatbots/${chatbotId}/inquiry`, {
       method: 'POST',
       headers: {

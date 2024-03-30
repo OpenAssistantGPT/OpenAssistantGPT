@@ -41,6 +41,18 @@ export async function POST(
             return new Response(null, { status: 404 });
         }
 
+
+        // if there is already a support case for the threadid and same chatbot return
+        const existingInquiry = await db.clientInquiries.findFirst({
+            where: {
+                chatbotId: params.chatbotId,
+                threadId: payload.threadId,
+            },
+        })
+        if (existingInquiry) {
+            return new Response('Already exist', { status: 409 });
+        }
+
         //const subscriptionPlan = await getUserSubscriptionPlan(chatbot.userId || '')
 
         //if (subscriptionPlan.basicCustomization === false) {
