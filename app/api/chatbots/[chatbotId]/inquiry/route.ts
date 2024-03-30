@@ -1,3 +1,7 @@
+import { db } from "@/lib/db";
+import { RequiresHigherPlanError } from "@/lib/exceptions";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
+import { inquirySchema } from "@/lib/validations/inquiry";
 import { z } from "zod"
 
 
@@ -19,20 +23,43 @@ export async function POST(
         const { params } = routeContextSchema.parse(context)
 
         const body = await req.json();
+        const payload = inquirySchema.parse(body)
 
-        //db.clientInquiries.create({
-        //    data: {
-        //        body.chatbotId,
-        //        body.threadId,
-        //        body.name,
-        //        body.email,
-        //        body.inquiry,
-        //    },
-        //    select: {
-        //        id: true,
-        //    },
-        //})
-        return new Response("returned", { status: 200 });
+        console.log(payload)
+
+        const chatbot = await db.chatbot.findUnique({
+            where: {
+                id: params.chatbotId,
+            },
+            select: {
+                id: true,
+                userId: true,
+            },
+        })
+
+        if (!chatbot) {
+            return new Response(null, { status: 404 });
+        }
+
+        const subscriptionPlan = await getUserSubscriptionPlan(chatbot.userId || '')
+
+        if (subscriptionPlan.basicCustomization === false) {
+            throw new RequiresHigherPlanError()
+        }
+
+        const id = await db.clientInquiries.create({
+            data: {
+                chatbotId: params.chatbotId,
+                threadId: payload.threadId,
+                email: payload.email,
+                inquiry: payload.inquiry,
+            },
+            select: {
+                id: true,
+            },
+        })
+
+        return new Response(JSON.stringify({ 'id': id }), { status: 200 });
 
     } catch (error) {
         console.error(error);

@@ -90,7 +90,6 @@ model ClientInquiries {
   createdAt DateTime @default(now())
   threadId  String
   email     String
-  name      String
   inquiry   String
   chatbotId String
   chatbot   Chatbot  @relation(fields: [chatbotId], references: [id], onDelete: Cascade)

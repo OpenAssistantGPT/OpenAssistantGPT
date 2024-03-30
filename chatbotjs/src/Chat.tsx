@@ -18,13 +18,17 @@ import {
 } from 'ai/react';
 import { ChatbotConfig } from '@/types';
 
-
 export default function ChatBox() {
+
   const [loading, setLoading] = useState(true)
   const [config, setConfig] = useState<ChatbotConfig>()
   const [chatbotId, setChatbotId] = useState<string>()
   const [isChatVisible, setIsChatVisible] = useState(false);
   const [sendInquiry, setSendInquiry] = useState(false);
+
+  // inquiry
+  const [userEmail, setUserEmail] = useState('')
+  const [userMessage, setUserMessage] = useState('')
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
@@ -83,6 +87,27 @@ export default function ChatBox() {
     init();
   }, [])
 
+  async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    const response = await fetch(`http://localhost:3000/api/chatbots/${chatbotId}/inquiry`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chatbotId: chatbotId,
+        threadId: "1245",//threadId,
+        email: "test@gmail.com",//userEmail,
+        inquiry: "test"//userMessage,
+      }),
+    })
+
+    if (response.ok) {
+      setSendInquiry(false)
+    }
+  }
+
   const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[65vh] max-h-[65vh]";
   const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
   const inputContainerHeight = 70; // Adjust this value based on your actual input container height
@@ -106,7 +131,7 @@ export default function ChatBox() {
                 <div key="0" className="flex w-5/6 items-end gap-2">
                   <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
                     <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
-                    <button className='mt-4 flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
+                    <button className='mt-4 underline flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
                       Contact our support team {sendInquiry ? <Icons.close className="h-4 w-4" /> : <Icons.chevronRight className="h-4 w-4" />}
                     </button>
                     {/**sendInquiry &&
@@ -137,27 +162,29 @@ export default function ChatBox() {
               </div>
               {sendInquiry &&
                 <div ref={inquiryRef} className="bg-white border-blue-600 border-t-2 rounded-lg shadow-md w-5/6">
-                  <Card className='border-0 h-full shadow-none'>
-                    <CardHeader>
-                      <CardTitle>Contact our support team</CardTitle>
-                      <CardDescription>Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="email">Email</Label>
-                          <Input className="bg-white" id="email" placeholder="Email" type="email" />
+                  <form onSubmit={handleInquirySubmit}>
+                    <Card className='border-0 h-full shadow-none'>
+                      <CardHeader>
+                        <CardTitle>Contact our support team</CardTitle>
+                        <CardDescription>Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input className="bg-white" id="email" placeholder="Email" type="email" />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="message">Message</Label>
+                            <Textarea className="min-h-[100px]" id="message" placeholder="Your message" />
+                          </div>
                         </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="message">Message</Label>
-                          <Textarea className="min-h-[100px]" id="message" placeholder="Your message" />
-                        </div>
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Button type="submit" className='bg-black text-white'>Send message</Button>
-                    </CardFooter>
-                  </Card>
+                      </CardContent>
+                      <CardFooter>
+                        <Button type="submit" className='bg-black text-white'>Send message</Button>
+                      </CardFooter>
+                    </Card>
+                  </form>
                 </div>
               }
 
