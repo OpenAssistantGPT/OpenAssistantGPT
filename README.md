@@ -20,3 +20,15 @@ For more detailed information and implementation guidelines, you can visit our [
 
 ## Documentation
 For full documentation, visit our [documentation](https://openassistantgpt.io/docs)
+
+## Contributing
+
+We love our contributors! Here's the list of who contributed:
+
+<a href="https://github.com/marcolivierbouch/OpenAssistantGPT/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=marcolivierbouch/OpenAssistantGPT" />
+</a>
+
+## Repo Activity
+
+![OpenAssistantGPT repo activity](https://repobeats.axiom.co/api/embed/d376259a3651f5bcb458c4f00efb9012cb400813.svg "Repobeats analytics image")
