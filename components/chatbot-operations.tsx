@@ -85,8 +85,8 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/inquiry`} className="flex w-full">
-                            User Inquiry
+                        <Link href={`/dashboard/chatbots/${chatbot.id}/inquiries`} className="flex w-full">
+                            Users Inquiries
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />

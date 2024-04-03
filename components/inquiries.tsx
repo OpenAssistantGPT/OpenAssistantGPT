@@ -2,21 +2,6 @@
 
 import * as React from "react"
 import {
-    AlertCircle,
-    Archive,
-    ArchiveX,
-    File,
-    Inbox,
-    MessagesSquare,
-    Search,
-    Send,
-    ShoppingCart,
-    Trash2,
-    Users2,
-} from "lucide-react"
-
-import { Input } from "@/components/ui/input"
-import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
@@ -29,25 +14,22 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import { InquiryDisplay } from "./inquiry-display"
-import { ClientInquiries } from "@prisma/client"
 import { InquiryList } from "./inquiry-list"
 import { TooltipProvider } from "@radix-ui/react-tooltip"
+import { useInquiry } from "@/hooks/use-inquiries"
+import { InquiryMessages } from "@/types"
 
-interface MailProps {
-    inquiries: ClientInquiries[]
+interface InquiryProps {
+    inquiries: InquiryMessages[]
     defaultLayout: number[] | undefined
     defaultCollapsed?: boolean
-    navCollapsedSize: number
 }
 
 export function Inquiries({
     inquiries,
     defaultLayout = [265, 440, 655],
-    defaultCollapsed = false,
-    navCollapsedSize,
-}: MailProps) {
-    const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed)
-    //const [mail] = useMail()
+}: InquiryProps) {
+    const [selectedInquiry] = useInquiry()
 
     return (
         <TooltipProvider delayDuration={0}>
@@ -69,37 +51,29 @@ export function Inquiries({
                                     value="all"
                                     className="text-zinc-600 dark:text-zinc-200"
                                 >
-                                    All mail
+                                    New Inquiries
                                 </TabsTrigger>
                                 <TabsTrigger
-                                    value="unread"
+                                    value="deleted"
                                     className="text-zinc-600 dark:text-zinc-200"
                                 >
-                                    Unread
+                                    Deleted Inquiries
                                 </TabsTrigger>
                             </TabsList>
                         </div>
-                        <Separator />
-                        <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                            <form>
-                                <div className="relative">
-                                    <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                                    <Input placeholder="Search" className="pl-8" />
-                                </div>
-                            </form>
-                        </div>
+                        <Separator className="mb-4" />
                         <TabsContent value="all" className="m-0">
-                            <InquiryList inquiries={inquiries} />
+                            <InquiryList inquiries={inquiries.filter((item) => !item.deletedAt) || []} />
                         </TabsContent>
-                        <TabsContent value="unread" className="m-0">
-                            <InquiryList inquiries={inquiries} />
+                        <TabsContent value="deleted" className="m-0">
+                            <InquiryList inquiries={inquiries.filter((item) => item.deletedAt) || []} />
                         </TabsContent>
                     </Tabs>
                 </ResizablePanel>
                 <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={defaultLayout[2]}>
                     <InquiryDisplay
-                        inquiry={inquiries[0] || null}
+                        inquiry={selectedInquiry.selected ? inquiries.find((i) => i.id === selectedInquiry.selected) : undefined}
                     />
                 </ResizablePanel>
             </ResizablePanelGroup>

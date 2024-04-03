@@ -140,6 +140,12 @@ export function BillingForm({
                                                             - {plan.maxMessagesPerMonth} Messages / Month
                                                         </li>
                                                 }
+                                                {
+                                                    plan.userInquiries &&
+                                                    <li className="flex items-center">
+                                                        - User Inquiry / Collect leads
+                                                    </li>
+                                                }
                                             </ul>
                                         </CardContent>
                                         <CardFooter>
@@ -188,6 +194,12 @@ export function BillingForm({
                                                     <li className="flex items-center">
                                                         - {plan.maxMessagesPerMonth} Messages / Month
                                                     </li>
+                                            }
+                                            {
+                                                plan.userInquiries &&
+                                                <li className="flex items-center">
+                                                    - User Inquiry / Collect leads
+                                                </li>
                                             }
                                         </ul>
                                     </CardContent>

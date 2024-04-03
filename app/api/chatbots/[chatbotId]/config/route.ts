@@ -29,8 +29,15 @@ export async function GET(
                 chatbotReplyBackgroundColor: true,
                 chatbotReplyTextColor: true,
                 userReplyBackgroundColor: true,
-                userReplyTextColor: true
-
+                userReplyTextColor: true,
+                inquiryEnabled: true,
+                inquiryLinkText: true,
+                inquiryTitle: true,
+                inquirySubtitle: true,
+                inquiryMessageLabel: true,
+                inquiryEmailLabel: true,
+                inquirySendButtonText: true,
+                inquiryDisplayLinkAfterXMessage: true,
             },
             where: {
                 id: params.chatbotId,

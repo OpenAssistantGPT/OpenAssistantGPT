@@ -10,6 +10,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { Inquiries } from "@/components/inquiries"
+import { InquiryMessages } from "@/types"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -38,7 +39,17 @@ export default async function UserInquiryPage({ params }: ChatbotSettingsProps) 
         notFound()
     }
 
+    // select the messages with the thread id
     const inquiries = await db.clientInquiries.findMany({
+        select: {
+            id: true,
+            email: true,
+            threadId: true,
+            inquiry: true,
+            createdAt: true,
+            chatbotId: true,
+            deletedAt: true
+        },
         where: {
             chatbotId: chatbot.id,
         },
@@ -46,6 +57,23 @@ export default async function UserInquiryPage({ params }: ChatbotSettingsProps) 
             createdAt: "desc",
         },
     })
+
+    // for each inquiry get the messages thread using threadid
+    const inquiriesWithMessages: InquiryMessages[] = await Promise.all(
+        inquiries.map(async (inquiry) => {
+            const messages = await db.message.findMany({
+                where: {
+                    threadId: inquiry.threadId,
+                    chatbotId: inquiry.chatbotId
+                }
+            })
+            return {
+                ...inquiry,
+                messages
+            }
+        }
+        )
+    )
 
     return (
         <DashboardShell>
@@ -63,7 +91,7 @@ export default async function UserInquiryPage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
-            <Inquiries inquiries={inquiries} />
+            <Inquiries inquiries={inquiriesWithMessages} />
         </DashboardShell >
     )
 }

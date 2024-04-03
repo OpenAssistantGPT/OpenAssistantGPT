@@ -52,6 +52,15 @@ model Chatbot {
   userReplyBackgroundColor    String @default("#3b82f6")
   userReplyTextColor          String @default("#FFFFFF")
 
+  inquiryEnabled                  Boolean @default(false)
+  inquiryLinkText                 String  @default("Contact our support team")
+  inquiryTitle                    String  @default("Contact our support team")
+  inquirySubtitle                 String  @default("Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.")
+  inquiryEmailLabel               String  @default("Email")
+  inquiryMessageLabel             String  @default("Message")
+  inquirySendButtonText           String  @default("Send message")
+  inquiryDisplayLinkAfterXMessage Int     @default(1)
+
   user            User              @relation(fields: [userId], references: [id])
   model           ChatbotModel      @relation(fields: [modelId], references: [id])
   ChatbotFiles    ChatbotFiles[]
@@ -86,13 +95,14 @@ model ChatbotModel {
 }
 
 model ClientInquiries {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
   threadId  String
   email     String
   inquiry   String
   chatbotId String
-  chatbot   Chatbot  @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  chatbot   Chatbot   @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+  deletedAt DateTime?
 }
 
 model Message {

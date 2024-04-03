@@ -29,6 +29,7 @@ export default function ChatBox() {
   // inquiry
   const [userEmail, setUserEmail] = useState('')
   const [userMessage, setUserMessage] = useState('')
+  const [inquiryLoading, setInquiryLoading] = useState(false)
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
@@ -89,8 +90,9 @@ export default function ChatBox() {
 
   async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setInquiryLoading(true)
 
-    const response = await fetch(`http://localhost:3000/api/chatbots/${chatbotId}/inquiry`, {
+    const response = await fetch(`${siteConfig.url}api/chatbots/${chatbotId}/inquiries`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -113,6 +115,7 @@ export default function ChatBox() {
     } else {
       console.error(`Failed to send inquiry: ${response}`)
     }
+    setInquiryLoading(false)
   }
 
   const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[65vh] max-h-[65vh]";
@@ -138,66 +141,15 @@ export default function ChatBox() {
                 <div key="0" className="flex w-5/6 items-end gap-2">
                   <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
                     <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
-                    <button className='mt-4 underline flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
-                      Contact our support team
-                    </button>
-                    {/**sendInquiry &&
-                      <Card className='border-0 h-full shadow-none'>
-                        <CardHeader>
-                          <CardTitle>Contact our support team</CardTitle>
-                          <CardDescription>Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-4">
-                            <div className="space-y-2">
-                              <Label htmlFor="email">Email</Label>
-                              <Input className="bg-white" id="email" placeholder="Email" type="email" />
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="message">Message</Label>
-                              <Textarea className="min-h-[100px]" id="message" placeholder="Your message" />
-                            </div>
-                          </div>
-                        </CardContent>
-                        <CardFooter>
-                          <Button type="submit" className='bg-black text-white'>Send message</Button>
-                        </CardFooter>
-                      </Card>
-                    **/}
                   </div>
                 </div>
               </div>
-              {sendInquiry &&
-                <div ref={inquiryRef} className="bg-white border-blue-600 border-t-2 rounded-lg shadow-md w-5/6">
-                  <form onSubmit={handleInquirySubmit}>
-                    <Card className='border-0 h-full shadow-none'>
-                      <CardHeader>
-                        <CardTitle>Contact our support team</CardTitle>
-                        <CardDescription>Our team is here to help you with any questions you may have. Please provide us with your email and a brief message so we can assist you.</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" placeholder="Email" type="email" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="message">Message</Label>
-                            <Textarea onChange={(e) => setUserMessage(e.target.value)} className="min-h-[100px]" id="message" placeholder="Your message" />
-                          </div>
-                        </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Button type="submit" className='bg-black text-white'>Send message</Button>
-                      </CardFooter>
-                    </Card>
-                  </form>
-                </div>
-              }
-
               {
                 messages.map((message: Message) => {
                   if (message.role === "assistant") {
+                    // find current assistant message reply number
+                    const currentChatbotReply = messages.filter((message) => message.role === 'assistant').indexOf(message) + 1
+
                     return (
                       <div key={message.id} className="flex w-5/6 items-end gap-2">
                         <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
@@ -255,7 +207,14 @@ export default function ChatBox() {
                                   </p>
                                 ));
                               }
-                            })}
+                            })
+                          }
+                          { // Check if it's the first message after X number of assistant replies and the link hasn't been added yet
+                            currentChatbotReply > 0 && currentChatbotReply == config!.inquiryDisplayLinkAfterXMessage && status !== "in_progress" && config!.inquiryEnabled &&
+                            <button className='mt-4 underline flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
+                              {config!.inquiryLinkText}
+                            </button>
+                          }
                         </div>
                       </div>
                     );
@@ -270,8 +229,42 @@ export default function ChatBox() {
                   }
                 })
               }
+
+              {status !== 'in_progress' && sendInquiry &&
+                <div ref={inquiryRef} className="bg-white border-t-2 rounded-lg shadow-md w-5/6">
+                  <form onSubmit={handleInquirySubmit}>
+                    <Card className='border-0 h-full shadow-none'>
+                      <CardHeader>
+                        <CardTitle>{config!.inquiryTitle}</CardTitle>
+                        <CardDescription>{config!.inquirySubtitle}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="email">{config!.inquiryEmailLabel}</Label>
+                            <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" type="email" />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="message">{config!.inquiryMessageLabel}</Label>
+                            <Textarea onChange={(e) => setUserMessage(e.target.value)} className="min-h-[100px]" id="message" />
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button type="submit" disabled={inquiryLoading} className='bg-black text-white'>
+                          {config!.inquirySendButtonText}
+                          {inquiryLoading && (
+                            <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                          )}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </form>
+                </div>
+              }
             </div>
           }
+
           <div className={inputContainerClassname}>
             {config?.displayBranding === true && (
               <div className="text-center text-zinc-400 text-md mb-2">

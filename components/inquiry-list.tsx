@@ -1,14 +1,19 @@
+"use client"
+
 import formatDistanceToNow from "date-fns/formatDistanceToNow"
 
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { ClientInquiries } from "@prisma/client"
+import { useInquiry } from "@/hooks/use-inquiries"
+import { InquiryMessages } from "@/types"
 
 interface InquiryListProps {
-  inquiries: ClientInquiries[]
+  inquiries: InquiryMessages[]
 }
 
 export function InquiryList({ inquiries }: InquiryListProps) {
+
+  const [selectedInquiry, setSelectedInquiry] = useInquiry()
 
   return (
     <ScrollArea className="h-screen">
@@ -17,8 +22,15 @@ export function InquiryList({ inquiries }: InquiryListProps) {
           <button
             key={item.id}
             className={cn(
-              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent"
+              "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+              selectedInquiry.selected === item.id && "bg-muted"
             )}
+            onClick={() =>
+              setSelectedInquiry({
+                ...selectedInquiry,
+                selected: item.id,
+              })
+            }
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
@@ -27,7 +39,10 @@ export function InquiryList({ inquiries }: InquiryListProps) {
                 </div>
                 <div
                   className={cn(
-                    "ml-auto text-xs text-muted-foreground"
+                    "ml-auto text-xs",
+                    selectedInquiry.selected === item.id
+                      ? "text-foreground"
+                      : "text-muted-foreground"
                   )}
                 >
                   {formatDistanceToNow(new Date(item.createdAt), {

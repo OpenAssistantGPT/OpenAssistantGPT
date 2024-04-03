@@ -1,7 +1,6 @@
 
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { inquirySchema } from "@/lib/validations/inquiry";
 import { z } from "zod"
 import { getServerSession } from "next-auth";
 
@@ -49,10 +48,13 @@ export async function DELETE(
             return new Response(null, { status: 404 });
         }
 
-        await db.clientInquiries.delete({
+        await db.clientInquiries.update({
+            data: {
+                deletedAt: new Date(),
+            },
             where: {
                 id: params.inquiryId,
-
+                chatbotId: params.chatbotId,
             },
         })
 
