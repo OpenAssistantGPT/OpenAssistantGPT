@@ -37,11 +37,11 @@ export async function PATCH(
             return new Response(null, { status: 403 })
         }
 
-        //const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
+        const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
 
-        //if (subscriptionPlan.userInquiries === false) {
-        //    throw new RequiresHigherPlanError()
-        //}
+        if (subscriptionPlan.userInquiries === false) {
+            throw new RequiresHigherPlanError()
+        }
 
         const body = await req.json()
         const payload = inquiryCustomizationSchema.parse(body)

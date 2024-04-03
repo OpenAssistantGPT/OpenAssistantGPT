@@ -53,11 +53,11 @@ export async function POST(
             return new Response('Already exist', { status: 409 });
         }
 
-        //const subscriptionPlan = await getUserSubscriptionPlan(chatbot.userId || '')
+        const subscriptionPlan = await getUserSubscriptionPlan(chatbot.userId || '')
 
-        //if (subscriptionPlan.basicCustomization === false) {
-        //    throw new RequiresHigherPlanError()
-        //}
+        if (subscriptionPlan.basicCustomization === false) {
+            throw new RequiresHigherPlanError()
+        }
 
         const id = await db.clientInquiries.create({
             data: {
