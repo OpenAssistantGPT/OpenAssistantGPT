@@ -46,8 +46,6 @@ export async function PATCH(
         const body = await req.json()
         const payload = inquiryCustomizationSchema.parse(body)
 
-        console.log(payload)
-
         const chatbot = await db.chatbot.update({
             where: {
                 id: params.chatbotId
