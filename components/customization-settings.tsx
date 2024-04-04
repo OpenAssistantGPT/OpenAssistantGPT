@@ -12,6 +12,7 @@ import {
     FormField,
     FormItem,
     FormLabel,
+    FormMessage,
 } from "@/components/ui/form"
 import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/use-toast"
@@ -179,6 +180,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                             onChange={field.onChange}
                                         />
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -202,6 +204,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                             onChange={field.onChange}
                                         />
                                     </FormControl>
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />

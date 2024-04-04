@@ -4,7 +4,6 @@ import OpenAI from "openai"
 import { z } from "zod"
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { experimental_AssistantResponse } from 'ai';
-import { MessageContentText } from 'openai/resources/beta/threads/messages/messages';
 
 export const maxDuration = 300;
 

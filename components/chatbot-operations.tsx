@@ -84,6 +84,11 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                             Embed On Website
                         </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        <Link href={`/dashboard/chatbots/${chatbot.id}/inquiries`} className="flex w-full">
+                            Users Inquiries
+                        </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                         className="flex cursor-pointer items-center text-destructive focus:text-destructive"

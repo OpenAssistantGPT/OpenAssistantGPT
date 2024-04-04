@@ -323,6 +323,10 @@ export default function IndexPage() {
                   <Icons.check className="mr-2 inline-block h-4 w-4" />
                   Unlimited Messages
                 </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Client Inquiry / Collect Leads
+                </li>
               </ul>
             </div>
             <div className="flex flex-col space-y-2">
@@ -353,6 +357,10 @@ export default function IndexPage() {
                 <li>
                   <Icons.check className="mr-2 inline-block h-4 w-4" />
                   Unlimited Messages
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Client Inquiry / Collect Leads
                 </li>
               </ul>
             </div>
