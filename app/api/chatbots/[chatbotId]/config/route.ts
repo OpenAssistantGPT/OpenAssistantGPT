@@ -37,6 +37,7 @@ export async function GET(
                 inquiryMessageLabel: true,
                 inquiryEmailLabel: true,
                 inquirySendButtonText: true,
+                inquiryAutomaticReplyText: true,
                 inquiryDisplayLinkAfterXMessage: true,
             },
             where: {

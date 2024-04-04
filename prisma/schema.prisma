@@ -59,6 +59,7 @@ model Chatbot {
   inquiryEmailLabel               String  @default("Email")
   inquiryMessageLabel             String  @default("Message")
   inquirySendButtonText           String  @default("Send message")
+  inquiryAutomaticReplyText       String  @default("Your inquiry has been sent. Our team will get back to you shortly.")
   inquiryDisplayLinkAfterXMessage Int     @default(1)
 
   user            User              @relation(fields: [userId], references: [id])

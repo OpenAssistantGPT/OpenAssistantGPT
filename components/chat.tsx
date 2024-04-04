@@ -9,8 +9,10 @@ import { Input } from "@/components/ui/input"
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar"
 import { Chatbot } from "@prisma/client"
 import { Icons } from "./icons"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "./ui/card"
 import {
   Message,
   // import as useAssistant:
@@ -18,7 +20,6 @@ import {
 } from 'ai/react';
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { siteConfig } from "@/config/site"
 import { ChatbotConfig } from "@/types"
 import { toast } from "@/components/ui/use-toast"
 
@@ -33,7 +34,13 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
   const [loading, setLoading] = useState(true)
   const [config, setConfig] = useState<ChatbotConfig>()
 
-  const { status, messages, input, submitMessage, handleInputChange, error } =
+  // inquiry
+  const [sendInquiry, setSendInquiry] = useState(false);
+  const [userEmail, setUserEmail] = useState('')
+  const [userMessage, setUserMessage] = useState('')
+  const [inquiryLoading, setInquiryLoading] = useState(false)
+
+  const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat` });
 
   useEffect(() => {
@@ -42,16 +49,51 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
       toast({
         title: 'Error',
         description: error.message,
-        status: 'destructive',
+        variant: 'destructive'
       })
     }
   }, [error])
+
+  async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setInquiryLoading(true)
+
+    const response = await fetch(`/api/chatbots/${chatbot.id}/inquiries`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chatbotId: chatbot.id,
+        threadId: threadId || '',
+        email: userEmail,
+        inquiry: userMessage,
+      }),
+    })
+
+    if (response.ok) {
+      setSendInquiry(false)
+      messages.push({
+        id: String(messages.length + 1),
+        role: 'assistant',
+        content: config!.inquiryAutomaticReplyText,
+      })
+    } else {
+      console.error(`Failed to send inquiry: ${response}`)
+      toast({
+        title: 'Error',
+        description: 'Failed to send inquiry',
+        variant: 'destructive'
+      })
+    }
+    setInquiryLoading(false)
+  }
 
   useEffect(() => {
     const init = async () => {
       setLoading(true)
 
-      const config = await fetch(`${siteConfig.url}api/chatbots/${chatbot.id}/config`)
+      const config = await fetch(`/api/chatbots/${chatbot.id}/config`)
       const chatbotConfig: ChatbotConfig = await config.json()
       setConfig(chatbotConfig)
       setLoading(false)
@@ -91,9 +133,10 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
           {
             messages.map((message: Message) => {
               if (message.role === "assistant") {
+                const currentChatbotReply = messages.filter((message) => message.role === 'assistant').indexOf(message) + 1
                 return (
                   <div key={message.id} className="flex items-end gap-2">
-                    <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
+                    <div className="rounded-lg bg-zinc-200 text-md p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
                       {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
                         .split('```').map((block, blockIdx) => {
                           // Check if the block is a code block or normal text
@@ -103,7 +146,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
                           } else {
                             // Process normal text for ** and \n
                             return block.split('\n').map((line, lineIndex, lineArray) => (
-                              <p key={`${blockIdx}-${lineIndex}`} className={`text-sm ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
+                              <p key={`${blockIdx}-${lineIndex}`} className={`text-md ${lineIndex < lineArray.length - 1 ? 'mb-4' : ''}`}>
                                 {line.split('**').map((segment, segmentIndex) => {
                                   // Render bold text for segments surrounded by **
                                   if (segmentIndex % 2 === 1) {
@@ -148,7 +191,18 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
                               </p>
                             ));
                           }
-                        })}
+                        })
+                      }
+                      { // Check if it's the first message after X number of assistant replies and the link hasn't been added yet
+                        currentChatbotReply > 0 && currentChatbotReply == config!.inquiryDisplayLinkAfterXMessage && status !== "in_progress" && config!.inquiryEnabled &&
+                        <button
+                          className='mt-4 flex flex-row items-center text-sm justify-center text-blue-600 hover:text-blue-800 focus:outline-none focus:underline'
+                          type="button"
+                          onClick={() => setSendInquiry(!sendInquiry)}
+                        >
+                          {config!.inquiryLinkText}
+                        </button>
+                      }
                     </div>
                   </div>
                 );
@@ -162,6 +216,38 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
                 );
               }
             })
+          }
+          {status !== 'in_progress' && sendInquiry &&
+            <div className="bg-white border-t-2 rounded-lg shadow-md w-5/6">
+              <form onSubmit={handleInquirySubmit}>
+                <Card className='border-0 h-full shadow-none'>
+                  <CardHeader>
+                    <CardTitle>{config!.inquiryTitle}</CardTitle>
+                    <CardDescription>{config!.inquirySubtitle}</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="email">{config!.inquiryEmailLabel}</Label>
+                        <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" type="email" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="message">{config!.inquiryMessageLabel}</Label>
+                        <Textarea onChange={(e) => setUserMessage(e.target.value)} className="min-h-[100px]" id="message" />
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Button type="submit" disabled={inquiryLoading} className='bg-black text-white'>
+                      {config!.inquirySendButtonText}
+                      {inquiryLoading && (
+                        <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                      )}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </form>
+            </div>
           }
         </div>
       </CardContent>

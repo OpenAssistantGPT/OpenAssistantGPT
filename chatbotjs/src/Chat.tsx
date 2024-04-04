@@ -110,7 +110,7 @@ export default function ChatBox() {
       messages.push({
         id: String(messages.length + 1),
         role: 'assistant',
-        content: 'Your inquiry has been sent. Our team will get back to you shortly.',
+        content: config!.inquiryAutomaticReplyText,
       })
     } else {
       console.error(`Failed to send inquiry: ${response}`)
@@ -211,7 +211,11 @@ export default function ChatBox() {
                           }
                           { // Check if it's the first message after X number of assistant replies and the link hasn't been added yet
                             currentChatbotReply > 0 && currentChatbotReply == config!.inquiryDisplayLinkAfterXMessage && status !== "in_progress" && config!.inquiryEnabled &&
-                            <button className='mt-4 underline flex flex-row text-sm justify-center' type="submit" style={{ color: config ? config.chatbotReplyTextColor : "" }} onClick={() => setSendInquiry(!sendInquiry)}>
+                            <button
+                              className='mt-4 flex flex-row items-center text-sm justify-center text-blue-600 hover:text-blue-800 focus:outline-none focus:underline'
+                              type="button"
+                              onClick={() => setSendInquiry(!sendInquiry)}
+                            >
                               {config!.inquiryLinkText}
                             </button>
                           }
@@ -229,6 +233,7 @@ export default function ChatBox() {
                   }
                 })
               }
+
 
               {status !== 'in_progress' && sendInquiry &&
                 <div ref={inquiryRef} className="bg-white border-t-2 rounded-lg shadow-md w-5/6">

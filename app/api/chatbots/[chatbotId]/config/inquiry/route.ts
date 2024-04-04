@@ -58,6 +58,7 @@ export async function PATCH(
                 inquirySubtitle: payload.inquirySubtitle,
                 inquiryMessageLabel: payload.inquiryMessageLabel,
                 inquiryEmailLabel: payload.inquiryEmailLabel,
+                inquiryAutomaticReplyText: payload.inquiryAutomaticReplyText,
                 inquirySendButtonText: payload.inquirySendButtonText
             },
             select: {

@@ -49,6 +49,7 @@ export function InquirySettings({ chatbot }: ChatbotOperationsProps) {
             form.setValue("inquiryEmailLabel", data.inquiryEmailLabel)
             form.setValue("inquiryMessageLabel", data.inquiryMessageLabel)
             form.setValue("inquirySendButtonText", data.inquirySendButtonText)
+            form.setValue("inquiryAutomaticReplyText", data.inquiryAutomaticReplyText)
             form.setValue("inquiryDisplayLinkAfterXMessage", data.inquiryDisplayLinkAfterXMessage)
         })
     }, [])
@@ -69,6 +70,7 @@ export function InquirySettings({ chatbot }: ChatbotOperationsProps) {
                 inquiryEmailLabel: data.inquiryEmailLabel,
                 inquiryMessageLabel: data.inquiryMessageLabel,
                 inquirySendButtonText: data.inquirySendButtonText,
+                inquiryAutomaticReplyText: data.inquiryAutomaticReplyText,
                 inquiryDisplayLinkAfterXMessage: data.inquiryDisplayLinkAfterXMessage,
             }),
         })
@@ -93,13 +95,13 @@ export function InquirySettings({ chatbot }: ChatbotOperationsProps) {
 
             return toast({
                 title: "Something went wrong.",
-                description: "Your chatbot was not updated. Please try again.",
+                description: "Your inquiry settings were not updated. Please try again.",
                 variant: "destructive",
             })
         }
 
         toast({
-            description: "Your chatbot has been updated.",
+            description: "Your inquiry settings are updated.",
         })
     }
 
@@ -188,6 +190,29 @@ export function InquirySettings({ chatbot }: ChatbotOperationsProps) {
                                         </FormLabel>
                                         <FormDescription>
                                             The subtitle text of the inquiry form.
+                                        </FormDescription>
+                                    </div>
+                                    <FormControl>
+                                        <Textarea
+                                            defaultValue={field.value}
+                                            onChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="inquiryAutomaticReplyText"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col justify-between rounded-lg border p-4">
+                                    <div className="space-y-0.5">
+                                        <FormLabel className="text-base">
+                                            Inquiry Automatic Reply Message Text
+                                        </FormLabel>
+                                        <FormDescription>
+                                            The message sent to the user after they have submitted an inquiry.
                                         </FormDescription>
                                     </div>
                                     <FormControl>

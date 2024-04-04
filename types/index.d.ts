@@ -89,6 +89,7 @@ export type ChatbotConfig = {
   inquiryMessageLabel: string,
   inquiryEmailLabel: string,
   inquirySendButtonText: string,
+  inquiryAutomaticReplyText: string,
   inquiryDisplayLinkAfterXMessage: number,
 }
 

@@ -8,5 +8,6 @@ export const inquiryCustomizationSchema = z.object({
     inquiryEmailLabel: z.string(),
     inquiryMessageLabel: z.string(),
     inquirySendButtonText: z.string(),
+    inquiryAutomaticReplyText: z.string(),
     inquiryDisplayLinkAfterXMessage: z.coerce.number().min(1).max(5),
 })

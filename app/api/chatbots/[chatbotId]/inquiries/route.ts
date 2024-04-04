@@ -25,8 +25,6 @@ export async function POST(
         const body = await req.json();
         const payload = inquirySchema.parse(body)
 
-        console.log(payload)
-
         const chatbot = await db.chatbot.findUnique({
             where: {
                 id: params.chatbotId,
@@ -40,7 +38,6 @@ export async function POST(
         if (!chatbot) {
             return new Response(null, { status: 404 });
         }
-
 
         // if there is already a support case for the threadid and same chatbot return
         const existingInquiry = await db.clientInquiries.findFirst({
