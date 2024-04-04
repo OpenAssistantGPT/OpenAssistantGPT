@@ -143,7 +143,7 @@ export function BillingForm({
                                                 {
                                                     plan.userInquiries &&
                                                     <li className="flex items-center">
-                                                        - User Inquiry / Collect leads
+                                                        - User Inquiry
                                                     </li>
                                                 }
                                             </ul>
@@ -198,7 +198,7 @@ export function BillingForm({
                                             {
                                                 plan.userInquiries &&
                                                 <li className="flex items-center">
-                                                    - User Inquiry / Collect leads
+                                                    - User Inquiry
                                                 </li>
                                             }
                                         </ul>
