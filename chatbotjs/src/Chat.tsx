@@ -6,7 +6,9 @@ import React, { useEffect, useState, useRef } from 'react';
  */
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import {
@@ -16,16 +18,22 @@ import {
 } from 'ai/react';
 import { ChatbotConfig } from '@/types';
 
-
 export default function ChatBox() {
+
   const [loading, setLoading] = useState(true)
   const [config, setConfig] = useState<ChatbotConfig>()
   const [chatbotId, setChatbotId] = useState<string>()
   const [isChatVisible, setIsChatVisible] = useState(false);
+  const [sendInquiry, setSendInquiry] = useState(false);
+
+  // inquiry
+  const [userEmail, setUserEmail] = useState('')
+  const [userMessage, setUserMessage] = useState('')
+  const [inquiryLoading, setInquiryLoading] = useState(false)
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
-  const { status, messages, input, submitMessage, handleInputChange } =
+  const { status, messages, input, submitMessage, handleInputChange, threadId } =
     useAssistant({
       api: `${siteConfig.url}api/chatbots/${window.chatbotConfig.chatbotId}/chat`,
     });
@@ -36,6 +44,7 @@ export default function ChatBox() {
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+  const inquiryRef = useRef(null);
 
   useEffect(() => {
     // Check if status has changed to "awaiting_message"
@@ -49,6 +58,12 @@ export default function ChatBox() {
     // Scroll to the bottom of the container on messages update
     if (containerRef.current) containerRef.current.scrollTop = containerRef.current.scrollHeight;
   }, [messages]);
+
+  useEffect(() => {
+    if (sendInquiry && inquiryRef.current) {
+      inquiryRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [sendInquiry]);
 
   useEffect(() => {
     function handleResize() {
@@ -73,6 +88,36 @@ export default function ChatBox() {
     init();
   }, [])
 
+  async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setInquiryLoading(true)
+
+    const response = await fetch(`${siteConfig.url}api/chatbots/${chatbotId}/inquiries`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chatbotId: chatbotId,
+        threadId: threadId || '',
+        email: userEmail,
+        inquiry: userMessage,
+      }),
+    })
+
+    if (response.ok) {
+      setSendInquiry(false)
+      messages.push({
+        id: String(messages.length + 1),
+        role: 'assistant',
+        content: config!.inquiryAutomaticReplyText,
+      })
+    } else {
+      console.error(`Failed to send inquiry: ${response}`)
+    }
+    setInquiryLoading(false)
+  }
+
   const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[65vh] max-h-[65vh]";
   const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
   const inputContainerHeight = 70; // Adjust this value based on your actual input container height
@@ -89,16 +134,22 @@ export default function ChatBox() {
               </Button>
             </div>
           </div>
-          <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
-            <div className="space-y-4">
-              <div key="0" className="flex w-5/6 items-end gap-2">
-                <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
-                  <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
+
+          {
+            <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
+              <div className="space-y-4">
+                <div key="0" className="flex w-5/6 items-end gap-2">
+                  <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
+                    <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
+                  </div>
                 </div>
               </div>
               {
                 messages.map((message: Message) => {
                   if (message.role === "assistant") {
+                    // find current assistant message reply number
+                    const currentChatbotReply = messages.filter((message) => message.role === 'assistant').indexOf(message) + 1
+
                     return (
                       <div key={message.id} className="flex w-5/6 items-end gap-2">
                         <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
@@ -156,7 +207,18 @@ export default function ChatBox() {
                                   </p>
                                 ));
                               }
-                            })}
+                            })
+                          }
+                          { // Check if it's the first message after X number of assistant replies and the link hasn't been added yet
+                            currentChatbotReply > 0 && currentChatbotReply == config!.inquiryDisplayLinkAfterXMessage && status !== "in_progress" && config!.inquiryEnabled &&
+                            <button
+                              className='mt-4 flex flex-row items-center text-sm justify-center text-blue-600 hover:text-blue-800 focus:outline-none focus:underline'
+                              type="button"
+                              onClick={() => setSendInquiry(!sendInquiry)}
+                            >
+                              {config!.inquiryLinkText}
+                            </button>
+                          }
                         </div>
                       </div>
                     );
@@ -171,8 +233,43 @@ export default function ChatBox() {
                   }
                 })
               }
+
+
+              {status !== 'in_progress' && sendInquiry &&
+                <div ref={inquiryRef} className="bg-white border-t-2 rounded-lg shadow-md w-5/6">
+                  <form onSubmit={handleInquirySubmit}>
+                    <Card className='border-0 h-full shadow-none'>
+                      <CardHeader>
+                        <CardTitle>{config!.inquiryTitle}</CardTitle>
+                        <CardDescription>{config!.inquirySubtitle}</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="email">{config!.inquiryEmailLabel}</Label>
+                            <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" type="email" />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="message">{config!.inquiryMessageLabel}</Label>
+                            <Textarea onChange={(e) => setUserMessage(e.target.value)} className="min-h-[100px]" id="message" />
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button type="submit" disabled={inquiryLoading} className='bg-black text-white'>
+                          {config!.inquirySendButtonText}
+                          {inquiryLoading && (
+                            <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                          )}
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </form>
+                </div>
+              }
             </div>
-          </div>
+          }
+
           <div className={inputContainerClassname}>
             {config?.displayBranding === true && (
               <div className="text-center text-zinc-400 text-md mb-2">

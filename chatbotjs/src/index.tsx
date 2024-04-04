@@ -3,7 +3,6 @@ import ChatBox from './Chat'; // Import your main component
 import { createRoot } from 'react-dom/client'; // Import createRoot
 import ShadowRootComponent from './ShadowRoot';
 
-
 // Create a new div element
 const rootDiv = document.createElement('div');
 rootDiv.id = 'chatbot-root'; // Give it an ID for easy reference

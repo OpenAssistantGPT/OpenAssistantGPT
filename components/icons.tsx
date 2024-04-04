@@ -32,6 +32,7 @@ import {
   Coins,
   ArrowUp,
   CheckCheck,
+  ArrowDown,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -60,6 +61,7 @@ export const Icons = {
   user: User,
   arrowRight: ArrowRight,
   arrowUp: ArrowUp,
+  arrowDown: ArrowDown,
   help: HelpCircle,
   pizza: Pizza,
   sun: SunMedium,

@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -16,7 +15,7 @@ const Label = React.forwardRef<
     React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
     VariantProps<typeof labelVariants>
 >(({ className, ...props }, ref) => (
-    <LabelPrimitive.Root
+    <label
         ref={ref}
         className={cn(labelVariants(), className)}
         {...props}

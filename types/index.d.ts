@@ -1,8 +1,20 @@
 
-import { User } from "@prisma/client"
+import { User, Message } from "@prisma/client"
 import type { Icon } from "lucide-react"
 
 import { Icons } from "@/components/icons"
+
+
+export type InquiryMessages = {
+  id: string
+  inquiry: string
+  createdAt: Date
+  chatbotId: string
+  threadId: string
+  email: string
+  deletedAt: Date | null
+  messages: Message[]
+}
 
 export type NavItem = {
   title: string
@@ -65,11 +77,20 @@ export type ChatbotConfig = {
   bubbleColor: string
   bubbleTextColor: string
   chatHeaderBackgroundColor: string
-  chatHeaderTextColor: string 
+  chatHeaderTextColor: string
   chatbotReplyBackgroundColor: string
   chatbotReplyTextColor: string
   userReplyBackgroundColor: string
   userReplyTextColor: string
+  inquiryEnabled: boolean,
+  inquiryLinkText: string,
+  inquiryTitle: string,
+  inquirySubtitle: string,
+  inquiryMessageLabel: string,
+  inquiryEmailLabel: string,
+  inquirySendButtonText: string,
+  inquiryAutomaticReplyText: string,
+  inquiryDisplayLinkAfterXMessage: number,
 }
 
 
@@ -107,6 +128,8 @@ export type SubscriptionPlan = {
   premiumSupport?: boolean
 
   basicCustomization: boolean
+
+  userInquiries: boolean
 
   price: number | undefined
 }
