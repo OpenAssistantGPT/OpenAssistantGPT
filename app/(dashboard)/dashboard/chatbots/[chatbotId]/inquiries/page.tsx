@@ -77,7 +77,7 @@ export default async function UserInquiryPage({ params }: ChatbotSettingsProps) 
 
     return (
         <DashboardShell>
-            <DashboardHeader heading="Users Inquiry" text="All the users that contacted you using your chatbot">
+            <DashboardHeader heading="Users' Inquiries" text="All the users that contacted you using your chatbot">
                 <Link
                     href={`/dashboard/chatbots`}
                     className={cn(
