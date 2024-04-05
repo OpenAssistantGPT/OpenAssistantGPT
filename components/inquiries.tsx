@@ -22,7 +22,6 @@ import { InquiryMessages } from "@/types"
 interface InquiryProps {
     inquiries: InquiryMessages[]
     defaultLayout: number[] | undefined
-    defaultCollapsed?: boolean
 }
 
 export function Inquiries({
