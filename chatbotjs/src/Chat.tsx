@@ -125,7 +125,7 @@ export default function ChatBox() {
   return (
     <div className="fixed bottom-0 right-0 mb-4 z-50 flex items-end">
       {isChatVisible &&
-        <Card className={chatboxClassname + " bg-white shadow-lg transform transition-transform duration-200 ease-in-out" + (isMobile ? " overflow-auto" : "")}>
+        <Card className={chatboxClassname + " bg-white shadow-lg" + (isChatVisible ? " slide-in" : "") + (isMobile ? " overflow-auto" : "")}>
           <div style={{ background: config ? config!.chatHeaderBackgroundColor : "" }} className="flex rounded-t-lg shadow justify-between items-center p-4">
             <h3 style={{ color: config ? config!.chatHeaderTextColor : "" }} className="text-xl font-semibold">{config ? config!.chatTitle : ""}</h3>
             <div>
