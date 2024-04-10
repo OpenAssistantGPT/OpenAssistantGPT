@@ -2171,6 +2171,24 @@ video {
   background-color: #a8bbbf;
 }
 
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%, 100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0, 0);
+    opacity: 1;
+  }
+}
+
+/* Apply animation to the chatbox */
+
+.slide-in {
+  animation: slideIn 0.4s ease-in-out forwards;
+}
+
 .file\:border-0::file-selector-button {
   border-width: 0px;
 }
