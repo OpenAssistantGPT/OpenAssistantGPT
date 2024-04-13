@@ -110,17 +110,17 @@ export async function GET(
         }
 
         const { user } = session
-        //const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
-        //const count = await db.file.count({
-        //    where: {
-        //        userId: user.id,
-        //    },
-        //})
+        const count = await db.file.count({
+            where: {
+                userId: user.id,
+            },
+        })
 
-        //if (count >= subscriptionPlan.maxFiles) {
-        //    throw new RequiresHigherPlanError()
-        //}
+        if (count >= subscriptionPlan.maxFiles) {
+            throw new RequiresHigherPlanError()
+        }
 
         const openAIConfig = await db.openAIConfig.findUnique({
             select: {
