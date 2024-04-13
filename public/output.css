@@ -1079,16 +1079,24 @@ video {
   width: 1px;
 }
 
-.min-w-\[400px\] {
-  min-width: 400px;
-}
-
 .min-w-\[8rem\] {
   min-width: 8rem;
 }
 
 .min-w-\[var\(--radix-select-trigger-width\)\] {
   min-width: var(--radix-select-trigger-width);
+}
+
+.min-w-\[400px\] {
+  min-width: 400px;
+}
+
+.min-w-\[500px\] {
+  min-width: 500px;
+}
+
+.min-w-\[420px\] {
+  min-width: 420px;
 }
 
 .max-w-\[420px\] {
