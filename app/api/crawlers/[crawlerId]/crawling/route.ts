@@ -110,17 +110,17 @@ export async function GET(
         }
 
         const { user } = session
-        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+        //const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
-        const count = await db.file.count({
-            where: {
-                userId: user.id,
-            },
-        })
+        //const count = await db.file.count({
+        //    where: {
+        //        userId: user.id,
+        //    },
+        //})
 
-        if (count >= subscriptionPlan.maxFiles) {
-            throw new RequiresHigherPlanError()
-        }
+        //if (count >= subscriptionPlan.maxFiles) {
+        //    throw new RequiresHigherPlanError()
+        //}
 
         const openAIConfig = await db.openAIConfig.findUnique({
             select: {
@@ -160,6 +160,13 @@ export async function GET(
 
         const content = await crawl(crawler.crawlUrl, crawler.selector, crawler.maxPagesToCrawl, crawler.urlMatch)
         if (!content) {
+            console.error('Failed to crawl URL:', crawler.crawlUrl);
+            return new Response(null, { status: 500 })
+        }
+
+        // if content is only spaces return 500
+        if (content.toString().trim().length === 0) {
+            console.error('Failed to crawl URL contains only spaces:', crawler.crawlUrl + ' - No content found');
             return new Response(null, { status: 500 })
         }
 
