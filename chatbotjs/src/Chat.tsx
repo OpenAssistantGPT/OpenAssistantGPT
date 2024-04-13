@@ -118,7 +118,7 @@ export default function ChatBox() {
     setInquiryLoading(false)
   }
 
-  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col max-w-md min-h-[65vh] max-h-[65vh]";
+  const chatboxClassname = isMobile ? "fixed inset-0 flex flex-col" : "mr-3 flex flex-col min-w-[400px] max-w-md min-h-[65vh] max-h-[65vh]";
   const inputContainerClassname = isMobile ? "fixed bottom-0 left-0 w-full bg-white" : "";
   const inputContainerHeight = 70; // Adjust this value based on your actual input container height
 
@@ -136,7 +136,7 @@ export default function ChatBox() {
           </div>
 
           {
-            <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
+            <div className="p-4 space-y-4 flex-grow overflow-auto custom-scrollbar w-full" style={{ marginBottom: isMobile ? `${inputContainerHeight}px` : '0' }} ref={containerRef}>
               <div className="space-y-4">
                 <div key="0" className="flex w-5/6 items-end gap-2">
                   <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
@@ -153,7 +153,8 @@ export default function ChatBox() {
                     return (
                       <div key={message.id} className="flex w-5/6 items-end gap-2">
                         <div className="rounded-lg bg-zinc-200 p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
-                          {message.content.replace(/\【\d+†source】/g, '') // Remove citation markers
+
+                          {message.content.replace(/\【.*?】/g, '') // Remove citation markers
                             .split('```').map((block, blockIdx) => {
                               // Check if the block is a code block or normal text
                               if (blockIdx % 2 === 1) {
