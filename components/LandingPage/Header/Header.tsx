@@ -38,15 +38,15 @@ const Header = () => {
     setIsActive(!isActive);
   };
   return (
-    <div className="flex justify-between items-center relative">
-      <div className="w-[80%] lg:w-[400px]">
+    <div className="flex justify-between items-center relative max-w-full lg:max-w-[75%] md:mx-auto w-full py-2">
+      <div className="w-[65%] lg:w-[400px]">
         <picture>
           <img src="/wickedchatbots.svg" alt="Wickedchatbots" className="" />
         </picture>
       </div>
       {/* for desktop */}
-      <div className="hidden lg:flex justify-evenly items-center">
-        <ul className="list-none flex justify-evenly items-center">
+      <div className="hidden md:flex justify-evenly items-center">
+        <ul className="list-none flex justify-evenly items-center text-[14px] lg:text-[16px]">
           {navList.map((nav, index) => (
             <li key={index}>
               {nav.title === "Login" ? (
@@ -59,7 +59,7 @@ const Header = () => {
               ) : nav.title === "Request A Demo" ? (
                 <a
                   href={nav.path}
-                  className="px-[12px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg hover:shadow-[#6662a5]"
+                  className="pl-[12px] w-[150px] lg:w-[165px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg hover:shadow-[#6662a5]"
                 >
                   {nav.title}
                   <svg
@@ -68,7 +68,7 @@ const Header = () => {
                     width="18"
                     height="18"
                     fill="rgba(255,255,255,1)"
-                    className="mt-[4px] ml-[4px]"
+                    className="mt-[2px] ml-[2px]"
                   >
                     <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
                   </svg>
@@ -89,7 +89,7 @@ const Header = () => {
       <DropdownMenu>
         <DropdownMenuTrigger
           onClick={handleToggle}
-          className="lg:hidden duration-300 transition-all"
+          className="md:hidden duration-300 transition-all mr-[22px]"
         >
           {isActive ? (
             <svg
@@ -113,7 +113,7 @@ const Header = () => {
             </svg>
           )}
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[20rem] shadow-xl shadow-[#333333] absolute -right-[16px] top-[25px] text-white bg-[#131212] border-[#131212] lg:hidden">
+        <DropdownMenuContent className="w-[20rem] shadow-xl shadow-[#333333] absolute -right-[16px] top-[25px] text-white bg-[#131212] border-[#131212] md:hidden">
           {navList.map((navItem, index) => (
             <React.Fragment key={index}>
               <DropdownMenuItem>
