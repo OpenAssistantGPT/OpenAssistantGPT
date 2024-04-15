@@ -1,15 +1,15 @@
-import SectionTitle from '@/components/common/SectionTitle';
-import React from 'react';
+import SectionTitle from "@/components/common/SectionTitle";
+import React from "react";
 
 const DragAndDrop = () => {
-    return (
-        <section  className="flex flex-col md:flex-row justify-center md:justify-between gap-10 md:w-full h-full mb-10">
-            <div className="w-full">
+  return (
+    <section className="flex flex-col md:flex-row justify-center md:justify-between gap-10 md:w-full h-full mb-10">
+      <div className="w-full">
         <picture>
           <img src="/landingPage/collection_u2np.svg" alt="" />
         </picture>
       </div>
-            <div className="flex flex-col justify-center w-full gap-y-4">
+      <div className="flex flex-col justify-center w-full gap-y-4">
         <SectionTitle
           title="Drag & Drop Simple 💆‍♂️"
           subtitle="No coding, no headaches. Just drag and drop conversational elements and unleash your creativity... The possibilities are endless."
@@ -46,8 +46,8 @@ const DragAndDrop = () => {
           ))}
         </div>
       </div>
-        </section>
-    );
+    </section>
+  );
 };
 
 export default DragAndDrop;

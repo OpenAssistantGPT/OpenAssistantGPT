@@ -2,7 +2,9 @@
 import DragAndDrop from "@/components/LandingPage/DragAndDrop/DragAndDrop";
 import Header from "@/components/LandingPage/Header/Header";
 import Hero from "@/components/LandingPage/Hero/Hero";
+import Lead from "@/components/LandingPage/Lead/Lead";
 import Marketing from "@/components/LandingPage/Marketing/Marketing";
+import RequestDemo from "@/components/LandingPage/RequestDemo/RequestDemo";
 import Work from "@/components/LandingPage/Work/Work";
 import React from "react";
 
@@ -18,6 +20,8 @@ const HomePage = () => {
         <Work/>
         <Marketing/>
         <DragAndDrop/>
+        <Lead/>
+        <RequestDemo/>
       </div>
     </div>
   );
