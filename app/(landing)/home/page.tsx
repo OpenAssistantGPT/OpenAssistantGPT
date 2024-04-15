@@ -1,4 +1,5 @@
 'use client';
+import DragAndDrop from "@/components/LandingPage/DragAndDrop/DragAndDrop";
 import Header from "@/components/LandingPage/Header/Header";
 import Hero from "@/components/LandingPage/Hero/Hero";
 import Marketing from "@/components/LandingPage/Marketing/Marketing";
@@ -16,6 +17,7 @@ const HomePage = () => {
         <Hero/>
         <Work/>
         <Marketing/>
+        <DragAndDrop/>
       </div>
     </div>
   );
