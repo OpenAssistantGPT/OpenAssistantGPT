@@ -17,7 +17,7 @@ const RequestDemo: React.FC = () => {
           id="contact_yauvlma3ggc"
           data-siteid="7rk6p0gy8v4m"
         >
-          <div className="flex flex-col mb-[20px]">
+          <div className="flex flex-col mb-[20px] w-full">
             <label className="mb-[3px] font-semibold">Full Name</label>
             <input
               id="name"
@@ -26,7 +26,7 @@ const RequestDemo: React.FC = () => {
               className="bg-transparent border-[2px] border-gray-500  p-[10px] rounder-[3px]  text-[1.15em]"
             />
           </div>
-          <div className="flex justify-between w-full gap-x-4">
+          <div className="flex justify-between flex-col md:flex-row w-full gap-x-4">
             <div className="flex flex-col mb-[20px] w-full">
               <label className="mb-[3px] font-semibold">Email Address</label>
               <input
@@ -46,7 +46,7 @@ const RequestDemo: React.FC = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col mb-[20px]">
+          <div className="flex flex-col mb-[20px] w-full">
             <label className="mb-[3px] font-semibold">
               Tell us about your brand or company & what you hope to get out of
               the Aminos platform
