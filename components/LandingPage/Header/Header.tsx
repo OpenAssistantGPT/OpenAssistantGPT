@@ -31,11 +31,25 @@ const Header = () => {
     },
     {
       title: "Request A Demo",
-      path: "/login",
+      path: "#contact",
     },
   ];
   const handleToggle = () => {
     setIsActive(!isActive);
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const targetId = event.currentTarget.getAttribute("href")?.substring(1);
+    const targetElement = document.getElementById(targetId || "");
+    if (targetElement) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: targetElement.offsetTop,
+          behavior: "smooth",
+        });
+      }, 500);
+    }
   };
   return (
     <div className="flex justify-between items-center relative max-w-full lg:max-w-[75%] md:mx-auto w-full py-2">
@@ -59,6 +73,7 @@ const Header = () => {
               ) : nav.title === "Request A Demo" ? (
                 <a
                   href={nav.path}
+                  onClick={handleClick}
                   className="pl-[12px] w-[150px] lg:w-[165px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg hover:shadow-[#6662a5]"
                 >
                   {nav.title}

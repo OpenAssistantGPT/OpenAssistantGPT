@@ -1,6 +1,19 @@
 import React from "react";
 
 const Hero = () => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const targetId = event.currentTarget.getAttribute("href")?.substring(1);
+    const targetElement = document.getElementById(targetId || "");
+    if (targetElement) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: targetElement.offsetTop,
+          behavior: "smooth",
+        });
+      }, 500);
+    }
+  };
   return (
     <section className="flex flex-col md:flex-row justify-center md:justify-between gap-10 md:w-full h-full mb-10">
       <div className="flex flex-col justify-center gap-y-8 text-left">
@@ -30,7 +43,7 @@ const Hero = () => {
               </svg>
             </span>
           </a>
-          <a className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg hover:shadow-[#6662a5]" href="">Request A Demo</a>
+          <a className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg hover:shadow-[#6662a5]" href="#contact"  onClick={handleClick}>Request A Demo</a>
         </div>
       </div>
       <div className=" md:w-[65%] lg:w-[40%]">

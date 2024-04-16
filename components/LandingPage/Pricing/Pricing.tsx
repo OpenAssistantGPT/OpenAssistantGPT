@@ -16,7 +16,19 @@ const PricingTier: React.FC<{ tier: PricingTier; isYearly: boolean }> = ({
   isYearly,
 }) => {
   const getPrice = (tier: PricingTier) => (isYearly ? tier.yearlyPrice : tier.monthlyPrice);
-
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const targetId = event.currentTarget.getAttribute("href")?.substring(1);
+    const targetElement = document.getElementById(targetId || "");
+    if (targetElement) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: targetElement.offsetTop,
+          behavior: "smooth",
+        });
+      }, 500);
+    }
+  };
   return (
     <div className="flex-grow pt-[20px] pb-[30px] px-[25px] bg-[#1E1B2C] text-center flex flex-col justify-between">
   <div>
@@ -65,7 +77,7 @@ const PricingTier: React.FC<{ tier: PricingTier; isYearly: boolean }> = ({
     </ul>
   </div>
   {/* button */}
-  <a id="btn_5x3xds5evri" className="border border-[#4F46E5] py-[0.7em] px-[0.8em] mt-[25px] hover:shadow-lg hover:shadow-[#6662a5]" href="#contact">Request A Demo</a>
+  <a className="border border-[#4F46E5] py-[0.7em] px-[0.8em] mt-[25px] hover:shadow-lg hover:shadow-[#6662a5]" href="#contact"  onClick={handleClick}>Request A Demo</a>
 </div>
 
   );

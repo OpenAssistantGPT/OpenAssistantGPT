@@ -4,7 +4,7 @@ import SectionTitle from "@/components/common/SectionTitle";
 const RequestDemo: React.FC = () => {
   return (
     <section className="flex flex-col justify-center items-center gap-10 mb-10">
-      <div className="text-center">
+      <div className="text-center" id="contact">
         <SectionTitle
           title="Request An Invite"
           subtitle="We're currently in beta, but are onboarding customers each week. Request a demo today."

@@ -1,14 +1,14 @@
 import React from "react";
 
 const Footer = () => {
-  const FooterColumn: React.FC<{ title: string; items: string[] }> = ({ title, items }) => {
+  const FooterColumn: React.FC<{ title: string; items: { name: string; path: string }[] }> = ({ title, items }) => {
     return (
       <div className="flex flex-col">
         <h4 className="font-bold mb-4">{title}</h4>
         <ul className="text-[#6460b6]">
-          {items.map((item, index) => (
-            <li key={index} className="mb-2 hover:underline">
-              <a href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}>{item}</a>
+        {items.map((item, index) => (
+            <li key={index} className="mb-2">
+              <a href={`/${item.path}`}>{item.name}</a>
             </li>
           ))}
         </ul>
@@ -20,19 +20,27 @@ const Footer = () => {
   const columns = [
     {
       title: "Product",
-      items: ["Features", "Pricing", "Tour"],
+      items: [
+        { name: "Features", path: "features" },
+        { name: "Pricing", path: "pricing" },
+        { name: "Tour", path: "tour" },
+      ],
     },
     {
       title: "Legal",
-      items: ["Terms of Service", "Privacy Policy", "GDPR Policy"],
+      items: [
+        { name: "Terms of Service", path: "terms-of-service" },
+        { name: "Privacy Policy", path: "privacy-policy" },
+        { name: "GDPR Policy", path: "gdpr-policy" },
+      ],
     },
     {
       title: "Existing Customers",
-      items: ["Login"],
+      items: [{ name: "Login", path: "login" }],
     },
     {
       title: "New Customers",
-      items: ["Request A Demo"],
+      items: [{ name: "Request A Demo", path: "request-demo" }],
     },
   ];
 
