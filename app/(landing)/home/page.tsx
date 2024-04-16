@@ -6,6 +6,7 @@ import Hero from "@/components/LandingPage/Hero/Hero";
 import Lead from "@/components/LandingPage/Lead/Lead";
 import Marketing from "@/components/LandingPage/Marketing/Marketing";
 import Pricing from "@/components/LandingPage/Pricing/Pricing";
+import ReadyToBuild from "@/components/LandingPage/ReadyToBuild/ReadyToBuild";
 import RequestDemo from "@/components/LandingPage/RequestDemo/RequestDemo";
 import Work from "@/components/LandingPage/Work/Work";
 import React from "react";
@@ -25,6 +26,7 @@ const HomePage = () => {
         <Lead/>
         <Pricing/>
         <RequestDemo/>
+        <ReadyToBuild/>
       </div>
         <Footer/>
     </div>
