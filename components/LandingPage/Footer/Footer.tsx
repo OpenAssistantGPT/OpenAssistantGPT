@@ -46,14 +46,14 @@ const Footer = () => {
 
   return (
     <footer className="bg-[#1E1B2C] text-white py-8">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {/* Render each column using FooterColumn component */}
         {columns.map((column, index) => (
           <FooterColumn key={index} title={column.title} items={column.items} />
         ))}
       </div>
       {/* Copyright and Support */}
-      <div className="w-[80%] flex justify-end mt-8 text-[#6460b6]">
+      <div className="md:w-[80%] flex justify-end mt-8 text-[#6460b6]">
         <p className="text-sm">
           © {new Date().getFullYear()} 24 Ventures Ltd | Support:{" "}
           <a href="mailto:support@aminos.ai" className="underline">support@aminos.ai</a>
