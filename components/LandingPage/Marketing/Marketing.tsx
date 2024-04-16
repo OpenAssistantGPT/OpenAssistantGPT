@@ -4,7 +4,7 @@ import React from "react";
 const Marketing = () => {
   return (
     <section className="flex flex-col md:flex-row justify-center md:justify-between gap-10 md:w-full h-full mb-10">
-      <div className="flex flex-col justify-center w-full gap-y-4">
+      <div className="flex flex-col justify-center w-full gap-y-4" id="features">
         <SectionTitle
           title="💬 Conversational Marketing"
           subtitle="The web is turning conversational. Build and deploy simple automated chatbots that engage & delight your prospects, customers & users with a variety of exciting use cases."

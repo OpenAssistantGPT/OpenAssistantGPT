@@ -8,7 +8,6 @@ const RequestDemo: React.FC = () => {
     phone: "",
     message: ""
   });
-  const [buttonColor, setButtonColor] = useState("#4F46E5");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -20,16 +19,6 @@ const RequestDemo: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you can submit the form data, for now, let's just log it
-    console.log(formData);
-
-    // Change button color for 2 seconds
-    setButtonColor("#1E1B2C");
-    setTimeout(() => {
-      setButtonColor("#4F46E5");
-    }, 5000);
-
-    // Clear the form
     setFormData({
       name: "",
       email: "",
@@ -57,7 +46,7 @@ const RequestDemo: React.FC = () => {
               id="name"
               type="text"
               placeholder="Jane Doe"
-              className="bg-transparent border-[2px] border-gray-500  p-[10px] rounder-[3px]  text-[1.15em]"
+              className="bg-transparent border-[2px] border-gray-500  p-[10px] rounded-md  text-[1.15em]"
               value={formData.name}
               onChange={handleChange}
             />
@@ -69,7 +58,7 @@ const RequestDemo: React.FC = () => {
                 id="email"
                 type="email"
                 placeholder="jane.doe@mail.com"
-                className="bg-transparent border-[2px] border-gray-500  p-[10px] rounder-[3px] w-full  text-[1.15em]"
+                className="bg-transparent border-[2px] border-gray-500  p-[10px] rounded-md w-full  text-[1.15em]"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -80,7 +69,7 @@ const RequestDemo: React.FC = () => {
                 id="phone"
                 type="text"
                 placeholder="(123) 456-7890"
-                className="bg-transparent border-[2px] border-gray-500  p-[10px] rounder-[3px] w-full text-[1.15em]"
+                className="bg-transparent border-[2px] border-gray-500  p-[10px] rounded-md w-full text-[1.15em]"
                 value={formData.phone}
                 onChange={handleChange}
               />
@@ -94,7 +83,7 @@ const RequestDemo: React.FC = () => {
             <textarea
               id="message"
               placeholder=""
-              className="bg-transparent border-[2px] border-gray-500  p-[10px] rounder-[3px]  text-[1.15em] min-h-[150px]"
+              className="bg-transparent border-[2px] border-gray-500  p-[10px] rounded-md text-[1.15em] min-h-[150px]"
               value={formData.message}
               onChange={handleChange}
             />
@@ -103,7 +92,7 @@ const RequestDemo: React.FC = () => {
           <div className="flex justify-center md:justify-end">
           <button
               id="contactSubmit"
-              className={`flex justify-end items-end bg-[${buttonColor}] py-[0.7em] px-[0.8em]`}
+              className="flex justify-end items-end bg-[#4F46E5] rounded-md py-[0.7em] px-[0.8em]"
               type="submit"
             >
               Request My Demo & Invitation

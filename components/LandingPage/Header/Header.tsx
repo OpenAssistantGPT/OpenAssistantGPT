@@ -15,15 +15,15 @@ const Header = () => {
   const navList = [
     {
       title: "Home",
-      path: "/",
+      path: "#hero",
     },
     {
       title: "Features",
-      path: "/features",
+      path: "#features",
     },
     {
       title: "Pricing",
-      path: "/pricing",
+      path: "#pricing",
     },
     {
       title: "Login",
@@ -53,10 +53,12 @@ const Header = () => {
   };
   return (
     <div className="flex justify-between items-center relative max-w-full lg:max-w-[75%] md:mx-auto w-full py-2">
-      <div className="w-[65%] lg:w-[400px]">
+      <div className="w-[65%] lg:w-[400px] cursor-pointer">
+        <a href="/">
         <picture>
           <img src="/wickedchatbots.svg" alt="Wickedchatbots" className="" />
         </picture>
+        </a>
       </div>
       {/* for desktop */}
       <div className="hidden md:flex justify-evenly items-center">
@@ -66,7 +68,7 @@ const Header = () => {
               {nav.title === "Login" ? (
                 <a
                   href={nav.path}
-                  className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg hover:shadow-[#6662a5]"
+                  className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg rounded-md hover:shadow-[#6662a5]"
                 >
                   {nav.title}
                 </a>
@@ -74,7 +76,7 @@ const Header = () => {
                 <a
                   href={nav.path}
                   onClick={handleClick}
-                  className="pl-[12px] w-[150px] lg:w-[165px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg hover:shadow-[#6662a5]"
+                  className="pl-[12px] w-[150px] lg:w-[165px] py-2 bg-[#4840C9] rounded-md flex items-center hover:shadow-lg hover:shadow-[#6662a5]"
                 >
                   {nav.title}
                   <svg
@@ -91,6 +93,7 @@ const Header = () => {
               ) : (
                 <a
                   href={nav.path}
+                  onClick={handleClick}
                   className="px-5 hover:text-[#4840C9] hover:underline font-semibold"
                 >
                   {nav.title}

@@ -26,14 +26,14 @@ const ReadyToBuild = () => {
       </div>
       <div className="flex space-x-4">
         <a
-          className="px-[12px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg hover:shadow-[#6662a5]"
+          className="px-[12px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg rounded-md hover:shadow-[#6662a5]"
           href=""
           onClick={handleClick}
         >
           START NOW
         </a>
         <a
-          className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg hover:shadow-[#6662a5]"
+          className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg rounded-md hover:shadow-[#6662a5]"
           href="#contact"
           onClick={handleClick}
         >

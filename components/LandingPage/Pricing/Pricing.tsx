@@ -30,7 +30,7 @@ const PricingTier: React.FC<{ tier: PricingTier; isYearly: boolean }> = ({
     }
   };
   return (
-    <div className="flex-grow pt-[20px] pb-[30px] px-[25px] bg-[#1E1B2C] text-center flex flex-col justify-between">
+    <div className="flex-grow pt-[20px] pb-[30px] px-[25px] rounded-md bg-[#1E1B2C] text-center flex flex-col justify-between">
   <div>
     <h3 className="font-semibold text-[1.8em] w-[300px] break-words">{tier.title}</h3>
     <p className="h-[50px] text-[1.1em] text-center">{tier.description}</p>
@@ -77,7 +77,7 @@ const PricingTier: React.FC<{ tier: PricingTier; isYearly: boolean }> = ({
     </ul>
   </div>
   {/* button */}
-  <a className="border border-[#4F46E5] py-[0.7em] px-[0.8em] mt-[25px] hover:shadow-lg hover:shadow-[#6662a5]" href="#contact"  onClick={handleClick}>Request A Demo</a>
+  <a className="border border-[#4F46E5] py-[0.7em] px-[0.8em] rounded-md mt-[25px] hover:shadow-lg hover:shadow-[#6662a5]" href="#contact"  onClick={handleClick}>Request A Demo</a>
 </div>
 
   );
@@ -115,7 +115,7 @@ const Pricing = () => {
   ];
 
   return (
-    <section className="flex flex-col justify-center mb-10">
+    <section className="flex flex-col justify-center mb-10" id="pricing">
       <div className="text-center">
         <SectionTitle
           title="Simple, Transparent Pricing ❤️"

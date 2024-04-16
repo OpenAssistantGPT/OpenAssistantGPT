@@ -16,7 +16,7 @@ const Hero = () => {
   };
   return (
     <section className="flex flex-col md:flex-row justify-center md:justify-between gap-10 md:w-full h-full mb-10">
-      <div className="flex flex-col justify-center gap-y-8 text-left">
+      <div className="flex flex-col justify-center gap-y-8 text-left" id="hero">
         <div className="flex flex-col justify-center">
           <h2 className="text-[28pt] md:text-[2.5em] lg:text-[3.5em] leading-[1.2] mb-[17px] whitespace-pre-line font-bold">
             Chatbots Made Easy 💪
@@ -28,7 +28,7 @@ const Hero = () => {
           </p>
         </div>
         <div className="flex space-x-4">
-          <a className="px-[12px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg hover:shadow-[#6662a5]" href="">
+          <a className="px-[12px] py-2 bg-[#4840C9] flex items-center rounded-md hover:shadow-lg hover:shadow-[#6662a5]" href="">
             <span>START NOW</span>{" "}
             <span>
               <svg
@@ -43,7 +43,7 @@ const Hero = () => {
               </svg>
             </span>
           </a>
-          <a className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg hover:shadow-[#6662a5]" href="#contact"  onClick={handleClick}>Request A Demo</a>
+          <a className="px-[12px] py-2 border border-[#4840C9] mr-5 hover:shadow-lg rounded-md hover:shadow-[#6662a5]" href="#contact"  onClick={handleClick}>Request A Demo</a>
         </div>
       </div>
       <div className=" md:w-[65%] lg:w-[40%]">
