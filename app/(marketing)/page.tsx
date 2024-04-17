@@ -154,7 +154,7 @@ export default function IndexPage() {
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 Compatible with your Platform
               </h2>
-              <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="mx-auto max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Effortlessly integrate with the most popular website platforms.
               </p>
             </div>
@@ -232,7 +232,7 @@ export default function IndexPage() {
           <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Pick the perfect plan for you</h2>
-              <p className="max-w-[800px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="max-w-[800px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 All plans include everything that is required to build a chatbot.
               </p>
             </div>
@@ -242,7 +242,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold tracking-tighter">{freePlan.name}</h3>
                 <p className="text-2xl font-bold tracking-tighter">${freePlan.price}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Perfect for personal projects, experiments, or simply getting familiar with our powerful tools.</p>
+                <p className="text-sm text-gray-500 ">Perfect for personal projects, experiments, or simply getting familiar with our powerful tools.</p>
               </div>
               <ul className="grid gap-2 py-4">
                 <li>
@@ -267,7 +267,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold tracking-tighter">{hobbyPlan.name}</h3>
                 <p className="text-2xl font-bold tracking-tighter">${hobbyPlan.price}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500">
                   Ideal for teams and collaborators who are serious about building and deploying multiple projects.
                 </p>
               </div>
@@ -298,7 +298,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold tracking-tighter">{basicPlan.name}</h3>
                 <p className="text-2xl font-bold tracking-tighter">${basicPlan.price}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500">
                   For organizations that require collaboration and deploy multiple chatbots.
                 </p>
               </div>
@@ -333,7 +333,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="text-2xl font-bold tracking-tighter">{proPlan.name}</h3>
                 <p className="text-2xl font-bold tracking-tighter">${proPlan.price}</p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500">
                   Tailored solutions for large-scale operations and advanced requirements.
                 </p>
               </div>
