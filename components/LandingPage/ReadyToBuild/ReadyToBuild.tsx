@@ -26,7 +26,7 @@ const ReadyToBuild = () => {
       </div>
       <div className="flex space-x-4">
         <a
-          className="px-[12px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg rounded-md hover:shadow-[#6662a5]"
+          className="px-[12px] py-2 bg-[#4840C9] flex items-center hover:shadow-lg rounded-md hover:shadow-[#6662a5] font-bold text-base"
           href=""
           onClick={handleClick}
         >

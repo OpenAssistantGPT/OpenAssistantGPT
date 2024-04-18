@@ -17,10 +17,10 @@ const Footer = () => {
   const FooterColumn: React.FC<{ title: string; items: { name: string; path: string }[] }> = ({ title, items }) => {
     return (
       <div className="flex flex-col">
-        <h4 className="font-bold mb-4">{title}</h4>
-        <ul className="text-[#6460b6]">
+        <h4 className="font-bold mb-4 text-gray-700">{title}</h4>
+        <ul className="text-[14px]">
         {items.map((item, index) => (
-            <li key={index} className="mb-2 hover:underline">
+            <li key={index} className="mb-2 hover:underline text-gray-500 hover:text-blue-500 ">
               <a href={`${item.path}`} onClick={handleClick}>{item.name}</a>
             </li>
           ))}
@@ -44,7 +44,6 @@ const Footer = () => {
       items: [
         { name: "Terms of Service", path: "https://wickedai.com/terms-of-service" },
         { name: "Privacy Policy", path: "https://wickedai.com/privacy-policy" },
-        { name: "GDPR Policy", path: "gdpr-policy" },
       ],
     },
     {
@@ -58,7 +57,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-[#1E1B2C] text-white py-8">
+    <footer className="text-base py-8 bg-[#ffffff]">
       <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {/* Render each column using FooterColumn component */}
         {columns.map((column, index) => (
@@ -66,10 +65,10 @@ const Footer = () => {
         ))}
       </div>
       {/* Copyright and Support */}
-      <div className="w-[80%] flex justify-end mt-8 text-[#6460b6]">
+      <div className="w-[80%] flex justify-end mt-8 text-base text-gray-500">
         <p className="text-sm text-center">
           © {new Date().getFullYear()} 24 Ventures Ltd | Support:{" "}
-          <a href="mailto:support@wickedai.com" className="underline">support@wickedai.com</a>
+          <a href="mailto:support@wickedai.com" className="underline hover:text-blue-500">support@wickedai.com</a>
         </p>
       </div>
     </footer>
