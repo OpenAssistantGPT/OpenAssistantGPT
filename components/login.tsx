@@ -52,7 +52,7 @@ const LoginPage: React.FC = () => {
         <div className="w-full md:w-1/2 p-8 flex flex-col gap-y-2 justify-center items-center">
           <Icons.bot className="mx-auto h-8 w-8" />
           <h2 className="text-[35px] md:text-[40px] font-semibold mb-4 text-center text-black tracking-tight">
-            Sign In
+            Signin
           </h2>
           <form onSubmit={handleLogin} className="w-full md:w-[80%] flex flex-col gap-y-2">
             {/* Email */}

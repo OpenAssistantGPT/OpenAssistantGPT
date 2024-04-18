@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { Icons } from './icons';
 
 const RegistrationPage: React.FC = () => {
   const router = useRouter();
@@ -61,47 +62,65 @@ const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="screen flex shadow-lg rounded-lg">
+    <div className="h-screen w-full container flex items-center justify-center relative">
+      <div className="flex flex-col md:flex-row justify-center shadow-lg rounded-lg overflow-hidden h-[70%] md:h-[90%] bg-white md:w-3/4 lg:w-full">
         {/* Left side image */}
-        <div className="w-1/2 bg-gray-200">
+        <div className="w-full md:w-1/2 relative hidden md:flex">
           <img
-            src="https://via.placeholder.com/500x500"
-            alt="Registration Image"
+            src="/login/login-bg.jpg"
+            alt="Login Image"
             className="h-full w-full object-cover"
           />
+          {/* Text overlay */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+            <h1 className="text-[40px] font-bold">
+            Wicked ChatBots
+            </h1>
+            <p className="text-[14px] mt-4">
+              Your ultimate solution for intelligent conversational agents.
+            </p>
+          </div>
         </div>
-
         {/* Right side form */}
-        <div className="w-1/2 p-8">
-          <h2 className="text-2xl font-semibold mb-4">Register</h2>
-          <form onSubmit={handleSubmit}>
+        <div className="w-full md:w-1/2 p-8 flex flex-col gap-y-2 justify-center items-center">
+          <Icons.bot className="mx-auto h-8 w-8" />
+          <h2 className="text-[35px] md:text-[40px] font-semibold mb-4 text-center text-black tracking-tight">
+            Sign up
+          </h2>
+          <form onSubmit={handleSubmit } className="w-full md:w-[80%] flex flex-col gap-y-2">
             {/* First Name and Last Name */}
             <div className="mb-4">
               <div className="flex space-x-4">
+                <div className=" flex flex-col space-y-2 w-[80%]">
+                <label htmlFor="firstName">First Name </label>
                 <input
                   type="text"
                   name="firstName"
                   placeholder="First Name"
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-1/2 px-4 py-2 border rounded"
+                  className="w-full px-4 py-2 border rounded"
                   required
                 />
+                </div>
+                <div className="flex flex-col space-y-2 w-[80%]">
+                <label htmlFor="lastName">Last Name </label>
                 <input
                   type="text"
                   name="lastName"
                   placeholder="Last Name"
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-1/2 px-4 py-2 border rounded"
+                  className="w-full px-4 py-2 border rounded"
                   required
                 />
+                </div>
               </div>
             </div>
 
             {/* Email */}
-            <div className="mb-4">
+            <div className="mb-4 space-y-2">
+            <label htmlFor="email">Email </label>
               <input
                 type="email"
                 name="email"
@@ -114,7 +133,8 @@ const RegistrationPage: React.FC = () => {
             </div>
 
             {/* Password */}
-            <div className="mb-4">
+            <div className="mb-4 space-y-2">
+              <label htmlFor="password">Password </label>
               <input
                 type="password"
                 name="password"
@@ -127,7 +147,8 @@ const RegistrationPage: React.FC = () => {
             </div>
 
             {/* Confirm Password */}
-            <div className="mb-4">
+            <div className="mb-4 space-y-2">
+              <label htmlFor="confirmPassword">Confirm Password </label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -142,7 +163,7 @@ const RegistrationPage: React.FC = () => {
             {/* Register Button */}
             <button
               type="submit"
-              className="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-200"
+              className="w-full py-2 bg-[#0F172A] text-white rounded-md hover:bg-[#272E3F] transition duration-200"
             >
               Register
             </button>
