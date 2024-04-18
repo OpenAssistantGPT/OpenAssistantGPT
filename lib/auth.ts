@@ -1,19 +1,19 @@
-import { type NextAuthOptions } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-import GithubProvider from "next-auth/providers/github"
-import GoogleProvider from "next-auth/providers/google";
+import { type NextAuthOptions } from 'next-auth';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import GithubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
-
-import { db } from "@/lib/db"
+import { db } from '@/lib/db';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   providers: [
     GithubProvider({
@@ -25,31 +25,51 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       allowDangerousEmailAccountLinking: true,
-    })
+    }),
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
+      },
+      authorize: async (credentials) => {
+        const user = await db.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        });
+
+        if (user && user?.password === credentials?.password) {
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
   ],
   callbacks: {
     async session({ token, session }) {
       if (token) {
-        session!.user!.id = token.id
-        session!.user!.name = token.name
-        session!.user!.email = token.email
-        session!.user!.image = token.picture
+        session!.user!.id = token.id;
+        session!.user!.name = token.name;
+        session!.user!.email = token.email;
+        session!.user!.image = token.picture;
       }
 
-      return session
+      return session;
     },
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
           email: token.email,
         },
-      })
+      });
 
       if (!dbUser) {
         if (user) {
-          token.id = user?.id
+          token.id = user?.id;
         }
-        return token
+        return token;
       }
 
       return {
@@ -57,9 +77,7 @@ export const authOptions: NextAuthOptions = {
         name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
-      }
+      };
     },
-
   },
 };
-
