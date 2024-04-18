@@ -48,13 +48,13 @@ export function Inquiries({
                             <TabsList className="ml-auto">
                                 <TabsTrigger
                                     value="all"
-                                    className="text-zinc-600 dark:text-zinc-200"
+                                    className="text-zinc-600"
                                 >
                                     New Inquiries
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="deleted"
-                                    className="text-zinc-600 dark:text-zinc-200"
+                                    className="text-zinc-600"
                                 >
                                     Deleted Inquiries
                                 </TabsTrigger>
