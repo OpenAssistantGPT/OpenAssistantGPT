@@ -94,11 +94,12 @@ export async function POST(
 
                     // validate if there is any error
                     if (runResult === undefined) {
+                        console.log(runStream.currentEvent()?.data.last_error.message)
                         console.log(`Error running assistant ${chatbot.openaiId} on thread ${threadId}`)
                         sendMessage({
                             id: "end",
                             role: 'assistant',
-                            content: [{ type: 'text', text: { value: "Oops! An error has occurred. Please ensure that your OpenAI account is configured correctly with a valid credit card and you have credit left. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!" } }]
+                            content: [{ type: 'text', text: { value: `Oops! An error has occurred. ${runStream.currentEvent()?.data.last_error.message}` } }]
                         });
                         return;
                     }
@@ -111,7 +112,7 @@ export async function POST(
                         })
                     ).data;
 
-                    //// Send the messages
+                    // Send the messages
                     for (const message of responseMessages) {
                         await db.message.create({
                             data: {
@@ -130,7 +131,7 @@ export async function POST(
                     sendMessage({
                         id: "end",
                         role: 'assistant',
-                        content: [{ type: 'text', text: { value: "Oops! An error has occurred. Please ensure that your OpenAI account is configured correctly with a valid credit card. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!" } }]
+                        content: [{ type: 'text', text: { value: "Oops! An error has occurred. Please ensure that your OpenAI account is configured correctly with credits left. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!" } }]
                     });
                 }
             },

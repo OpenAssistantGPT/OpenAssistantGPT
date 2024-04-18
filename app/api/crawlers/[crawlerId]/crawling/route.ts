@@ -160,6 +160,13 @@ export async function GET(
 
         const content = await crawl(crawler.crawlUrl, crawler.selector, crawler.maxPagesToCrawl, crawler.urlMatch)
         if (!content) {
+            console.error('Failed to crawl URL:', crawler.crawlUrl);
+            return new Response(null, { status: 500 })
+        }
+
+        // if content is only spaces return 500
+        if (content.toString().trim().length === 0) {
+            console.error('Failed to crawl URL contains only spaces:', crawler.crawlUrl + ' - No content found');
             return new Response(null, { status: 500 })
         }
 

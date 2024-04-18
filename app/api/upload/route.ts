@@ -83,12 +83,11 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ url: blob.url }, { status: 201 });
     } catch (error) {
-        console.error(error);
-
         if (error instanceof RequiresHigherPlanError) {
             return new Response("Requires Higher plan", { status: 402 })
         }
-
+        
+        console.error(error);
         return new Response(null, { status: 500 })
     }
 }
