@@ -111,12 +111,12 @@ export default async function DashboardPage() {
             <a href="/dashboard/onboarding"><Button><p className="pr-2">Open Onboarding</p>  <Icons.help className="h-4 w-4" /> ‍</Button></a>
           </div>
         }
-        {
+        {/* {
           !openaiConfig &&
           <div className="mb-4">
             <OpenAIForm user={user} />
           </div>
-        }
+        } */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

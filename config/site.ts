@@ -1,7 +1,7 @@
 import { SiteConfig } from "@/types"
 
 export const siteConfig: SiteConfig = {
-  name: "OpenAssistantGPT",
+  name: "WickedChatbots",
   description:
     "An Open-Source SaaS Platform for Crafting Chatbots with OpenAI's Assistant.",
   url: "https://www.openassistantgpt.io/",
