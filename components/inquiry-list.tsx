@@ -52,7 +52,7 @@ export function InquiryList({ inquiries }: InquiryListProps) {
               </div>
               <div className="text-xs font-medium">{item.threadId}</div>
             </div>
-            <div className="line-clamp-2 text-xs text-muted-foreground">
+            <div className="line-clamp-2 break-all text-xs text-muted-foreground">
               {item.inquiry.substring(0, 300)}
             </div>
           </button>
