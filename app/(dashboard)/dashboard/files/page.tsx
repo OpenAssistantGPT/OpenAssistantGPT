@@ -103,7 +103,6 @@ export default async function FilePage() {
                             <CrawlerCreateButton variant={"outline"} />
                         </EmptyPlaceholder>
                     </div>
-
                 }
             </div>
         </DashboardShell>

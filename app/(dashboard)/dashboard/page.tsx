@@ -17,6 +17,8 @@ import { siteConfig } from "@/config/site"
 import { MessagesOverview } from "@/components/message-overview"
 import { OpenAIForm } from "@/components/openai-config-form"
 import { Button } from "@/components/ui/button"
+import { EmptyPlaceholder } from "@/components/empty-placeholder"
+import { InquiryItem } from "@/components/inquiry-item"
 
 export const metadata = {
   title: `${siteConfig.name} - Dashboard`,
@@ -95,6 +97,28 @@ export default async function DashboardPage() {
   // Reverse the data array to start from the oldest date
   data.reverse();
 
+  const chatbotIds = await db.chatbot.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+    },
+  })
+
+  const userInquiries = await db.clientInquiries.findMany({
+    where: {
+      chatbotId: {
+        in: chatbotIds.map(chatbot => chatbot.id),
+      },
+      deletedAt: null,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 4,
+  })
+
   return (
     <DashboardShell>
       <DashboardHeader heading="Dashboard" text="Welcome to Your Chatbot Dashboard">
@@ -164,14 +188,42 @@ export default async function DashboardPage() {
           </Card>
         </div>
       </div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Messages per day</CardTitle>
-        </CardHeader>
-        <CardContent className="pl-2">
-          <MessagesOverview items={data} />
-        </CardContent>
-      </Card>
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Messages per day</CardTitle>
+          </CardHeader>
+          <CardContent className="pl-2">
+            <MessagesOverview items={data} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent User Inquiries</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {userInquiries.length ?
+              <div className="grid gap-2 w-full">
+                {
+                  userInquiries.map((inquiry) => (
+                    <InquiryItem key={inquiry.id} inquiry={inquiry}></InquiryItem>
+                  ))
+                }
+              </div>
+              :
+              <div className="grid gap-10">
+                <EmptyPlaceholder className="border-0">
+                  <EmptyPlaceholder.Icon name="help" />
+                  <EmptyPlaceholder.Title>No new user inquiry</EmptyPlaceholder.Title>
+                  <EmptyPlaceholder.Description>
+                    You don&apos;t have any new user inquiries.
+                  </EmptyPlaceholder.Description>
+                </EmptyPlaceholder>
+              </div>
+            }
+          </CardContent>
+        </Card>
+      </div>
     </DashboardShell >
   )
 }
