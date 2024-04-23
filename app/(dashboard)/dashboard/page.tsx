@@ -19,6 +19,7 @@ import { OpenAIForm } from "@/components/openai-config-form"
 import { Button } from "@/components/ui/button"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { InquiryItem } from "@/components/inquiry-item"
+import { ErrorShortItem } from "@/components/error-short-item"
 
 export const metadata = {
   title: `${siteConfig.name} - Dashboard`,
@@ -107,6 +108,14 @@ export default async function DashboardPage() {
   })
 
   const userInquiries = await db.clientInquiries.findMany({
+    select: {
+      id: true,
+      chatbotId: true,
+      threadId: true,
+      email: true,
+      inquiry: true,
+      createdAt: true,
+    },
     where: {
       chatbotId: {
         in: chatbotIds.map(chatbot => chatbot.id),
@@ -117,6 +126,28 @@ export default async function DashboardPage() {
       createdAt: 'desc',
     },
     take: 4,
+  })
+
+  const chatbotErrors = await db.chatbotErrors.findMany({
+    where: {
+      chatbotId: {
+        in: chatbotIds.map(chatbot => chatbot.id),
+      }
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 4,
+  })
+
+  const chatbotNamesForIds = await db.chatbot.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+      name: true,
+    }
   })
 
   return (
@@ -206,7 +237,9 @@ export default async function DashboardPage() {
               <div className="grid gap-2 w-full">
                 {
                   userInquiries.map((inquiry) => (
-                    <InquiryItem key={inquiry.id} inquiry={inquiry}></InquiryItem>
+                    <InquiryItem key={inquiry.id} inquiry={inquiry} chatbotName={
+                      chatbotNamesForIds.find(chatbot => chatbot.id === inquiry.chatbotId)?.name || ''
+                    }></InquiryItem>
                   ))
                 }
               </div>
@@ -214,9 +247,9 @@ export default async function DashboardPage() {
               <div className="grid gap-10">
                 <EmptyPlaceholder className="border-0">
                   <EmptyPlaceholder.Icon name="help" />
-                  <EmptyPlaceholder.Title>No new user inquiry</EmptyPlaceholder.Title>
+                  <EmptyPlaceholder.Title>No User Inquiry</EmptyPlaceholder.Title>
                   <EmptyPlaceholder.Description>
-                    You don&apos;t have any new user inquiries.
+                    You don&apos;t have any new user inquiries. User Inquiries are disabled by default, you can enable them in your chatbot settings.
                   </EmptyPlaceholder.Description>
                 </EmptyPlaceholder>
               </div>
@@ -224,6 +257,34 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Recent Chatbot Errors</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {chatbotErrors.length ?
+            <div className="grid gap-2 w-full">
+              {
+                chatbotErrors.map((error) => (
+                  <ErrorShortItem key={error.id} error={error} chatbotName={
+                    chatbotNamesForIds.find(chatbot => chatbot.id === error.chatbotId)?.name || ''
+                  }></ErrorShortItem>
+                ))
+              }
+            </div>
+            :
+            <div className="grid gap-10">
+              <EmptyPlaceholder className="border-0">
+                <EmptyPlaceholder.Icon name="warning" />
+                <EmptyPlaceholder.Title>No Chatbot Error</EmptyPlaceholder.Title>
+                <EmptyPlaceholder.Description>
+                  If you have any errors you will see a comprehensive breakdown of user-generated errors within your chatbot.
+                </EmptyPlaceholder.Description>
+              </EmptyPlaceholder>
+            </div>
+          }
+        </CardContent>
+      </Card>
     </DashboardShell >
   )
 }

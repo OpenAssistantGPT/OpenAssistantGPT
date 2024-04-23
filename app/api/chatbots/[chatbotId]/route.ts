@@ -102,6 +102,7 @@ export async function PATCH(
         name: payload.name,
         welcomeMessage: payload.welcomeMessage,
         prompt: payload.prompt,
+        chatbotErrorMessage: payload.chatbotErrorMessage,
         openaiKey: payload.openAIKey,
         modelId: payload.modelId,
       },

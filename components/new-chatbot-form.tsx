@@ -22,6 +22,7 @@ import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
 import { ChatbotModel, File, User } from "@prisma/client"
 import Select from 'react-select';
+import { Textarea } from "@/components/ui/textarea"
 
 type FormData = z.infer<typeof chatbotSchema>
 
@@ -37,6 +38,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
         defaultValues: {
             welcomeMessage: "Hello, how can I help you?",
             prompt: "You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.",
+            chatbotErrorMessage: "Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!"
         }
     })
 
@@ -102,6 +104,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                 prompt: data.prompt,
                 openAIKey: data.openAIKey,
                 welcomeMessage: data.welcomeMessage,
+                chatbotErrorMessage: data.chatbotErrorMessage,
                 modelId: data.modelId,
                 files: data.files
             }),
@@ -194,7 +197,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                     <FormLabel htmlFor="prompt">
                                         Default prompt
                                     </FormLabel >
-                                    <Input
+                                    <Textarea
                                         onChange={field.onChange}
                                         value={field.value}
                                         id="prompt"
@@ -244,7 +247,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                         OpenAI Model
                                     </FormLabel>
                                     <Select
-                                        onChange={value => field.onChange(value.value)}
+                                        onChange={value => field.onChange(value!.value)}
                                         defaultValue={field.value}
                                         id="modelId"
                                         options={
@@ -278,6 +281,26 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                     />
                                     <FormDescription>
                                         The OpenAI API key that will be used to generate responses
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="chatbotErrorMessage"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="chatbotErrorMessage">
+                                        Chatbot Error Message
+                                    </FormLabel>
+                                    <Textarea
+                                        value={field.value}
+                                        onChange={field.onChange}
+                                        id="chatbotErrorMessage"
+                                    />
+                                    <FormDescription>
+                                        The message that will be displayed when the chatbot encounters an error and can&apos;t reply to a user.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
