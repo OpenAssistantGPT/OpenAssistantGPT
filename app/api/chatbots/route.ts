@@ -130,6 +130,7 @@ export async function POST(req: Request) {
         modelId: model.id,
         userId: user?.id,
         welcomeMessage: body.welcomeMessage,
+        chatbotErrorMessage: body.chatbotErrorMessage,
       },
       select: {
         id: true,

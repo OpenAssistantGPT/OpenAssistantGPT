@@ -30,6 +30,7 @@ export async function POST(
                 openaiKey: true,
                 userId: true,
                 openaiId: true,
+                chatbotErrorMessage: true,
             },
             where: {
                 id: params.chatbotId,
@@ -93,13 +94,29 @@ export async function POST(
                     let runResult = await forwardStream(runStream);
 
                     // validate if there is any error
-                    if (runResult === undefined) {
-                        console.log(runStream.currentEvent()?.data.last_error.message)
+                    if (runResult == undefined) {
                         console.log(`Error running assistant ${chatbot.openaiId} on thread ${threadId}`)
+
+                        // set the error if last_error is not null
+                        let errorMessage = 'Unknown error'
+                        if (runStream.currentEvent()?.data.last_error) {
+                            errorMessage = runStream.currentEvent()?.data.last_error.message
+                        }
+
+                        await db.chatbotErrors.create({
+                            data: {
+                                errorMessage: errorMessage,
+                                threadId: threadId || '',
+                                chatbotId: chatbot.id,
+                            }
+                        })
+
                         sendMessage({
                             id: "end",
                             role: 'assistant',
-                            content: [{ type: 'text', text: { value: `Oops! An error has occurred. ${runStream.currentEvent()?.data.last_error.message}` } }]
+                            content: [{
+                                type: 'text', text: { value: chatbot.chatbotErrorMessage }
+                            }]
                         });
                         return;
                     }
@@ -112,7 +129,6 @@ export async function POST(
                         })
                     ).data;
 
-                    //// Send the messages
                     for (const message of responseMessages) {
                         await db.message.create({
                             data: {
@@ -127,18 +143,18 @@ export async function POST(
 
                     }
                 } catch (error) {
-                    console.log(error)
+                    console.error(error)
                     sendMessage({
                         id: "end",
                         role: 'assistant',
-                        content: [{ type: 'text', text: { value: "Oops! An error has occurred. Please ensure that your OpenAI account is configured correctly with credits left. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!" } }]
+                        content: [{ type: 'text', text: { value: chatbot.chatbotErrorMessage } }]
                     });
                 }
             },
         );
 
     } catch (error) {
-        console.log(error)
+        console.error(error)
         if (error instanceof z.ZodError) {
             return new Response(JSON.stringify(error.issues), { status: 422 })
         }
