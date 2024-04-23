@@ -1,21 +1,21 @@
 import Link from "next/link"
-import { ClientInquiries } from "@prisma/client"
+import { ChatbotErrors } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { formatDistanceToNow } from "date-fns"
 
 interface UploadFileProps {
-    inquiry: Pick<ClientInquiries, "id" | "chatbotId" | "email" | "createdAt" | "inquiry" | "threadId">
+    error: Pick<ChatbotErrors, "id" | "chatbotId" | "errorMessage" | "threadId" | "createdAt">
     chatbotName: string
 }
 
-export async function InquiryItem({ inquiry, chatbotName }: UploadFileProps) {
+export async function ErrorShortItem({ error, chatbotName }: UploadFileProps) {
 
     return (
-        <Link href={`/dashboard/chatbots/${inquiry.chatbotId}/inquiries`}>
+        <Link href={`/dashboard/chatbots/${error.chatbotId}/errors`}>
             <button
-                key={inquiry.id}
+                key={error.id}
                 className={cn(
                     "flex flex-col w-full items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
                 )}
@@ -28,22 +28,22 @@ export async function InquiryItem({ inquiry, chatbotName }: UploadFileProps) {
                         <div
                             className="ml-auto text-xs"
                         >
-                            {formatDistanceToNow(new Date(inquiry.createdAt), {
+                            {formatDistanceToNow(new Date(error.createdAt), {
                                 addSuffix: true,
                             })}
                         </div>
                     </div>
-                    <div className="text-xs font-medium">{inquiry.email}</div>
+                    <div className="text-xs font-medium">{error.threadId}</div>
                 </div>
                 <div className="line-clamp-2 break-all text-xs text-muted-foreground">
-                    {inquiry.inquiry.substring(0, 100)}
+                    {error.errorMessage.substring(0, 300)}
                 </div>
             </button>
         </Link>
     )
 }
 
-InquiryItem.Skeleton = function FileItemSkeleton() {
+ErrorShortItem.Skeleton = function ErrorShortItemSkeleton() {
     return (
         <div className="p-4">
             <div className="space-y-3">

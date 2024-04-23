@@ -5,6 +5,7 @@ export const chatbotSchema = z.object({
     openAIKey: z.string().min(1),
     prompt: z.string().min(1),
     welcomeMessage: z.string().min(1),
+    chatbotErrorMessage: z.string().min(1),
     modelId: z.string().min(1),
     files: z.array(z.string()),
 })

@@ -28,16 +28,26 @@ model ChatbotFiles {
   file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
 }
 
+model ChatbotErrors {
+  id           String   @id @default(cuid())
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  errorMessage String
+  threadId     String
+  chatbotId    String
+  chatbot      Chatbot  @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+}
+
 model Chatbot {
-  id             String   @id @default(cuid())
-  name           String
-  userId         String
-  openaiId       String   @unique
-  createdAt      DateTime @default(now()) @map(name: "created_at")
-  openaiKey      String
-  modelId        String
-  prompt         String
-  welcomeMessage String
+  id                  String   @id @default(cuid())
+  name                String
+  userId              String
+  openaiId            String   @unique
+  createdAt           DateTime @default(now()) @map(name: "created_at")
+  openaiKey           String
+  modelId             String
+  prompt              String
+  welcomeMessage      String
+  chatbotErrorMessage String   @default("Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!")
 
   displayBranding        Boolean @default(true)
   chatTitle              String  @default("Chat with us")
@@ -66,6 +76,7 @@ model Chatbot {
   model           ChatbotModel      @relation(fields: [modelId], references: [id])
   ChatbotFiles    ChatbotFiles[]
   ClientInquiries ClientInquiries[]
+  ChatbotErrors   ChatbotErrors[]
 
   @@map(name: "chatbots")
 }

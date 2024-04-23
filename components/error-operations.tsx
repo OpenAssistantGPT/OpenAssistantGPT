@@ -1,10 +1,8 @@
-
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Chatbot } from "@prisma/client"
+import { ChatbotErrors } from "@prisma/client"
 
 import {
     AlertDialog,
@@ -20,39 +18,40 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-interface ChatbotOperationsProps {
-    chatbot: Pick<Chatbot, "id" | "name" | "modelId">
+
+interface ErrorOperationsProps {
+    error: Pick<ChatbotErrors, "id" | "createdAt" | "chatbotId"> | undefined
 }
 
-export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
+export function ErrorOperations({ error }: ErrorOperationsProps) {
     const router = useRouter()
     const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
     const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
-    async function deleteChatbot(chatbotId: string) {
-        const response = await fetch(`/api/chatbots/${chatbotId}`, {
+    async function deleteError(chatbotId: string, errorId: string) {
+        const response = await fetch(`/api/chatbots/${chatbotId}/errors/${errorId}`, {
             method: "DELETE",
         })
 
         if (!response?.ok) {
             toast({
                 title: "Something went wrong.",
-                description: "Your chatbot was not deleted. Please try again.",
+                description: "Your file was not deleted. Please try again.",
                 variant: "destructive",
             })
         } else {
             toast({
-                title: "Chatbot deleted.",
-                description: "Your chatbot was successfully deleted.",
+                title: "Error deleted.",
+                description: "Your error was successfully deleted.",
                 variant: "default",
             })
         }
+
         router.refresh()
         return true
     }
@@ -62,39 +61,9 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
             <DropdownMenu>
                 <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
                     <Icons.ellipsis className="h-4 w-4" />
+                    <span className="sr-only">Download</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/chat`} className="flex w-full">
-                            Chat
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}`} className="flex w-full">
-                            Settings
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/customization`} className="flex w-full">
-                            Customize
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/embed`} className="flex w-full">
-                            Embed On Website
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/inquiries`} className="flex w-full">
-                            User Inquiries
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/errors`} className="flex w-full">
-                            Errors
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
                     <DropdownMenuItem
                         className="flex cursor-pointer items-center text-destructive focus:text-destructive"
                         onSelect={() => setShowDeleteAlert(true)}
@@ -102,12 +71,12 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                         Delete
                     </DropdownMenuItem>
                 </DropdownMenuContent>
-            </DropdownMenu >
+            </DropdownMenu>
             <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Are you sure you want to delete this chatbot?
+                            Are you sure you want to delete this error?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                             This action cannot be undone.
@@ -120,13 +89,11 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                                 event.preventDefault()
                                 setIsDeleteLoading(true)
 
-                                const deleted = await deleteChatbot(chatbot.id)
+                                await deleteError(error?.chatbotId || "", error?.id || "")
 
-                                if (deleted) {
-                                    setIsDeleteLoading(false)
-                                    setShowDeleteAlert(false)
-                                    router.refresh()
-                                }
+                                setIsDeleteLoading(false)
+                                setShowDeleteAlert(false)
+                                router.refresh()
                             }}
                             className="bg-red-600 focus:ring-red-600"
                         >

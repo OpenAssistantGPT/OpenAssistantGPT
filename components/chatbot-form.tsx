@@ -23,9 +23,10 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import Select from 'react-select';
+import { Textarea } from "@/components/ui/textarea"
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
-    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt">
+    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "chatbotErrorMessage">
     currentFiles: File["id"][]
     models: ChatbotModel[]
     files: File[]
@@ -43,6 +44,7 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
             openAIKey: chatbot.openaiKey,
             modelId: chatbot.modelId,
             welcomeMessage: chatbot.welcomeMessage,
+            chatbotErrorMessage: chatbot.chatbotErrorMessage,
             prompt: chatbot.prompt,
             files: currentFiles,
         },
@@ -83,6 +85,7 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                 openAIKey: data.openAIKey,
                 modelId: data.modelId,
                 welcomeMessage: data.welcomeMessage,
+                chatbotErrorMessage: data.chatbotErrorMessage,
                 prompt: data.prompt,
                 files: data.files,
             }),
@@ -178,7 +181,7 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                                     <FormLabel htmlFor="prompt">
                                         Prompt
                                     </FormLabel>
-                                    <Input
+                                    <Textarea
                                         defaultValue={chatbot.prompt}
                                         onChange={field.onChange}
                                         id="prompt"
@@ -229,7 +232,7 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                                         OpenAI Model
                                     </FormLabel>
                                     <Select
-                                        onChange={value => field.onChange(value.value)}
+                                        onChange={value => field.onChange(value!.value)}
                                         defaultValue={models.filter((model: ChatbotModel) => model.id === chatbot.modelId).map((model: ChatbotModel) => ({ value: model.id, label: model.name }))[0]}
                                         id="modelId"
                                         options={
@@ -264,6 +267,26 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                                     />
                                     <FormDescription>
                                         The API key that will be used to generate responses
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="chatbotErrorMessage"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="chatbotErrorMessage">
+                                        Chatbot Error Message
+                                    </FormLabel>
+                                    <Textarea
+                                        defaultValue={chatbot.chatbotErrorMessage}
+                                        onChange={field.onChange}
+                                        id="chatbotErrorMessage"
+                                    />
+                                    <FormDescription>
+                                        The message that will be displayed when the chatbot encounters an error and can&apos;t reply to a user.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
