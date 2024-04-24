@@ -37,7 +37,7 @@ export async function POST(request: Request) {
             return new Response('Missing filename', { status: 400 });
         }
 
-        const validExtensions = ['c', 'cpp', 'docx', 'html', 'java', 'json', 'md', 'pdf', 'php', 'pptx', 'py', 'rb', 'tex', 'txt', 'css', 'jpeg', 'jpg', 'js', 'gif', 'png', 'tar', 'ts', 'xlsx', 'xml', 'zip']
+        const validExtensions = ['c', 'cpp', 'docx', 'html', 'java', 'json', 'md', 'pdf', 'php', 'pptx', 'py', 'rb', 'tex', 'txt', 'css', 'js', 'ts', 'xml']
         if (!validExtensions.includes(filename.split('.').pop()!)) {
             return new Response(`Invalid file extension, check the documentation for more information.`, { status: 400 });
         }
