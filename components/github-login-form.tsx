@@ -18,7 +18,7 @@ export default function GithubLoginForm() {
         setLoading(true);
         await signIn("github", {
           redirect: false,
-          callbackUrl: searchParams?.get("from") || "/dashboard",
+          callbackUrl: searchParams?.get("from") || "/welcome",
         })
       }}
       className="flex flex-col space-y-4 px-4 mb-4 sm:px-16"
@@ -27,7 +27,7 @@ export default function GithubLoginForm() {
         disabled={loading}
         className={`${loading
           ? "cursor-not-allowed border-gray-200 bg-gray-100"
-          : "border-black bg-black text-white hover:bg-white hover:text-black"
+          : "border-black bg-black text-white hover:bg-zinc-100 hover:text-black"
           } flex h-10 w-full items-center justify-center rounded-md border text-sm transition-all focus:outline-none`}
       >
         {loading ? (
