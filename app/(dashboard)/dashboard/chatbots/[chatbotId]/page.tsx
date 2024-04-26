@@ -30,6 +30,7 @@ async function getChatbotForUser(chatbotId: Chatbot["id"], userId: User["id"]) {
             createdAt: true,
             openaiKey: true,
             welcomeMessage: true,
+            chatbotErrorMessage: true,
             prompt: true,
             modelId: true,
             model: {
@@ -122,6 +123,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                                     openaiKey: chatbot.openaiKey,
                                     modelId: chatbot.model.id,
                                     welcomeMessage: chatbot.welcomeMessage,
+                                    chatbotErrorMessage: chatbot.chatbotErrorMessage,
                                     prompt: chatbot.prompt,
                                 }} />
                         </div>
