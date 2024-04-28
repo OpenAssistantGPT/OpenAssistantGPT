@@ -98,7 +98,7 @@ ${siteConfig.url}dashboard/chatbots/${chatbot.id}/inquiries
 Best regards,
 
 OpenAssistantGPT
-https://www.openassistantgpt.io
+${siteConfig.url}
 `
 
         try {
