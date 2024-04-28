@@ -3,8 +3,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google";
 
-
 import { db } from "@/lib/db"
+import { sendWelcomeEmail } from "./emails/send-welcome";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db as any),
@@ -59,7 +59,15 @@ export const authOptions: NextAuthOptions = {
         picture: dbUser.image,
       }
     },
-
+  },
+  events: {
+    async createUser(message) {
+      const params = {
+        name: message.user.name,
+        email: message.user.email,
+      };
+      await sendWelcomeEmail(params);
+    }
   },
 };
 
