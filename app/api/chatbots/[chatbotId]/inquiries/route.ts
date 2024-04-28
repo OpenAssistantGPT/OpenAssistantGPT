@@ -3,9 +3,7 @@ import { RequiresHigherPlanError } from "@/lib/exceptions";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { inquirySchema } from "@/lib/validations/inquiry";
 import { z } from "zod"
-
-import { siteConfig } from "@/config/site"
-import { email } from "@/lib/email";
+import { sendNewInquiryEmail } from "@/lib/emails/send-inquiry";
 
 
 const routeContextSchema = z.object({
@@ -83,35 +81,14 @@ export async function POST(
             },
         })
 
-        const emailContent = `
-Hello ${chatbotOwner?.name!},
-
-You have received a new inquiry from a user. Here are the details:
-
-Chatbot Name: ${chatbot.name}
-User Email: ${payload.email}
-Inquiry Message: ${payload.inquiry}
-
-Open your dashboard to view the inquiry.
-${siteConfig.url}dashboard/chatbots/${chatbot.id}/inquiries
-
-Best regards,
-
-OpenAssistantGPT
-${siteConfig.url}
-`
-
-        try {
-            // Send email to user
-            await email.emails.send({
-                from: 'OpenAssistantGPT <no-reply@openassistantgpt.io>',
-                to: [chatbotOwner?.email!],
-                subject: `${chatbot.name} - New User Inquiry`,
-                text: emailContent,
-            })
-        } catch (error) {
-            console.error(`Error sending email to chatbot owner ${chatbotOwner?.email} for inquiry ${id}. ${error}`)
-        }
+        sendNewInquiryEmail({
+            email: chatbotOwner?.email!,
+            ownerName: chatbotOwner?.name || '',
+            userEmail: payload.email,
+            userInquiry: payload.inquiry,
+            chatbotName: chatbot.name,
+            chatbotId: chatbot.id,
+        })
 
         return new Response(JSON.stringify({ 'id': id }), { status: 200 });
 

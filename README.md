@@ -29,6 +29,24 @@ We love our contributors! Here's the list of who contributed:
   <img src="https://contrib.rocks/image?repo=marcolivierbouch/OpenAssistantGPT" />
 </a>
 
+## Tech Stack
+
+Next.js – framework
+
+TypeScript – language
+
+Tailwind – CSS
+
+Supabase – database
+
+NextAuth.js – auth
+
+Stripe – payments
+
+Resend – emails
+
+Vercel – deployments
+
 ## Repo Activity
 
 ![OpenAssistantGPT repo activity](https://repobeats.axiom.co/api/embed/d376259a3651f5bcb458c4f00efb9012cb400813.svg "Repobeats analytics image")
