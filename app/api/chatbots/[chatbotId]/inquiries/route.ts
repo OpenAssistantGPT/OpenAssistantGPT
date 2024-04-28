@@ -94,6 +94,11 @@ Inquiry Message: ${payload.inquiry}
 
 Open your dashboard to view the inquiry.
 ${siteConfig.url}dashboard/chatbots/${chatbot.id}/inquiries
+
+Best regards,
+
+OpenAssistantGPT
+https://www.openassistantgpt.io
 `
 
         // Send email to user
