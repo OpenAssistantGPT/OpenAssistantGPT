@@ -101,13 +101,17 @@ OpenAssistantGPT
 https://www.openassistantgpt.io
 `
 
-        // Send email to user
-        await email.emails.send({
-            from: 'OpenAssistantGPT <no-reply@openassistantgpt.io>',
-            to: [chatbotOwner?.email!],
-            subject: `${chatbot.name} - New User Inquiry`,
-            text: emailContent,
-        })
+        try {
+            // Send email to user
+            await email.emails.send({
+                from: 'OpenAssistantGPT <no-reply@openassistantgpt.io>',
+                to: [chatbotOwner?.email!],
+                subject: `${chatbot.name} - New User Inquiry`,
+                text: emailContent,
+            })
+        } catch (error) {
+            console.error(`Error sending email to chatbot owner ${chatbotOwner?.email} for inquiry ${id}. ${error}`)
+        }
 
         return new Response(JSON.stringify({ 'id': id }), { status: 200 });
 
