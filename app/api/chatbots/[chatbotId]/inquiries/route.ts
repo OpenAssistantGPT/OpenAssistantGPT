@@ -4,6 +4,9 @@ import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { inquirySchema } from "@/lib/validations/inquiry";
 import { z } from "zod"
 
+import { siteConfig } from "@/config/site"
+import { email } from "@/lib/email";
+
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -32,6 +35,7 @@ export async function POST(
             select: {
                 id: true,
                 userId: true,
+                name: true,
             },
         })
 
@@ -66,6 +70,38 @@ export async function POST(
             select: {
                 id: true,
             },
+        })
+
+        // get chatbot owner email
+        const chatbotOwner = await db.user.findUnique({
+            where: {
+                id: chatbot.userId,
+            },
+            select: {
+                email: true,
+                name: true,
+            },
+        })
+
+        const emailContent = `
+Hello ${chatbotOwner?.name!},
+
+You have received a new inquiry from a user. Here are the details:
+
+Chatbot Name: ${chatbot.name}
+User Email: ${payload.email}
+Inquiry Message: ${payload.inquiry}
+
+Open your dashboard to view the inquiry.
+${siteConfig.url}dashboard/chatbots/${chatbot.id}/inquiries
+`
+
+        // Send email to user
+        await email.emails.send({
+            from: 'OpenAssistantGPT <no-reply@openassistantgpt.io>',
+            to: [chatbotOwner?.email!],
+            subject: `${chatbot.name} - New User Inquiry`,
+            text: emailContent,
         })
 
         return new Response(JSON.stringify({ 'id': id }), { status: 200 });
