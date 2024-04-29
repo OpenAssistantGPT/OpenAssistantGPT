@@ -2,7 +2,6 @@ import InquiryEmail from "@/emails/inquiry";
 import { siteConfig } from "@/config/site";
 import { email as EmailClient } from "@/lib/email";
 
-
 export async function sendNewInquiryEmail({ email, ownerName, userEmail, userInquiry, chatbotName, chatbotId }: { email: string | null | undefined, ownerName: string | null | undefined, userEmail: string | null | undefined, userInquiry: string | null | undefined, chatbotName: string | null | undefined, chatbotId: string | null | undefined }) {
     const emailTemplate = InquiryEmail({ ownerName, userEmail, userInquiry, chatbotName, chatbotId });
     try {

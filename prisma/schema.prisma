@@ -197,6 +197,8 @@ model User {
   stripePriceId          String?   @map(name: "stripe_price_id")
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
   Message                Message[]
+
+  inquiryEmailEnabled Boolean @default(true)
 }
 
 model VerificationToken {

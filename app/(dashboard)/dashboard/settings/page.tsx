@@ -8,6 +8,8 @@ import { DashboardShell } from "@/components/shell"
 import { UserNameForm } from "@/components/user-name-form"
 import { OpenAIForm } from "@/components/openai-config-form"
 import { siteConfig } from "@/config/site"
+import { NotificationSettingsForm } from "@/components/notification-settings-form"
+import { db } from "@/lib/db"
 
 export const metadata = {
     title: `${siteConfig.name} - Settings`,
@@ -21,6 +23,15 @@ export default async function SettingsPage() {
         redirect(authOptions?.pages?.signIn || "/login")
     }
 
+    const userNotifications = await db.user.findFirst({
+        where: {
+            id: user.id,
+        },
+        select: {
+            inquiryEmailEnabled: true,
+        },
+    })
+
     return (
         <DashboardShell>
             <DashboardHeader
@@ -30,9 +41,8 @@ export default async function SettingsPage() {
             <div className="grid gap-10">
                 <div className="grid gap-10">
                     <UserNameForm user={{ id: user.id, name: user.name || "" }} />
-                </div>
-                <div className="grid gap-10">
-                    <OpenAIForm user={{ id: user.id, name: user.name || "" }} />
+                    <OpenAIForm user={{ id: user.id }} />
+                    <NotificationSettingsForm user={{ id: user.id }} inquiryNotificationEnabled={userNotifications?.inquiryEmailEnabled!} />
                 </div>
             </div>
         </DashboardShell>
