@@ -78,17 +78,20 @@ export async function POST(
             select: {
                 email: true,
                 name: true,
+                inquiryEmailEnabled: true,
             },
         })
 
-        sendNewInquiryEmail({
-            email: chatbotOwner?.email!,
-            ownerName: chatbotOwner?.name || '',
-            userEmail: payload.email,
-            userInquiry: payload.inquiry,
-            chatbotName: chatbot.name,
-            chatbotId: chatbot.id,
-        })
+        if (chatbotOwner?.inquiryEmailEnabled) {
+            sendNewInquiryEmail({
+                email: chatbotOwner?.email!,
+                ownerName: chatbotOwner?.name || '',
+                userEmail: payload.email,
+                userInquiry: payload.inquiry,
+                chatbotName: chatbot.name,
+                chatbotId: chatbot.id,
+            })
+        }
 
         return new Response(JSON.stringify({ 'id': id }), { status: 200 });
 
