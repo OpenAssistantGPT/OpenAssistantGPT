@@ -11,6 +11,12 @@
   <priority>1.00</priority>
 </url>
 <url>
+  <loc>https://www.openassistantgpt.io/changelog</loc>
+  <lastmod>2024-04-04T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.81</priority>
+</url>
+<url>
   <loc>https://www.openassistantgpt.io/docs</loc>
   <lastmod>2024-01-04T15:44:57+00:00</lastmod>
   <changefreq>weekly</changefreq>
