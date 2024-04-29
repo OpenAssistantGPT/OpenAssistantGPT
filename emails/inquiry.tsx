@@ -10,6 +10,7 @@ import {
     Text,
     Tailwind,
     Section,
+    Link,
 } from "@react-email/components";
 import { siteConfig } from "@/config/site";
 
@@ -62,6 +63,11 @@ export default function InquiryEmail({ ownerName, userEmail, userInquiry, chatbo
                             Cheers,
                             <br />
                             The {siteConfig.name} Team
+                        </Text>
+                        <Text className="text-center text-gray-400">
+                            You are subscribed to the emails for Inquiry notifications. To manage your communication preferences, click <Link className="underline text-gray-400" href={`${siteConfig.url}dashboard/settings`}>
+                                here
+                            </Link>
                         </Text>
                     </Container>
                 </Body>

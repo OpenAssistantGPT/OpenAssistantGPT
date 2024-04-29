@@ -45,7 +45,7 @@ export default function WelcomeEmail({ name }: WelcomeEmailProps) {
                                 className="p-2 bg-[#00A3FF] rounded text-white text-xs font-semibold no-underline text-center"
                                 href={`${siteConfig.url}dashboard/onboarding`}
                             >
-                                Get Started With The Onboarding
+                                Get Started
                             </Button>
                         </Section>
                         <Text className="text-sm">
