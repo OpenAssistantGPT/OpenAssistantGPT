@@ -13,6 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.1.2"
+                    date="2024-05-1"
+                    new={[
+                        {
+                            title: 'Import Assistant from OpenAI',
+                            description:
+                                "You can now import an assistant that you've trained on OpenAI in our app without having to recreate everything.",
+                            image: new URL(
+                                '/public/import_chatbot.png',
+                                import.meta.url,
+                            ).toString(),
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.1.1"
                     date="2024-04-28"
                     new={[

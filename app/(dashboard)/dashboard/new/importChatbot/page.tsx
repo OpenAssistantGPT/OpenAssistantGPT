@@ -1,8 +1,6 @@
 
 import { redirect } from "next/navigation"
 
-import { NewChatbotForm } from "@/components/new-chatbot-form"
-
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { authOptions } from "@/lib/auth"
@@ -14,7 +12,7 @@ import { Icons } from "@/components/icons"
 import { ImportChatbotForm } from "@/components/new-import-chatbot-form"
 
 
-export default async function ChatbotCreatePage() {
+export default async function ImportChatbotPage() {
     const user = await getCurrentUser()
 
     if (!user) {
@@ -23,7 +21,7 @@ export default async function ChatbotCreatePage() {
 
     return (
         <DashboardShell>
-            <DashboardHeader heading="Create your chatbot" text="Create your chatbot and start talking with him.">
+            <DashboardHeader heading="Import your chatbot" text="Import a chatbot that already exist in the OpenAI platform.">
                 <Link
                     href="/dashboard"
                     className={cn(
@@ -38,7 +36,7 @@ export default async function ChatbotCreatePage() {
                 </Link>
             </DashboardHeader>
             <div className="grid gap-10">
-                <NewChatbotForm user={user} isOnboarding={false} />
+                <ImportChatbotForm user={user} />
             </div>
         </DashboardShell>
     )

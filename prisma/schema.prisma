@@ -38,16 +38,18 @@ model ChatbotErrors {
 }
 
 model Chatbot {
-  id                  String   @id @default(cuid())
+  id                  String        @id @default(cuid())
   name                String
   userId              String
-  openaiId            String   @unique
-  createdAt           DateTime @default(now()) @map(name: "created_at")
+  openaiId            String        @unique
+  createdAt           DateTime      @default(now()) @map(name: "created_at")
   openaiKey           String
-  modelId             String
+  modelId             String?
+  model               ChatbotModel? @relation(fields: [modelId], references: [id])
   prompt              String
   welcomeMessage      String
-  chatbotErrorMessage String   @default("Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!")
+  chatbotErrorMessage String        @default("Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!")
+  isImported          Boolean       @default(false)
 
   displayBranding        Boolean @default(true)
   chatTitle              String  @default("Chat with us")
@@ -73,7 +75,6 @@ model Chatbot {
   inquiryDisplayLinkAfterXMessage Int     @default(1)
 
   user            User              @relation(fields: [userId], references: [id])
-  model           ChatbotModel      @relation(fields: [modelId], references: [id])
   ChatbotFiles    ChatbotFiles[]
   ClientInquiries ClientInquiries[]
   ChatbotErrors   ChatbotErrors[]
