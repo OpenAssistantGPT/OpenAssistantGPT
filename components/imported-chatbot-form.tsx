@@ -40,7 +40,6 @@ export function ImportedChatbotForm({ chatbot, className, ...props }: ChatbotFor
             openAIKey: chatbot.openaiKey,
             welcomeMessage: chatbot.welcomeMessage,
             chatbotErrorMessage: chatbot.chatbotErrorMessage,
-            prompt: chatbot.prompt,
             openAIAssistantId: chatbot.openaiId
         }
     })
@@ -61,7 +60,6 @@ export function ImportedChatbotForm({ chatbot, className, ...props }: ChatbotFor
                 openAIAssistantId: data.openAIAssistantId,
                 welcomeMessage: data.welcomeMessage,
                 chatbotErrorMessage: data.chatbotErrorMessage,
-                prompt: data.prompt,
             }),
         })
 
@@ -150,47 +148,6 @@ export function ImportedChatbotForm({ chatbot, className, ...props }: ChatbotFor
                         />
                         <FormField
                             control={form.control}
-                            name="welcomeMessage"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="welcomeMessage">
-                                        Welcome Message
-                                    </FormLabel >
-                                    <Input
-                                        defaultValue={chatbot.welcomeMessage}
-                                        onChange={field.onChange}
-                                        id="welcomeMessage"
-                                    />
-                                    <FormDescription>
-                                        The first message that will be sent to the user when they start a conversation with your chatbot.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="prompt"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="prompt">
-                                        Prompt
-                                    </FormLabel>
-                                    <Textarea
-                                        defaultValue={chatbot.prompt}
-                                        onChange={field.onChange}
-                                        id="prompt"
-                                    />
-                                    <FormDescription>
-                                        This is the prompt that will be sent to OpenAI, here&apos;s and example:
-                                        &quot;You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
                             name="openAIKey"
                             render={({ field }) => (
                                 <FormItem>
@@ -205,6 +162,26 @@ export function ImportedChatbotForm({ chatbot, className, ...props }: ChatbotFor
                                     />
                                     <FormDescription>
                                         The API key that will be used to generate responses
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="welcomeMessage"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="welcomeMessage">
+                                        Welcome Message
+                                    </FormLabel >
+                                    <Input
+                                        defaultValue={chatbot.welcomeMessage}
+                                        onChange={field.onChange}
+                                        id="welcomeMessage"
+                                    />
+                                    <FormDescription>
+                                        The first message that will be sent to the user when they start a conversation with your chatbot.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

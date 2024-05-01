@@ -60,7 +60,6 @@ export async function POST(req: Request) {
         const chatbot = await db.chatbot.create({
             data: {
                 name: body.name,
-                prompt: body.prompt,
                 openaiKey: body.openAIKey,
                 openaiId: body.openAIAssistantId,
                 userId: user?.id,

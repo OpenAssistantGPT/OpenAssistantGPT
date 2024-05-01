@@ -41,12 +41,12 @@ model Chatbot {
   id                  String        @id @default(cuid())
   name                String
   userId              String
-  openaiId            String        @unique
+  openaiId            String
   createdAt           DateTime      @default(now()) @map(name: "created_at")
   openaiKey           String
   modelId             String?
   model               ChatbotModel? @relation(fields: [modelId], references: [id])
-  prompt              String
+  prompt              String?
   welcomeMessage      String
   chatbotErrorMessage String        @default("Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!")
   isImported          Boolean       @default(false)

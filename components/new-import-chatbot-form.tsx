@@ -35,7 +35,6 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
         resolver: zodResolver(importChatbotSchema),
         defaultValues: {
             welcomeMessage: "Hello, how can I help you?",
-            prompt: "You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.",
             chatbotErrorMessage: "Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!"
         }
     })
@@ -53,7 +52,6 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
             },
             body: JSON.stringify({
                 name: data.name,
-                prompt: data.prompt,
                 openAIKey: data.openAIKey,
                 welcomeMessage: data.welcomeMessage,
                 chatbotErrorMessage: data.chatbotErrorMessage,
@@ -156,27 +154,6 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>)}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="prompt"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="prompt">
-                                        Default prompt
-                                    </FormLabel >
-                                    <Textarea
-                                        onChange={field.onChange}
-                                        value={field.value}
-                                        id="prompt"
-                                    />
-                                    <FormDescription>
-                                        The prompt that will be sent to OpenAI for every messages, here&apos;s and example:
-                                        &quot;You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
                         />
                         <FormField
                             control={form.control}
