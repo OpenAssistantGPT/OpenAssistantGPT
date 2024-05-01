@@ -21,7 +21,7 @@ export default function ChangelogPage() {
                             description:
                                 "You can now import an assistant that you've trained on OpenAI in our app without having to recreate everything.",
                             image: new URL(
-                                '/public/import_chatbot.png',
+                                '/public/import_assistant.png',
                                 import.meta.url,
                             ).toString(),
                         },

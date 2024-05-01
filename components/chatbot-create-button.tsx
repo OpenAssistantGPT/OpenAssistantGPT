@@ -90,7 +90,7 @@ export function ChatbotCreateButton({
                             className="flex cursor-pointer items-center text-primary focus:text-primary"
                         >
                             <Icons.import className="mr-2 h-4 w-4" />
-                            Import Chatbot
+                            Import OpenAI Assistant
                         </span>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
