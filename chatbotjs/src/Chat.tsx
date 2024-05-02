@@ -225,7 +225,8 @@ export default function ChatBox() {
                     );
                   } else {
                     return (
-                      <div key={message.id} className="flex max-w-5/6 items-end gap-2 justify-end">
+                      <div key={message.id} className="flex items-end gap-2 justify-end">
+                        <div className="w-1/6"></div>
                         <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
                           <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                         </div>
