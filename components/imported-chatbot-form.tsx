@@ -1,14 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Chatbot, File, ChatbotModel, User } from "@prisma/client"
+import { Chatbot, User } from "@prisma/client"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
 import { cn } from "@/lib/utils"
-import { chatbotSchema } from "@/lib/validations/chatbot"
 import { buttonVariants } from "@/components/ui/button"
 import {
     Card,
@@ -22,60 +21,35 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import Select from 'react-select';
 import { Textarea } from "@/components/ui/textarea"
+import { importChatbotSchema } from "@/lib/validations/importChatbot"
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
-    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "chatbotErrorMessage" | "isImported">
-    currentFiles: File["id"][]
-    models: ChatbotModel[]
-    files: File[]
+    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "chatbotErrorMessage" | "isImported" | "openaiId">
     user: Pick<User, "id">
 }
 
-type FormData = z.infer<typeof chatbotSchema>
+type FormData = z.infer<typeof importChatbotSchema>
 
-export function ChatbotForm({ chatbot, currentFiles, models, files, className, ...props }: ChatbotFormProps) {
+export function ImportedChatbotForm({ chatbot, className, ...props }: ChatbotFormProps) {
     const router = useRouter()
     const form = useForm<FormData>({
-        resolver: zodResolver(chatbotSchema),
+        resolver: zodResolver(importChatbotSchema),
         defaultValues: {
             name: chatbot.name,
             openAIKey: chatbot.openaiKey,
             welcomeMessage: chatbot.welcomeMessage,
             chatbotErrorMessage: chatbot.chatbotErrorMessage,
-            prompt: chatbot.prompt,
-            modelId: chatbot.modelId!,
-            files: currentFiles,
+            openAIAssistantId: chatbot.openaiId
         }
     })
     const [isSaving, setIsSaving] = useState<boolean>(false)
-    const [availablesModels, setAvailablesModels] = useState<string[]>([])
-
-    useEffect(() => {
-        const init = async () => {
-            const supportedModels = await getAvailableModels()
-            setAvailablesModels(supportedModels)
-        }
-        init()
-    }, [])
-
-    async function getAvailableModels() {
-        const response = await fetch(`/api/users/${props.user.id}/openai/models`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        const models = await response.json()
-        return models
-    }
 
     async function onSubmit(data: FormData) {
         console.log(data)
         setIsSaving(true)
 
-        const response = await fetch(`/api/chatbots/${chatbot.id}`, {
+        const response = await fetch(`/api/chatbots/${chatbot.id}/imported`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -83,11 +57,9 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
             body: JSON.stringify({
                 name: data.name,
                 openAIKey: data.openAIKey,
-                modelId: data.modelId,
+                openAIAssistantId: data.openAIAssistantId,
                 welcomeMessage: data.welcomeMessage,
                 chatbotErrorMessage: data.chatbotErrorMessage,
-                prompt: data.prompt,
-                files: data.files,
             }),
         })
 
@@ -155,97 +127,20 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                         />
                         <FormField
                             control={form.control}
-                            name="welcomeMessage"
+                            name="openAIAssistantId"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="welcomeMessage">
-                                        Welcome Message
-                                    </FormLabel >
+                                    <FormLabel htmlFor="openAIAssistantId">
+                                        OpenAI Assistant ID
+                                    </FormLabel>
+
                                     <Input
-                                        defaultValue={chatbot.welcomeMessage}
+                                        defaultValue={chatbot.openaiId}
                                         onChange={field.onChange}
-                                        id="welcomeMessage"
+                                        id="openAIAssistantId"
                                     />
                                     <FormDescription>
-                                        The first message that will be sent to the user when they start a conversation with your chatbot.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="prompt"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="prompt">
-                                        Prompt
-                                    </FormLabel>
-                                    <Textarea
-                                        defaultValue={chatbot.prompt}
-                                        onChange={field.onChange}
-                                        id="prompt"
-                                    />
-                                    <FormDescription>
-                                        This is the prompt that will be sent to OpenAI, here&apos;s and example:
-                                        &quot;You are an assistant you help users that visit our website, keep it short, always refer to the documentation provided and never ask for more information.&quot;
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="files"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="files">
-                                        Choose your file for retrival
-                                    </FormLabel>
-                                    <Select
-                                        isMulti
-                                        closeMenuOnSelect={false}
-                                        onChange={value => field.onChange(value.map((v) => v.value))}
-                                        defaultValue={files.filter((file) => currentFiles.includes(file.id)).map((file) => ({ value: file.id, label: file.name }))}
-                                        name="files"
-                                        id="files"
-                                        options={files.map((file) => ({ value: file.id, label: file.name }))}
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
-                                    />
-
-                                    <FormDescription>
-                                        The OpenAI model will use this file to search for specific content.
-                                        If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="modelId"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="modelId">
-                                        OpenAI Model
-                                    </FormLabel>
-                                    <Select
-                                        onChange={value => field.onChange(value!.value)}
-                                        defaultValue={models.filter((model: ChatbotModel) => model.id === chatbot.modelId).map((model: ChatbotModel) => ({ value: model.id, label: model.name }))[0]}
-                                        id="modelId"
-                                        options={
-                                            models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
-                                                { value: model.id, label: model.name }
-                                            ))
-                                        }
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
-                                    />
-                                    <FormDescription>
-                                        The OpenAI model that will be used to generate responses.
-                                        <b> If you don&apos;t have the gpt-4 option and want to use it. You need to have an OpenAI account at least tier 1.</b>
+                                        The OpenAI Assistant ID that already exists in your OpenAI account.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -267,6 +162,26 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                                     />
                                     <FormDescription>
                                         The API key that will be used to generate responses
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="welcomeMessage"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="welcomeMessage">
+                                        Welcome Message
+                                    </FormLabel >
+                                    <Input
+                                        defaultValue={chatbot.welcomeMessage}
+                                        onChange={field.onChange}
+                                        id="welcomeMessage"
+                                    />
+                                    <FormDescription>
+                                        The first message that will be sent to the user when they start a conversation with your chatbot.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

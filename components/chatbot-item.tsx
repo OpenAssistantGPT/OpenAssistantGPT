@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ChatbotOperations } from "./chatbot-operations"
 
 interface ChatbotProps {
-    chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId" | "openaiId">
+    chatbot: Pick<Chatbot, "id" | "name" | "createdAt" | "modelId" | "openaiId" | "isImported">
     model: ChatbotModel,
 }
 
@@ -22,7 +22,7 @@ export function ChatbotItem({ chatbot, model }: ChatbotProps) {
                 </Link>
                 <div>
                     <p className="text-sm text-muted-foreground">
-                        {model.name}
+                        {model ? model.name : ''}
                     </p>
                     <p className="text-sm text-muted-foreground">
                         {chatbot.openaiId}

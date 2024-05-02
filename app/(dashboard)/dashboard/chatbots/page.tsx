@@ -1,4 +1,3 @@
-
 import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
@@ -10,6 +9,7 @@ import { DashboardShell } from "@/components/shell"
 import { ChatbotCreateButton } from "@/components/chatbot-create-button"
 import { ChatbotItem } from "@/components/chatbot-item"
 import { siteConfig } from "@/config/site"
+import { ChatbotImportButton } from "@/components/chatbot-import-button"
 
 export const metadata = {
   title: `${siteConfig.name} - Chatbots`,
@@ -31,6 +31,7 @@ export default async function ChatbotsPage() {
       name: true,
       createdAt: true,
       openaiId: true,
+      isImported: true,
       model: {
         select: {
           id: true,
