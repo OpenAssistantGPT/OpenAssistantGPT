@@ -688,6 +688,10 @@ video {
   z-index: 100;
 }
 
+.order-2 {
+  order: 2;
+}
+
 .col-span-2 {
   grid-column: span 2 / span 2;
 }
@@ -1029,6 +1033,10 @@ video {
 
 .w-5\/6 {
   width: 83.333333%;
+}
+
+.w-56 {
+  width: 14rem;
 }
 
 .w-6 {
@@ -2268,9 +2276,9 @@ video {
   background-color: rgb(243 244 246 / 0.5);
 }
 
-.hover\:bg-white:hover {
+.hover\:bg-zinc-100:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(244 244 245 / var(--tw-bg-opacity));
 }
 
 .hover\:text-black:hover {

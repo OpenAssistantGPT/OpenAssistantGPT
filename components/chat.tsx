@@ -108,8 +108,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
   })
 
   return (
-    <Card className="flex border flex-col w-full overflow-hidden flex-grow">
-
+    <Card className="flex flex-col h-full w-full">
       <CardHeader className="border-b p-4">
         <h2 className="text-xl font-bold flex items-center gap-2">
           <Avatar className="relative overflow-visible w-10 h-10">
@@ -124,8 +123,8 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
         </h2>
       </CardHeader>
       <CardContent className="border-b overflow-auto p-4 flex-1">
-        <div className="space-y-4">
-          <div key="welcomemessage" className="flex items-end gap-2">
+        <div className="flex-grow overflow-y-auto space-y-4 flex flex-col order-2 whitespace-pre-wrap">
+          <div key="welcomemessage" className="flex items-end gap-2 w-5/6">
             <div className="rounded-lg bg-zinc-200 p-2" style={{ background: config ? config.chatbotReplyBackgroundColor : "" }}>
               <p className="text-md" style={{ color: config ? config.chatbotReplyTextColor : "" }}>{config ? config!.welcomeMessage : ""}</p>
             </div>
@@ -135,7 +134,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               if (message.role === "assistant") {
                 const currentChatbotReply = messages.filter((message) => message.role === 'assistant').indexOf(message) + 1
                 return (
-                  <div key={message.id} className="flex items-end gap-2">
+                  <div key={message.id} className="flex items-end gap-2 w-5/6">
                     <div className="rounded-lg bg-zinc-200 text-md p-2" style={{ color: config ? config.chatbotReplyTextColor : "", background: config ? config.chatbotReplyBackgroundColor : "" }}>
                       {message.content.replace(/\【.*?】/g, '') // Remove citation markers
                         .split('```').map((block, blockIdx) => {
@@ -209,6 +208,7 @@ export function Chat({ chatbot, defaultMessage, ...props }: ChatbotProps) {
               } else {
                 return (
                   <div key={message.id} className="flex items-end gap-2 justify-end">
+                    <div className="w-1/6"></div>
                     <div className="rounded-lg flex max-w-5/6 bg-blue-500 text-white p-2 self-end" style={{ background: config ? config.userReplyBackgroundColor : "" }}>
                       <p className="text-md" style={{ color: config ? config.userReplyTextColor : "" }}>{message.content}</p>
                     </div>
