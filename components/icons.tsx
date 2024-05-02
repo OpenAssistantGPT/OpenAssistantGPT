@@ -33,11 +33,15 @@ import {
   ArrowUp,
   CheckCheck,
   ArrowDown,
+  Import,
+  BadgePlus,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  badgeplus: BadgePlus,
+  import: Import,
   logo: Command,
   folder: FolderClosed,
   dashboard: LayoutDashboard,

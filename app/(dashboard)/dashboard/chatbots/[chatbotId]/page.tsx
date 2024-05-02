@@ -17,36 +17,11 @@ import { siteConfig } from "@/config/site"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CustomizationSettings } from "@/components/customization-settings"
 import { InquirySettings } from "@/components/inquiry-settings"
+import { ImportedChatbotForm } from "@/components/imported-chatbot-form"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
 }
-
-async function getChatbotForUser(chatbotId: Chatbot["id"], userId: User["id"]) {
-    return await db.chatbot.findFirst({
-        select: {
-            id: true,
-            name: true,
-            createdAt: true,
-            openaiKey: true,
-            welcomeMessage: true,
-            chatbotErrorMessage: true,
-            prompt: true,
-            modelId: true,
-            model: {
-                select: {
-                    id: true,
-                    name: true,
-                }
-            },
-        },
-        where: {
-            id: chatbotId,
-            userId: userId,
-        },
-    })
-}
-
 
 export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
 
@@ -56,7 +31,30 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         redirect(authOptions?.pages?.signIn || "/login")
     }
 
-    const chatbot = await getChatbotForUser(params.chatbotId, user.id)
+    const chatbot = await db.chatbot.findFirst({
+        select: {
+            id: true,
+            name: true,
+            createdAt: true,
+            openaiKey: true,
+            welcomeMessage: true,
+            chatbotErrorMessage: true,
+            prompt: true,
+            modelId: true,
+            openaiId: true,
+            isImported: true,
+            model: {
+                select: {
+                    id: true,
+                    name: true,
+                }
+            },
+        },
+        where: {
+            id: params.chatbotId,
+            userId: user.id,
+        },
+    })
 
     if (!chatbot) {
         notFound()
@@ -111,21 +109,21 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                 <TabsContent value="settings">
                     <div className="space-y-4">
                         <div className="grid gap-10">
-                            <ChatbotForm
-                                user={user}
-                                files={files}
-                                currentFiles={currentFiles.map((file) => file.file.id)}
-                                models={models}
-                                chatbot={{
-                                    id: chatbot.id,
-                                    name: chatbot.name,
-                                    createdAt: chatbot.createdAt,
-                                    openaiKey: chatbot.openaiKey,
-                                    modelId: chatbot.model.id,
-                                    welcomeMessage: chatbot.welcomeMessage,
-                                    chatbotErrorMessage: chatbot.chatbotErrorMessage,
-                                    prompt: chatbot.prompt,
-                                }} />
+                            {
+                                !chatbot.isImported ?
+                                    <ChatbotForm
+                                        user={user}
+                                        files={files}
+                                        currentFiles={currentFiles.map((file) => file.file.id)}
+                                        models={models}
+                                        chatbot={chatbot} />
+                                    :
+                                    <ImportedChatbotForm
+                                        user={user}
+                                        chatbot={chatbot}
+                                    />
+
+                            }
                         </div>
                         <Card>
                             <CardHeader>
