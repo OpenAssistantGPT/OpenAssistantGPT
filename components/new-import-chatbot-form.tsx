@@ -87,7 +87,9 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
         })
 
         router.refresh()
-        router.push("/dashboard/chatbots")
+
+        const object = await response.json()
+        router.push(`/dashboard/chatbots/${object.chatbot.id}/chat`)
     }
 
     return (

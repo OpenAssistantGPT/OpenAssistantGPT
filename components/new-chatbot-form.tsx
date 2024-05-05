@@ -138,8 +138,10 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
         })
 
         router.refresh()
+
         if (!isOnboarding) {
-            router.push("/dashboard/chatbots")
+            const object = await response.json()
+            router.push(`/dashboard/chatbots/${object.chatbot.id}/chat`)
         }
     }
 
