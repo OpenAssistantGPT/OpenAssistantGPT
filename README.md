@@ -1,5 +1,13 @@
 # Welcome to OpenAssistantGPT
 
+<p>
+<img alt="Vercel Build Status" src="https://vercelbadge.vercel.app/api/marcolivierbouch/OpenAssistantGPT" />
+<img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/marcolivierbouch/OpenAssistantGPT" />
+<img alt="" src="https://img.shields.io/github/repo-size/marcolivierbouch/OpenAssistantGPT" />
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/marcolivierbouch/OpenAssistantGPT" />
+<img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/marcolivierbouch/OpenAssistantGPT" />
+</p>
+
 OpenAssistantGPT is an open source platform for building chatbot assistants using OpenAI's Assistant. It offers features like easy website integration, low cost, and an open source codebase available on GitHub. 
 
 Users can build their chatbot with minimal coding required, and OpenAssistantGPT supports direct billing through OpenAI without extra charges. The platform is particularly user-friendly and cost-effective, appealing to those seeking to integrate AI chatbot functionalities into their websites.
