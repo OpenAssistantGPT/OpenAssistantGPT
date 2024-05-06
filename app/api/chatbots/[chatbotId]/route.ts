@@ -215,25 +215,29 @@ export async function DELETE(
     })
 
     if (!chatbot!.isImported) {
-      const openAIConfig = await db.openAIConfig.findUnique({
-        select: {
-          globalAPIKey: true,
-          id: true,
-        },
-        where: {
-          userId: session?.user?.id
+      try {
+        const openAIConfig = await db.openAIConfig.findUnique({
+          select: {
+            globalAPIKey: true,
+            id: true,
+          },
+          where: {
+            userId: session?.user?.id
+          }
+        })
+
+        if (!openAIConfig?.globalAPIKey) {
+          return new Response("Missing OpenAI API key", { status: 403 })
         }
-      })
 
-      if (!openAIConfig?.globalAPIKey) {
-        return new Response("Missing OpenAI API key", { status: 403 })
+        const openai = new OpenAI({
+          apiKey: openAIConfig?.globalAPIKey
+        })
+
+        await openai.beta.assistants.del(chatbot?.openaiId || '')
+      } catch (error) {
+        console.log(error)
       }
-
-      const openai = new OpenAI({
-        apiKey: openAIConfig?.globalAPIKey
-      })
-
-      await openai.beta.assistants.del(chatbot?.openaiId || '')
     }
 
     await db.chatbot.delete({
