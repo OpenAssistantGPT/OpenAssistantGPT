@@ -78,11 +78,15 @@ export async function DELETE(
 
         await del(file.blobUrl);
 
-        const openai = new OpenAI({
-            apiKey: openAIConfig?.globalAPIKey
-        })
-
-        await openai.files.del(file.openAIFileId)
+        try {
+            const openai = new OpenAI({
+                apiKey: openAIConfig?.globalAPIKey
+            })
+    
+            await openai.files.del(file.openAIFileId)
+        } catch (error) {
+            console.log(`Cant delete file in OpenAI ${error}`)
+        }
 
         await db.file.delete({
             where: {
@@ -92,7 +96,7 @@ export async function DELETE(
 
         return NextResponse.json({ deleted: true }, { status: 200 });
     } catch (error) {
-        console.log(error)
+        console.error(error)
         return new Response(null, { status: 500 })
     }
 
