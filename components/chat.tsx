@@ -152,7 +152,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
         </h2>
       </CardHeader>
       <div
-        className={cn('pb-[200px] md:pb-52 pr-2 pl-10 md:p-20 pt-4 md:pt-10', className)}
+        className={cn('pb-[200px] md:pb-96 pr-2 pl-10 md:p-20 pt-4 md:pt-10', className)}
         ref={messagesRef}
       >
         <ChatMessage message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
