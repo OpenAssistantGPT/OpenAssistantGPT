@@ -35,11 +35,19 @@ import {
   ArrowDown,
   Import,
   BadgePlus,
+  Copy,
+  Download,
+  Send,
+  Loader,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  loading: Loader,
+  send: Send,
+  download: Download,
+  copy: Copy,
   badgeplus: BadgePlus,
   import: Import,
   logo: Command,

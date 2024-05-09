@@ -13,8 +13,7 @@ import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import {
   Message,
-  // import as useAssistant:
-  experimental_useAssistant as useAssistant,
+  useAssistant,
 } from 'ai/react';
 import { ChatbotConfig } from '@/types';
 
