@@ -152,7 +152,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
         </h2>
       </CardHeader>
       <div
-        className={cn('pb-[200px] pr-2 pl-10 md:p-20 pt-4 md:pt-10', className)}
+        className={cn('pb-[200px] pr-2 pl-10 md:p-20 pt-4', className)}
         ref={messagesRef}
       >
         <ChatMessage message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
@@ -168,7 +168,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
             <ChatMessage message={{ id: 'waiting', role: "assistant", content: 'loading' }} />
           </div>
         }
-
+        <div className="h-px w-full" ref={visibilityRef} />
       </div>
       <div className="fixed inset-x-0 bottom-0 w-full bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
         <ButtonScrollToBottom
