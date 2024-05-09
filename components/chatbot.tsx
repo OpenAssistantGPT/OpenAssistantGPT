@@ -14,21 +14,21 @@ export default function Chatbot() {
         };
     }, []);
 
-    function enableChatbox() {
-        const searchParams = useSearchParams()
+    function Chatbox() {
+        const params = useSearchParams()
        
-        return !(params.get('chatbox') || '').match('false')
+        if (!(params.get('chatbox') || '').match('false')) {
+           return <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
+        } else {
+            return <></>
+        }
       }
 
 
     return (
         <>
             <Suspense>
-                {
-                    enableChatbox() && (
-                        <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
-                    )
-                }
+                <Chatbox/>
             </Suspense>
         </>
     )
