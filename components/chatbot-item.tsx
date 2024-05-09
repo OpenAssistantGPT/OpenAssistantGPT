@@ -15,7 +15,7 @@ export function ChatbotItem({ chatbot, model }: ChatbotProps) {
         <div className="flex items-center justify-between p-4">
             <div className="grid gap-1">
                 <Link
-                    href={`/dashboard/chatbots/${chatbot.id}`}
+                    href={`/dashboard/chatbots/${chatbot.id}/chat`}
                     className="font-semibold hover:underline"
                 >
                     {chatbot.name}

@@ -66,19 +66,12 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                         <CodeBlock
                             language="HTML"
                             description="If you use HTML, you can use the following code to embed your chatbot."
-                        >{`<script>
-  window.chatbotConfig = {
-    chatbotId: '${params.chatbotId}',
-  }
-</script>
-
-<body>
-  <script src="${siteConfig.url}chatwindow.js"></script>
-  <!-- ... elements ... -->
-  <div id="openassistantgpt-chatbot">
-  </div>
-  <!-- ... other body elements ... -->
-</body>
+                        >{`<iframe 
+    src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
+    style="overflow: hidden; height: 80vh; border: 0 none; width: 480px; bottom: -30px;"
+    allowfullscreen allow="clipboard-read; clipboard-write" allowtransparency
+>
+</iframe>
 `}
                         </CodeBlock>
                     </div>
