@@ -2,12 +2,11 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-
+import { Suspense } from 'react'
 import { useSearchParams } from "next/navigation";
 
 
 export default function Chatbot() {
-    const params = useSearchParams()
 
     useEffect(() => {
         (window as any).chatbotConfig = {
@@ -15,14 +14,22 @@ export default function Chatbot() {
         };
     }, []);
 
+    function Chatbox() {
+        const params = useSearchParams()
+       
+        if (!(params.get('chatbox') || '').match('false')) {
+           return <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
+        } else {
+            return <></>
+        }
+      }
+
 
     return (
         <>
-            {
-                !(params.get('chatbox') || '').match('false') && (
-                    <Script src="https://openassistantgpt.io/chatbot.js" strategy="afterInteractive" />
-                )
-            }
+            <Suspense>
+                <Chatbox/>
+            </Suspense>
         </>
     )
 }
