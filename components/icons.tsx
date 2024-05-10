@@ -39,11 +39,13 @@ import {
   Download,
   Send,
   Loader,
+  RefreshCcw,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  reload: RefreshCcw,
   loading: Loader,
   send: Send,
   download: Download,

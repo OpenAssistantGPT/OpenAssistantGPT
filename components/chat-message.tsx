@@ -5,8 +5,8 @@ import remarkMath from 'remark-math'
 import { cn } from '@/lib/utils'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/markdown'
-import { Icons } from './icons'
-import { ExternalLink } from './external-link'
+import { Icons } from '@/components/icons'
+import { ExternalLink } from '@/components/external-link'
 
 export interface ChatMessageProps {
     message: Message

@@ -7,16 +7,14 @@ import { Icons } from "./icons"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
-import { ButtonScrollToBottom } from "@/components/button-scroll-to-bottom"
 
 import { CardHeader } from "./ui/card"
 import {
   Message,
   useAssistant,
 } from 'ai/react';
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "@/components/ui/use-toast"
-import { useScrollAnchor } from "@/hooks/user-scroll-anchor";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { FooterText } from "./chat-footer-text";
 import { ChatMessage } from "./chat-message"
@@ -83,8 +81,22 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat` });
 
-  const { messagesRef, scrollRef, visibilityRef, isAtBottom, scrollToBottom } =
-    useScrollAnchor()
+  const containerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // Check if status has changed to "awaiting_message"
+    if (status === 'awaiting_message' && inputRef.current) {
+      // Focus on the input field
+      inputRef.current.focus();
+    }
+  }, [status]);
+
+  useEffect(() => {
+    // Scroll to the bottom of the container on messages update
+    document.documentElement.scrollTop = document.getElementById("end").offsetTop;
+
+  }, [messages]);
 
   useEffect(() => {
     if (error) {
@@ -142,7 +154,6 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
   return (
     <div
       className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
-      ref={scrollRef}
     >
       <CardHeader style={{ background: chatbot.chatHeaderBackgroundColor }} className="sticky top-0 border-b p-4">
         <h2 className="text-xl font-bold flex items-center h-10 gap-2">
@@ -152,8 +163,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
         </h2>
       </CardHeader>
       <div
-        className={cn('pb-[200px] pr-2 pl-10 md:pl-20 md:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
-        ref={messagesRef}
+        className={cn('pb-[200px] overflow-auto pr-2 pl-10 md:pl-20 md:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
       >
         <ChatMessage message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
         <div className="flex-grow overflow-y-auto space-y-4 flex flex-col order-2 whitespace-pre-wrap">
@@ -168,12 +178,10 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
             <ChatMessage message={{ id: 'waiting', role: "assistant", content: 'loading' }} />
           </div>
         }
+        <div id="end" ref={containerRef}> </div>
       </div>
       <div className="fixed inset-x-0 bottom-0 w-full bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
-        <ButtonScrollToBottom
-          isAtBottom={isAtBottom}
-          scrollToBottom={scrollToBottom}
-        />
+
         <div className="mx-auto sm:max-w-2xl sm:px-4">
 
           <div className="mb-4 grid grid-cols-2 gap-2 px-4 sm:px-0">
@@ -234,13 +242,14 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
                         window.location.reload()
                       }}
                     >
-                      <Icons.add />
+                      <Icons.reload className="h-4 w-4" />
                       <span className="sr-only">New Chat</span>
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>New Chat</TooltipContent>
                 </Tooltip>
                 <Input
+                  ref={inputRef}
                   tabIndex={0}
                   placeholder={chatbot.chatMessagePlaceHolder}
                   className="border-0 focus-visible:ring-0 min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
@@ -279,6 +288,6 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
           </div>
         </div>
       </div>
-    </div >
+    </div>
   )
 }
