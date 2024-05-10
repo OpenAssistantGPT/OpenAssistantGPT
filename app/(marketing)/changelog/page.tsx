@@ -13,6 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.0"
+                    date="2024-05-10"
+                    new={[
+                        {
+                            title: 'New Chatbot Window UI',
+                            description:
+                                "We improved UI to make it look better. We also now have an integration via IFrame which means no more CSS conflicts and a smoother user experience.",
+                            image: new URL(
+                                '/public/new_chatbot_ui.jpg',
+                                import.meta.url,
+                            ).toString(),
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.1.2"
                     date="2024-05-1"
                     new={[
