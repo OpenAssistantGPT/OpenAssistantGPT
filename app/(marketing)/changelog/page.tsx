@@ -21,7 +21,7 @@ export default function ChangelogPage() {
                             description:
                                 "We improved UI to make it look better. We also now have an integration via IFrame which means no more CSS conflicts and a smoother user experience.",
                             image: new URL(
-                                '/public/new_chatbot_ui.png',
+                                '/public/new_chatbot_ui.jpg',
                                 import.meta.url,
                             ).toString(),
                         },
