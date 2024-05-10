@@ -1,21 +1,14 @@
 import { GithubCard } from "@/components/github-card";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
-import { Chat } from "@/components/chat";
 import { freePlan, basicPlan, hobbyPlan, proPlan } from "@/config/subscriptions";
 
 export default function IndexPage() {
-
-  const chatbot = {
-    id: "clq6m06gc000114hm42s838g2",
-    name: "OpenAssistantGPT",
-    welcomeMessage: "Hello! I can help you with any questions you have about OpenAssistantGPT."
-  }
 
   return (
     <>
@@ -143,7 +136,11 @@ export default function IndexPage() {
             Ask any question about OpenAssistantGPT to our chatbot powered by OpenAI Assistant API and see how it responds. You can also try the chatbot buttom right of the window.
           </p>
           <div className="min-w-[85%] min-h-[15rem] text-left items-left pt-6">
-            <Chat chatbot={chatbot} defaultMessage="how do I get unlimited messages for my chatbot?"></Chat>
+            <iframe
+              src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
+              className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-96"
+              allowFullScreen allow="clipboard-read; clipboard-write" allowTransparency
+            ></iframe>
           </div>
         </div>
       </section>

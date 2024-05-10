@@ -3,7 +3,7 @@ import OpenAI from "openai"
 
 import { z } from "zod"
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { experimental_AssistantResponse } from 'ai';
+import { AssistantResponse } from 'ai';
 
 export const maxDuration = 300;
 
@@ -59,7 +59,7 @@ export async function POST(
             content: input.message,
         });
 
-        return experimental_AssistantResponse(
+        return AssistantResponse(
             { threadId, messageId: createdMessage.id },
             async ({ sendMessage, forwardStream, sendDataMessage }) => {
 

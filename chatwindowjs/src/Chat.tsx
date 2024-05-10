@@ -10,8 +10,7 @@ import { siteConfig } from "@/config/site"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Message,
-  // import as useAssistant:
-  experimental_useAssistant as useAssistant,
+  useAssistant,
 } from 'ai/react';
 import { ChatbotConfig } from '@/types';
 

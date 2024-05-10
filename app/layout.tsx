@@ -12,6 +12,7 @@ import { siteConfig } from "@/config/site"
 import Chatbot from '@/components/chatbot';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { AOSInit } from '@/components/aos-init';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export const metadata: Metadata = {
   },
 };
 
+
 export default async function RootLayout({
   children,
 }: {
@@ -65,11 +67,13 @@ export default async function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Toaster />
-          {
-            process.env.VERCEL_ENV === "production" ? <Analytics /> : <></>
-          }
+          <TooltipProvider>
+            {children}
+            <Toaster />
+            {
+              process.env.VERCEL_ENV === "production" ? <Analytics /> : <></>
+            }
+          </TooltipProvider>
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="AW-11267388324" />
