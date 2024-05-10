@@ -138,12 +138,12 @@ export default function IndexPage() {
           <div className="min-w-[85%] min-h-[15rem] text-left items-left pt-6">
             <iframe
               src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
-              className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-96"
+              className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
               allowFullScreen allow="clipboard-read; clipboard-write" allowTransparency
             ></iframe>
           </div>
         </div>
-      </section>
+      </section >
       <section data-aos="fade-up" id="integrations" className="container bg-slate-50 py-12 md:py-24 lg:py-32">
         <div className="container px-4">
           <div className="flex flex-col items-center justify-center space-y-4 md:space-y-6">
