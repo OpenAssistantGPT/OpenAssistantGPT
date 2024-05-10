@@ -71,6 +71,7 @@ type MessageProps = {
 
 
 export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotProps) {
+  const [open, setOpen] = useState(false);
 
   // inquiry
   const [sendInquiry, setSendInquiry] = useState(false);
@@ -141,6 +142,8 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
         variant: 'destructive'
       })
     }
+    // close dialog
+    setOpen(false)
     setInquiryLoading(false)
   }
 
@@ -186,7 +189,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
 
           <div className="mb-4 grid grid-cols-2 gap-2 px-4 sm:px-0">
             {messages.length >= chatbot.inquiryDisplayLinkAfterXMessage &&
-              <Dialog>
+              <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <Button className="bg-white" variant="outline">{chatbot.inquiryLinkText}</Button>
                 </DialogTrigger>
