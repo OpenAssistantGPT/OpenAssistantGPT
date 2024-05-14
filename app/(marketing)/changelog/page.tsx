@@ -13,6 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.1"
+                    date="2024-05-10"
+                    new={[
+                        {
+                            title: 'Display LaTex Math function in the chat',
+                            description:
+                                "When you ask your chatbot to output math function and starting them with $$ it will display math function in LaTex style. Here's what your promt should look like to display LaTex: 'Display a math function in latex and the function text must always start with $$'",
+                            image: new URL(
+                                '/public/chatmessage-latex.png',
+                                import.meta.url,
+                            ).toString(),
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.2.0"
                     date="2024-05-10"
                     new={[

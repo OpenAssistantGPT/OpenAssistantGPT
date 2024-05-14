@@ -53,7 +53,7 @@ export function ChatMessage({ message, children, ...props }: ChatMessageProps) {
                                 if (match && (match[1] === 'math' || match[1] === 'latex')) {
                                     return (
                                         <MathJaxContext>
-                                            <MathJax>{children}</MathJax>
+                                            <MathJax>{children || ''}</MathJax>
                                         </MathJaxContext>
                                     )
                                 }
