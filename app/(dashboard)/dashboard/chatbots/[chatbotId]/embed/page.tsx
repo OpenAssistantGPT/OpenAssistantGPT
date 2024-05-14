@@ -9,7 +9,7 @@ import { DashboardShell } from "@/components/shell"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@/components/ui/codeblock"
 import { siteConfig } from "@/config/site"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -64,24 +64,22 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                 <TabsContent value="window">
                     <div className="space-y-4">
                         <CodeBlock
-                            language="HTML"
-                            description="If you use HTML, you can use the following code to embed your chatbot."
-                        >{`<iframe 
+                            language="html"
+                            value={`<iframe 
     src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
     style="overflow: hidden; height: 80vh; border: 0 none; width: 480px; bottom: -30px;"
     allowfullscreen allow="clipboard-read; clipboard-write" allowtransparency
 >
 </iframe>
-`}
+`}>
                         </CodeBlock>
                     </div>
                 </TabsContent>
                 <TabsContent value="widget">
                     <div className="space-y-4">
                         <CodeBlock
-                            language="HTML"
-                            description="If you use HTML, you can use the following code to embed your chatbot."
-                        >{`<script>
+                            language="html"
+                            value={`<script>
   window.chatbotConfig = {
     chatbotId: '${params.chatbotId}',
   }
@@ -90,12 +88,11 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
 <body>
   <script src="${siteConfig.url}chatbot.js"></script>
 </body>
-`}
+`}>
                         </CodeBlock>
                         <CodeBlock
-                            language="NEXT.JS"
-                            description="If you use Next.js, you can use the following code to embed your chatbot."
-                        >{`"use client"
+                            language="javascript"
+                            value={`"use client"
 
 import Script from 'next/script'
 import React, { useEffect } from 'react';
@@ -115,7 +112,7 @@ export default function Home() {
     </main>
   )
 }
-`}
+`}>
                         </CodeBlock>
                     </div>
                 </TabsContent>

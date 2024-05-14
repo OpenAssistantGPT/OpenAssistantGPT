@@ -31,44 +31,6 @@ type MessageProps = {
   text: string;
 };
 
-//const UserMessage = ({ text }: { text: string }) => {
-//  return <div className={styles.userMessage}>{text}</div>;
-//};
-//
-//const AssistantMessage = ({ text }: { text: string }) => {
-//  return (
-//    <div className={styles.assistantMessage}>
-//      <Markdown>{text}</Markdown>
-//    </div>
-//  );
-//};
-//
-//const CodeMessage = ({ text }: { text: string }) => {
-//  return (
-//    <div className={styles.codeMessage}>
-//      {text.split("\n").map((line, index) => (
-//        <div key={index}>
-//          <span>{`${index + 1}. `}</span>
-//          {line}
-//        </div>
-//      ))}
-//    </div>
-//  );
-//};
-
-//const Message = ({ role, text }: MessageProps) => {
-//  switch (role) {
-//    case "user":
-//      return <UserMessage text={text} />;
-//    case "assistant":
-//      return <AssistantMessage text={text} />;
-//    case "code":
-//      return <CodeMessage text={text} />;
-//    default:
-//      return null;
-//  }
-//};
-
 
 export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotProps) {
   const [open, setOpen] = useState(false);
@@ -206,7 +168,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
                         <Label htmlFor="name" className="text-right">
                           {chatbot.inquiryEmailLabel}
                         </Label>
-                        <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" type="email" />
+                        <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" pattern=".+@.+\..+" type="email" />
                       </div>
                       <div className="gap-4">
                         <Label htmlFor="username" className="text-right">

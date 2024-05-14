@@ -2,7 +2,7 @@
 
 import { FC, memo } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { coldarkDark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import { coldarkCold } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard'
 import { Button } from '@/components/ui/button'
@@ -90,13 +90,13 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
     }
 
     return (
-        <div className="relative w-full font-sans codeblock bg-zinc-950">
-            <div className="flex items-center justify-between w-full px-6 py-2 pr-4 bg-zinc-800 text-zinc-100">
-                <span className="text-xs lowercase">{language}</span>
-                <div className="flex items-center space-x-1">
+        <div className="relative w-full font-sans codeblock bg-white text-muted-foreground border">
+            <div className="flex items-center justify-between w-full px-6 py-2 pr-4 bg-muted text-zinc-100">
+                <span className="text-xs lowercase text-muted-foreground">{language}</span>
+                <div className="flex items-center space-x-1 text-muted-foreground">
                     <Button
                         variant="ghost"
-                        className="hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+                        className="hover:bg-white focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
                         onClick={downloadAsFile}
                         size="icon"
                     >
@@ -106,7 +106,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="text-xs hover:bg-zinc-800 focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
+                        className="text-xs hover:bg-white focus-visible:ring-1 focus-visible:ring-slate-700 focus-visible:ring-offset-0"
                         onClick={onCopy}
                     >
                         {isCopied ? <Icons.check /> : <Icons.copy />}
@@ -116,7 +116,7 @@ const CodeBlock: FC<Props> = memo(({ language, value }) => {
             </div>
             <SyntaxHighlighter
                 language={language}
-                style={coldarkDark}
+                style={coldarkCold}
                 PreTag="div"
                 showLineNumbers
                 customStyle={{
