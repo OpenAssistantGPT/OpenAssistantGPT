@@ -2,6 +2,8 @@ import { Message } from 'ai'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 
+import { MathJax, MathJaxContext } from 'better-react-mathjax'
+
 import { cn } from '@/lib/utils'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/markdown'
@@ -43,10 +45,18 @@ export function ChatMessage({ message, children, ...props }: ChatMessageProps) {
                                 )
                             },
                             p({ children }) {
+                                console.log('p')
                                 return <p className="mb-2 last:mb-0">{children}</p>
                             },
                             code({ node, className, children, ...props }) {
                                 const match = /language-(\w+)/.exec(className || '')
+                                if (match && (match[1] === 'math' || match[1] === 'latex')) {
+                                    return (
+                                        <MathJaxContext>
+                                            <MathJax>{children}</MathJax>
+                                        </MathJaxContext>
+                                    )
+                                }
 
                                 return (
                                     <CodeBlock
