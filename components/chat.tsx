@@ -206,7 +206,7 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
                         <Label htmlFor="name" className="text-right">
                           {chatbot.inquiryEmailLabel}
                         </Label>
-                        <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" type="email" />
+                        <Input onChange={(e) => setUserEmail(e.target.value)} className="bg-white" id="email" pattern=".+@.+\..+" type="email" />
                       </div>
                       <div className="gap-4">
                         <Label htmlFor="username" className="text-right">
