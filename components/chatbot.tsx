@@ -7,6 +7,22 @@ import { siteConfig } from "@/config/site";
 
 export default function Chatbot() {
 
+    const customStyle = {
+        marginRight: '1rem',
+        marginBottom: '6rem',
+        display: 'none',
+        position: 'fixed',
+        right: 0,
+        bottom: 0,
+        pointerEvents: 'none',
+        overflow: 'hidden',
+        height: '65vh',
+        border: '2px solid #e2e8f0',
+        borderRadius: '0.375rem',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        width: '30rem'
+    };
+
 
     function Chatbox() {
         const params = useSearchParams()
@@ -28,11 +44,7 @@ export default function Chatbot() {
                     ></iframe>
                     <iframe
                         src={`${siteConfig.url}embed/clq6m06gc000114hm42s838g2/window?chatbox=false&withExitX=true`}
-                        className='md:block fixed mr-4 mb-24 fixed right-0 bottom-0 pointer-events-none overflow-hidden h-4/6 border border-gray-300 rounded-lg shadow-md'
-                        style={{
-                            display: 'none',
-                            width: '30rem'
-                        }}
+                        style={customStyle}
                         allowFullScreen
                         id="openassistantgpt-chatbot-iframe"
                     ></iframe>

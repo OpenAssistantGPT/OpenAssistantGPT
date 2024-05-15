@@ -87,7 +87,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
   <iframe src="${siteConfig.url}embed/${params.chatbotId}/button?chatbox=false"
     style="margin-right: 1rem; margin-bottom: 1rem; position: fixed; right: 0; bottom: 0; width: 56px; height: 56px; border: 0; border-color: rgb(0, 0, 0); border-radius: 50%; color-scheme: none; background: none;"
     id="openassistantgpt-chatbot-button-iframe"></iframe>
-  <iframe src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
+  <iframe src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false&withExitX=true"
     style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
     allowfullscreen id="openassistantgpt-chatbot-iframe"></iframe>
 </body>
@@ -97,6 +97,22 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                             language="javascript"
                             value={`
 export default function Chatbot() {
+
+    const customStyle = {
+        marginRight: '1rem',
+        marginBottom: '6rem',
+        display: 'none',
+        position: 'fixed',
+        right: 0,
+        bottom: 0,
+        pointerEvents: 'none',
+        overflow: 'hidden',
+        height: '65vh',
+        border: '2px solid #e2e8f0',
+        borderRadius: '0.375rem',
+        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        width: '30rem'
+    };
 
     return (
         <div>
@@ -112,11 +128,7 @@ export default function Chatbot() {
             ></iframe>
             <iframe
                 src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false&withExitX=true"
-                className='md:block fixed mr-4 mb-24 fixed right-0 bottom-0 pointer-events-none overflow-hidden h-4/6 border border-gray-300 rounded-lg shadow-md'
-                style={{
-                    display: 'none',
-                    width: '30rem'
-                }}
+                style={customStyle}
                 id="openassistantgpt-chatbot-iframe"
             ></iframe>
         </div>
