@@ -58,7 +58,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                 <iframe
                     src={`/embed/${chatbot.id}/window?chatbox=false`}
                     className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-4/6"
-                    allowFullScreen allow="clipboard-read; clipboard-write" allowTransparency
+                    allowFullScreen allow="clipboard-read; clipboard-write"
                 ></iframe>
             </div>
         </DashboardShell >

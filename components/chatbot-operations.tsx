@@ -75,11 +75,6 @@ export function ChatbotOperations({ chatbot }: ChatbotOperationsProps) {
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <Link href={`/dashboard/chatbots/${chatbot.id}/customization`} className="flex w-full">
-                            Customize
-                        </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
                         <Link href={`/dashboard/chatbots/${chatbot.id}/embed`} className="flex w-full">
                             Embed On Website
                         </Link>

@@ -55,7 +55,6 @@ export default async function RootLayout({
   return (
     <html lang="en suppressHydrationWarning">
       <head>
-        <Chatbot />
       </head>
       <AOSInit />
       <body
@@ -75,6 +74,7 @@ export default async function RootLayout({
             }
           </TooltipProvider>
         </ThemeProvider>
+        <Chatbot />
       </body>
       <GoogleAnalytics gaId="AW-11267388324" />
     </html>

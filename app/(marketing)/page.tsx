@@ -44,6 +44,23 @@ export default function IndexPage() {
           <Image data-aos="zoom-in" priority={false} className="mt-10 border shadow-lg" src="/dashboard.png" width={810} height={540} alt="Dashboard" />
         </div>
       </section>
+      <section data-aos="fade-up" id="chat" className="container py-12 md:py-24 lg:py-32">
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
+          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+            Test our chatbot assistant
+          </h2>
+          <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+            Ask any question about OpenAssistantGPT to our chatbot powered by OpenAI Assistant API and see how it responds. You can also try the chatbot buttom right of the window.
+          </p>
+          <div className="min-w-[85%] min-h-[15rem] text-left items-left pt-6">
+            <iframe
+              src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
+              className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
+              allowFullScreen allow="clipboard-read; clipboard-write"
+            ></iframe>
+          </div>
+        </div>
+      </section>
       <section data-aos="fade-up" id="features" className="container space-y-6 bg-slate-50 py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
@@ -127,23 +144,7 @@ export default function IndexPage() {
           </p>
         </div>
       </section>
-      <section data-aos="fade-up" id="chat" className="container py-12 md:py-24 lg:py-32">
-        <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
-          <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-            Test our chatbot assistant
-          </h2>
-          <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-            Ask any question about OpenAssistantGPT to our chatbot powered by OpenAI Assistant API and see how it responds. You can also try the chatbot buttom right of the window.
-          </p>
-          <div className="min-w-[85%] min-h-[15rem] text-left items-left pt-6">
-            <iframe
-              src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
-              className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
-              allowFullScreen allow="clipboard-read; clipboard-write" allowTransparency
-            ></iframe>
-          </div>
-        </div>
-      </section >
+
       <section data-aos="fade-up" id="integrations" className="container bg-slate-50 py-12 md:py-24 lg:py-32">
         <div className="container px-4">
           <div className="flex flex-col items-center justify-center space-y-4 md:space-y-6">
