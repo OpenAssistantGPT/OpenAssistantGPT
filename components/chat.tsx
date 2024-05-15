@@ -24,15 +24,11 @@ interface ChatbotProps {
   chatbot: Chatbot
   defaultMessage: string
   className?: string
+  withExitX?: boolean
 }
 
-type MessageProps = {
-  role: "user" | "assistant" | "code";
-  text: string;
-};
 
-
-export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotProps) {
+export function Chat({ chatbot, defaultMessage, className, withExitX = false, ...props }: ChatbotProps) {
   const [open, setOpen] = useState(false);
 
   // inquiry
@@ -116,16 +112,29 @@ export function Chat({ chatbot, defaultMessage, className, ...props }: ChatbotPr
     }
   })
 
+  function closeChat() {
+    window.parent.postMessage('closeChat', '*')
+  }
+
   return (
     <div
       className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
     >
       <CardHeader style={{ background: chatbot.chatHeaderBackgroundColor }} className="sticky top-0 border-b p-4">
-        <h2 className="text-xl font-bold flex items-center h-10 gap-2">
-          <div style={{ color: chatbot.chatHeaderTextColor }}>
-            {chatbot.chatTitle}
-          </div>
-        </h2>
+        <div className="flex flex-row justify-between items-center">
+          <h2 className="text-xl font-bold flex items-center h-10 gap-2">
+            <div style={{ color: chatbot.chatHeaderTextColor }}>
+              {chatbot.chatTitle}
+            </div>
+          </h2>
+          {withExitX &&
+            <div className="items-end">
+              <Button onClick={closeChat} variant="nothing">
+                <Icons.close style={{ color: chatbot.chatHeaderTextColor }} className="h-5 w-5 text-gray-500" />
+              </Button>
+            </div>
+          }
+        </div>
       </CardHeader>
       <div
         className={cn('pb-[200px] overflow-auto pr-2 pl-10 md:pl-20 md:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}

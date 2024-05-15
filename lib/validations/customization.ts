@@ -8,8 +8,4 @@ export const customizationSchema = z.object({
     bubbleTextColor: z.string().default("").optional(),
     chatHeaderBackgroundColor: z.string().default("").optional(),
     chatHeaderTextColor: z.string().default("").optional(),
-    chatbotReplyBackgroundColor: z.string().default("").optional(),
-    chatbotReplyTextColor: z.string().default("").optional(),
-    userReplyBackgroundColor: z.string().default("").optional(),
-    userReplyTextColor: z.string().default("").optional(),
 })

@@ -1,7 +1,7 @@
 'use client'
 
 import { Icons } from '@/components/icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export interface ChatbotButtonComponentProps {
     textColor: string;
@@ -17,6 +17,20 @@ export default function ChatbotButton({ textColor, backgroundColor }: ChatbotBut
 
     const [isChatVisible, setIsChatVisible] = useState(false);
     const [animate, setAnimate] = useState(false); // State to trigger animation
+
+    useEffect(() => {
+        window.addEventListener('message', function (event) {
+
+            if (event.data === 'openChat') {
+                console.log('Toggle chat visibility');
+                setIsChatVisible(true);
+            }
+
+            if (event.data === 'closeChat') {
+                setIsChatVisible(false);
+            }
+        });
+    }, []);
 
 
     function toggleChatVisibility() {

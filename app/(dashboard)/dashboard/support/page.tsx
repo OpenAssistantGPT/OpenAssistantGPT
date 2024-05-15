@@ -34,9 +34,14 @@ export default async function SupportPage() {
                     First, before reaching out you can always try our chatbot. He knows a lot about our platform he might be able to help you.
                     <br />
                     If you still have issue with our app you can open a <a className="underline" href={siteConfig.links.github + '/issues'}>Github issue</a>, so we can help you to fix it and it will help us to improve our app.
-                    <br />
-                    To contract us directly use this email: openassistantgpt@gmail.com
                 </p>
+                <div className="min-w-[85%] min-h-[15rem] text-left items-left pt-6">
+                    <iframe
+                        src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
+                        className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
+                        allowFullScreen allow="clipboard-read; clipboard-write"
+                    ></iframe>
+                </div>
             </div>
         </DashboardShell >
     )

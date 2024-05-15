@@ -58,10 +58,6 @@ export async function PATCH(
                 bubbleTextColor: payload.bubbleTextColor,
                 chatHeaderBackgroundColor: payload.chatHeaderBackgroundColor,
                 chatHeaderTextColor: payload.chatHeaderTextColor,
-                chatbotReplyBackgroundColor: payload.chatbotReplyBackgroundColor,
-                chatbotReplyTextColor: payload.chatbotReplyTextColor,
-                userReplyBackgroundColor: payload.userReplyBackgroundColor,
-                userReplyTextColor: payload.userReplyTextColor,
             },
             select: {
                 id: true,

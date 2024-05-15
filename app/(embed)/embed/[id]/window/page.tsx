@@ -11,5 +11,5 @@ export default function Chat({ params, searchParams }: ChatComponentProps) {
   style="overflow: hidden; height: 80vh; border: 0 none; width: 480px; bottom: -30px;" allowfullscreen
   allowtransparency></iframe>
    */
-  return <ChatWindow params={{ chatbotId: params.id, defaultMessage: decodeURIComponent((searchParams.defaultMessage || "").replace('+', ' ')) || "" }} />;
+  return <ChatWindow params={{ chatbotId: params.id, withExitX: searchParams.withExitX === 'true' ? true : false }} />;
 }
