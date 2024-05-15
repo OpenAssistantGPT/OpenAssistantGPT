@@ -80,43 +80,52 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                         <CodeBlock
                             language="html"
                             value={`<script>
-  window.chatbotConfig = {
-    chatbotId: '${params.chatbotId}',
-  }
+    window.addEventListener("message",function(t){if("openChat"===t.data){console.log("Toggle chat visibility");var e=document.getElementById("openassistantgpt-chatbot-iframe");e?(e.style.display="block",e.style.pointerEvents="auto"):console.error("iframe not found")}if("closeChat"===t.data){var e=document.getElementById("openassistantgpt-chatbot-iframe");e&&(e.style.display="none",e.style.pointerEvents="none")}});
 </script>
 
 <body>
-  <script src="${siteConfig.url}chatbot.js"></script>
+  <iframe src="${siteConfig.url}embed/${params.chatbotId}/button?chatbox=false"
+    style="margin-right: 1rem; margin-bottom: 1rem; position: absolute; right: 0; bottom: 0; width: 56px; height: 56px; border: 0; border-color: rgb(0, 0, 0); border-radius: 50%; color-scheme: none; background: none;"
+    allowtransparency></iframe>
+  <iframe src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
+    style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: absolute; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
+    allowfullscreen id="openassistantgpt-chatbot-iframe" allowtransparency></iframe>
 </body>
 `}>
                         </CodeBlock>
                         <CodeBlock
                             language="javascript"
-                            value={`"use client"
+                            value={`
+export default function Chatbot() {
 
-import Script from 'next/script'
-import React, { useEffect } from 'react';
-
-export default function Home() {
-  useEffect(() => {
-    // Set your global variable here
-    (window as any).chatbotConfig = {
-      chatbotId: "${params.chatbotId}"
-    };
-
-  }, []);
-
-  return (
-    <main>
-      <Script src="${siteConfig.url}chatbot.js" strategy="afterInteractive" />
-    </main>
-  )
+    return (
+        <div>
+            <script dangerouslySetInnerHTML={{
+                __html: \`
+        window.addEventListener("message",function(t){if("openChat"===t.data){console.log("Toggle chat visibility");var e=document.getElementById("openassistantgpt-chatbot-iframe");e?(e.style.display="block",e.style.pointerEvents="auto"):console.error("iframe not found")}if("closeChat"===t.data){var e=document.getElementById("openassistantgpt-chatbot-iframe");e&&(e.style.display="none",e.style.pointerEvents="none")}});
+      \`}} />
+            <iframe
+                src="${siteConfig.url}embed/${params.chatbotId}/button?chatbox=false"
+                scrolling='no'
+                className="fixed bottom-0 right-0 mb-4 z-50 flex items-end inline-block mr-4 w-14 h-14 border border-gray-300 rounded-full shadow-md"
+            ></iframe>
+            <iframe
+                src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
+                className='md:block fixed mr-4 mb-24 fixed right-0 bottom-0 pointer-events-none overflow-hidden h-4/6 border border-gray-300 rounded-lg shadow-md'
+                style={{
+                    display: 'none',
+                    width: '30rem'
+                }}
+                id="openassistantgpt-chatbot-iframe"
+            ></iframe>
+        </div>
+    )
 }
 `}>
                         </CodeBlock>
                     </div>
                 </TabsContent>
-            </Tabs>
+            </Tabs >
 
         </DashboardShell >
     )

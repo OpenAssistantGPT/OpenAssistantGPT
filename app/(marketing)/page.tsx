@@ -139,7 +139,7 @@ export default function IndexPage() {
             <iframe
               src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
               className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
-              allowFullScreen allow="clipboard-read; clipboard-write" allowTransparency
+              allowFullScreen allow="clipboard-read; clipboard-write"
             ></iframe>
           </div>
         </div>

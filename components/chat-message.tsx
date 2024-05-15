@@ -45,7 +45,6 @@ export function ChatMessage({ message, children, ...props }: ChatMessageProps) {
                                 )
                             },
                             p({ children }) {
-                                console.log('p')
                                 return <p className="mb-2 last:mb-0">{children}</p>
                             },
                             code({ node, className, children, ...props }) {
