@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation";
 export default function Chatbot() {
 
 
-    function useChatbot() {
+    function Chatbox() {
         const params = useSearchParams()
 
         if ((params.get('chatbox') || '').match('false')) {
@@ -45,7 +45,7 @@ export default function Chatbot() {
         <div>
             <Suspense>
                 {
-                    <useChatbot />
+                    <Chatbox />
                 }
             </Suspense>
         </div>
