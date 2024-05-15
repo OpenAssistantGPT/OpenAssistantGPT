@@ -34,10 +34,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
     const [bubbleLogoColor, setBubbleLogoColor] = useState('')
     const [chatHeaderBackgroundColor, setChatHeaderBackgroundColor] = useState('')
     const [chatHeaderTextColor, setChatHeaderTextColor] = useState('')
-    const [chatbotBubbleColor, setChatbotBubbleColor] = useState('')
-    const [chatbotMessageColor, setChatbotMessageColor] = useState('')
-    const [userBubbleColor, setUserBubbleColor] = useState('')
-    const [userBubbleMessageColor, setUserBubbleMessageColor] = useState('')
 
 
     const [isSaving, setIsSaving] = useState<boolean>(false)
@@ -52,10 +48,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
             bubbleTextColor: "",
             chatHeaderBackgroundColor: "",
             chatHeaderTextColor: "",
-            chatbotReplyBackgroundColor: "",
-            chatbotReplyTextColor: "",
-            userReplyBackgroundColor: "",
-            userReplyTextColor: "",
         },
     })
 
@@ -72,10 +64,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
             setBubbleLogoColor(data.bubbleTextColor)
             setChatHeaderBackgroundColor(data.chatHeaderBackgroundColor)
             setChatHeaderTextColor(data.chatHeaderTextColor)
-            setChatbotBubbleColor(data.chatbotReplyBackgroundColor)
-            setChatbotMessageColor(data.chatbotReplyTextColor)
-            setUserBubbleColor(data.userReplyBackgroundColor)
-            setUserBubbleMessageColor(data.userReplyTextColor)
         })
     }, [])
 
@@ -95,10 +83,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                 bubbleTextColor: bubbleLogoColor,
                 chatHeaderBackgroundColor: chatHeaderBackgroundColor,
                 chatHeaderTextColor: chatHeaderTextColor,
-                chatbotReplyBackgroundColor: chatbotBubbleColor,
-                chatbotReplyTextColor: chatbotMessageColor,
-                userReplyBackgroundColor: userBubbleColor,
-                userReplyTextColor: userBubbleMessageColor,
             }),
         })
 
@@ -297,96 +281,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            name="chatbotReply"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
-                                    <div className="space-y-4">
-                                        <h1 className="">Personalize Your Chatbot Responses</h1>
-                                        <div className="flex">
-                                            <div className="flex flex-col w-full justify space-y-4">
-                                                <div className="space-y-0.5">
-                                                    <FormLabel className="text-base">
-                                                        Customize Chatbot Message Bubble Color
-                                                    </FormLabel>
-                                                    <FormDescription>
-                                                        Choose the color for your chatbot&apos;s message bubble background.
-                                                    </FormDescription>
-                                                    <FormControl>
-                                                        <GradientPicker background={chatbotBubbleColor} setBackground={setChatbotBubbleColor} />
-                                                    </FormControl>
-                                                </div>
-
-                                                <div className="space-y-0.5">
-                                                    <FormLabel className="text-base">
-                                                        Customize Chatbot Text Color
-                                                    </FormLabel>
-                                                    <FormDescription>
-                                                        Choose the color for the text in your chatbot&apos;s messages.
-                                                    </FormDescription>
-                                                    <FormControl>
-                                                        <GradientPicker withGradient={false} background={chatbotMessageColor} setBackground={setChatbotMessageColor} />
-                                                    </FormControl>
-                                                </div>
-                                            </div>
-                                            <div className="flex w-full items-center text-center justify-center">
-                                                <div key="0" className="flex w-5/6 items-end gap-2">
-                                                    <div className="rounded-lg bg-zinc-200 p-2" style={{ background: chatbotBubbleColor }}>
-                                                        <p className="text-md" style={{ color: chatbotMessageColor }}>Welcome to OpenAssitantGPT! How can we help you?</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            name="userReply"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
-                                    <div className="space-y-4">
-                                        <h1>Customize Your User Reply</h1>
-                                        <div className="flex">
-                                            <div className="flex flex-col w-full justify space-y-4">
-                                                <div className="space-y-0.5">
-                                                    <FormLabel className="text-base">
-                                                        User Background Message Color
-                                                    </FormLabel>
-                                                    <FormDescription>
-                                                        Choose the color for the background of your user&apos;s messages.
-                                                    </FormDescription>
-                                                    <FormControl>
-                                                        <GradientPicker background={userBubbleColor} setBackground={setUserBubbleColor} />
-                                                    </FormControl>
-                                                </div>
-
-                                                <div className="space-y-0.5">
-                                                    <FormLabel className="text-base">
-                                                        User Message Text Color
-                                                    </FormLabel>
-                                                    <FormDescription>
-                                                        Choose the color for the text in your user&apos;s messages.
-                                                    </FormDescription>
-                                                    <FormControl>
-                                                        <GradientPicker withGradient={false} background={userBubbleMessageColor} setBackground={setUserBubbleMessageColor} />
-                                                    </FormControl>
-                                                </div>
-
-                                            </div>
-                                            <div className="flex w-full items-center text-center justify-center">
-                                                <div key="0" className="flex w-5/6 items-end gap-2">
-                                                    <div className="rounded-lg bg-zinc-200 p-2" style={{ background: userBubbleColor }}>
-                                                        <p className="text-md" style={{ color: userBubbleMessageColor }}>I need help with my customization what color should I choose?</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </FormItem>
-                            )}
-                        />
-
                     </div>
                 </div>
                 <button

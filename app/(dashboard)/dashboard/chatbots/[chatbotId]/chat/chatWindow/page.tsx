@@ -5,7 +5,7 @@ import { db } from "@/lib/db"
 
 
 interface ChatbotSettingsProps {
-    params: { chatbotId: string, defaultMessage: string }
+    params: { chatbotId: string, defaultMessage: string, withExitX: boolean }
 }
 
 async function getChatbotForUser(chatbotId: Chatbot["id"]) {
@@ -27,6 +27,6 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
     console.log(params)
 
     return (
-        <Chat chatbot={chatbot} defaultMessage={params.defaultMessage || ""}></Chat>
+        <Chat chatbot={chatbot} withExitX={params.withExitX} defaultMessage={params.defaultMessage || ""}></Chat>
     )
 }

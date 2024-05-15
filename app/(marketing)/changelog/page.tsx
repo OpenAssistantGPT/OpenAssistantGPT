@@ -13,6 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.2"
+                    date="2024-05-10"
+                    new={[
+                        {
+                            title: 'New Chatbox UI in IFrame',
+                            description:
+                                "You can now embed the chatbox in your website using an IFrame. This will prevent CSS conflicts and provide a smoother user experience.",
+                            image: new URL(
+                                '/public/chatbox-iframe.png',
+                                import.meta.url,
+                            ).toString(),
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.2.1"
                     date="2024-05-10"
                     new={[
