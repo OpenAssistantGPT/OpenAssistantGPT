@@ -113,12 +113,22 @@ export async function POST(req: Request) {
       return new Response("Invalid OpenAI API key", { status: 400, statusText: "Invalid OpenAI API key" })
     }
 
+    const batch = await openai.beta.vectorStores.create({
+      name: `Vector Store - ${body.name}`,
+      file_ids: files.map((file) => file.openAIFileId)
+    }
+    );
+
     const createdChatbot = await openai.beta.assistants.create({
       name: body.name,
       instructions: body.prompt,
       model: model.name,
-      tools: [{ type: "retrieval" }],
-      file_ids: files.map((file) => file.openAIFileId),
+      tools: [{ type: "file_search" }],
+      tool_resources: {
+        file_search: {
+          vector_store_ids: [batch.id],
+        },
+      }
     })
 
     const chatbot = await db.chatbot.create({
