@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  </style>
+</head>
+<script>
+  // minify with https://www.toptal.com/developers/javascript-minifier
+  //window.addEventListener("message", function (t) { if ("openChat" === t.data) { console.log("Toggle chat visibility"); var e = document.getElementById("openassistantgpt-chatbot-iframe"); e ? (e.style.display = "block", e.style.pointerEvents = "auto") : console.error("iframe not found") } if ("closeChat" === t.data) { var e = document.getElementById("openassistantgpt-chatbot-iframe"); e && (e.style.display = "none", e.style.pointerEvents = "none") } });
+  window.addEventListener('message', function (event) {
+    var iframe = document.getElementById('openassistantgpt-chatbot-iframe');
+    var buttonIframe = document.getElementById('openassistantgpt-chatbot-button-iframe');
+
+    if (event.data === 'openChat') {
+      console.log('Toggle chat visibility');
+      if (iframe && buttonIframe) {
+        // send openChat to iframe
+        iframe.contentWindow.postMessage('openChat', '*');
+        buttonIframe.contentWindow.postMessage('openChat', '*');
+        iframe.style.pointerEvents = 'auto';
+        iframe.style.display = 'block';
+        // Check if the screen width is less than 640 pixels
+        if (window.innerWidth < 640) {
+          // Make the iframe fullscreen
+          iframe.style.position = 'fixed';
+          iframe.style.width = '100%';
+          iframe.style.height = '100%';
+          iframe.style.top = '0';
+          iframe.style.left = '0';
+          iframe.style.zIndex = '9999';
+        } else {
+          // remove fullscreen
+          iframe.style.position = 'fixed';
+          iframe.style.width = '30rem';
+          iframe.style.height = '65vh';
+          iframe.style.bottom = '0';
+          iframe.style.right = '0';
+
+          iframe.style.top = '';
+          iframe.style.left = '';
+        }
+      } else {
+        // insert an iframe in the body
+        console.error('iframe not found');
+      }
+    }
+
+    if (event.data === 'closeChat') {
+      // No need to redefine iframe here, already defined above
+      if (iframe && buttonIframe) {
+        iframe.style.display = 'none';
+        iframe.style.pointerEvents = 'none';
+        // send openChat to iframe
+        iframe.contentWindow.postMessage('closeChat', '*');
+        buttonIframe.contentWindow.postMessage('closeChat', '*');
+      }
+    }
+  });
+
+</script>
+
+<body>
+
+  <iframe src="http://localhost:3000/embed/clq5598dc000hrrwh5zvt6s1m/button?chatbox=false"
+    style="margin-right: 1rem; margin-bottom: 1rem; position: fixed; right: 0; bottom: 0; width: 56px; height: 56px; border: 0; border-color: rgb(0, 0, 0); border-radius: 50%; color-scheme: none; background: none;"
+    id="openassistantgpt-chatbot-button-iframe"></iframe>
+  <iframe src="http://localhost:3000/embed/clq5598dc000hrrwh5zvt6s1m/window?chatbox=false&withExitX=true"
+    style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
+    allowfullscreen id="openassistantgpt-chatbot-iframe"></iframe>
+  <!-- ... other body elements ... -->
+  tgasdf
+  <br />
+  as
+  tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br /> tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as tgasdf
+  <br />
+  as
+</body>
+
+</html>
