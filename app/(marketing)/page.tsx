@@ -77,7 +77,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="font-bold">OpenAI Assistants</h3>
                 <p className="text-sm">
-                  We use OpenAI Assistant to power our chatbots. You can use GPT-4 or GTP-3.5
+                  We use OpenAI Assistant to power our chatbots. You can use GPT-4, GTP-3.5 and GPT-4o
                 </p>
               </div>
             </div>

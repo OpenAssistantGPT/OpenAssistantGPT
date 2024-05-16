@@ -3,7 +3,6 @@
  * @see https://v0.dev/t/q78qlbK
  */
 import { AccordionTrigger, AccordionContent, AccordionItem, Accordion } from "@/components/ui/accordion"
-import { CardContent, Card } from "@/components/ui/card"
 
 export function FAQ() {
   return (
@@ -16,6 +15,7 @@ export function FAQ() {
           OpenAssistantGPT is an advanced chatbot solution designed to answer questions, assist with navigating our website, and provide information to users in real-time.
         </AccordionContent>
       </AccordionItem>
+
       <AccordionItem value="item-1">
         <AccordionTrigger className="hover:underline-none">
           What are OpenAI assistants?
@@ -55,6 +55,14 @@ export function FAQ() {
         </AccordionTrigger>
         <AccordionContent className="text-muted-foreground">
           OpenAssistantGPT complements our human customer service by handling straightforward questions and issues, allowing our human team to focus on more complex inquiries.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-6">
+        <AccordionTrigger className="hover:underline-none">
+          Which model do you support with OpenAssistantGPT?
+        </AccordionTrigger>
+        <AccordionContent className="text-muted-foreground">
+          We support the GPT-3, GPT-4 and GPT-4o model from OpenAI.
         </AccordionContent>
       </AccordionItem>
     </Accordion>
