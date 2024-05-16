@@ -12,6 +12,12 @@ import { Icons } from "@/components/icons"
 import { CodeBlock } from "@/components/ui/codeblock"
 import { siteConfig } from "@/config/site"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -56,6 +62,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
+            <Card>
             <Tabs className="w-full" defaultValue="widget">
                 <TabsList className="mb-10 grid w-full grid-cols-5 gap-4">
                     <TabsTrigger value="widget">Widget</TabsTrigger>
@@ -138,8 +145,8 @@ export default function Chatbot() {
                         </CodeBlock>
                     </div>
                 </TabsContent>
-            </Tabs >
-
+            </Tabs>
+            </Card>
         </DashboardShell >
     )
 }
