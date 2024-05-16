@@ -49,6 +49,15 @@ export function ChatMessage({ message, children, ...props }: ChatMessageProps) {
                             },
                             code({ node, className, children, ...props }) {
                                 const match = /language-(\w+)/.exec(className || '')
+
+                                if (!match) {
+                                    return (
+                                        <code className={className} {...props}>
+                                            {children}
+                                        </code>
+                                    )
+                                }
+
                                 if (match && (match[1] === 'math' || match[1] === 'latex')) {
                                     return (
                                         <MathJaxContext>
