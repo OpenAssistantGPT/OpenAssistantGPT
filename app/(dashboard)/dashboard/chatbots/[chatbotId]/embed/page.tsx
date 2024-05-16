@@ -56,7 +56,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
-            <Tabs className="w-full" defaultValue="widget">
+            <Tabs className="w-full overflow-x-auto max-w-full" defaultValue="widget">
                 <TabsList className="mb-10 grid w-full grid-cols-5 gap-4">
                     <TabsTrigger value="widget">Widget</TabsTrigger>
                     <TabsTrigger value="window">Window</TabsTrigger>
@@ -138,8 +138,7 @@ export default function Chatbot() {
                         </CodeBlock>
                     </div>
                 </TabsContent>
-            </Tabs >
-
+            </Tabs>
         </DashboardShell >
     )
 }
