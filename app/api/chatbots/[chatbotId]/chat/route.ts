@@ -48,6 +48,7 @@ export async function POST(
         const input: {
             threadId: string | null;
             message: string;
+            clientSidePrompt: string;
         } = await req.json();
 
         // Create a thread if needed
@@ -87,8 +88,9 @@ export async function POST(
                     }
 
                     // Run the assistant on the thread
-                    const runStream = openai.beta.threads.runs.createAndStream(threadId, {
+                    const runStream = openai.beta.threads.runs.stream(threadId, {
                         assistant_id: chatbot.openaiId,
+                        instructions: input.clientSidePrompt.replace('+', '') || "",
                     });
 
                     let runResult = await forwardStream(runStream);

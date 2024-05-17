@@ -46,6 +46,10 @@ export const docsConfig: DocsConfig = {
                 },
                 {
                     title: "Pricing",
+                    href: "/docs/documentation/embed",
+                },
+                {
+                    title: "Pricing",
                     href: "/docs/pricing",
                 },
                 {

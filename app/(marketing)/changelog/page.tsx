@@ -13,6 +13,17 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.3"
+                    date="2024-05-17"
+                    new={[
+                        {
+                            title: 'New Client Side Prompt in Chatbox IFrame',
+                            description:
+                                "It is now possible to use client side prompt on your chatbot for more personalization depending on the context. Heres's how you can use it '&clientSidePrompt=You are currently talking to {User X} help him to understand the book {Book Name X}.' You can find more information in our documentation.",
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.2"
                     date="2024-05-10"
                     new={[
@@ -28,7 +39,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.1"
                     date="2024-05-10"
                     new={[
@@ -44,7 +54,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.0"
                     date="2024-05-10"
                     new={[
@@ -60,7 +69,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.1.2"
                     date="2024-05-1"
                     new={[
@@ -76,7 +84,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.1.1"
                     date="2024-04-28"
                     new={[
