@@ -77,7 +77,7 @@ export function ChatMessage({ message, children, ...props }: ChatMessageProps) {
                             }
                         }}
                     >
-                        {message.content}
+                        {message.content.replace(/\【.*?】/g, "")}
                     </MemoizedReactMarkdown>
                 }
                 {/*<ChatMessageActions message={message} />*/}
