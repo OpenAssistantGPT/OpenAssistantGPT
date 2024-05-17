@@ -1,0 +1,21 @@
+---
+title: Documentation - Chatbot Embed
+description: OpenAssistantGPT Chatbots.
+---
+
+When embeding a chatbot there is one way to do it and it is to use IFRAME tags in HTML. You can find the code to add on your website when you click on a chatbot options.
+
+We offer different feature when embedding a chatbot like client side prompt.
+
+Adding a client-side prompt override feature to a chatbot makes it more user-friendly and flexible. With this feature, users can temporarily change how the chatbot behaves and responds to better suit their specific needs or situations. This customization happens on the user's side and doesn't affect the main settings of the chatbot on the server.
+
+
+Here's how it works:
+
+```HTML
+  <iframe src="https://www.openassistantgpt.io/embed/1234123/window?chatbox=false&clientSidePrompt=You are currently talking to {User X} help him to understand the book {Book Name X}."
+    style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
+    allowfullscreen id="openassistantgpt-chatbot-iframe"></iframe>
+```
+
+**Note**: This feature shouldn't not be used for user authentication it doesn't provide any security on the content since anyone change change the prompt client side.

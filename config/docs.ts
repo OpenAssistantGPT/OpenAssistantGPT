@@ -45,6 +45,10 @@ export const docsConfig: DocsConfig = {
                     href: "/docs/documentation/openai-assistant-api",
                 },
                 {
+                    title: "Chatbot Embedding",
+                    href: "/docs/documentation/embed",
+                },
+                {
                     title: "Pricing",
                     href: "/docs/pricing",
                 },
