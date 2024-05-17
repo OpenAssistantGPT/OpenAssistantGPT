@@ -140,7 +140,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, ..
         className={cn('pb-[200px] overflow-auto pr-2 pl-10 md:pl-20 md:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
       >
         <ChatMessage message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
-        <div className="flex-grow overflow-y-auto space-y-4 flex flex-col order-2 whitespace-pre-wrap">
+        <div className="flex-grow overflow-y-auto space-y-4 flex flex-col order-2">
           {messages.map((message: Message, index) => {
             return (
               <ChatMessage key={index} message={message} />
