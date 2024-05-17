@@ -25,10 +25,11 @@ interface ChatbotProps {
   defaultMessage: string
   className?: string
   withExitX?: boolean
+  clientSidePrompt?: string
 }
 
 
-export function Chat({ chatbot, defaultMessage, className, withExitX = false, ...props }: ChatbotProps) {
+export function Chat({ chatbot, defaultMessage, className, withExitX = false, clientSidePrompt, ...props }: ChatbotProps) {
   const [open, setOpen] = useState(false);
 
   // inquiry
@@ -38,7 +39,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, ..
   const [inquiryLoading, setInquiryLoading] = useState(false)
 
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat` });
+    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, body: { clientSidePrompt: clientSidePrompt } });
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);
