@@ -26,6 +26,7 @@ export function GradientPicker({
     const solids = [
         '#000000',
         '#FFFFFF',
+        '#e4e4e7',
         '#E2E2E2',
         '#ff75c3',
         '#ffa647',
