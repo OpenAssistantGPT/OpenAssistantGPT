@@ -62,7 +62,7 @@ model Chatbot {
   chatbotReplyBackgroundColor String @default("#e4e4e7")
   chatbotReplyTextColor       String @default("#000000")
   userReplyBackgroundColor    String @default("#e4e4e7")
-  userReplyTextColor          String @default("#FFFFFF")
+  userReplyTextColor          String @default("#000000")
 
   inquiryEnabled                  Boolean @default(false)
   inquiryLinkText                 String  @default("Contact our support team")
