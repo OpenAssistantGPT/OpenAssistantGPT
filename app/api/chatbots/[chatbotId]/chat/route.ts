@@ -4,6 +4,7 @@ import OpenAI from "openai"
 import { z } from "zod"
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { AssistantResponse } from 'ai';
+import { Message } from "openai/resources/beta/threads/messages.mjs";
 
 export const maxDuration = 300;
 
@@ -124,7 +125,7 @@ export async function POST(
                     }
 
                     // Get new thread messages (after our message)
-                    const responseMessages = (
+                    const responseMessages: Message[] = (
                         await openai.beta.threads.messages.list(threadId, {
                             after: createdMessage.id,
                             order: 'asc',
@@ -132,13 +133,22 @@ export async function POST(
                     ).data;
 
                     for (const message of responseMessages) {
+                        let response = ''
+                        if (message.content[0].type == 'text') {
+                            response = message.content[0].text.value
+                        } else if (message.content[0].type == 'image_file') {
+                            response = message.content[0].image_file.file_id
+                        } else if (message.content[0].type == 'image_url') {
+                            response = message.content[0].image_url.url
+                        }
+
                         await db.message.create({
                             data: {
                                 chatbotId: params.chatbotId,
                                 userId: chatbot.userId,
                                 message: input.message,
                                 threadId: threadId,
-                                response: message.content[0].text.value,
+                                response: response,
                                 from: req.headers.get("origin") || "unknown",
                             }
                         })
