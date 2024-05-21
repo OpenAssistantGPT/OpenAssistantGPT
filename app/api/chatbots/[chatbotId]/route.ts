@@ -171,13 +171,32 @@ export async function PATCH(
       }
     })
 
+    // list if vectors are already created
+    const vectorStores = await openai.beta.vectorStores.list();
+    const vectorStore = vectorStores.data.find((vectorStore) => vectorStore.name === `Vector Store - ${body.name}`);
+
+    if (vectorStore) {
+      await openai.beta.vectorStores.del(vectorStore.id);
+    }
+
+    const batch = await openai.beta.vectorStores.create({
+      name: `Vector Store - ${body.name}`,
+      file_ids: files.map((file) => file.openAIFileId)
+    }
+    );
+
     await openai.beta.assistants.update(
       chatbot.openaiId,
       {
         name: chatbot.name,
         instructions: chatbot.prompt,
         model: model?.name,
-        file_ids: files.map((file) => file.openAIFileId),
+        tools: [{ type: "file_search" }],
+        tool_resources: {
+          file_search: {
+            vector_store_ids: [batch.id],
+          },
+        }
       }
     )
 
