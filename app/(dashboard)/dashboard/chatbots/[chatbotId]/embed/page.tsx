@@ -71,6 +71,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
     allowfullscreen allow="clipboard-read; clipboard-write" 
 >
 </iframe>
+ <!-- This chatbot is build using https://openassistantgpt.io/ -->
 `}>
                         </CodeBlock>
                     </div>
@@ -87,6 +88,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
   <iframe src="${siteConfig.url}embed/${params.chatbotId}/button?chatbox=false"
     style="margin-right: 1rem; margin-bottom: 1rem; position: fixed; right: 0; bottom: 0; width: 56px; height: 56px; border: 0; border: 2px solid #e2e8f0; border-radius: 50%; color-scheme: none; background: none;box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
     id="openassistantgpt-chatbot-button-iframe"></iframe>
+  <!-- This chatbot is build using https://openassistantgpt.io/ -->
   <iframe src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false&withExitX=true"
     style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
     allowfullscreen id="openassistantgpt-chatbot-iframe"></iframe>
@@ -126,6 +128,7 @@ export default function Chatbot() {
                 id="openassistantgpt-chatbot-button-iframe"
                 className="fixed bottom-0 right-0 mb-4 z-50 flex items-end inline-block mr-4 w-14 h-14 border border-gray-300 rounded-full shadow-md"
             ></iframe>
+            <!-- This chatbot is build using https://openassistantgpt.io/ -->
             <iframe
                 src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false&withExitX=true"
                 style={customStyle}
