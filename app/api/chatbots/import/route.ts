@@ -57,6 +57,15 @@ export async function POST(req: Request) {
             return new Response("Invalid OpenAI API key", { status: 400, statusText: "Invalid OpenAI API key" })
         }
 
+        try {
+            const openaiClient = new OpenAI({
+                apiKey: body.openAIKey
+            })
+            await openaiClient.beta.assistants.retrieve(body.openAIAssistantId)
+        } catch (error) {
+            return new Response("Invalid OpenAI Assistant ID", { status: 400, statusText: "Invalid OpenAI Assistant ID" })
+        }
+
         const chatbot = await db.chatbot.create({
             data: {
                 name: body.name,
