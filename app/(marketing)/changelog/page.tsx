@@ -13,6 +13,17 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.4"
+                    date="2024-05-17"
+                    improvements={[
+                        {
+                            title: 'Improve UX for chatbot',
+                            description: 'Remove auto focus on input after message.'
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.2.3"
                     date="2024-05-17"
                     new={[
