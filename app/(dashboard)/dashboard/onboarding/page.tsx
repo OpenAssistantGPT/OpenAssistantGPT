@@ -180,7 +180,11 @@ export default async function OnboardingPage() {
                   </Link>
                 </p>
               </div>
-              <Chat chatbot={chatbot!} defaultMessage=""></Chat>
+              <iframe
+              src={`/embed/${chatbot?.id}/window?chatbox=false`}
+              className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
+              allowFullScreen allow="clipboard-read; clipboard-write"
+            ></iframe>
             </div>
           }
 
