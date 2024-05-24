@@ -14,13 +14,24 @@ export default function ChangelogPage() {
                 <Release
                     isFirst={true}
                     version="0.2.4"
-                    date="2024-05-17"
+                    date="2024-05-24"
+                    new={[
+                        {
+                            title: 'Improve chatbot bubbles',
+                            description: 'Improve design of chatbot bubbles on user\'s reply.',
+                            image: new URL(
+                                '/public/new_bubbles.png',
+                                import.meta.url,
+                            ).toString()
+                        }
+                    ]}
                     improvements={[
                         {
                             title: 'Improve UX for chatbot',
-                            description: 'Remove auto focus on input after message.'
+                            description: 'Remove auto focus on input after message.',
                         },
                     ]}
+
                 />
                 <Release
                     isFirst={true}
