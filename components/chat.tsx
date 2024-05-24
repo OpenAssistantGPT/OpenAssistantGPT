@@ -47,14 +47,6 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
 
 
   useEffect(() => {
-    // Check if status has changed to "awaiting_message"
-    if (status === 'awaiting_message' && inputRef.current) {
-      // Focus on the input field
-      inputRef.current.focus();
-    }
-  }, [status]);
-
-  useEffect(() => {
     // Scroll to the bottom of the container on messages update
     document.documentElement.scrollTop = document.getElementById("end").offsetTop;
 
