@@ -26,7 +26,10 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         className={cn('pl-10 group relative mb-4 flex justify-end items-end')}
                         {...props}
                     >
-                        <p style={{ color: chatbot.userReplyTextColor, background: chatbot.userReplyBackgroundColor }} className="p-2 rounded-lg mr-4">{message.content}</p>
+                        <p style={{ color: chatbot.userReplyTextColor, background: chatbot.userReplyBackgroundColor }} className="p-2 rounded-lg mr-4">
+                            <svg  fill={chatbot.userReplyBackgroundColor} className="absolute bottom-[0px] right-11" height="14" width="13"><path d="M6 .246c-.175 5.992-1.539 8.89-5.5 13.5 6.117.073 9.128-.306 12.5-3L6 .246Z"></path></svg>
+                            {message.content}
+                        </p>
                         <div
                             className={cn(
                                 'flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
