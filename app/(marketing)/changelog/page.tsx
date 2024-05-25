@@ -14,6 +14,16 @@ export default function ChangelogPage() {
                 <Release
                     isFirst={true}
                     version="0.2.4"
+                    date="2024-05-25"
+                    new={[
+                        {
+                            title: 'Change Chatbot Logo image in chatbox',
+                            description: 'You can now update Chatbot Logo in the Chatbox, this will help you to personalize your chatbot even more.',
+                        }
+                    ]}
+                />
+                <Release
+                    version="0.2.4"
                     date="2024-05-24"
                     new={[
                         {
@@ -34,7 +44,6 @@ export default function ChangelogPage() {
 
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.3"
                     date="2024-05-17"
                     new={[
