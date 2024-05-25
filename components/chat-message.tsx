@@ -28,7 +28,7 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         {...props}
                     >
                         <p style={{ color: chatbot.userReplyTextColor, background: chatbot.userReplyBackgroundColor }} className="p-2 rounded-lg mr-4">
-                            <svg  fill={chatbot.userReplyBackgroundColor} className="absolute bottom-[0px] right-11" height="14" width="13"><path d="M6 .246c-.175 5.992-1.539 8.89-5.5 13.5 6.117.073 9.128-.306 12.5-3L6 .246Z"></path></svg>
+                            <svg fill={chatbot.userReplyBackgroundColor} className="absolute bottom-[0px] right-11" height="14" width="13"><path d="M6 .246c-.175 5.992-1.539 8.89-5.5 13.5 6.117.073 9.128-.306 12.5-3L6 .246Z"></path></svg>
                             {message.content}
                         </p>
                         <div
@@ -46,16 +46,16 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         className={cn('pr-10 group relative mb-4 flex items-start ')}
                         {...props}
                     >
-]                    { chatbot.chatbotLogoURL ? <Image className='size-8' width={50} height={50} src={chatbot.chatbotLogoURL} alt="chatbot logo" /> : 
-                        <div
-                            className={cn(
-                                'flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
-                                'bg-primary text-primary-foreground'
-                            )}
-                        >
-                            <Icons.bot />
-                        </div>
-                    }
+                        {chatbot.chatbotLogoURL ? <Image className='size-8' width={50} height={50} src={chatbot.chatbotLogoURL} alt="chatbot logo" /> :
+                            <div
+                                className={cn(
+                                    'flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
+                                    'bg-primary text-primary-foreground'
+                                )}
+                            >
+                                <Icons.bot />
+                            </div>
+                        }
                         <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
                             {message.content == "loading" ? <Icons.loading className="animate-spin" /> :
                                 <MemoizedReactMarkdown
