@@ -144,8 +144,8 @@ export function useAssistant({
       const formData = new FormData();
       formData.append("message", message.content);
       formData.append("threadId", threadIdParam ?? threadId ?? null);
-      formData.append("file", inputFile);
-      formData.append("filename", inputFile.name);
+      formData.append("file", inputFile || '');
+      formData.append("filename", inputFile || '');
   
       const result = await fetch(api, {
         method: "POST",
@@ -153,23 +153,6 @@ export function useAssistant({
         signal: abortController.signal,
         body: formData
       });
-
-
-      //const result = await fetch(api, {
-      //  method: 'POST',
-      //  credentials,
-      //  signal: abortController.signal,
-      //  headers: { 'Content-Type': 'application/json', ...headers },
-      //  body: JSON.stringify({
-      //    ...body,
-      //    // always use user-provided threadId when available:
-      //    threadId: threadIdParam ?? threadId ?? null,
-      //    message: message.content,
-
-      //    // optional request data:
-      //    data: requestOptions?.data,
-      //  }),
-      //});
 
       if (result.body == null) {
         throw new Error('The response body is empty.');

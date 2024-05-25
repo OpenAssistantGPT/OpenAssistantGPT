@@ -174,19 +174,29 @@ export async function PATCH(
     })
 
     // validate file extension to create vector store or user code interpreter
-    let body = {
-      'code_interpreter': {},
-      'file_search': {}
-    };
-    if (codeFile.includes(files[0].name.split('.').pop()?.toLocaleLowerCase()!)) {
-      body['code_interpreter'] = {
-        file_ids: files.map((file) => file.openAIFileId)
+    let bodyTools = {
+      'code_interpreter': {
+        file_ids: []
+      },
+      'file_search': {
+        vector_store_ids: []
       }
-    }
+    };
 
-    if (searchFile.includes(files[0].name.split('.').pop()!)) {
+    // validate file extension to create vector store 
+    const allFileforFileSearch = files.filter((f) => searchFile.includes(f.name.split('.').pop()!));
+    console.log(allFileforFileSearch);
+
+    const allFileforCodeInterpreter = files.filter((f) => codeFile.includes(f.name.split('.').pop()?.toLocaleLowerCase()!));
+    console.log(allFileforCodeInterpreter);
+
+    bodyTools['code_interpreter'] = {
+      file_ids: allFileforCodeInterpreter.map((f) => f.openAIFileId)
+    };
+
+    if (allFileforFileSearch.length > 0) {
       const vectorStores = await openai.beta.vectorStores.list();
-      const vectorStore = vectorStores.data.find((vectorStore) => vectorStore.name === `Vector Store - ${body.name}`);
+      const vectorStore = vectorStores.data.find((vs) => vs.name === `Vector Store - ${body.name}`);
 
       if (vectorStore) {
         await openai.beta.vectorStores.del(vectorStore.id);
@@ -194,13 +204,12 @@ export async function PATCH(
 
       const batch = await openai.beta.vectorStores.create({
         name: `Vector Store - ${body.name}`,
-        file_ids: files.map((file) => file.openAIFileId)
-      }
-      );
+        file_ids: allFileforFileSearch.map((f) => f.openAIFileId)
+      });
 
-      body['file_search'] = {
+      bodyTools['file_search'] = {
         vector_store_ids: [batch.id]
-      }
+      };
     }
 
     await openai.beta.assistants.update(
@@ -209,9 +218,9 @@ export async function PATCH(
         name: chatbot.name,
         instructions: chatbot.prompt,
         model: model?.name,
-        tools: [{ type: "file_search" }],
+        tools: [{ type: "file_search" }, { type: "code_interpreter" }],
         tool_resources: {
-          ...body
+          ...bodyTools
         }
       }
     )

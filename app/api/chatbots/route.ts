@@ -47,17 +47,17 @@ export async function POST(req: Request) {
 
     // Validate user subscription plan
     const { user } = session
-    //const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+    const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
-    //const count = await db.chatbot.count({
-    //  where: {
-    //    userId: user.id,
-    //  },
-    //})
+    const count = await db.chatbot.count({
+      where: {
+        userId: user.id,
+      },
+    })
 
-    //if (count >= subscriptionPlan.maxChatbots) {
-    //  throw new RequiresHigherPlanError()
-    //}
+    if (count >= subscriptionPlan.maxChatbots) {
+      throw new RequiresHigherPlanError()
+    }
 
     const json = await req.json()
     const body = chatbotSchema.parse(json)
@@ -118,19 +118,28 @@ export async function POST(req: Request) {
 
     // validate file extension to create vector store or user code interpreter
     let bodyTools = {
-      'code_interpreter': {},
-      'file_search': {}
+      'code_interpreter': {
+        file_ids: []
+      },
+      'file_search': {
+        vector_store_ids: []
+      }
     };
 
-    if (codeFile.includes(files[0].name.split('.').pop()?.toLocaleLowerCase()!)) {
-      bodyTools['code_interpreter'] = {
-        file_ids: files.map((file) => file.openAIFileId)
-      }
-    }
+    // validate file extension to create vector store 
+    const allFileforFileSearch = files.filter((f) => searchFile.includes(f.name.split('.').pop()!));
+    console.log(allFileforFileSearch);
 
-    if (searchFile.includes(files[0].name.split('.').pop()!)) {
+    const allFileforCodeInterpreter = files.filter((f) => codeFile.includes(f.name.split('.').pop()?.toLocaleLowerCase()!));
+    console.log(allFileforCodeInterpreter);
+
+    bodyTools['code_interpreter'] = {
+      file_ids: allFileforCodeInterpreter.map((f) => f.openAIFileId)
+    };
+
+    if (allFileforFileSearch.length > 0) {
       const vectorStores = await openai.beta.vectorStores.list();
-      const vectorStore = vectorStores.data.find((vectorStore) => vectorStore.name === `Vector Store - ${body.name}`);
+      const vectorStore = vectorStores.data.find((vs) => vs.name === `Vector Store - ${body.name}`);
 
       if (vectorStore) {
         await openai.beta.vectorStores.del(vectorStore.id);
@@ -138,20 +147,19 @@ export async function POST(req: Request) {
 
       const batch = await openai.beta.vectorStores.create({
         name: `Vector Store - ${body.name}`,
-        file_ids: files.map((file) => file.openAIFileId)
-      }
-      );
+        file_ids: allFileforFileSearch.map((f) => f.openAIFileId)
+      });
 
       bodyTools['file_search'] = {
         vector_store_ids: [batch.id]
-      }
+      };
     }
 
     const createdChatbot = await openai.beta.assistants.create({
       name: body.name,
       instructions: body.prompt,
       model: model.name,
-      tools: [{ type: "file_search" }, { type: "code_interpreter"}],
+      tools: [{ type: "file_search" }, { type: "code_interpreter" }],
       tool_resources: {
         ...bodyTools
       }

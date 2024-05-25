@@ -44,25 +44,13 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   const [chatThreadId, setChatThreadId] = useState<string | null>()
 
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files[0], threadId: chatThreadId || '', body: { clientSidePrompt: clientSidePrompt } });
+    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined , threadId: chatThreadId || '', body: { clientSidePrompt: clientSidePrompt } });
 
   useEffect(() => {
     if (threadId) {
       setChatThreadId(threadId)
     }
   },[threadId])
-
-
-  //async function submitMessage(e: React.FormEvent<HTMLFormElement>) {
-  //  e.preventDefault()
-  //  if (input === '') {
-  //    return
-  //  }
-  //  await submitMessage(e)
-
-  //  //inputFileRef.current?.value = null
-  //}
-
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);

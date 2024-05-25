@@ -22,15 +22,16 @@ export async function POST(request: Request) {
 
         // Validate user subscription plan
         const { user } = session
-        //const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-        //const count = await db.file.count({
-        //    where: {
-        //        userId: user.id,
-        //    },
-        //})
-        //if (count >= subscriptionPlan.maxFiles) {
-        //    throw new RequiresHigherPlanError()
-        //}
+        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+        const count = await db.file.count({
+            where: {
+                userId: user.id,
+            },
+        })
+
+        if (count >= subscriptionPlan.maxFiles) {
+            throw new RequiresHigherPlanError()
+        }
 
         const { searchParams } = new URL(request.url);
         const filename = searchParams.get('filename');
