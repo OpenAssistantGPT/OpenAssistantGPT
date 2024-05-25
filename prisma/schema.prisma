@@ -55,14 +55,15 @@ model Chatbot {
   chatTitle              String  @default("Chat with us")
   chatMessagePlaceHolder String  @default("Type a message...")
 
-  bubbleColor                 String @default("#FFFFFF")
-  bubbleTextColor             String @default("#000000")
-  chatHeaderBackgroundColor   String @default("#FFFFFF")
-  chatHeaderTextColor         String @default("#000000")
-  chatbotReplyBackgroundColor String @default("#e4e4e7")
-  chatbotReplyTextColor       String @default("#000000")
-  userReplyBackgroundColor    String @default("#e4e4e7")
-  userReplyTextColor          String @default("#000000")
+  bubbleColor                 String  @default("#FFFFFF")
+  bubbleTextColor             String  @default("#000000")
+  chatHeaderBackgroundColor   String  @default("#FFFFFF")
+  chatHeaderTextColor         String  @default("#000000")
+  chatbotReplyBackgroundColor String  @default("#e4e4e7")
+  chatbotReplyTextColor       String  @default("#000000")
+  userReplyBackgroundColor    String  @default("#e4e4e7")
+  userReplyTextColor          String  @default("#000000")
+  chatbotLogoURL              String?
 
   inquiryEnabled                  Boolean @default(false)
   inquiryLinkText                 String  @default("Contact our support team")

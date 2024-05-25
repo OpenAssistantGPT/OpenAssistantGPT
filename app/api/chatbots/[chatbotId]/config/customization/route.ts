@@ -2,7 +2,8 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { RequiresHigherPlanError } from "@/lib/exceptions";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { customizationSchema } from "@/lib/validations/customization";
+import { customizationStringBackendSchema } from "@/lib/validations/customization";
+import { put } from "@vercel/blob";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 
@@ -43,15 +44,23 @@ export async function PATCH(
             throw new RequiresHigherPlanError()
         }
 
-        const body = await req.json()
-        const payload = customizationSchema.parse(body)
+        const formData = await req.formData();
+        const payload = customizationStringBackendSchema.parse(Object.fromEntries(formData));
+
+        let blob = undefined
+        if (payload.chatbotLogoFilename !== '' && payload.chatbotLogo !== '') {
+            blob = await put(payload.chatbotLogoFilename || "", payload.chatbotLogo, {
+                access: 'public',
+            });
+            console.log(blob)
+        }   
 
         const chatbot = await db.chatbot.update({
             where: {
-                id: params.chatbotId
+                id: params.chatbotId,
             },
             data: {
-                displayBranding: payload.displayBranding,
+                displayBranding: payload.displayBranding === 'true' ? true : false,
                 chatTitle: payload.chatTitle,
                 chatMessagePlaceHolder: payload.chatMessagePlaceHolder,
                 bubbleColor: payload.bubbleColor,
@@ -60,13 +69,14 @@ export async function PATCH(
                 chatHeaderTextColor: payload.chatHeaderTextColor,
                 userReplyBackgroundColor: payload.userReplyBackgroundColor,
                 userReplyTextColor: payload.userReplyTextColor,
+                chatbotLogoURL: blob ? blob.url : '',
             },
             select: {
                 id: true,
                 name: true,
                 displayBranding: true,
             },
-        })
+        });
 
         return new Response(JSON.stringify(chatbot))
     } catch (error) {

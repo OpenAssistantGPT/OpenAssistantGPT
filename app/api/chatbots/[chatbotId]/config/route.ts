@@ -39,6 +39,7 @@ export async function GET(
                 inquirySendButtonText: true,
                 inquiryAutomaticReplyText: true,
                 inquiryDisplayLinkAfterXMessage: true,
+                chatbotLogoURL: true,
             },
             where: {
                 id: params.chatbotId,
