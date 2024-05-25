@@ -13,7 +13,7 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
-                    version="0.2.4"
+                    version="0.2.5"
                     date="2024-05-25"
                     new={[
                         {
