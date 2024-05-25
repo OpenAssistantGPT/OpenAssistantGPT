@@ -4,6 +4,7 @@ import remarkMath from 'remark-math'
 
 import { MathJax, MathJaxContext } from 'better-react-mathjax'
 
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { CodeBlock } from '@/components/ui/codeblock'
 import { MemoizedReactMarkdown } from '@/components/markdown'
@@ -45,6 +46,7 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         className={cn('pr-10 group relative mb-4 flex items-start ')}
                         {...props}
                     >
+                    { chatbot.chatbotLogoURL ? <Image className='border shadow rounded-md size-8' width={50} height={50} src={chatbot.chatbotLogoURL} alt="chatbot logo" /> : 
                         <div
                             className={cn(
                                 'flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
@@ -53,6 +55,7 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         >
                             <Icons.bot />
                         </div>
+                    }
                         <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
                             {message.content == "loading" ? <Icons.loading className="animate-spin" /> :
                                 <MemoizedReactMarkdown
