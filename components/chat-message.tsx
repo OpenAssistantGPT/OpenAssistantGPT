@@ -46,7 +46,7 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         className={cn('pr-10 group relative mb-4 flex items-start ')}
                         {...props}
                     >
-                    { chatbot.chatbotLogoURL ? <Image className='border shadow rounded-md size-8' width={50} height={50} src={chatbot.chatbotLogoURL} alt="chatbot logo" /> : 
+]                    { chatbot.chatbotLogoURL ? <Image className='size-8' width={50} height={50} src={chatbot.chatbotLogoURL} alt="chatbot logo" /> : 
                         <div
                             className={cn(
                                 'flex size-8 shrink-0 select-none items-center justify-center rounded-md border shadow',
