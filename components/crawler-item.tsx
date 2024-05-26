@@ -20,10 +20,10 @@ export function CrawlerItem({ crawler }: CrawlerItemProps) {
                     {crawler.name}
                 </Link>
                 <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-md text-muted-foreground">
                         {crawler.crawlUrl}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-md text-muted-foreground">
                         {formatDate(crawler.createdAt?.toDateString())}
                     </p>
                 </div>

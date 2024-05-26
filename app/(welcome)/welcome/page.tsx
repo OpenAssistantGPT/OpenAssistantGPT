@@ -52,14 +52,14 @@ export default async function Welcome() {
           <h1 className="text-2xl font-semibold tracking-tight">
             Welcome to {siteConfig.name}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-md text-muted-foreground">
             Let&apos;s get started with creating your first chatbot. We highly recommend you to go through our onboarding process to get started.
           </p>
           <div className="flex flex-col space-y-5 pt-10">
-            <Link data-aos="fade-left" data-aos-duration="3000" className="shadow-lg border border-gray inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary rounded text-secondary-foreground hover:bg-secondary/80" href={"/dashboard/onboarding"}>
+            <Link data-aos="fade-left" data-aos-duration="3000" className="shadow-lg border border-gray inline-flex items-center justify-center rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary rounded text-secondary-foreground hover:bg-secondary/80" href={"/dashboard/onboarding"}>
               <Button variant="secondary">Start with our Onboarding</Button>
             </Link>
-            <Link data-aos="fade-right" data-aos-duration="3000" className="shadow-lg border border-gray inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary rounded text-secondary-foreground hover:bg-secondary/80" href={"/dashboard"}>
+            <Link data-aos="fade-right" data-aos-duration="3000" className="shadow-lg border border-gray inline-flex items-center justify-center rounded-md text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary rounded text-secondary-foreground hover:bg-secondary/80" href={"/dashboard"}>
               <Button variant="secondary">Skip to dashboard</Button>
             </Link>
           </div>

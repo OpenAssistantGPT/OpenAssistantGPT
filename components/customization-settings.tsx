@@ -129,10 +129,10 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                                     <div className="space-y-0.5">
                                         <FormLabel className="text-base">
-                                            OpenAssistantGPT Branding Label
+                                            WiseChat Branding Label
                                         </FormLabel>
                                         <FormDescription>
-                                            Remove &quot;Powered by OpenAssistantGPT&quot; from the chatbot.
+                                            Remove &quot;Powered by WiseChat&quot; from the chatbot.
                                         </FormDescription>
                                     </div>
                                     <FormControl>

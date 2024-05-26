@@ -21,9 +21,15 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { chatbotSchema } from "@/lib/validations/chatbot"
 import { ChatbotModel, File, User } from "@prisma/client"
-import Select from 'react-select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-
+import ReactSelect from 'react-select';
 type FormData = z.infer<typeof chatbotSchema>
 
 interface NewChatbotProps extends React.HTMLAttributes<HTMLElement> {
@@ -46,7 +52,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
     const [availablesModels, setAvailablesModels] = useState<string[]>([])
     const [files, setFiles] = useState<File[]>([])
     const [isSaving, setIsSaving] = useState<boolean>(false)
-
+    console.log(availablesModels ,'availablesModels')
     useEffect(() => {
         const init = async () => {
             const response = await fetch('/api/models', {
@@ -87,6 +93,9 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             },
         })
         const models = await response.json()
+
+
+        console.log(models , "models")
         return models
     }
 
@@ -220,18 +229,16 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                     <FormLabel htmlFor="files">
                                         Choose your file for retrival
                                     </FormLabel>
-                                    <Select
-                                        isMulti
-                                        closeMenuOnSelect={false}
-                                        onChange={value => field.onChange(value.map((v) => v.value))}
-                                        defaultValue={field.value}
-                                        name="files"
-                                        id="files"
-                                        options={files.map((file) => ({ value: file.id, label: file.name }))}
-                                        className="basic-multi-select"
-                                        classNamePrefix="select"
+                                  
+                                    <ReactSelect 
+                                      isMulti
+                                      options={files.map(file => ({ value: file.id, label: file.name }))}
+                                      onChange={(selectedOptions) => {
+                                          const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
+                                          field.onChange(selectedValues);
+                                      }}
+                                      value={Array.isArray(field.value) ? files.filter(file => field.value.includes(file.id)).map(file => ({ value: file.id, label: file.name })) : []}
                                     />
-
                                     <FormDescription>
                                         The OpenAI model will use this file to search for specific content.
                                         If you don&apos;t have a file yet, it is because you haven&apos;t published any file.
@@ -241,6 +248,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                             )}
                         />
                         <FormField
+                        
                             control={form.control}
                             name="modelId"
                             render={({ field }) => (
@@ -248,9 +256,22 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                     <FormLabel htmlFor="modelId">
                                         OpenAI Model
                                     </FormLabel>
-                                    <Select
+                                    <Select onValueChange={field.onChange}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a model" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {/* {models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
+                                                <SelectItem key={model.id} value={model.id}>{model.name}</SelectItem>
+                                            ))} */}
+
+                                             {models.map((model) => (
+                                                <SelectItem key={model.id} value={model.id}>{model.name}</SelectItem>
+                                            ))}
+
+                                    {/* <ReactSelect
                                         onChange={value => field.onChange(value!.value)}
-                                        defaultValue={field.value}
+                                        defaultValue={models.filter((model: ChatbotModel) => model.id === chatbot.modelId).map((model: ChatbotModel) => ({ value: model.id, label: model.name }))[0]}
                                         id="modelId"
                                         options={
                                             models.filter((model: ChatbotModel) => availablesModels.includes(model.name)).map((model: ChatbotModel) => (
@@ -259,7 +280,9 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                         }
                                         className="basic-multi-select"
                                         classNamePrefix="select"
-                                    />
+                                    /> */}
+                                        </SelectContent>
+                                    </Select>
                                     <FormDescription>
                                         The OpenAI model that will be used to generate responses.
                                         <b> If you don&apos;t have the gpt-4 option and want to use it. You need to have an OpenAI account at least tier 1.</b>

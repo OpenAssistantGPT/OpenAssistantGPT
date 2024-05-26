@@ -22,7 +22,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
     }
 
     return (
-        <nav className="flex flex-col justify-between h-full gap-2">
+        <nav className="flex flex-col justify-center h-250px gap-10">
             <div>
                 {items.map((item, index) => {
                     const Icon = Icons[item.icon || "arrowRight"]
@@ -31,7 +31,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
                             <Link key={index} href={item.disabled ? "/" : item.href}>
                                 <span
                                     className={cn(
-                                        "group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                                        "group flex items-center rounded-md px-3 py-2 text-md font-medium hover:bg-accent hover:text-accent-foreground",
                                         path === item.href ? "bg-accent" : "transparent",
                                         item.disabled && "cursor-not-allowed opacity-80"
                                     )}
@@ -44,17 +44,21 @@ export function DashboardNav({ items }: DashboardNavProps) {
                     )
                 })}
             </div>
+
+            <div  className=" mt-60">
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-sm">Upgrade your plan</CardTitle>
+                    <CardTitle className="text-lg">Upgrade your plan</CardTitle>
                     <CardDescription className="text-xs">
                         Unlock more features by upgrading your plan and get premium support.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <UpgradePlanButton size="sm" />
+                    <UpgradePlanButton size="lg" />
                 </CardContent>
             </Card>
+            </div>
+            
         </nav>
     )
 }

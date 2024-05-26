@@ -47,11 +47,11 @@ export function SiteFooter({ simpleFooter, className }: SiteFooterProps) {
           </div>
         }
         <div className="flex justify-between items-center border-t border-gray-200 mt-8 pt-4">
-          <div className="text-sm text-gray-500 flex flex-row"> <Icons.bot className="mr-2" /> © 2023 {siteConfig.name}. All rights reserved.</div>
+          <div className="text-md text-gray-500 flex flex-row"> <Icons.bot className="mr-2" /> © 2023 {siteConfig.name}. All rights reserved.</div>
           <div className="flex items-center space-x-4">
-            <Link className="text-sm text-gray-500 hover:text-blue-500" href="#">
+            <Link className="text-md text-gray-500 hover:text-blue-500" href="#">
             </Link>
-            <Link className="text-sm text-gray-500 hover:text-blue-500" href="#">
+            <Link className="text-md text-gray-500 hover:text-blue-500" href="#">
             </Link>
           </div>
         </div>

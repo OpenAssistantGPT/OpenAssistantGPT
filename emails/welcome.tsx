@@ -31,8 +31,8 @@ export default function WelcomeEmail({ name }: WelcomeEmailProps) {
                         <Heading className="text-2xl font-normal text-center p-0 my-8 mx-0">
                             Welcome to {siteConfig.name}!
                         </Heading>
-                        <Text className="text-sm">Hello {name},</Text>
-                        <Text className="text-sm">
+                        <Text className="text-md">Hello {name},</Text>
+                        <Text className="text-md">
                             We're excited to have you onboard at <span>{siteConfig.name}</span>. We
                             hope you enjoy your journey with us. If you have any questions or
                             need assistance, feel free to reach out.
@@ -48,7 +48,7 @@ export default function WelcomeEmail({ name }: WelcomeEmailProps) {
                                 Get Started
                             </Button>
                         </Section>
-                        <Text className="text-sm">
+                        <Text className="text-md">
                             Cheers,
                             <br />
                             The {siteConfig.name} Team

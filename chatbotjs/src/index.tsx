@@ -14,8 +14,8 @@ document.body.appendChild(rootDiv);
 const root = createRoot(document.getElementById('chatbot-root'));
 
 root.render(
-    <ShadowRootComponent styleUrl="https://www.openassistantgpt.io/chatbot.css">
-        <noscript>This chatbot is built using OpenAssistantGPT https://www.openassistantgpt.io/</noscript>
+    <ShadowRootComponent styleUrl="https://www.WiseChat.live/chatbot.css">
+        <noscript>This chatbot is built using WiseChat https://www.WiseChat.live/</noscript>
         <ChatBox />
     </ShadowRootComponent>
 );

@@ -36,8 +36,8 @@ export default function InquiryEmail({ ownerName, userEmail, userInquiry, chatbo
                         <Heading className="text-2xl font-normal text-center p-0 my-8 mx-0">
                             You have a new user inquiry from {userEmail} !
                         </Heading>
-                        <Text className="text-sm">Hello {ownerName},</Text>
-                        <Text className="text-sm">
+                        <Text className="text-md">Hello {ownerName},</Text>
+                        <Text className="text-md">
                             You have received a new inquiry from a user. Here are the details:
 
                             <br />
@@ -59,7 +59,7 @@ export default function InquiryEmail({ ownerName, userEmail, userInquiry, chatbo
                                 Open Inquiries Dashboard
                             </Button>
                         </Section>
-                        <Text className="text-sm">
+                        <Text className="text-md">
                             Cheers,
                             <br />
                             The {siteConfig.name} Team

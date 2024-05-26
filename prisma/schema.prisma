@@ -1,7 +1,7 @@
 datasource db {
   provider  = "postgresql"
   url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_DIRECT_URL")
+  directUrl = env("POSTGRES_URL")
 }
 
 generator client {
@@ -182,6 +182,7 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
+  password      String
   emailVerified DateTime?
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")

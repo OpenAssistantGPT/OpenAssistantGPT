@@ -98,7 +98,7 @@ export default async function OnboardingPage() {
                 </CardHeader>
                 {currentStep == 1 &&
                   <CardContent>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-md text-gray-500">
                       This step is where we configure your OpenAI API Key. You will have to go <a target="_blank" className="underline" href="https://platform.openai.com/account/api-keys">here</a> to create your API Key. Once you have it, you can paste it in the form below.
                     </p>
                   </CardContent>
@@ -114,7 +114,7 @@ export default async function OnboardingPage() {
 
                 {currentStep == 2 &&
                   <CardContent>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-md text-gray-500">
                       This step is where you upload a file for your chatbot to use. This file can be a PDF, a Word document, or a text file. It will be used to train your chatbot.
                     </p>
                   </CardContent>
@@ -130,7 +130,7 @@ export default async function OnboardingPage() {
 
                 {currentStep == 3 &&
                   <CardContent>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-md text-gray-500">
                       This step is where you create your first smart chatbot. Then we will be able to chat with him. 🤖
                     </p>
                   </CardContent>
@@ -146,7 +146,7 @@ export default async function OnboardingPage() {
 
                 {currentStep == 4 &&
                   <CardContent>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-md text-gray-500">
                       Chat with your chatbot for the first time! 🎉
                     </p>
                   </CardContent>
@@ -169,10 +169,10 @@ export default async function OnboardingPage() {
             <div>
               <div className="mb-4 bg-blue-100 border-l-4 border-blue-500 text-black p-4" role="info">
                 <p className="font-bold text-md">Congratulations 🎉 </p>
-                <p className="text-sm">Now that your first chatbot is created your now chat with him.</p>
-                <p className="text-sm">There is still one more step if you want to embed the chatbot in your website like we did for this website you are currently in.</p>
+                <p className="text-md">Now that your first chatbot is created your now chat with him.</p>
+                <p className="text-md">There is still one more step if you want to embed the chatbot in your website like we did for this website you are currently in.</p>
                 <br />
-                <p className="borderinline-flex items-center text-sm justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background" >
+                <p className="borderinline-flex items-center text-md justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background" >
                   <Link href={`/dashboard/chatbots/${chatbot!.id}/embed`} className="flex w-full">
                     <Button>
                       See how to embed our chatbot on your website

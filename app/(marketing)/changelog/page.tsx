@@ -153,7 +153,7 @@ function Release(props: { isFirst?: boolean; version: string; date: string; new?
                         {props.new?.map((item, index) => (
                             <div className="mb-2" key={`new-${index}`}>
                                 <div className="font-bold pb-1 text-base">🎉 {item.title}</div>
-                                <div className="text-neutral-500 text-sm pb-3">
+                                <div className="text-neutral-500 text-md pb-3">
                                     {item.description}
                                 </div>
                                 {item.image && (
@@ -176,7 +176,7 @@ function Release(props: { isFirst?: boolean; version: string; date: string; new?
                         {props.improvements?.map((item, index) => (
                             <div className="mb-2" key={`improvements-${index}`}>
                                 <div className="font-bold pb-1 text-base">🚀 {item.title}</div>
-                                <div className="text-neutral-500 text-sm pb-3">
+                                <div className="text-neutral-500 text-md pb-3">
                                     {item.description}
                                 </div>
                                 {item.image && (
@@ -199,7 +199,7 @@ function Release(props: { isFirst?: boolean; version: string; date: string; new?
                         {props.bugs?.map((item, index) => (
                             <div className="mb-2" key={`bugs-${index}`}>
                                 <div className="font-bold pb-1 text-base">🐛 {item.title}</div>
-                                <div className="text-neutral-500 text-sm pb-3">
+                                <div className="text-neutral-500 text-md pb-3">
                                     {item.description}
                                 </div>
                                 {item.image && (

@@ -1831,7 +1831,7 @@ video {
   line-height: 1.75rem;
 }
 
-.text-sm {
+.text-md {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
@@ -2171,7 +2171,7 @@ video {
   background-color: transparent;
 }
 
-.file\:text-sm::file-selector-button {
+.file\:text-md::file-selector-button {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
@@ -2699,7 +2699,7 @@ video {
     text-align: left;
   }
 
-  .sm\:text-sm {
+  .sm\:text-md {
     font-size: 0.875rem;
     line-height: 1.25rem;
   }

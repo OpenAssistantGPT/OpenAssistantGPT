@@ -1,14 +1,14 @@
 import { SiteConfig } from "@/types"
 
 export const siteConfig: SiteConfig = {
-  name: "OpenAssistantGPT",
+  name: "WiseChat",
   description:
-    "An Open-Source SaaS Platform for Crafting Chatbots with OpenAI's Assistant.",
-  url: "https://www.openassistantgpt.io/",
-  ogImage: "https://www.openassistantgpt.io/dashboard.png",
+    " SaaS Platform for Crafting Chatbots with OpenAI.",
+  url: "https://www.WiseChat.live/",
+  ogImage: "https://www.WiseChat.io/dashboard.png",
   links: {
     twitter: "https://twitter.com/oassistantgpt",
-    github: "https://github.com/marcolivierbouch/OpenAssistantGPT",
-    productHunt: "https://www.producthunt.com/posts/openassistantgpt",
+    github: "https://github.com/marcolivierbouch/WiseChat",
+    productHunt: "https://www.producthunt.com/posts/WiseChat",
   },
 }

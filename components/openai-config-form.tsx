@@ -31,10 +31,26 @@ type FormData = z.infer<typeof openAIConfigSchema>
 
 export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
     const router = useRouter()
+    const [isSaving, setIsSaving] = React.useState<boolean>(false)
     const form = useForm<FormData>({
         resolver: zodResolver(openAIConfigSchema),
+        defaultValues: {
+            globalAPIKey: "",
+        },
     })
-    const [isSaving, setIsSaving] = React.useState<boolean>(false)
+
+    React.useEffect(() => {
+        async function fetchOpenAIConfig() {
+            const response = await fetch(`/api/users/${user.id}/openai`)
+
+            if (response.ok) {
+                const data = await response.json()
+                form.reset(data)
+            }
+        }
+
+        fetchOpenAIConfig()
+    }, [user.id, form])
 
     async function onSubmit(data: FormData) {
         setIsSaving(true)
@@ -85,7 +101,7 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
                     <CardHeader>
                         <CardTitle>Configure your account</CardTitle>
                         <CardDescription>
-                            Your global api key for OpenAI will be used for all your global configurations. It is very important to set it before creating a chatbot.
+                            Your global API key for OpenAI will be used for all your global configurations. It is very important to set it before creating a chatbot.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
@@ -98,6 +114,7 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
                                         OpenAI Global API Key
                                     </FormLabel>
                                     <Input
+                                        value={field.value}
                                         onChange={field.onChange}
                                         id="globalAPIKey"
                                     />

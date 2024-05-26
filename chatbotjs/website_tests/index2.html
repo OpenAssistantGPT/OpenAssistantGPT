@@ -1,12 +1,12 @@
-<script>
-    window.addEventListener("message", function (t) { var e = document.getElementById("openassistantgpt-chatbot-iframe"), s = document.getElementById("openassistantgpt-chatbot-button-iframe"); "openChat" === t.data && (console.log("Toggle chat visibility"), e && s ? (e.contentWindow.postMessage("openChat", "*"), s.contentWindow.postMessage("openChat", "*"), e.style.pointerEvents = "auto", e.style.display = "block", window.innerWidth < 640 ? (e.style.position = "fixed", e.style.width = "100%", e.style.height = "100%", e.style.top = "0", e.style.left = "0", e.style.zIndex = "9999") : (e.style.position = "fixed", e.style.width = "30rem", e.style.height = "65vh", e.style.bottom = "0", e.style.right = "0", e.style.top = "", e.style.left = "")) : console.error("iframe not found")), "closeChat" === t.data && e && s && (e.style.display = "none", e.style.pointerEvents = "none", e.contentWindow.postMessage("closeChat", "*"), s.contentWindow.postMessage("closeChat", "*")) });
+<!-- <script>
+    window.addEventListener("message", function (t) { var e = document.getElementById("wisechat-chatbot-iframe"), s = document.getElementById("wisechat-chatbot-button-iframe"); "openChat" === t.data && (console.log("Toggle chat visibility"), e && s ? (e.contentWindow.postMessage("openChat", "*"), s.contentWindow.postMessage("openChat", "*"), e.style.pointerEvents = "auto", e.style.display = "block", window.innerWidth < 640 ? (e.style.position = "fixed", e.style.width = "100%", e.style.height = "100%", e.style.top = "0", e.style.left = "0", e.style.zIndex = "9999") : (e.style.position = "fixed", e.style.width = "30rem", e.style.height = "65vh", e.style.bottom = "0", e.style.right = "0", e.style.top = "", e.style.left = "")) : console.error("iframe not found")), "closeChat" === t.data && e && s && (e.style.display = "none", e.style.pointerEvents = "none", e.contentWindow.postMessage("closeChat", "*"), s.contentWindow.postMessage("closeChat", "*")) });
 </script>
 
 <body>
-    <iframe src="https://www.openassistantgpt.io/embed/clq6m06gc000114hm42s838g2/button?chatbox=false"
+    <iframe src="https://www.WiseChat.live/embed/clq6m06gc000114hm42s838g2/button?chatbox=false"
         style="margin-right: 1rem; margin-bottom: 1rem; position: fixed; right: 0; bottom: 0; width: 56px; height: 56px; border: 0; border-color: rgb(0, 0, 0); border-radius: 50%; color-scheme: none; background: none;"
-        id="openassistantgpt-chatbot-button-iframe"></iframe>
-    <iframe src="https://www.openassistantgpt.io/embed/clq6m06gc000114hm42s838g2/window?chatbox=false&withExitX=true"
+        id="wisechat-chatbot-button-iframe"></iframe>
+    <iframe src="https://www.WiseChat.live/embed/clq6m06gc000114hm42s838g2/window?chatbox=false&withExitX=true"
         style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
-        allowfullscreen id="openassistantgpt-chatbot-iframe"></iframe>
-</body>
+        allowfullscreen id="wisechat-chatbot-iframe"></iframe>
+</body> -->

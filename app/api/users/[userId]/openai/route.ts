@@ -62,3 +62,38 @@ export async function PATCH(
         return new Response(null, { status: 500 })
     }
 }
+
+export async function GET(
+    req: Request,
+    context: z.infer<typeof routeContextSchema>
+) {
+    try {
+        // Validate the route context.
+        const { params } = routeContextSchema.parse(context)
+
+        // Ensure user is authenticated and has access to this user.
+        const session = await getServerSession(authOptions)
+        if (!session?.user || params.userId !== session?.user.id) {
+            return new Response(null, { status: 403 })
+        }
+
+        // Fetch the user's global API key from the OpenAIConfig model.
+        const openAIConfig = await db.openAIConfig.findUnique({
+            where: {
+                userId: session.user.id,
+            },
+            select: {
+                globalAPIKey: true,
+            },
+        })
+
+        if (!openAIConfig) {
+            return new Response(null, { status: 404 })
+        }
+
+        return new Response(JSON.stringify({ globalAPIKey: openAIConfig.globalAPIKey }), { status: 200 })
+    } catch (error) {
+        console.error(error)
+        return new Response(null, { status: 500 })
+    }
+}

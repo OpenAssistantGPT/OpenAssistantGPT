@@ -21,13 +21,13 @@ export function ChatbotItem({ chatbot, model }: ChatbotProps) {
                     {chatbot.name}
                 </Link>
                 <div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-md text-muted-foreground">
                         {model ? model.name : ''}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-md text-muted-foreground">
                         {chatbot.openaiId}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-md text-muted-foreground">
                         {formatDate(chatbot.createdAt?.toDateString())}
                     </p>
                 </div>

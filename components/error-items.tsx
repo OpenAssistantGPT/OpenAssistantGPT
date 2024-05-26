@@ -22,7 +22,7 @@ export async function ErrorItem({ error }: UploadFileProps) {
                         Date: {formatDate(error.createdAt?.toDateString())}
                     </p>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-md text-muted-foreground">
                     {error.errorMessage}
                 </p>
             </div>

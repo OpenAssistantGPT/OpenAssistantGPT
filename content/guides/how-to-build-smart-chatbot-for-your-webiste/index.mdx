@@ -4,30 +4,30 @@ description: Tutorial about how to build a AI smart chatbot for your website. Bu
 date: 2024-03-12
 ---
 
-Welcome to [OpenAssistantGPT](https://www.openassistantgpt.io/), in this guide we will guide you on how to build a smart chatbot for you website.
+Welcome to [WiseChat](https://www.WiseChat.live/), in this guide we will guide you on how to build a smart chatbot for you website.
 In this tutorial we want to any body without coding skills to be able to create an assistant to your website.
 
-[OpenAssistantGPT](https://www.openassistantgpt.io/) assistant chatbot is able to learn from any custom content and understand everything about your business. With our custom website integration, your customers will be able to ask any question and receive smart answers.
+[WiseChat](https://www.WiseChat.live/) assistant chatbot is able to learn from any custom content and understand everything about your business. With our custom website integration, your customers will be able to ask any question and receive smart answers.
 
 Before we start this tutorial you'll need two accounts:
-- A Google or Github account to connect to [OpenAssistantGPT](https://www.openassistantgpt.io/).
+- A Google or Github account to connect to [WiseChat](https://www.WiseChat.live/).
 - An [OpenAI](https://openai.com/) account, with you credit card configured on it.
 
-Small note! If you prefer interactive in-app onboarding you can start with this https://www.openassistantgpt.io/dashboard/onboarding.
+Small note! If you prefer interactive in-app onboarding you can start with this https://www.WiseChat.live/dashboard/onboarding.
 
 <img
   src="/dashboard.png"
-  title="OpenAssistantGPT Main Dashboard"
-  alt="An image showing OpenAssistantGPT Main Dashboard"
+  title="WiseChat Main Dashboard"
+  alt="An image showing WiseChat Main Dashboard"
 />
 
-## Step 1 — Configure your OpenAssistantGPT account
+## Step 1 — Configure your WiseChat account
 
 In this step we will configure your account to enable chatbot creation and file uploads.
 
-1. Open https://www.openassistantgpt.io/dashboard/settings. 
+1. Open https://www.WiseChat.live/dashboard/settings. 
 2. In a new window open https://platform.openai.com/api-keys and create a new secret key.
-3. Set this new secret key in your OpenAssistantGPT settings.
+3. Set this new secret key in your WiseChat settings.
 
 Also in the OpenAI platform don't *forget to add your credit card* or they won't let you generate any messages. Now that your account is configured let's move to Step 2.
 
@@ -37,33 +37,33 @@ This file contains the content from which your chatbot retrieves information, ev
 
 <img
   src="/upload_file.png"
-  title="OpenAssistantGPT File Upload Form"
-  alt="An image showing OpenAssistantGPT file upload form"
+  title="WiseChat File Upload Form"
+  alt="An image showing WiseChat file upload form"
 />
 
-1. Open this https://www.openassistantgpt.io/dashboard/files.
+1. Open this https://www.WiseChat.live/dashboard/files.
 2. Upload your file that contains your custom content.
 
 ## Step 3 - Create your first chatbot
 
 Now, let’s proceed to create your first chatbot.
 
-1. Open this in your browser https://www.openassistantgpt.io/dashboard/new/chatbot
+1. Open this in your browser https://www.WiseChat.live/dashboard/new/chatbot
 2. Fill in the necessary informations by adding the name, welcome message, OpenAI model, files etc.
 
 <img
   src="/new_chatbot_form.png"
-  title="OpenAssistantGPT new chatbot form"
-  alt="An image showing OpenAssistantGPT new chatbot form"
+  title="WiseChat new chatbot form"
+  alt="An image showing WiseChat new chatbot form"
 />
 
 3. Press create!
-4. Now in your chatbot list https://www.openassistantgpt.io/dashboard/chatbots and by using the triple dots on the right of your new chatbot you can choose the option chat to talk with him.
+4. Now in your chatbot list https://www.WiseChat.live/dashboard/chatbots and by using the triple dots on the right of your new chatbot you can choose the option chat to talk with him.
 
 <img
   src="/chatbox.png"
-  title="OpenAssistantGPT Chat Box"
-  alt="An image showing OpenAssistantGPT chat"
+  title="WiseChat Chat Box"
+  alt="An image showing WiseChat chat"
 />
 
 ## Step 4 - Embed the chatbot in your website
@@ -73,16 +73,16 @@ You can also find the information on how to embed your chatbot in your chatbot s
 
 ```javascript
 <script>
-    window.addEventListener("message",function(t){var e=document.getElementById("openassistantgpt-chatbot-iframe"),o=document.getElementById("openassistantgpt-chatbot-button-iframe");"openChat"===t.data&&(console.log("Toggle chat visibility"),e&&o?(e.contentWindow.postMessage("openChat","*"),o.contentWindow.postMessage("openChat","*"),window.innerWidth<640?(e.style.position="fixed",e.style.width="100%",e.style.height="100%",e.style.top="0",e.style.left="0",e.style.zIndex="9999"):e.style="margin-right: 1rem; margin-bottom: 6rem; display: block; position: absolute; right: 0; bottom: 0; pointer-events: auto; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"):console.error("iframe not found")),"closeChat"===t.data&&e&&o&&(e.style.display="none",e.style.pointerEvents="none",e.contentWindow.postMessage("closeChat","*"),o.contentWindow.postMessage("closeChat","*"))});
+    window.addEventListener("message",function(t){var e=document.getElementById("wisechat-chatbot-iframe"),o=document.getElementById("wisechat-chatbot-button-iframe");"openChat"===t.data&&(console.log("Toggle chat visibility"),e&&o?(e.contentWindow.postMessage("openChat","*"),o.contentWindow.postMessage("openChat","*"),window.innerWidth<640?(e.style.position="fixed",e.style.width="100%",e.style.height="100%",e.style.top="0",e.style.left="0",e.style.zIndex="9999"):e.style="margin-right: 1rem; margin-bottom: 6rem; display: block; position: absolute; right: 0; bottom: 0; pointer-events: auto; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"):console.error("iframe not found")),"closeChat"===t.data&&e&&o&&(e.style.display="none",e.style.pointerEvents="none",e.contentWindow.postMessage("closeChat","*"),o.contentWindow.postMessage("closeChat","*"))});
 </script>
 
 <body>
   <iframe src="${siteConfig.url}embed/${params.chatbotId}/button?chatbox=false"
     style="margin-right: 1rem; margin-bottom: 1rem; position: fixed; right: 0; bottom: 0; width: 56px; height: 56px; border: 0; border-color: rgb(0, 0, 0); border-radius: 50%; color-scheme: none; background: none;"
-    id="openassistantgpt-chatbot-button-iframe"></iframe>
+    id="wisechat-chatbot-button-iframe"></iframe>
   <iframe src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
     style="margin-right: 1rem; margin-bottom: 6rem; display: none; position: fixed; right: 0; bottom: 0; pointer-events: none; overflow: hidden; height: 65vh; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); width: 30rem;"
-    allowfullscreen id="openassistantgpt-chatbot-iframe"></iframe>
+    allowfullscreen id="wisechat-chatbot-iframe"></iframe>
 </body>
 ```
 

@@ -23,17 +23,24 @@ export function MobileNav({ items, children }: MobileNavProps) {
     >
       <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground shadow-md">
         <Link href="/" className="flex items-center space-x-2">
-          <Icons.bot />
+          <Icons.bot1 />
           <span className="font-bold">{siteConfig.name}</span>
         </Link>
-        <nav className="grid grid-flow-row auto-rows-max text-sm">
+        <nav className="grid grid-flow-row auto-rows-max text-md">
           {items.map((item, index) => (
             <Link
               key={index}
               href={item.disabled ? "#" : item.href}
               className={cn(
-                "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline",
-                item.disabled && "cursor-not-allowed opacity-60"
+                "flex w-full items-center rounded-md p-2 text-md font-medium hover:underline",
+                item.disabled && "cursor-not-allowed opacity-60",
+                "px-6",
+                "border-black",
+               "text-black", // White text for contrast
+               "hover:text-gray-200", // Slightly lighter text on hover
+               "hover:bg-gray-800", // Dark gray background on hover
+               "active:text-gray-400", // Even lighter text on active state
+               "bg-gray-200" 
               )}
             >
               {item.title}

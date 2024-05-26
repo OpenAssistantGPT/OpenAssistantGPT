@@ -25,8 +25,8 @@ const fontHeading = localFont({
   variable: "--font-heading",
 })
 
-const title = `Build chatbot using OpenAI Assistant - ${siteConfig.name}`;
-const description = "OpenAssistantGPT is an open source platform for building chatbot using OpenAI's assitants.";
+const title = `Build chatbot using - ${siteConfig.name}`;
+const description = "Wisechat is an platform for building chatbot using OpenAI's assitants.";
 
 export const metadata: Metadata = {
   title,
@@ -36,12 +36,12 @@ export const metadata: Metadata = {
     title,
     description,
   },
-  metadataBase: new URL('https://openassitantgpt.io/'),
+  metadataBase: new URL('https://wisechat.live/'),
   openGraph: {
     title: title,
     description: description,
-    url: new URL('https://openassitantgpt.io/'),
-    siteName: 'OpenAssistantGPT',
+    url: new URL('https://wisechat.live/'),
+    siteName: 'WiseChat',
     type: 'website',
   },
 };
@@ -76,7 +76,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <Chatbot />
       </body>
-      <GoogleAnalytics gaId="AW-11267388324" />
+      {/* <GoogleAnalytics gaId="AW-11267388324" /> */}
     </html>
   );
 }

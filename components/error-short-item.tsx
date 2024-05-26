@@ -17,7 +17,7 @@ export async function ErrorShortItem({ error, chatbotName }: UploadFileProps) {
             <button
                 key={error.id}
                 className={cn(
-                    "flex flex-col w-full items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent",
+                    "flex flex-col w-full items-start gap-2 rounded-lg border p-3 text-left text-md transition-all hover:bg-accent",
                 )}
             >
                 <div className="flex w-full flex-col gap-1">

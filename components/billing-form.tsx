@@ -105,7 +105,7 @@ export function BillingForm({
                         if (plan.name === basicPlan.name) {
                             return (
                                 <div key={i} className="hover:shadow-sm relative flex flex-col p-2 bg-white rounded-lg  bg-zinc-850 justify-between border border-purple-500">
-                                    <div className="px-3 py-1 text-sm text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-full inline-block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <div className="px-3 py-1 text-md text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-full inline-block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                         Popular
                                     </div>
                                     <Card className="shadow-none border-0 p-0 m-0" key={i}>

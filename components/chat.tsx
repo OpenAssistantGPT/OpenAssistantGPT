@@ -227,7 +227,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                   ref={inputRef}
                   tabIndex={0}
                   placeholder={chatbot.chatMessagePlaceHolder}
-                  className="border-0 focus-visible:ring-0 min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
+                  className="border-0 focus-visible:ring-0 min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-md"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault()

@@ -25,8 +25,8 @@ export default function Chatbot() {
 
     useEffect(() => {
         window.addEventListener('message', function (event) {
-            var iframe = document.getElementById('openassistantgpt-chatbot-iframe');
-            var buttonIframe = document.getElementById('openassistantgpt-chatbot-button-iframe');
+            var iframe = document.getElementById('wisechat-chatbot-iframe');
+            var buttonIframe = document.getElementById('wisechat-chatbot-button-iframe');
 
             if (event.data === 'openChat') {
                 console.log('Toggle chat visibility');
@@ -84,18 +84,61 @@ export default function Chatbot() {
         } else {
             return (
                 <>
-                    <iframe
+                    {/* <iframe
                         src={`${siteConfig.url}embed/clq6m06gc000114hm42s838g2/button?chatbox=false`}
                         scrolling='no'
-                        id="openassistantgpt-chatbot-button-iframe"
+                        id="wisechat-chatbot-button-iframe"
                         className="fixed bottom-0 right-0 mb-4 z-50 flex items-end inline-block mr-4 w-14 h-14 border border-gray-300 rounded-full shadow-md"
                     ></iframe>
                     <iframe
                         src={`${siteConfig.url}embed/clq6m06gc000114hm42s838g2/window?chatbox=false&withExitX=true`}
                         style={customStyle}
                         allowFullScreen
-                        id="openassistantgpt-chatbot-iframe"
-                    ></iframe>
+                        id="wisechat-chatbot-iframe"
+                    ></iframe> */}
+
+<>
+  <iframe
+    src="http://localhost:3001/embed/clwm2rnru0001cpxa6ocjwacf/button?chatbox=false"
+    style={{
+      marginRight: '1rem',
+      marginBottom: '1rem',
+      position: 'fixed',
+      right: 0,
+      bottom: 0,
+      width: '56px',
+      height: '56px',
+      border: 0,
+      borderColor: 'rgb(0, 0, 0)',
+      borderRadius: '50%',
+      colorScheme: 'none',
+      background: 'none',
+    }}
+    id="wisechat-chatbot-button-iframe"
+  ></iframe>
+  <iframe
+    src="http://localhost:3001/embed/clwm2rnru0001cpxa6ocjwacf/window?chatbox=false&withExitX=true"
+    style={{
+      marginRight: '1rem',
+      marginBottom: '6rem',
+      display: 'none',
+      position: 'fixed',
+      right: 0,
+      bottom: 0,
+      pointerEvents: 'none',
+      overflow: 'hidden',
+      height: '65vh',
+      border: '2px solid #e2e8f0',
+      borderRadius: '0.375rem',
+      boxShadow:
+        '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      width: '30rem',
+    }}
+    allowFullScreen
+    id="wisechat-chatbot-iframe"
+  ></iframe>
+</>
+
                 </>
             )
         }

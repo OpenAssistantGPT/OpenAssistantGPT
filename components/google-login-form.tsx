@@ -27,7 +27,7 @@ export default function GoogleLoginForm() {
         className={`${loading
           ? "cursor-not-allowed border-gray-200 bg-gray-100"
           : "border-black bg-black text-black bg-white hover:text-white hover:bg-black"
-          } flex h-10 w-full items-center justify-center rounded-md border text-sm transition-all focus:outline-none`}
+          } flex h-10 w-full items-center justify-center rounded-md border text-md transition-all focus:outline-none`}
       >
         {loading ? (
           <LoadingDots color="#808080" />

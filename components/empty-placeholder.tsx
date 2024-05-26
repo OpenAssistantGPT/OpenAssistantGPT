@@ -70,7 +70,7 @@ EmptyPlaceholder.Description = function EmptyPlaceholderDescription({
     return (
         <p
             className={cn(
-                "mb-8 mt-2 text-center text-sm font-normal leading-6 text-muted-foreground",
+                "mb-8 mt-2 text-center text-md font-normal leading-6 text-muted-foreground",
                 className
             )}
             {...props}

@@ -15,7 +15,7 @@ export function FooterText({ className, ...props }: React.ComponentProps<'p'>) {
             {...props}
         >
             Powered by{' '}
-            <ExternalLink href={siteConfig.url}>OpenAssistantGPT</ExternalLink>
+            <ExternalLink href={siteConfig.url}>WiseChat</ExternalLink>
         </p>
     )
 }

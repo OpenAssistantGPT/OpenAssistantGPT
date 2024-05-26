@@ -159,9 +159,9 @@ export default async function DashboardPage() {
         {bots === 0 &&
           <div className="mb-4 bg-blue-100 border-l-4 border-blue-500 text-black p-4" role="info">
             <p className="font-bold text-md">Welcome to {siteConfig.name} 🎉</p>
-            <p className="text-sm">You are probably new to this platform.</p>
-            <p className="text-sm">We recommend starting with our <a className="underline" href="/dashboard/onboarding">onboarding</a> for a step-by-step guide on how to create your first chatbot.</p>
-            <p className="text-sm">If you prefer you can also start with our <a target="_blank" className="underline" href="/guides/how-to-build-smart-chatbot-for-your-webiste">tutorial</a>.</p>
+            <p className="text-md">You are probably new to this platform.</p>
+            <p className="text-md">We recommend starting with our <a className="underline" href="/dashboard/onboarding">onboarding</a> for a step-by-step guide on how to create your first chatbot.</p>
+            <p className="text-md">If you prefer you can also start with our <a target="_blank" className="underline" href="/guides/how-to-build-smart-chatbot-for-your-webiste">tutorial</a>.</p>
             <br />
             <a href="/dashboard/onboarding"><Button><p className="pr-2">Open Onboarding</p>  <Icons.help className="h-4 w-4" /> ‍</Button></a>
           </div>
@@ -175,7 +175,7 @@ export default async function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-md font-medium">
                 Total Chatbots
               </CardTitle>
               <Icons.bot className="h-4 w-4 text-muted-foreground" />
@@ -186,7 +186,7 @@ export default async function DashboardPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-md font-medium">
                 Total Crawlers
               </CardTitle>
               <Icons.post className="h-4 w-4 text-muted-foreground" />
@@ -197,7 +197,7 @@ export default async function DashboardPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-md font-medium">
                 Total Files
               </CardTitle>
               <Icons.folder className="h-4 w-4 text-muted-foreground" />
@@ -208,7 +208,7 @@ export default async function DashboardPage() {
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-md font-medium">
                 Messages last 30 days
               </CardTitle>
               <Icons.message className="h-4 w-4 text-muted-foreground" />

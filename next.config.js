@@ -21,7 +21,18 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
-
+module.exports = {
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.html$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'html-loader',
+      },
+    });
+    return config;
+  },
+};
 
 // Injected content via Sentry wizard below
 

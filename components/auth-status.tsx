@@ -5,7 +5,7 @@ export default async function AuthStatus() {
   return (
     <div className="absolute top-5 w-full flex justify-center items-center">
       {session && (
-        <p className="text-stone-200 text-sm">
+        <p className="text-stone-200 text-md">
           Signed in as {session.user?.email}
         </p>
       )}

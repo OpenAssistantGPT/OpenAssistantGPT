@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useSelectedLayoutSegment } from "next/navigation"
-
+import { buttonVariants } from "@/components/ui/button"
 import { MainNavItem } from "@/types"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -33,12 +33,20 @@ export function MainNav({ items, children }: MainNavProps) {
             <Link
               key={index}
               href={item.disabled ? "#" : item.href}
-              className={cn(
+              className={cn( 
+                buttonVariants({ variant: "ghost", size: "sm" }),
                 "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
                 item.href.startsWith(`/${segment}`)
                   ? "text-foreground"
                   : "text-foreground/60",
-                item.disabled && "cursor-not-allowed opacity-80"
+                item.disabled && "cursor-not-allowed opacity-80",
+        
+                "border-black",
+               "text-black", // White text for contrast
+               "hover:text-gray-200", // Slightly lighter text on hover
+               "hover:bg-gray-800", // Dark gray background on hover
+               "active:text-gray-400", // Even lighter text on active state
+               "bg-gray-200"
               )}
             >
               {item.title}

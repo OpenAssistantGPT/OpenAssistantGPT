@@ -26,7 +26,7 @@ import { siteConfig } from "@/config/site"
 async function getGitHubStars(): Promise<string | null> {
     try {
         const response = await fetch(
-            "https://api.github.com/repos/marcolivierbouch/OpenAssistantGPT",
+            "https://api.github.com/repos/marcolivierbouch/WiseChat",
             {
                 headers: {
                     Accept: "application/vnd.github+json",
@@ -86,7 +86,7 @@ export async function GithubCard() {
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 space-x-4 text-sm text-muted-foreground">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 space-x-4 text-md text-muted-foreground">
                     <div className="flex items-center">
                         <CircleIcon className="mr-1 h-3 w-3 fill-sky-400 text-sky-400" />
                         TypeScript
