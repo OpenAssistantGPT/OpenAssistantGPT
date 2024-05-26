@@ -65,7 +65,7 @@ export default async function RootLayout({
           fontHeading.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" >
           <TooltipProvider>
             {children}
             <Toaster />
