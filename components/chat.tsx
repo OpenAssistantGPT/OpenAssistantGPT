@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils"
 
 import { CardHeader } from "./ui/card"
 import {
-  Message,
   useAssistant,
-} from 'ai/react';
+} from '@/hooks/use-assistant';
+import { Message } from 'ai/react'
 import { useEffect, useRef, useState } from "react"
 import { toast } from "@/components/ui/use-toast"
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
@@ -39,12 +39,33 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   const [userMessage, setUserMessage] = useState('')
   const [inquiryLoading, setInquiryLoading] = useState(false)
 
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const [chatThreadId, setChatThreadId] = useState<string | null>()
+
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, body: { clientSidePrompt: clientSidePrompt } });
+    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files[0], threadId: chatThreadId || '', body: { clientSidePrompt: clientSidePrompt } });
+
+  useEffect(() => {
+    if (threadId) {
+      setChatThreadId(threadId)
+    }
+  },[threadId])
+
+
+  //async function submitMessage(e: React.FormEvent<HTMLFormElement>) {
+  //  e.preventDefault()
+  //  if (input === '') {
+  //    return
+  //  }
+  //  await submitMessage(e)
+
+  //  //inputFileRef.current?.value = null
+  //}
+
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);
-
 
   useEffect(() => {
     // Scroll to the bottom of the container on messages update
@@ -123,6 +144,21 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
               {chatbot.chatTitle}
             </div>
           </h2>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                style={{ color: chatbot.chatHeaderTextColor, background: chatbot.chatHeaderBackgroundColor }}
+                size={'icon'}
+                onClick={() => {
+                  window.location.reload()
+                }}
+              >
+                <Icons.reload className="h-4 w-4" />
+                <span className="sr-only">New Chat</span>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>New Chat</TooltipContent>
+          </Tooltip>
           {withExitX &&
             <div className="items-end">
               <Button onClick={closeChat} variant="nothing">
@@ -138,6 +174,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
         <ChatMessage chatbot={chatbot} message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
         <div className="flex-grow overflow-y-auto space-y-6 flex flex-col order-2">
           {messages.map((message: Message, index) => {
+            console.log(message)
             return (
               <ChatMessage chatbot={chatbot} key={index} message={message} />
             );
@@ -206,33 +243,28 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
               {...props}
             >
               <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="absolute left-0 top-[14px] size-8 rounded-full bg-background p-0 sm:left-4"
-                      onClick={() => {
-                        window.location.reload()
-                      }}
+                <div className="">
+                  <Label htmlFor="file" className="">
+                    <div
+                      className="size-9 absolute left-0 top-[12px] size-8 rounded-full bg-background p-0 sm:left-4 border border-input hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background"
                     >
-                      <Icons.reload className="h-4 w-4" />
-                      <span className="sr-only">New Chat</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>New Chat</TooltipContent>
-                </Tooltip>
+                      { inputFileRef && inputFileRef.current?.files.length > 0 &&   <span className="absolute top-0 right-0 inline-flex rounded-full h-3 w-3 bg-sky-500"></span> }
+                      <Icons.paperclip className="text-muted-foreground h-4 w-4" />
+                    </div>
+                  </Label>
+                  <Input
+                    ref={inputFileRef}
+                    id="file"
+                    type="file"
+                    className="hidden"
+                  />
+
+                </div>
                 <Input
                   ref={inputRef}
                   tabIndex={0}
                   placeholder={chatbot.chatMessagePlaceHolder}
                   className="border-0 focus-visible:ring-0 min-h-[60px] w-full resize-none bg-transparent px-4 py-[1.3rem] focus-within:outline-none sm:text-sm"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault()
-                      submitMessage(e as any)
-                    }
-                  }}
                   spellCheck={false}
                   autoComplete="off"
                   autoCorrect="off"
@@ -245,7 +277,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                     <TooltipTrigger asChild>
                       <Button
                         disabled={status !== 'awaiting_message' || input === ''}
-                        type="submit" size="icon" >
+                        type="submit" size="icon">
                         <Icons.arrowRight />
                         <span className="sr-only">Send message</span>
                       </Button>

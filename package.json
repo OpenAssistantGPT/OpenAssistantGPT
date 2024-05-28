@@ -82,7 +82,8 @@
     "stripe": "^14.7.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zod-form-data": "^2.0.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",

@@ -7,6 +7,8 @@ import { db } from '@/lib/db';
 import OpenAI from 'openai';
 import { getUserSubscriptionPlan } from '@/lib/subscription';
 import { RequiresHigherPlanError } from '@/lib/exceptions';
+import { fileTypes as codeTypes } from '@/lib/validations/codeInterpreter';
+import { fileTypes as searchTypes } from '@/lib/validations/fileSearch';
 
 export const maxDuration = 60;
 
@@ -20,15 +22,15 @@ export async function POST(request: Request) {
 
         // Validate user subscription plan
         const { user } = session
-        const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-        const count = await db.file.count({
-            where: {
-                userId: user.id,
-            },
-        })
-        if (count >= subscriptionPlan.maxFiles) {
-            throw new RequiresHigherPlanError()
-        }
+        //const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+        //const count = await db.file.count({
+        //    where: {
+        //        userId: user.id,
+        //    },
+        //})
+        //if (count >= subscriptionPlan.maxFiles) {
+        //    throw new RequiresHigherPlanError()
+        //}
 
         const { searchParams } = new URL(request.url);
         const filename = searchParams.get('filename');
@@ -37,7 +39,7 @@ export async function POST(request: Request) {
             return new Response('Missing filename', { status: 400 });
         }
 
-        const validExtensions = ['c', 'cpp', 'docx', 'html', 'java', 'json', 'md', 'pdf', 'php', 'pptx', 'py', 'rb', 'tex', 'txt', 'css', 'js', 'ts', 'xml']
+        const validExtensions = [...codeTypes, ...searchTypes];
         if (!validExtensions.includes(filename.split('.').pop()!)) {
             return new Response(`Invalid file extension, check the documentation for more information.`, { status: 400 });
         }
