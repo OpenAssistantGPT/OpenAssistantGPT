@@ -2,8 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { RequiresHigherPlanError } from "@/lib/exceptions";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { customizationStringBackendSchema } from "@/lib/validations/customization";
-import { put } from "@vercel/blob";
+import { chatFileAttachementSettingsSchema } from "@/lib/validations/chatFileAttachement";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
 
@@ -38,44 +37,27 @@ export async function PATCH(
             return new Response(null, { status: 403 })
         }
 
-        const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
+        //const subscriptionPlan = await getUserSubscriptionPlan(session?.user?.id || '')
 
-        if (subscriptionPlan.basicCustomization === false) {
-            throw new RequiresHigherPlanError()
-        }
+        //if (subscriptionPlan.chatFileAttachments === false) {
+        //    throw new RequiresHigherPlanError()
+        //}
 
-        const formData = await req.formData();
-        const payload = customizationStringBackendSchema.parse(Object.fromEntries(formData));
-
-        let blob = undefined
-        if (payload.chatbotLogoFilename !== '' && payload.chatbotLogo !== '') {
-            blob = await put(payload.chatbotLogoFilename || "", payload.chatbotLogo, {
-                access: 'public',
-            });
-            console.log(blob)
-        }   
+        const body = await req.json()
+        const payload = chatFileAttachementSettingsSchema.parse(body)
 
         const chatbot = await db.chatbot.update({
             where: {
-                id: params.chatbotId,
+                id: params.chatbotId
             },
             data: {
-                chatTitle: payload.chatTitle,
-                chatMessagePlaceHolder: payload.chatMessagePlaceHolder,
-                bubbleColor: payload.bubbleColor,
-                bubbleTextColor: payload.bubbleTextColor,
-                chatHeaderBackgroundColor: payload.chatHeaderBackgroundColor,
-                chatHeaderTextColor: payload.chatHeaderTextColor,
-                userReplyBackgroundColor: payload.userReplyBackgroundColor,
-                userReplyTextColor: payload.userReplyTextColor,
-                chatbotLogoURL: blob ? blob.url : '',
+                chatFileAttachementEnabled: payload.chatFileAttachementEnabled,
             },
             select: {
                 id: true,
                 name: true,
-                displayBranding: true,
             },
-        });
+        })
 
         return new Response(JSON.stringify(chatbot))
     } catch (error) {

@@ -129,7 +129,11 @@ export type SubscriptionPlan = {
 
   basicCustomization: boolean
 
+  brandingCustomization: boolean
+
   userInquiries: boolean
+
+  chatFileAttachments: boolean
 
   price: number | undefined
 }

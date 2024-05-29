@@ -13,6 +13,10 @@ export const freePlan: SubscriptionPlan = {
     basicCustomization: false,
     userInquiries: false,
 
+    brandingCustomization: false,
+
+    chatFileAttachments: false,
+
     price: 0,
 }
 
@@ -28,6 +32,9 @@ export const hobbyPlan: SubscriptionPlan = {
     maxMessagesPerMonth: undefined,
     basicCustomization: true,
     userInquiries: false,
+
+    brandingCustomization: false,
+    chatFileAttachments: false,
 
     price: 3,
 }
@@ -45,6 +52,8 @@ export const basicPlan: SubscriptionPlan = {
     basicCustomization: true,
     userInquiries: true,
 
+    chatFileAttachments: false,
+    brandingCustomization: false,
     premiumSupport: true,
 
     price: 9,
@@ -64,6 +73,8 @@ export const proPlan: SubscriptionPlan = {
     userInquiries: true,
 
     premiumSupport: true,
+    chatFileAttachments: true,
+    brandingCustomization: true,
 
     price: 27,
 }

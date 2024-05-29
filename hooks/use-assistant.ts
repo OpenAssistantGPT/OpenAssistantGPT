@@ -8,7 +8,6 @@ import {
   AssistantStatus,
   CreateMessage,
   Message,
-  UseAssistantOptions,
 } from 'ai';
 
 export type UseAssistantHelpers = {
@@ -145,7 +144,7 @@ export function useAssistant({
       formData.append("message", message.content);
       formData.append("threadId", threadIdParam ?? threadId ?? null);
       formData.append("file", inputFile || '');
-      formData.append("filename", inputFile || '');
+      formData.append("filename", inputFile !== undefined ? inputFile.name : '');
   
       const result = await fetch(api, {
         method: "POST",

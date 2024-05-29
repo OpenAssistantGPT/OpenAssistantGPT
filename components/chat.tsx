@@ -28,7 +28,6 @@ interface ChatbotProps {
   clientSidePrompt?: string
 }
 
-
 export function Chat({ chatbot, defaultMessage, className, withExitX = false, clientSidePrompt, ...props }: ChatbotProps) {
   const [open, setOpen] = useState(false);
 
@@ -39,27 +38,29 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   const [userMessage, setUserMessage] = useState('')
   const [inquiryLoading, setInquiryLoading] = useState(false)
 
-  const inputFileRef = useRef<HTMLInputElement>(null);
+  let inputFileRef = useRef<HTMLInputElement>(null);
 
   const [chatThreadId, setChatThreadId] = useState<string | null>()
 
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined , threadId: chatThreadId || '', body: { clientSidePrompt: clientSidePrompt } });
+    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, threadId: chatThreadId || '', body: { clientSidePrompt: clientSidePrompt } });
 
   useEffect(() => {
     if (threadId) {
       setChatThreadId(threadId)
     }
-  },[threadId])
+  }, [threadId])
+
+  useEffect(() => {
+    if (status === 'awaiting_message') {
+      if (inputFileRef.current) {
+        inputFileRef.current.value = '';
+      }
+    }
+  }, [status])
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    // Scroll to the bottom of the container on messages update
-    document.documentElement.scrollTop = document.getElementById("end").offsetTop;
-
-  }, [messages]);
 
   useEffect(() => {
     if (error) {
@@ -110,7 +111,6 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
     setInquiryLoading(false)
   }
 
-
   useEffect(() => {
     if (defaultMessage !== '') {
       input === '' && handleInputChange({ target: { value: defaultMessage } } as React.ChangeEvent<HTMLInputElement>);
@@ -132,29 +132,38 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
               {chatbot.chatTitle}
             </div>
           </h2>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                style={{ color: chatbot.chatHeaderTextColor, background: chatbot.chatHeaderBackgroundColor }}
-                size={'icon'}
-                onClick={() => {
-                  window.location.reload()
-                }}
-              >
-                <Icons.reload className="h-4 w-4" />
-                <span className="sr-only">New Chat</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>New Chat</TooltipContent>
-          </Tooltip>
-          {withExitX &&
-            <div className="items-end">
-              <Button onClick={closeChat} variant="nothing">
-                <Icons.close style={{ color: chatbot.chatHeaderTextColor }} className="h-5 w-5 text-gray-500" />
-              </Button>
-            </div>
-          }
+          <div className="flex flex-row items-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  style={{ color: chatbot.chatHeaderTextColor, background: chatbot.chatHeaderBackgroundColor }}
+                  className="cursor-pointer"
+                  size={'icon'}
+                  onClick={() => {
+                    window.location.reload()
+                  }}
+                >
+                  <Icons.reload className="h-4 w-4" />
+                  <span className="sr-only">New Chat</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>New Chat</TooltipContent>
+            </Tooltip>
+            {withExitX &&
+              <div className="items-end">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button onClick={closeChat} variant="nothing" className="cursor-pointer">
+                      <Icons.close style={{ color: chatbot.chatHeaderTextColor }} className="h-5 w-5 text-gray-500" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>Exit Chat</TooltipContent>
+                </Tooltip>
+              </div>
+            }
+          </div>
         </div>
+
       </CardHeader>
       <div
         className={cn('pb-[200px] overflow-auto pl-5 sm:pl-20 pr-5 sm:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
@@ -230,24 +239,25 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
             <form onSubmit={submitMessage}
               {...props}
             >
-              <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
-                <div className="">
-                  <Label htmlFor="file" className="">
-                    <div
-                      className="size-9 absolute left-0 top-[12px] size-8 rounded-full bg-background p-0 sm:left-4 border border-input hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background"
-                    >
-                      { inputFileRef && inputFileRef.current?.files.length > 0 &&   <span className="absolute top-0 right-0 inline-flex rounded-full h-3 w-3 bg-sky-500"></span> }
-                      <Icons.paperclip className="text-muted-foreground h-4 w-4" />
-                    </div>
-                  </Label>
-                  <Input
-                    ref={inputFileRef}
-                    id="file"
-                    type="file"
-                    className="hidden"
-                  />
-
-                </div>
+              <div className={`relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background sm:rounded-md sm:border ${chatbot.chatFileAttachementEnabled ? 'px-8 sm:px-12' : 'px-2 sm:px-2'}`}>
+                {chatbot.chatFileAttachementEnabled &&
+                  <div className="">
+                    <Label htmlFor="file" className="">
+                      <div
+                        className="size-9 absolute left-0 top-[12px] size-8 rounded-full bg-background p-0 sm:left-4 border border-input hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background"
+                      >
+                        {inputFileRef && inputFileRef.current?.files.length > 0 && <span className="absolute top-0 right-0 inline-flex rounded-full h-3 w-3 bg-sky-500"></span>}
+                        <Icons.paperclip className="text-muted-foreground h-4 w-4" />
+                      </div>
+                    </Label>
+                    <Input
+                      ref={inputFileRef}
+                      id="file"
+                      type="file"
+                      className="hidden"
+                    />
+                  </div>
+                }
                 <Input
                   ref={inputRef}
                   tabIndex={0}

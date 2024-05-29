@@ -40,6 +40,7 @@ export async function GET(
                 inquiryAutomaticReplyText: true,
                 inquiryDisplayLinkAfterXMessage: true,
                 chatbotLogoURL: true,
+                chatFileAttachementEnabled: true,
             },
             where: {
                 id: params.chatbotId,

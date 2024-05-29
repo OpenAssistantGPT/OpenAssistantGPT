@@ -14,7 +14,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/use-toast"
 import { Chatbot } from "@prisma/client"
 import { customizationSchema } from "@/lib/validations/customization"
@@ -48,7 +47,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
     const form = useForm<z.infer<typeof customizationSchema>>({
         resolver: zodResolver(customizationSchema),
         defaultValues: {
-            displayBranding: true,
             chatTitle: "",
             chatMessagePlaceHolder: "",
             bubbleColor: "",
@@ -64,7 +62,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         fetch(`/api/chatbots/${chatbot.id}/config`, {
             method: "GET",
         }).then((res) => res.json()).then((data) => {
-            form.setValue("displayBranding", data.displayBranding)
             form.setValue("chatTitle", data.chatTitle)
             form.setValue("chatMessagePlaceHolder", data.chatMessagePlaceHolder)
 
@@ -101,7 +98,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         console.log(fileImage)
 
         const formData = new FormData();
-        formData.append('displayBranding', String(data.displayBranding));
         formData.append('chatTitle', data.chatTitle || '');
         formData.append('chatMessagePlaceHolder', data.chatMessagePlaceHolder || '');
         formData.append('bubbleColor', bubbleColor);
@@ -163,28 +159,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                     <div>
                         <h3 className="mb-4 text-lg font-medium">Chatbot Customizations</h3>
                         <div className="space-y-4">
-                            <FormField
-                                control={form.control}
-                                name="displayBranding"
-                                render={({ field }) => (
-                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                                        <div className="space-y-0.5">
-                                            <FormLabel className="text-base">
-                                                OpenAssistantGPT Branding Label
-                                            </FormLabel>
-                                            <FormDescription>
-                                                Remove &quot;Powered by OpenAssistantGPT&quot; from the chatbot.
-                                            </FormDescription>
-                                        </div>
-                                        <FormControl>
-                                            <Switch
-                                                checked={field.value}
-                                                onCheckedChange={field.onChange}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
                             <FormField
                                 control={form.control}
                                 name="chatTitle"

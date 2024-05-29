@@ -37,8 +37,9 @@ export default async function BillingPage() {
         <DashboardShell>
             <DashboardHeader
                 heading="Billing"
-                text="Manage billing and your subscription plan."
+                text="Manage billing and your subscription plan. For more information about our plans, visit our documentation pricing page or you can ask our chatbot."
             />
+            
             <BillingForm
                 subscriptionPlan={{
                     ...subscriptionPlan,

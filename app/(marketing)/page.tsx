@@ -263,37 +263,6 @@ export default function IndexPage() {
             </div>
             <div className="flex flex-col space-y-2">
               <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">{hobbyPlan.name}</h3>
-                <p className="text-2xl font-bold tracking-tighter">${hobbyPlan.price}</p>
-                <p className="text-sm text-gray-500">
-                  Ideal for teams and collaborators who are serious about building and deploying multiple projects.
-                </p>
-              </div>
-              <ul className="grid gap-2 py-4">
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {hobbyPlan.maxChatbots} Chatbot
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {hobbyPlan.maxCrawlers} Crawlers
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {hobbyPlan.maxFiles} Files
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Customizations
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Unlimited Messages
-                </li>
-              </ul>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <div className="space-y-2">
                 <h3 className="text-2xl font-bold tracking-tighter">{basicPlan.name}</h3>
                 <p className="text-2xl font-bold tracking-tighter">${basicPlan.price}</p>
                 <p className="text-sm text-gray-500">
@@ -360,11 +329,44 @@ export default function IndexPage() {
                   <Icons.check className="mr-2 inline-block h-4 w-4" />
                   Client Inquiry / Collect Leads
                 </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Remove &apos;Powered by {siteConfig.name}&apos;
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  Client File Attachement
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <div className="space-y-2">
+                <h3 className="text-2xl font-bold tracking-tighter">Enterprise</h3>
+                <p className="text-2xl font-bold tracking-tighter"><span>$X</span></p>
+                <p className="text-sm text-gray-500 ">Custom plan for bigger enterprise. Contact the team for more information.</p>
+              </div>
+              <ul className="grid gap-2 py-4">
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  X Chatbot
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  X Crawlers
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  X Files
+                </li>
+                <li>
+                  <Icons.check className="mr-2 inline-block h-4 w-4" />
+                  All Features from other plans.
+                </li>
               </ul>
             </div>
           </div>
         </div>
-      </section>
+      </section >
       <section data-aos="fade-up" id="faq" className="container bg-slate-50 space-y-6 py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
