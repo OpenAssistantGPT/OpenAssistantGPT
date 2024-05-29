@@ -40,11 +40,13 @@ import {
   Send,
   Loader,
   RefreshCcw,
+  Paperclip,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  paperclip: Paperclip,
   reload: RefreshCcw,
   loading: Loader,
   send: Send,

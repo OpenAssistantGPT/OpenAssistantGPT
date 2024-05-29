@@ -3,8 +3,11 @@ import OpenAI from "openai"
 
 import { z } from "zod"
 import { getUserSubscriptionPlan } from "@/lib/subscription";
-import { AssistantResponse } from 'ai';
+import { AssistantResponse } from '@/lib/assistant-response';
+import { zfd } from "zod-form-data";
 import { Message } from "openai/resources/beta/threads/messages.mjs";
+import { fileTypes as codeFile } from "@/lib/validations/codeInterpreter";
+import { fileTypes as searchFile } from "@/lib/validations/fileSearch";
 
 export const maxDuration = 300;
 
@@ -13,6 +16,15 @@ const routeContextSchema = z.object({
         chatbotId: z.string(),
     }),
 })
+
+
+const schema = zfd.formData({
+    threadId: z.string().or(z.undefined()),
+    message: zfd.text(),
+    clientSidePrompt: z.string().or(z.undefined()),
+    file: z.instanceof(Blob).or(z.string()),
+    filename: z.string(),
+});
 
 export async function OPTIONS(req: Request) {
     return new Response('Ok', { status: 200 })
@@ -43,26 +55,68 @@ export async function POST(
         }
 
         const openai = new OpenAI({
-            apiKey: chatbot.openaiKey
+            apiKey: chatbot.openaiKey,
         })
 
-        const input: {
-            threadId: string | null;
-            message: string;
-            clientSidePrompt: string;
-        } = await req.json();
+        const input = await req.formData();
+
+        const data = schema.parse(input);
 
         // Create a thread if needed
-        const threadId = input.threadId ?? (await openai.beta.threads.create({})).id;
+        const threadId = data.threadId != '' ? data.threadId : (await openai.beta.threads.create({})).id
+
+        let openAiFile: OpenAI.Files.FileObject | null = null;
+
+        if (data.filename !== '') {
+            const file = new File([data.file], data.filename, { type: data.file.type });
+
+
+            if (data.file.size > 0) {
+                openAiFile = await openai.files.create({
+                    file,
+                    purpose: "assistants"
+                });
+            }
+        }
+
+
+        if (openAiFile) {
+            let body = {};
+            if (codeFile.includes(data.filename.split('.').pop()?.toLocaleLowerCase()!)) {
+                body = {
+                    code_interpreter: {
+                        file_ids: [openAiFile.id],
+                    }
+                }
+            } else if (searchFile.includes(data.filename.split('.').pop()!)) {
+                const batch = await openai.beta.vectorStores.create({
+                    name: `Vector Store - ${threadId} ${file.name}`,
+                    file_ids: [openAiFile.id]
+                });
+
+                body = {
+                    file_search: {
+                        vectore_store_ids: [batch.id]
+                    }
+                }
+            }
+
+            const respo = await openai.beta.threads.update(threadId!, {
+                tool_resources: body,
+                metadata: {
+                    file: data.filename,
+                }
+            });
+        }
 
         // Add a message to the thread
-        const createdMessage = await openai.beta.threads.messages.create(threadId, {
-            role: 'user',
-            content: input.message,
+        const createdMessage = await openai.beta.threads.messages.create(threadId!, {
+            role: 'user' as 'user' | 'assistant',
+            content: data.message.toString(),
         });
 
         return AssistantResponse(
-            { threadId, messageId: createdMessage.id },
+            { threadId, messageId: createdMessage.id, chatbotId: params.chatbotId },
             async ({ sendMessage, forwardStream, sendDataMessage }) => {
 
                 try {
@@ -91,7 +145,11 @@ export async function POST(
                     // Run the assistant on the thread
                     const runStream = openai.beta.threads.runs.stream(threadId, {
                         assistant_id: chatbot.openaiId,
-                        instructions: (input.clientSidePrompt || "").replace('+', '') || "",
+                        instructions: (data.clientSidePrompt || "").replace('+', '') || "",
+                        tools: [
+                            { type: "file_search" },
+                            { type: "code_interpreter" },
+                        ],
                     });
 
                     let runResult = await forwardStream(runStream);
@@ -146,7 +204,7 @@ export async function POST(
                             data: {
                                 chatbotId: params.chatbotId,
                                 userId: chatbot.userId,
-                                message: input.message,
+                                message: data.message,
                                 threadId: threadId,
                                 response: response,
                                 from: req.headers.get("origin") || "unknown",

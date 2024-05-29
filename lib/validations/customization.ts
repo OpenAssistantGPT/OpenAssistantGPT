@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 export const customizationSchema = z.object({
-    displayBranding: z.boolean().default(false).optional(),
     chatTitle: z.string().default("").optional(),
     chatMessagePlaceHolder: z.string().default("").optional(),
     bubbleColor: z.string().default("").optional(),
@@ -16,7 +15,6 @@ export const customizationSchema = z.object({
 
 
 export const customizationStringBackendSchema = z.object({
-    displayBranding: z.string().default('false').optional(),
     chatbotLogoFilename: z.string().default("").optional(),
     chatTitle: z.string().default("").optional(),
     chatMessagePlaceHolder: z.string().default("").optional(),

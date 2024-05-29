@@ -15,7 +15,8 @@ import { Icons } from "@/components/icons"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { formatDate } from "@/lib/utils"
 import { toast } from "@/components/ui/use-toast"
-import { freePlan, basicPlan, hobbyPlan, proPlan } from "@/config/subscriptions"
+import { freePlan, basicPlan, proPlan } from "@/config/subscriptions"
+import { siteConfig } from "@/config/site"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
     subscriptionPlan: UserSubscriptionPlan & {
@@ -100,9 +101,9 @@ export function BillingForm({
                 </CardFooter>
             </Card>
             <Card className="border-0 shadow-0">
-                <div className="flex flex-wrap gap-6 mt-8 md:gap-8">
-                    {[freePlan, hobbyPlan, basicPlan, proPlan].map((plan, i) => {
-                        if (plan.name === basicPlan.name) {
+                <div className="flex grid grid-cols-4 flex-wrap gap-6 mt-8 md:gap-8">
+                    {[freePlan, basicPlan, proPlan].map((plan, i) => {
+                        if (plan.name === proPlan.name) {
                             return (
                                 <div key={i} className="hover:shadow-sm relative flex flex-col p-2 bg-white rounded-lg  bg-zinc-850 justify-between border border-purple-500">
                                     <div className="px-3 py-1 text-sm text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-full inline-block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -146,9 +147,27 @@ export function BillingForm({
                                                         - User Inquiry
                                                     </li>
                                                 }
+                                                {
+                                                    plan.brandingCustomization &&
+                                                    <li className="flex items-center">
+                                                        - Remove &quot;Powered by {siteConfig.name}&quot;
+                                                    </li>
+                                                }
+                                                {
+                                                    plan.chatFileAttachments &&
+                                                    <li className="flex items-center">
+                                                        - Client File Attachments
+                                                    </li>
+                                                }
+                                                {
+                                                    plan.premiumSupport &&
+                                                    <li className="flex items-center">
+                                                        - Premium Support
+                                                    </li>
+                                                }
                                             </ul>
                                         </CardContent>
-                                        <CardFooter>
+                                        <CardFooter className="mt-auto">
                                             <Button
                                                 onClick={(e) => openSession(e, plan.stripePriceId)}
                                                 className={cn(buttonVariants())}>
@@ -163,12 +182,12 @@ export function BillingForm({
                         }
                         return (
                             <div key={i} className="hover:shadow-sm relative flex flex-col p-2 bg-white rounded-lg bg-zinc-850 justify-between border ">
-                                <Card className="shadow-none border-0 p-0 m-0" key={i}>
+                                <Card className="shadow-none border-0 p-0 m-0 flex flex-col flex-grow" key={i}>
                                     <CardHeader>
                                         <CardTitle>{plan.name}</CardTitle>
                                         <CardDescription>${plan.price}/month</CardDescription>
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="flex flex-col flex-grow">
                                         <ul className="mt-4 space-y-2">
                                             <li className="flex items-center">
                                                 - {plan.maxChatbots} Chatbots
@@ -201,9 +220,27 @@ export function BillingForm({
                                                     - User Inquiry
                                                 </li>
                                             }
+                                            {
+                                                plan.brandingCustomization &&
+                                                <li className="flex items-center">
+                                                    - Remove &quot;Powered by {siteConfig.name}&quot;
+                                                </li>
+                                            }
+                                            {
+                                                plan.chatFileAttachments &&
+                                                <li className="flex items-center">
+                                                    - Client File Attachments
+                                                </li>
+                                            }
+                                            {
+                                                plan.premiumSupport &&
+                                                <li className="flex items-center">
+                                                    - Premium Support
+                                                </li>
+                                            }
                                         </ul>
                                     </CardContent>
-                                    <CardFooter>
+                                    <CardFooter className="mt-auto">
                                         {plan.name !== freePlan.name &&
                                             <Button
                                                 onClick={(e) => openSession(e, plan.stripePriceId)}
@@ -220,37 +257,40 @@ export function BillingForm({
                         )
                     }
                     )}
-                    {/** 
-                    <Card key="enterprise">
-                        <CardHeader>
-                            <CardTitle>Enterprise</CardTitle>
-                            <CardDescription>$X/ month</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="mt-4 space-y-2">
-                                <li className="flex items-center">
-                                    - X Chatbots
-                                </li>
-                                <li className="flex items-center">
-                                    - X Crawlers
-                                </li>
-                                <li className="flex items-center">
-                                    -  X Files
-                                </li>
-                                <li className="flex items-center">
-                                    - Unlimited Messages
-                                </li>
-                            </ul>
-                        </CardContent>
-                        <CardFooter>
-                            <Button
-                                type="submit"
-                                className={cn(buttonVariants())}>
-                                Contact Sales
-                            </Button>
-                        </CardFooter>
-                    </Card>
-                    **/}
+                    {
+                        <Card key="enterprise" className="flex flex-col flex-grow">
+                            <CardHeader>
+                                <CardTitle>Enterprise</CardTitle>
+                                <CardDescription>$X/month</CardDescription>
+                            </CardHeader>
+                            <CardContent className="flex flex-col flex-grow">
+                                <ul className="mt-4 space-y-2">
+                                    <li className="flex items-center">
+                                        - X Chatbots
+                                    </li>
+                                    <li className="flex items-center">
+                                        - X Crawlers
+                                    </li>
+                                    <li className="flex items-center">
+                                        -  X Files
+                                    </li>
+                                    <li className="flex items-center">
+                                        - Unlimited Messages
+                                    </li>
+                                    <li className="flex items-center">
+                                        - All Feature from other plans
+                                    </li>
+                                </ul>
+                            </CardContent>
+                            <CardFooter>
+                                <Button
+                                    type="submit"
+                                    className={cn(buttonVariants())}>
+                                    Contact Sales
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                    }
                 </div>
             </Card>
 

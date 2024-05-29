@@ -4,6 +4,8 @@ import { chatbotSchema } from "@/lib/validations/chatbot";
 import { getServerSession } from "next-auth";
 import OpenAI from "openai";
 import { z } from "zod";
+import { fileTypes as codeFile } from "@/lib/validations/codeInterpreter";
+import { fileTypes as searchFile } from "@/lib/validations/fileSearch";
 
 export const maxDuration = 300;
 
@@ -171,19 +173,44 @@ export async function PATCH(
       }
     })
 
-    // list if vectors are already created
-    const vectorStores = await openai.beta.vectorStores.list();
-    const vectorStore = vectorStores.data.find((vectorStore) => vectorStore.name === `Vector Store - ${body.name}`);
+    // validate file extension to create vector store or user code interpreter
+    let bodyTools = {
+      'code_interpreter': {
+        file_ids: []
+      },
+      'file_search': {
+        vector_store_ids: []
+      }
+    };
 
-    if (vectorStore) {
-      await openai.beta.vectorStores.del(vectorStore.id);
-    }
+    // validate file extension to create vector store 
+    const allFileforFileSearch = files.filter((f) => searchFile.includes(f.name.split('.').pop()!));
+    console.log(allFileforFileSearch);
 
-    const batch = await openai.beta.vectorStores.create({
-      name: `Vector Store - ${body.name}`,
-      file_ids: files.map((file) => file.openAIFileId)
+    const allFileforCodeInterpreter = files.filter((f) => codeFile.includes(f.name.split('.').pop()?.toLocaleLowerCase()!));
+    console.log(allFileforCodeInterpreter);
+
+    bodyTools['code_interpreter'] = {
+      file_ids: allFileforCodeInterpreter.map((f) => f.openAIFileId)
+    };
+
+    if (allFileforFileSearch.length > 0) {
+      const vectorStores = await openai.beta.vectorStores.list();
+      const vectorStore = vectorStores.data.find((vs) => vs.name === `Vector Store - ${body.name}`);
+
+      if (vectorStore) {
+        await openai.beta.vectorStores.del(vectorStore.id);
+      }
+
+      const batch = await openai.beta.vectorStores.create({
+        name: `Vector Store - ${body.name}`,
+        file_ids: allFileforFileSearch.map((f) => f.openAIFileId)
+      });
+
+      bodyTools['file_search'] = {
+        vector_store_ids: [batch.id]
+      };
     }
-    );
 
     await openai.beta.assistants.update(
       chatbot.openaiId,
@@ -191,11 +218,9 @@ export async function PATCH(
         name: chatbot.name,
         instructions: chatbot.prompt,
         model: model?.name,
-        tools: [{ type: "file_search" }],
+        tools: [{ type: "file_search" }, { type: "code_interpreter" }],
         tool_resources: {
-          file_search: {
-            vector_store_ids: [batch.id],
-          },
+          ...bodyTools
         }
       }
     )
