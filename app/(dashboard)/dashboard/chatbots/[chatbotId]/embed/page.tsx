@@ -67,7 +67,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                             language="html"
                             value={`<iframe 
     src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false"
-    style="overflow: hidden; height: 80vh; border: 0 none; width: 480px; bottom: -30px;"
+    style="overflow: hidden; height: 80vh; width: 480px; bottom: -30px; border: 2px solid #e2e8f0; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
     allowfullscreen allow="clipboard-read; clipboard-write" 
 >
 </iframe>
