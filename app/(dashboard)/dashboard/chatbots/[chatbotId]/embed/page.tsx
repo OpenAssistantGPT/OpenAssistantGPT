@@ -56,6 +56,7 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                     </>
                 </Link>
             </DashboardHeader>
+
             <Tabs className="w-full overflow-x-auto max-w-full" defaultValue="widget">
                 <TabsList className="mb-10 grid w-full grid-cols-5 gap-4">
                     <TabsTrigger value="widget">Widget</TabsTrigger>
@@ -77,7 +78,13 @@ export default async function EmbedOnSitePage({ params }: ChatbotSettingsProps) 
                     </div>
                 </TabsContent>
                 <TabsContent value="widget">
+
                     <div className="space-y-4">
+                        <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+                            <p className="font-bold text-md">Warning</p>
+                            <p className="text-sm">Depending on which platform you are adding our chatbot you may have to change the width and the height of the button. If you see a scroll bar it means the IFRAME is the wrong size and you have to change it.</p>
+                            <p className="text-sm">By default we have `width: 56px; height: 56px;` but if you see the scroll bar try to use `width: 60px; height: 60px;` </p>
+                        </div>
                         <CodeBlock
                             language="html"
                             value={`<script>
