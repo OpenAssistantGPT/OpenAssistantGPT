@@ -111,7 +111,6 @@ export function AssistantResponse(
                         }
 
                         case 'thread.message.completed': {
-                            console.log(value.data.content)
                             value.data.content.map((content) => {
                                 console.log(content)
                                 if (content.type == 'image_file') {

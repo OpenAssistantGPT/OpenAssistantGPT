@@ -60,10 +60,8 @@ export async function POST(
         })
 
         const input = await req.formData();
-        console.log(input)
 
         const data = schema.parse(input);
-        console.log(data)
 
         // Create a thread if needed
         const threadId = data.threadId != '' ? data.threadId : (await openai.beta.threads.create({})).id
