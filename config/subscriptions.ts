@@ -33,7 +33,7 @@ export const hobbyPlan: SubscriptionPlan = {
     basicCustomization: true,
     userInquiries: false,
 
-    brandingCustomization: false,
+    brandingCustomization: true,
     chatFileAttachments: false,
 
     price: 3,
