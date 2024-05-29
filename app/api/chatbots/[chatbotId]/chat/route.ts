@@ -8,6 +8,7 @@ import { zfd } from "zod-form-data";
 import { Message } from "openai/resources/beta/threads/messages.mjs";
 import { fileTypes as codeFile } from "@/lib/validations/codeInterpreter";
 import { fileTypes as searchFile } from "@/lib/validations/fileSearch";
+import { File } from "buffer";
 
 export const maxDuration = 300;
 
