@@ -89,6 +89,7 @@ export function useAssistant({
   threadId: threadIdParam,
   inputFile,
   credentials,
+  clientSidePrompt,
   headers,
   body,
   onError,
@@ -145,6 +146,7 @@ export function useAssistant({
       formData.append("threadId", threadIdParam ?? threadId ?? null);
       formData.append("file", inputFile || '');
       formData.append("filename", inputFile !== undefined ? inputFile.name : '');
+      formData.append("clientSidePrompt", clientSidePrompt || '');
   
       const result = await fetch(api, {
         method: "POST",

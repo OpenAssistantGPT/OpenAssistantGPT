@@ -41,9 +41,9 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   let inputFileRef = useRef<HTMLInputElement>(null);
 
   const [chatThreadId, setChatThreadId] = useState<string | null>()
-
+  
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, threadId: chatThreadId || '', body: { clientSidePrompt: clientSidePrompt } });
+    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, threadId: chatThreadId || '', clientSidePrompt: clientSidePrompt });
 
   useEffect(() => {
     if (threadId) {
