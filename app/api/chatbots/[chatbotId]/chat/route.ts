@@ -59,8 +59,10 @@ export async function POST(
         })
 
         const input = await req.formData();
+        console.log(input)
 
         const data = schema.parse(input);
+        console.log(data)
 
         // Create a thread if needed
         const threadId = data.threadId != '' ? data.threadId : (await openai.beta.threads.create({})).id
@@ -120,27 +122,27 @@ export async function POST(
             async ({ sendMessage, forwardStream, sendDataMessage }) => {
 
                 try {
-                    //const plan = await getUserSubscriptionPlan(chatbot.userId)
-                    //if (plan.unlimitedMessages === false) {
-                    //    const messageCount = await db.message.count({
-                    //        where: {
-                    //            userId: chatbot.userId,
-                    //            createdAt: {
-                    //                gte: new Date(new Date().setDate(new Date().getDate() - 30))
-                    //            }
-                    //        }
-                    //    })
-                    //    console.log(`Message count: ${messageCount}`)
-                    //    if (messageCount >= plan.maxMessagesPerMonth!) {
-                    //        console.log(`Reached message limit ${chatbot.userId}`)
-                    //        sendMessage({
-                    //            id: "end",
-                    //            role: 'assistant',
-                    //            content: [{ type: 'text', text: { value: "You have reached your monthly message limit. Upgrade your plan to continue using your chatbot." } }]
-                    //        });
-                    //        return;
-                    //    }
-                    //}
+                    const plan = await getUserSubscriptionPlan(chatbot.userId)
+                    if (plan.unlimitedMessages === false) {
+                        const messageCount = await db.message.count({
+                            where: {
+                                userId: chatbot.userId,
+                                createdAt: {
+                                    gte: new Date(new Date().setDate(new Date().getDate() - 30))
+                                }
+                            }
+                        })
+                        console.log(`Message count: ${messageCount}`)
+                        if (messageCount >= plan.maxMessagesPerMonth!) {
+                            console.log(`Reached message limit ${chatbot.userId}`)
+                            sendMessage({
+                                id: "end",
+                                role: 'assistant',
+                                content: [{ type: 'text', text: { value: "You have reached your monthly message limit. Upgrade your plan to continue using your chatbot." } }]
+                            });
+                            return;
+                        }
+                    }
 
                     // Run the assistant on the thread
                     const runStream = openai.beta.threads.runs.stream(threadId, {
