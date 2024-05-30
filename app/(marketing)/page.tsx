@@ -16,7 +16,7 @@ export default function IndexPage() {
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <Link
             href={siteConfig.links.twitter}
-            className="rounded-2xl bg-muted px-4 py-1.5 text-sm font-medium"
+            className="rounded-2xl border shadow-md bg-muted px-4 py-1.5 text-sm font-medium"
             target="_blank"
           >
             Find us on 𝕏
@@ -36,7 +36,7 @@ export default function IndexPage() {
               href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
-              className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+              className={cn(buttonVariants({ variant: "outline", size: "lg" }), 'bg-white')}
             >
               <Icons.gitHub className="h-4 w-4 mr-2"></Icons.gitHub> GitHub
             </Link>
@@ -61,7 +61,7 @@ export default function IndexPage() {
           </div>
         </div>
       </section>
-      <section data-aos="fade-up" id="features" className="container space-y-6 bg-slate-50 py-12 md:py-24 lg:py-32">
+      <section data-aos="fade-up" id="features" className="container space-y-6 py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Features
@@ -145,7 +145,7 @@ export default function IndexPage() {
         </div>
       </section>
 
-      <section data-aos="fade-up" id="integrations" className="container bg-slate-50 py-12 md:py-24 lg:py-32">
+      <section data-aos="fade-up" id="integrations" className="container py-12 md:py-24 lg:py-32">
         <div className="container px-4">
           <div className="flex flex-col items-center justify-center space-y-4 md:space-y-6">
             <div className="space-y-3 text-center">
@@ -211,7 +211,7 @@ export default function IndexPage() {
           <Image alt="code example" className="mt-6 shadow-xl border rounded-lg" width={550} height={550} src="/code_example.png" />
         </div>
       </section>
-      <section data-aos="fade-up" id="open-source" className="container bg-slate-50 py-12 md:py-24 lg:py-32">
+      <section data-aos="fade-up" id="open-source" className="container py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             Proudly Open Source
@@ -367,7 +367,7 @@ export default function IndexPage() {
           </div>
         </div>
       </section >
-      <section data-aos="fade-up" id="faq" className="container bg-slate-50 space-y-6 py-12 md:py-24 lg:py-32">
+      <section data-aos="fade-up" id="faq" className="container space-y-6 py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
             FAQ
