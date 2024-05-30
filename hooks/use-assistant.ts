@@ -175,6 +175,21 @@ export function useAssistant({
             break;
           }
 
+          case 'message_annotations': {
+            // loop over all annotations
+            for (const annotation of value) {
+                setMessages(messages => {
+                  const lastMessage = messages[messages.length - 1];
+                  lastMessage.content = lastMessage.content.replace(
+                    annotation.text,
+                    annotation.file_path.url,
+                  );
+                  return [...messages.slice(0, messages.length - 1), lastMessage];
+                });
+            }
+            break;
+          }
+
           case 'text': {
             // text delta - add to last message:
             setMessages(messages => {
