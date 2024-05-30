@@ -114,8 +114,6 @@ export function AssistantResponse(
                         case 'thread.message.completed': {
                             value.data.content.map((content) => {
                                 if (content.text.annotations) {
-                                    console.log(content.text.annotations)
-
                                     // for all anoatition add url to object file path
                                     content.text.annotations.map((annotation) => {
                                         if (annotation.type === 'file_path') {
