@@ -100,6 +100,7 @@ export function AssistantResponse(
                         case 'thread.message.delta': {
                             const content = value.data.delta.content?.[0];
                             if (content?.type === 'text' && content.text?.value != null) {
+
                                 controller.enqueue(
                                     textEncoder.encode(
                                         formatStreamPart('text', content.text.value),
@@ -112,7 +113,26 @@ export function AssistantResponse(
 
                         case 'thread.message.completed': {
                             value.data.content.map((content) => {
-                                console.log(content)
+                                if (content.text.annotations) {
+
+                                    console.log(content.text.annotations)   
+
+                                    // for all anoatition add url to object file path
+                                    content.text.annotations.map((annotation) => {
+                                        annotation.file_path = {
+                                            file_id: annotation.file_path.file_id,
+                                            url: `/api/chatbots/${chatbotId}/chat/file/${annotation.file_path.file_id}`,
+                                        }
+                                    })
+
+                                    controller.enqueue(
+                                        textEncoder.encode(
+                                            formatStreamPart('message_annotations', content.text.annotations),
+                                        ),
+                                    );
+                                }
+
+
                                 if (content.type == 'image_file') {
                                     console.log(content.image_file)
                                     controller.enqueue(

@@ -29,7 +29,7 @@ export default function ChatbotButton({ textColor, backgroundColor }: ChatbotBut
                 setIsChatVisible(false);
             }
         });
-        
+
         const hasScrollbar = document.body.scrollHeight > document.documentElement.clientHeight;
         window.parent.postMessage({ type: 'checkScrollbar', hasScrollbar: hasScrollbar }, '*');
     }, []);
