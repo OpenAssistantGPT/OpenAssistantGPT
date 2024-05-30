@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     (function () {
         // Ensure the chatbotConfig object exists and has a chatbotId property
         if (!window.chatbotConfig || !window.chatbotConfig.chatbotId) {
@@ -26,8 +25,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Add the event listener script
         window.addEventListener("message", function (t) {
+
             var e = document.getElementById("openassistantgpt-chatbot-iframe");
             var s = document.getElementById("openassistantgpt-chatbot-button-iframe");
+
+            if (t.data.type === 'checkScrollbar') {
+                var hasScrollbar = t.data.hasScrollbar;
+                if (hasScrollbar) {
+                    s.style.width = "60px";
+                    s.style.height = "60px";
+                }
+            }
+
             if ("openChat" === t.data) {
                 console.log("Toggle chat visibility");
                 if (e && s) {
@@ -62,5 +71,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     })();
-
 });

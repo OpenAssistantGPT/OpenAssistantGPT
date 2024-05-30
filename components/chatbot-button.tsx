@@ -20,7 +20,6 @@ export default function ChatbotButton({ textColor, backgroundColor }: ChatbotBut
 
     useEffect(() => {
         window.addEventListener('message', function (event) {
-
             if (event.data === 'openChat') {
                 console.log('Toggle chat visibility');
                 setIsChatVisible(true);
@@ -30,6 +29,9 @@ export default function ChatbotButton({ textColor, backgroundColor }: ChatbotBut
                 setIsChatVisible(false);
             }
         });
+        
+        const hasScrollbar = document.body.scrollHeight > document.documentElement.clientHeight;
+        window.parent.postMessage({ type: 'checkScrollbar', hasScrollbar: hasScrollbar }, '*');
     }, []);
 
 
