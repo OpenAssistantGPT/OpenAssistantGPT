@@ -2,7 +2,7 @@
 
 import { isAbortError } from '@ai-sdk/provider-utils';
 import { useCallback, useRef, useState } from 'react';
-import {generateId} from '@/lib/generate-id';
+import { generateId } from '@/lib/generate-id';
 import { readDataStream } from '@/lib/read-data-stream';
 import {
   AssistantStatus,
@@ -147,7 +147,7 @@ export function useAssistant({
       formData.append("file", inputFile || '');
       formData.append("filename", inputFile !== undefined ? inputFile.name : '');
       formData.append("clientSidePrompt", clientSidePrompt || '');
-  
+
       const result = await fetch(api, {
         method: "POST",
         credentials,
@@ -178,14 +178,17 @@ export function useAssistant({
           case 'message_annotations': {
             // loop over all annotations
             for (const annotation of value) {
-                setMessages(messages => {
-                  const lastMessage = messages[messages.length - 1];
-                  lastMessage.content = lastMessage.content.replace(
-                    annotation.text,
-                    annotation.file_path.url,
-                  );
-                  return [...messages.slice(0, messages.length - 1), lastMessage];
-                });
+              if (annotation.type !== 'file_path') {
+                continue;
+              }
+              setMessages(messages => {
+                const lastMessage = messages[messages.length - 1];
+                lastMessage.content = lastMessage.content.replace(
+                  annotation.text,
+                  annotation.file_path.url,
+                );
+                return [...messages.slice(0, messages.length - 1), lastMessage];
+              });
             }
             break;
           }
