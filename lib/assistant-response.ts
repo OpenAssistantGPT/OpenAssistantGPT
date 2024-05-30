@@ -114,14 +114,13 @@ export function AssistantResponse(
                         case 'thread.message.completed': {
                             value.data.content.map((content) => {
                                 if (content.text.annotations) {
-
-                                    console.log(content.text.annotations)   
-
                                     // for all anoatition add url to object file path
                                     content.text.annotations.map((annotation) => {
-                                        annotation.file_path = {
-                                            file_id: annotation.file_path.file_id,
-                                            url: `/api/chatbots/${chatbotId}/chat/file/${annotation.file_path.file_id}`,
+                                        if (annotation.type === 'file_path') {
+                                            annotation.file_path = {
+                                                file_id: annotation.file_path.file_id,
+                                                url: `/api/chatbots/${chatbotId}/chat/file/${annotation.file_path.file_id}`,
+                                            }
                                         }
                                     })
 
