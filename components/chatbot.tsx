@@ -2,7 +2,6 @@
 
 import { Suspense, useEffect } from 'react'
 import { useSearchParams } from "next/navigation";
-import { siteConfig } from "@/config/site";
 
 
 export default function Chatbot() {
@@ -94,6 +93,7 @@ export default function Chatbot() {
                         src={`/embed/clq6m06gc000114hm42s838g2/window?chatbox=false&withExitX=true`}
                         style={customStyle}
                         allowFullScreen
+                        className='z-50'
                         id="openassistantgpt-chatbot-iframe"
                     ></iframe>
                 </>

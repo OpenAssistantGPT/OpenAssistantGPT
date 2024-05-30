@@ -139,6 +139,7 @@ export default function Chatbot() {
             <iframe
                 src="${siteConfig.url}embed/${params.chatbotId}/window?chatbox=false&withExitX=true"
                 style={customStyle}
+                className="z-50"
                 id="openassistantgpt-chatbot-iframe"
             ></iframe>
         </div>
