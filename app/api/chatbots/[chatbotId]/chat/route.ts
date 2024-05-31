@@ -71,7 +71,6 @@ export async function POST(
         if (data.filename !== '') {
             const file = new File([data.file], data.filename, { type: data.file.type });
 
-
             if (data.file.size > 0) {
                 openAiFile = await openai.files.create({
                     file,
@@ -91,22 +90,19 @@ export async function POST(
                 }
             } else if (searchFile.includes(data.filename.split('.').pop()!)) {
                 const batch = await openai.beta.vectorStores.create({
-                    name: `Vector Store - ${threadId} ${file.name}`,
+                    name: `Vector Store - ${threadId} ${data.filename}`,
                     file_ids: [openAiFile.id]
                 });
 
                 body = {
                     file_search: {
-                        vectore_store_ids: [batch.id]
+                        vector_store_ids: [batch.id]
                     }
                 }
             }
 
-            const respo = await openai.beta.threads.update(threadId!, {
-                tool_resources: body,
-                metadata: {
-                    file: data.filename,
-                }
+            await openai.beta.threads.update(threadId!, {
+                tool_resources: body
             });
         }
 

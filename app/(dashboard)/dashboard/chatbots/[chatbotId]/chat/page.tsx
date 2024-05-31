@@ -1,7 +1,6 @@
 import { getCurrentUser } from "@/lib/session"
 import { notFound, redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
-import { Chat } from "@/components/chat"
 import { Chatbot, User } from "@prisma/client"
 import { db } from "@/lib/db"
 import Link from "next/link"
