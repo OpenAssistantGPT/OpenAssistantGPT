@@ -101,7 +101,7 @@ export function BillingForm({
                 </CardFooter>
             </Card>
             <Card className="border-0 shadow-0">
-                <div className="flex grid grid-cols-4 flex-wrap gap-6 mt-8 md:gap-8">
+                <div className="flex grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 flex-wrap gap-6 mt-8 md:gap-8">
                     {[freePlan, basicPlan, proPlan].map((plan, i) => {
                         if (plan.name === proPlan.name) {
                             return (
@@ -174,7 +174,7 @@ export function BillingForm({
                                                 {isLoading && (
                                                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                                                 )}
-                                                Upgrade
+                                                Start 7 days free trial
                                             </Button>
                                         </CardFooter>
                                     </Card>
@@ -248,7 +248,7 @@ export function BillingForm({
                                                 {isLoading && (
                                                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                                                 )}
-                                                Upgrade
+                                                Start 7 days free trial
                                             </Button>
                                         }
                                     </CardFooter>
