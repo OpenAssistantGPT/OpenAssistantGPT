@@ -13,6 +13,21 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.7"
+                    date="2024-06-01"
+                    new={[
+                        {
+                            title: 'Free trials!',
+                            description: 'You can now try our basic and pro plan for free for 7 days. It will give you access to all the features of the plan.',
+                        },
+                        {
+                            title: 'Enable auto scroll in chatbox',
+                            description: 'We re-enabled the auto scroll in the chatbox. This will make the chatbox scroll to the bottom when a new message is received.',
+                        }
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.2.6"
                     date="2024-05-29"
                     new={[
