@@ -73,6 +73,10 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
     }
   }, [error])
 
+  useEffect(() => {
+    // Scroll to the bottom of the container on messages update
+    document.documentElement.scrollTop = document.getElementById("end").offsetTop;
+  }, [messages]);
 
   async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

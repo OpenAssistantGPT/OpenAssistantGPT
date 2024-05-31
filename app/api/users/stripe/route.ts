@@ -49,6 +49,9 @@ export async function POST(req: Request) {
                     quantity: 1,
                 },
             ],
+            subscription_data: {
+                trial_period_days: 7
+            },
             metadata: {
                 userId: session.user.id,
             },
