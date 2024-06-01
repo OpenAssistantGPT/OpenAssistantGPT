@@ -23,6 +23,7 @@ import { chatbotSchema } from "@/lib/validations/chatbot"
 import { ChatbotModel, File, User } from "@prisma/client"
 import Select from 'react-select';
 import { Textarea } from "@/components/ui/textarea"
+import Link from "next/link"
 
 type FormData = z.infer<typeof chatbotSchema>
 
@@ -282,7 +283,8 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
                                         type="password"
                                     />
                                     <FormDescription>
-                                        The OpenAI API key that will be used to generate responses
+                                        The OpenAI API key that will be used to generate responses.
+                                        You can create your API Key <Link target="_blank" className="underline" href='https://platform.openai.com/api-keys'>here</Link>.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

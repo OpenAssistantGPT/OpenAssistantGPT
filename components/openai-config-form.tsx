@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 import { Form, FormField, FormDescription, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import Link from "next/link"
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
     user: Pick<User, "id">
@@ -86,6 +87,7 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
                         <CardTitle>Configure your account</CardTitle>
                         <CardDescription>
                             Your global api key for OpenAI will be used for all your global configurations. It is very important to set it before creating a chatbot.
+                            You can create your API Key <Link target="_blank" className="underline" href='https://platform.openai.com/api-keys'>here</Link>.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">

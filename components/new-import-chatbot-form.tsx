@@ -22,6 +22,7 @@ import { Icons } from "@/components/icons"
 import { User } from "@prisma/client"
 import { Textarea } from "@/components/ui/textarea"
 import { importChatbotSchema } from "@/lib/validations/importChatbot"
+import Link from "next/link"
 
 type FormData = z.infer<typeof importChatbotSchema>
 
@@ -133,6 +134,7 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
                                     />
                                     <FormDescription>
                                         The OpenAI Assistant ID that already exists in your OpenAI account.
+                                        You can find your Assistant ID in the <Link target="_blank" className="underline" href="https://platform.openai.com/assistants">OpenAI Assistant Dashboard</Link>.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -172,6 +174,7 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
                                     />
                                     <FormDescription>
                                         The OpenAI API key that will be used to generate responses
+                                        You can create your API Key <Link target="_blank" className="underline" href='https://platform.openai.com/api-keys'>here</Link>.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
