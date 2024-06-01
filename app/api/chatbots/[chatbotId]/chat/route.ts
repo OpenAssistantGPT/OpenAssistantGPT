@@ -18,7 +18,6 @@ const routeContextSchema = z.object({
     }),
 })
 
-
 const schema = zfd.formData({
     threadId: z.string().or(z.undefined()),
     message: zfd.text(),
@@ -78,7 +77,6 @@ export async function POST(
                 });
             }
         }
-
 
         if (openAiFile) {
             let body = {};
