@@ -35,7 +35,8 @@ export async function PATCH(
                 id: session.user.id,
             },
             data: {
-                inquiryEmailEnabled: payload.inquiryNotificationEnabled
+                inquiryEmailEnabled: payload.inquiryNotificationEnabled,
+                marketingEmailEnabled: payload.marketingEmailEnabled,
             }
         })
 
