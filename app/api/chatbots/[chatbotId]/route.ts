@@ -221,7 +221,7 @@ export async function PATCH(
         tools: [{ type: "file_search" }, { type: "code_interpreter" }],
         tool_resources: {
           ...bodyTools
-        }
+        },
       }
     )
 
