@@ -77,6 +77,9 @@ model Chatbot {
   displayBranding            Boolean @default(true)
   chatFileAttachementEnabled Boolean @default(false)
 
+  maxCompletionTokens Int?
+  maxPromptTokens     Int?
+
   user            User              @relation(fields: [userId], references: [id])
   ChatbotFiles    ChatbotFiles[]
   ClientInquiries ClientInquiries[]

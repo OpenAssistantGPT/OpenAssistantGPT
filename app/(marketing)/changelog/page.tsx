@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.9"
+                    date="2024-06-03"
+                    new={[
+                        {
+                            title: 'Configure max_completion_tokens and max_prompt_tokens',
+                            description: 'Now in the advanced settings of your chatbot, you can configure the max_completion_tokens and max_prompt_tokens. This will allow you to control the number of tokens used in the completion and prompt.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.8"
                     date="2024-06-02"
                     new={[

@@ -44,6 +44,8 @@ export async function POST(
                 userId: true,
                 openaiId: true,
                 chatbotErrorMessage: true,
+                maxCompletionTokens: true,
+                maxPromptTokens: true,
             },
             where: {
                 id: params.chatbotId,
@@ -63,7 +65,9 @@ export async function POST(
         const data = schema.parse(input);
 
         // Create a thread if needed
-        const threadId = data.threadId != '' ? data.threadId : (await openai.beta.threads.create({})).id
+        const threadId = data.threadId != '' ? data.threadId : (await openai.beta.threads.create({
+            
+        })).id
 
         let openAiFile: OpenAI.Files.FileObject | null = null;
 
@@ -138,13 +142,15 @@ export async function POST(
                     }
 
                     // Run the assistant on the thread
-                    const runStream = openai.beta.threads.runs.stream(threadId, {
+                    const runStream = openai.beta.threads.runs.stream(threadId!, {
                         assistant_id: chatbot.openaiId,
                         instructions: (data.clientSidePrompt || "").replace('+', '') || "",
                         tools: [
                             { type: "file_search" },
                             { type: "code_interpreter" },
                         ],
+                        max_completion_tokens: chatbot.maxCompletionTokens,
+                        max_prompt_tokens: chatbot.maxPromptTokens,
                     });
 
                     let runResult = await forwardStream(runStream);

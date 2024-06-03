@@ -1,5 +1,4 @@
 import { notFound, redirect } from "next/navigation"
-import { Chatbot, User } from "@prisma/client"
 
 import { ChatbotForm } from "@/components/chatbot-form"
 import { DashboardHeader } from "@/components/header"
@@ -20,6 +19,7 @@ import { InquirySettings } from "@/components/inquiry-settings"
 import { ImportedChatbotForm } from "@/components/imported-chatbot-form"
 import { ChatbotBrandingProSettingsForm } from "@/components/chatbot-branding-pro-settings"
 import { ChatbotFileAttachementProSettingsForm } from "@/components/chatbot-file-attachement-pro-settings"
+import { ChatbotAdvancedSettingsForm } from "@/components/chatbot-advanced-settings"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -47,6 +47,8 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
             openaiId: true,
             isImported: true,
             chatFileAttachementEnabled: true,
+            maxCompletionTokens: true,
+            maxPromptTokens: true,
             model: {
                 select: {
                     id: true,
@@ -105,8 +107,9 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                 </Link>
             </DashboardHeader>
             <Tabs className="w-full" defaultValue="settings">
-                <TabsList className="mb-5 grid w-full grid-cols-4 gap-4">
+                <TabsList className="mb-5 grid w-full grid-cols-5 gap-4">
                     <TabsTrigger value="settings">General Settings</TabsTrigger>
+                    <TabsTrigger value="advancedSettings">Advanced Settings</TabsTrigger>
                     <TabsTrigger value="customizations">Customizations</TabsTrigger>
                     <TabsTrigger value="inquiry">User Inquiry Settings</TabsTrigger>
                     <TabsTrigger value="pro">Pro features 👑</TabsTrigger>
@@ -144,6 +147,9 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                             </CardContent>
                         </Card>
                     </div>
+                </TabsContent>
+                <TabsContent value="advancedSettings">
+                    <ChatbotAdvancedSettingsForm chatbot={chatbot} />
                 </TabsContent>
                 <TabsContent value="customizations">
                     <div className="space-y-4">
