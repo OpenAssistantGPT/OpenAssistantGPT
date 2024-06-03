@@ -29,6 +29,7 @@ export default async function SettingsPage() {
         },
         select: {
             inquiryEmailEnabled: true,
+            marketingEmailEnabled: true,
         },
     })
 
@@ -42,7 +43,7 @@ export default async function SettingsPage() {
                 <div className="grid gap-10">
                     <UserNameForm user={{ id: user.id, name: user.name || "" }} />
                     <OpenAIForm user={{ id: user.id }} />
-                    <NotificationSettingsForm user={{ id: user.id }} inquiryNotificationEnabled={userNotifications?.inquiryEmailEnabled!} />
+                    <NotificationSettingsForm user={{ id: user.id }} marketingEmailEnabled={userNotifications?.marketingEmailEnabled!} inquiryNotificationEnabled={userNotifications?.inquiryEmailEnabled!} />
                 </div>
             </div>
         </DashboardShell>

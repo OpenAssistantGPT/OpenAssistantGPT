@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.8"
+                    date="2024-06-02"
+                    new={[
+                        {
+                            title: 'You can now unsubscribe from marketing emails',
+                            description: 'New feature to unsubscribe from marketing emails. You can now manage your communication preferences in the settings page.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.7"
                     date="2024-06-01"
                     new={[
@@ -27,7 +37,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.6"
                     date="2024-05-29"
                     new={[
@@ -60,7 +69,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.5"
                     date="2024-05-25"
                     new={[

@@ -26,16 +26,18 @@ import { Switch } from "@/components/ui/switch"
 interface NotificationSettingsFormProps extends React.HTMLAttributes<HTMLFormElement> {
     user: Pick<User, "id">
     inquiryNotificationEnabled: boolean
+    marketingEmailEnabled: boolean
 }
 
 type FormData = z.infer<typeof notificationSchema>
 
-export function NotificationSettingsForm({ user, inquiryNotificationEnabled, className, ...props }: NotificationSettingsFormProps) {
+export function NotificationSettingsForm({ user, inquiryNotificationEnabled, marketingEmailEnabled, className, ...props }: NotificationSettingsFormProps) {
     const router = useRouter()
     const form = useForm<FormData>({
         resolver: zodResolver(notificationSchema),
         defaultValues: {
             inquiryNotificationEnabled: inquiryNotificationEnabled,
+            marketingEmailEnabled: marketingEmailEnabled,
         },
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
@@ -50,6 +52,7 @@ export function NotificationSettingsForm({ user, inquiryNotificationEnabled, cla
             },
             body: JSON.stringify({
                 inquiryNotificationEnabled: data.inquiryNotificationEnabled,
+                marketingEmailEnabled: data.marketingEmailEnabled,
             }),
         })
 
@@ -95,6 +98,27 @@ export function NotificationSettingsForm({ user, inquiryNotificationEnabled, cla
                                     </FormLabel>
                                     <FormDescription>
                                         Get a notification when a new inquiry is received.
+                                    </FormDescription>
+                                    <FormControl>
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="marketingEmailEnabled"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>
+                                        Marketing Emails
+                                    </FormLabel>
+                                    <FormDescription>
+                                        Receive our marketing emails. New features, updates, and more.
                                     </FormDescription>
                                     <FormControl>
                                         <Switch
