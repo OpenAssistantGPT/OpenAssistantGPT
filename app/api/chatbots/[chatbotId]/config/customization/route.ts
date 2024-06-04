@@ -48,12 +48,21 @@ export async function PATCH(
         const payload = customizationStringBackendSchema.parse(Object.fromEntries(formData));
 
         let blob = undefined
-        if (payload.chatbotLogoFilename !== '' && payload.chatbotLogo !== '') {
+        if (payload.chatbotLogoFilename !== '' && payload.chatbotLogoFilename !== 'keep-current-image' && payload.chatbotLogo !== '') {
             blob = await put(payload.chatbotLogoFilename || "", payload.chatbotLogo, {
                 access: 'public',
             });
             console.log(blob)
         }   
+
+        const currentChatbot = await db.chatbot.findUnique({
+            where: {
+                id: params.chatbotId,
+            },
+            select: {
+                chatbotLogoURL: true,
+            },
+        });
 
         const chatbot = await db.chatbot.update({
             where: {
@@ -68,7 +77,7 @@ export async function PATCH(
                 chatHeaderTextColor: payload.chatHeaderTextColor,
                 userReplyBackgroundColor: payload.userReplyBackgroundColor,
                 userReplyTextColor: payload.userReplyTextColor,
-                chatbotLogoURL: blob ? blob.url : '',
+                chatbotLogoURL: blob ? blob.url : payload.chatbotLogoFilename === 'keep-current-image' ? currentChatbot?.chatbotLogoURL : '',
             },
             select: {
                 id: true,
