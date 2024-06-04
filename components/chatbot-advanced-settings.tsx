@@ -126,7 +126,7 @@ export function ChatbotAdvancedSettingsForm({ chatbot, ...props }: ChatbotFormPr
                                     </FormLabel>
 
                                     <Input
-                                        defaultValue={chatbot.maxPromptTokens || undefined}
+                                        defaultValue={chatbot.maxCompletionTokens || undefined}
                                         onChange={e => field.onChange(Number(e.target.value))}
                                         type="number"
                                         id="maxCompletionTokens"
