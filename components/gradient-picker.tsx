@@ -10,7 +10,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
 import { Paintbrush } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 export function GradientPicker({
     background,
@@ -159,24 +159,5 @@ export function GradientPicker({
                 />
             </PopoverContent>
         </Popover>
-    )
-}
-
-const GradientButton = ({
-    background,
-    children,
-}: {
-    background: string
-    children: React.ReactNode
-}) => {
-    return (
-        <div
-            className="p-0.5 rounded-md relative !bg-cover !bg-center transition-all"
-            style={{ background }}
-        >
-            <div className="bg-popover/80 rounded-md p-1 text-xs text-center">
-                {children}
-            </div>
-        </div>
     )
 }

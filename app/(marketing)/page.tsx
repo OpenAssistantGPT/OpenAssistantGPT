@@ -6,7 +6,7 @@ import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
-import { freePlan, basicPlan, hobbyPlan, proPlan } from "@/config/subscriptions";
+import { freePlan, basicPlan, proPlan } from "@/config/subscriptions";
 
 export default function IndexPage() {
 

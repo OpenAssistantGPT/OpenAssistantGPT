@@ -110,9 +110,12 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         if (useDefaultImage) {
             formData.set('chatbotLogoFilename', '');
             formData.set('chatbotLogo', '');
-        } else {
+        } else if (fileImage) {
             formData.append('chatbotLogoFilename', fileImage.name);
             formData.append('chatbotLogo', fileImage);
+        } else {
+            formData.set('chatbotLogoFilename', 'keep-current-image');
+            formData.set('chatbotLogo', '');
         }
 
         formData.append('useDefaultImage', String(useDefaultImage));
@@ -312,7 +315,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                             Choose the color for the background of your user&apos;s messages.
                                                         </FormDescription>
                                                         <FormControl>
-                                                            <GradientPicker background={userBubbleColor} setBackground={setUserBubbleColor} />
+                                                            <GradientPicker withGradient={false} background={userBubbleColor} setBackground={setUserBubbleColor} />
                                                         </FormControl>
                                                     </div>
 

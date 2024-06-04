@@ -21,6 +21,13 @@ export default function ChangelogPage() {
                             description: 'Now in the advanced settings of your chatbot, you can configure the max_completion_tokens and max_prompt_tokens. This will allow you to control the number of tokens used in the completion and prompt.',
                         },
                     ]}
+                    bugs={[
+                        {
+                            title: 'Fix issue while customizing the chatbot could create infinite loading',
+                            description: 'Now we can update the chatbot customization without having an infinite loading issue.',
+                        },
+
+                    ]}
                 />
                 <Release
                     version="0.2.8"
