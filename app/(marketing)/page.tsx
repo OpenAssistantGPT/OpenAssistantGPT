@@ -88,18 +88,18 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="font-bold">Easy integration</h3>
                 <p className="text-sm">
-                  Only include our js in your website
+                  Only include few lines of code in your website to make the chatbot work.
                 </p>
               </div>
             </div>
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <Icons.coin></Icons.coin>
+              <Icons.import></Icons.import>
               <div className="space-y-2">
-                <h3 className="font-bold">Low cost</h3>
+                <h3 className="font-bold">User Inquiry</h3>
                 <p className="text-sm">
-                  Cheapest chatbot on the market
+                  User can enter contact information with a question and you can collect leads.
                 </p>
               </div>
             </div>
@@ -128,11 +128,11 @@ export default function IndexPage() {
           </div>
           <div className="relative overflow-hidden rounded-lg border bg-background p-2">
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
-              <Icons.settings></Icons.settings>
+              <Icons.folder></Icons.folder>
               <div className="space-y-2">
-                <h3 className="font-bold">Low code</h3>
+                <h3 className="font-bold">File Attachements</h3>
                 <p className="text-sm">
-                  You don&apos;t need to write a lot of code to implement our chatbot
+                  You can attach a file CSV, XML, Images etc... in the chat and the chatbot will analyse it. 
                 </p>
               </div>
             </div>
