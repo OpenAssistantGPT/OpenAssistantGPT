@@ -132,7 +132,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="font-bold">File Attachements</h3>
                 <p className="text-sm">
-                  You can attach a file in the chat and the chatbot will analyse it.
+                  You can attach a file CSV, XML, Images etc... in the chat and the chatbot will analyse it. 
                 </p>
               </div>
             </div>
