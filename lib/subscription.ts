@@ -24,7 +24,6 @@ export async function getUserSubscriptionPlan(
         throw new Error("User not found")
     }
 
-    // Check if user is on a pro plan.
     const hasPlan = user.stripePriceId &&
         user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
 
