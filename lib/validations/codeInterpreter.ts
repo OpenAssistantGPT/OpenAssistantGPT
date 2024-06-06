@@ -10,3 +10,35 @@ export const fileTypes = [
     'xml',
     'zip'
 ]
+
+export const fileTypesFullList = [
+    'c',
+    'cs',
+    'cpp',
+    'doc',
+    'docx',
+    'html',
+    'java',
+    'json',
+    'md',
+    'pdf',
+    'php',
+    'pptx',
+    'py',
+    'rb',
+    'tex',
+    'txt',
+    'css',
+    'js',
+    'sh',
+    'ts',
+    'csv',
+    'jpeg',
+    'jpg',
+    'gif',
+    'png',
+    'tar',
+    'xlsx',
+    'xml',
+    'zip'
+]
