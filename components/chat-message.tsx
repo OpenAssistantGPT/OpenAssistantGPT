@@ -11,14 +11,16 @@ import { MemoizedReactMarkdown } from '@/components/markdown'
 import { Icons } from '@/components/icons'
 import { ExternalLink } from '@/components/external-link'
 import { Chatbot } from '@prisma/client'
+import { ChatMessageActions } from './chat-message-actions'
 
 export interface ChatMessageProps {
     message: Message
     children?: React.ReactNode
     chatbot: Chatbot
+    isFirst?: boolean
 }
 
-export function ChatMessage({ message, children, chatbot, ...props }: ChatMessageProps) {
+export function ChatMessage({ message, children, chatbot, isFirst, ...props }: ChatMessageProps) {
     return (
         <>
             {
@@ -41,7 +43,6 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                         </div>
                     </div>
                 ) : (
-
                     <div
                         className={cn('pr-10 group relative mb-4 flex items-start ')}
                         {...props}
@@ -56,56 +57,61 @@ export function ChatMessage({ message, children, chatbot, ...props }: ChatMessag
                                 <Icons.bot />
                             </div>
                         }
-                        <div className="flex-1 px-1 ml-4 space-y-2 overflow-hidden">
+                        <div className="flex-1 px-1 ml-4 ">
                             {message.content == "loading" ? <Icons.loading className="animate-spin" /> :
-                                <MemoizedReactMarkdown
-                                    className="w-full prose break-words prose-p:leading-relaxed prose-pre:p-0"
-                                    remarkPlugins={[remarkGfm, remarkMath]}
-                                    components={{
-                                        a({ node, children, ...props }) {
-                                            return (
-                                                <ExternalLink href={props.href!}>
-                                                    {children}
-                                                </ExternalLink>
-                                            )
-                                        },
-                                        p({ children }) {
-                                            return <p className="mb-2 last:mb-0">{children}</p>
-                                        },
-                                        code({ node, className, children, ...props }) {
-                                            const match = /language-(\w+)/.exec(className || '')
-
-                                            if (!match) {
+                                <>
+                                    <MemoizedReactMarkdown
+                                        className="w-full prose break-words prose-p:leading-relaxed prose-pre:p-0"
+                                        remarkPlugins={[remarkGfm, remarkMath]}
+                                        components={{
+                                            a({ node, children, ...props }) {
                                                 return (
-                                                    <code className={className} {...props}>
+                                                    <ExternalLink href={props.href!}>
                                                         {children}
-                                                    </code>
+                                                    </ExternalLink>
                                                 )
-                                            }
+                                            },
+                                            p({ children }) {
+                                                return <p className="mb-2 last:mb-0">{children}</p>
+                                            },
+                                            code({ node, className, children, ...props }) {
+                                                const match = /language-(\w+)/.exec(className || '')
 
-                                            if (match && (match[1] === 'math' || match[1] === 'latex')) {
+                                                if (!match) {
+                                                    return (
+                                                        <code className={className} {...props}>
+                                                            {children}
+                                                        </code>
+                                                    )
+                                                }
+
+                                                if (match && (match[1] === 'math' || match[1] === 'latex')) {
+                                                    return (
+                                                        <MathJaxContext>
+                                                            <MathJax>{children || ''}</MathJax>
+                                                        </MathJaxContext>
+                                                    )
+                                                }
+
                                                 return (
-                                                    <MathJaxContext>
-                                                        <MathJax>{children || ''}</MathJax>
-                                                    </MathJaxContext>
+                                                    <CodeBlock
+                                                        key={Math.random()}
+                                                        language={(match && match[1]) || ''}
+                                                        value={String(children).replace(/\n$/, '')}
+                                                        {...props}
+                                                    />
                                                 )
                                             }
-
-                                            return (
-                                                <CodeBlock
-                                                    key={Math.random()}
-                                                    language={(match && match[1]) || ''}
-                                                    value={String(children).replace(/\n$/, '')}
-                                                    {...props}
-                                                />
-                                            )
-                                        }
-                                    }}
-                                >
-                                    {message.content.replace(/\【.*?】/g, "")}
-                                </MemoizedReactMarkdown>
+                                        }}
+                                    >
+                                        {message.content.replace(/\【.*?】/g, "")}
+                                    </MemoizedReactMarkdown>
+                                    { !isFirst ?
+                                        <ChatMessageActions message={message} /> :
+                                        <div className='size-3'></div>
+                                    }
+                                </>
                             }
-                            {/*<ChatMessageActions message={message} />*/}
                         </div>
                     </div >
                 )

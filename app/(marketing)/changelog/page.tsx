@@ -13,6 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.10"
+                    date="2024-06-07"
+                    new={[
+                        {
+                            title: 'Copy to clipboard feature',
+                            description: 'Now you can copy to your clipboard the chatbot response by clicking on the copy icon in the chat.',
+                        },
+                    ]}
+                    improvements={[
+                        {
+                            title: 'We added Z index on the chatbot HTML code',
+                            description: 'This will prevent the chatbot from being hidden by other elements on the page.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.9"
                     date="2024-06-03"
                     new={[
