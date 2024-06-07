@@ -172,10 +172,9 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
       <div
         className={cn('pb-[200px] overflow-auto pl-5 sm:pl-20 pr-5 sm:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
       >
-        <ChatMessage chatbot={chatbot} message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
+        <ChatMessage isFirst={true} chatbot={chatbot} message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
         <div className="flex-grow overflow-y-auto space-y-6 flex flex-col order-2">
           {messages.map((message: Message, index) => {
-            console.log(message)
             return (
               <ChatMessage chatbot={chatbot} key={index} message={message} />
             );

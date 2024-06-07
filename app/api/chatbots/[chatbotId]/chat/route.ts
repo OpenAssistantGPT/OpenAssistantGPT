@@ -6,7 +6,7 @@ import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { AssistantResponse } from '@/lib/assistant-response';
 import { zfd } from "zod-form-data";
 import { Message } from "openai/resources/beta/threads/messages.mjs";
-import { fileTypes as codeFile } from "@/lib/validations/codeInterpreter";
+import { fileTypesFullList } from "@/lib/validations/codeInterpreter";
 import { fileTypes as searchFile } from "@/lib/validations/fileSearch";
 import { File } from "buffer";
 
@@ -84,7 +84,7 @@ export async function POST(
 
         if (openAiFile) {
             let body = {};
-            if (codeFile.includes(data.filename.split('.').pop()?.toLocaleLowerCase()!)) {
+            if (fileTypesFullList.includes(data.filename.split('.').pop()?.toLocaleLowerCase()!)) {
                 body = {
                     code_interpreter: {
                         file_ids: [openAiFile.id],
