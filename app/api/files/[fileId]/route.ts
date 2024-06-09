@@ -1,6 +1,3 @@
-
-// create delete function for a file
-
 import { del } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 import { getServerSession } from "next-auth/next"

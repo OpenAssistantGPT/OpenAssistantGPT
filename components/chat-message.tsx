@@ -86,6 +86,15 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                                                 }
 
                                                 if (match && (match[1] === 'math' || match[1] === 'latex')) {
+                                                    //const translateLaTex = (val: string): string => {
+                                                    //    if (val.indexOf("\\") == -1) return val;
+
+                                                    //    return val.replaceAll("\\(", "$")
+                                                    //        .replaceAll("\\)", "$")
+                                                    //        .replaceAll("\\[", "$$")
+                                                    //        .replaceAll("\\]", "$$");
+                                                    //}
+                                                    //console.log(children?.toString() || '')
                                                     return (
                                                         <MathJaxContext>
                                                             <MathJax>{children || ''}</MathJax>

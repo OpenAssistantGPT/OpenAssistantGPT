@@ -13,6 +13,20 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.11"
+                    date="2024-06-09"
+                    new={[
+                        {
+                            title: 'Messages Export',
+                            description: 'This feature is created for exporting messages from your chatbot. This feature will generate a JSON file with all the messages received by a chatbot.',
+                            image: new URL(
+                                '/public/exports.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.10"
                     date="2024-06-07"
                     new={[
