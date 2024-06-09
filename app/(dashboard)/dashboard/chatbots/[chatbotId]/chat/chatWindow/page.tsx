@@ -26,7 +26,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
     }
 
     const plan = await getUserSubscriptionPlan(chatbot.userId)
-
+    
     if (chatbot.displayBranding && plan?.brandingCustomization === false) {
         chatbot.displayBranding = false
     }
