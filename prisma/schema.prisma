@@ -28,6 +28,17 @@ model ChatbotFiles {
   file   File   @relation(fields: [fileId], references: [id], onDelete: Cascade)
 }
 
+model ChatbotMessagesExport {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+  blobUrl         String
+  blobDownloadUrl String
+  lastXDays       Int
+
+  chatbotId String
+  chatbot   Chatbot @relation(fields: [chatbotId], references: [id], onDelete: Cascade)
+}
+
 model ChatbotErrors {
   id           String   @id @default(cuid())
   createdAt    DateTime @default(now()) @map(name: "created_at")
@@ -80,10 +91,11 @@ model Chatbot {
   maxCompletionTokens Int?
   maxPromptTokens     Int?
 
-  user            User              @relation(fields: [userId], references: [id])
-  ChatbotFiles    ChatbotFiles[]
-  ClientInquiries ClientInquiries[]
-  ChatbotErrors   ChatbotErrors[]
+  user                  User                    @relation(fields: [userId], references: [id])
+  ChatbotFiles          ChatbotFiles[]
+  ClientInquiries       ClientInquiries[]
+  ChatbotErrors         ChatbotErrors[]
+  ChatbotMessagesExport ChatbotMessagesExport[]
 
   @@map(name: "chatbots")
 }
