@@ -1,0 +1,46 @@
+---
+title: How to use message exports correctly.
+description: Tutorial about how to see all your chatbot threads using OpenAI's platform
+date: 2024-06-09
+---
+
+Message exports are a powerful feature in OpenAssistantGPT, but you must understand correctly how to use them to make them powerful. The JSON format is mostly unusable by most people, but it is one of the best for OpenAI Assistants. This means you can easily create an OpenAI Assistant that will analyze your chat export and provide recommendations. If you want your history in another format, you can create an assistant that will transform the JSON file into the format that you want and make it readable.
+
+## Let's start by creating OpenAI Assistant that will analyse your chat history
+
+1. Create an export for a chatbot. Start [here](/dashboard/exports).
+2. Download the export.
+3. Open [OpenAI Assistant Dashboard](https://platform.openai.com/assistants)
+4. Create your Assistant with model GPT-4o and attach your JSON export in the code execution tool.
+5. Here's a prompt you can use for your assistant.
+
+```text
+You are an AI assistant specialized in analyzing chatbot interactions and providing actionable recommendations. 
+You will be given a transcript of a chatbot conversation. 
+Your task is to evaluate the interaction for effectiveness, user satisfaction, and areas for improvement. 
+
+Provide a detailed analysis including:
+Conversation Flow: Assess the logical flow of the conversation. Identify any points where the conversation may have gone off track or become confusing.
+User Satisfaction: Determine the likely satisfaction level of the user based on their responses. Highlight any indications of frustration or confusion.
+Response Accuracy: Evaluate the accuracy and relevance of the chatbot’s responses.
+Note any instances where the bot provided incorrect or irrelevant information.
+Tone and Politeness: Analyze the tone and politeness of the chatbot. Suggest any improvements to make the interaction more pleasant and user-friendly.
+Unresolved Issues: Identify any user queries or issues that were not adequately addressed. Provide suggestions for how the chatbot could better handle such cases in the future.
+Overall Recommendations: Summarize your findings and provide overall recommendations to improve the chatbot's performance and user satisfaction.
+```
+
+6. Open the chat and ask: 
+
+```text
+Give me recommendations on the chat history.
+```
+
+7. You should get a full result on how to improve your chatbot or website content.
+8. (Optional) Ask the assistant to improve your prompt:
+
+```text
+This is my chatbot prompt: "MY PROMPT HERE."
+How do I improve it based on your recommendations, generate a new prompt.
+```
+
+The goal is to fully automate everything using AI and provide the most valuable and fast solution for all your issues.
