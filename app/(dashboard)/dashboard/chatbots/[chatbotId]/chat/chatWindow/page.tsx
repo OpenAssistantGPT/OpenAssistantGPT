@@ -35,6 +35,10 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         chatbot.chatFileAttachementEnabled = false
     }
 
+    if (chatbot.chatbotLogoURL !== '' && plan?.basicCustomization === false) {
+        chatbot.chatbotLogoURL = null
+    }
+
     return (
         <Chat chatbot={chatbot} withExitX={params.withExitX} defaultMessage={params.defaultMessage || ""} clientSidePrompt={params.clientSidePrompt || ""}></Chat>
     )
