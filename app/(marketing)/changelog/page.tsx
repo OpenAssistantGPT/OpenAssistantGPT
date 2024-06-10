@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.12"
+                    date="2024-06-09"
+                    improvements={[
+                        {
+                            title: 'Add validation for the max_completion_tokens and max_prompt_tokens',
+                            description: 'In the advanced settings of your chatbot, you can now configure the max_completion_tokens and max_prompt_tokens. We added validation to prevent you from entering a value lower than 256. This will prevent the chatbot from returning an error when the value is too low.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.11"
                     date="2024-06-09"
                     new={[

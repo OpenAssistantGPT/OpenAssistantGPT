@@ -39,8 +39,14 @@ export async function PATCH(
         const body = await req.json()
         const payload = advancedSettingsSchema.parse(body)
 
-        console.log(payload)
-        console.log(payload.maxCompletionTokens)
+        if (payload.maxCompletionTokens && payload.maxCompletionTokens <= 255) {
+            return new Response("Max completion tokens must be at least 256", { status: 400 })
+        }
+
+        if (payload.maxPromptTokens && payload.maxPromptTokens <= 255) {
+            return new Response("Max prompt tokens must be at least 256", { status: 400 })
+        }
+
 
         const chatbot = await db.chatbot.update({
             where: {
