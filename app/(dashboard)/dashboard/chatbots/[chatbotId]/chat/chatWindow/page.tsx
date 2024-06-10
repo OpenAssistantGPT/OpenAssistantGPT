@@ -27,8 +27,8 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
 
     const plan = await getUserSubscriptionPlan(chatbot.userId)
     
-    if (chatbot.displayBranding && plan?.brandingCustomization === false) {
-        chatbot.displayBranding = false
+    if (chatbot.displayBranding === false && plan?.brandingCustomization === false) {
+        chatbot.displayBranding = true
     }
 
     if (chatbot.chatFileAttachementEnabled && plan?.chatFileAttachments === false) {
