@@ -46,7 +46,7 @@ export default async function MessagesExportPage() {
         <DashboardShell>
             <DashboardHeader heading="Messages Export" text="Export Messages from your chatbot. This feature will generate a JSON file with all the messages received by a chatbot.">
             </DashboardHeader>
-            <div className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+            <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4" role="alert">
                 <p className="font-bold text-md">Need help when using message exports?</p>
                 <p>Check our guide on how to use message exports correctly.</p>
                 <p>Click <a href='/guides/how-to-use-message-exports-correctly' className="underline">here</a> to open our guide.</p>

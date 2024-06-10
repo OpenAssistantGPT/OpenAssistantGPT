@@ -88,4 +88,10 @@
   <changefreq>weekly</changefreq>
   <priority>0.61</priority>
 </url>
+<url>
+  <loc>https://www.openassistantgpt.io/guides/how-to-use-message-exports-correctly</loc>
+  <lastmod>2024-06-09T15:44:57+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.61</priority>
+</url>
 </urlset>
