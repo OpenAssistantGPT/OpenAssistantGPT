@@ -23,6 +23,7 @@
       }
     ],
     "strictNullChecks": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*",
