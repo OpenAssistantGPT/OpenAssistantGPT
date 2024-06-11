@@ -81,7 +81,7 @@
     "resend": "^3.2.0",
     "sharp": "^0.33.3",
     "stripe": "^14.7.0",
-    "shikiji": "^1.0.0",
+    "shikiji": "0.10.2",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4",
