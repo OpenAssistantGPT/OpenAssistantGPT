@@ -46,6 +46,7 @@ import {
 export type Icon = LucideIcon
 
 export const Icons = {
+  document: File,
   paperclip: Paperclip,
   reload: RefreshCcw,
   loading: Loader,
