@@ -59,6 +59,26 @@ export const basicPlan: SubscriptionPlan = {
     price: 9,
 }
 
+export const legacyBasicPlan: SubscriptionPlan = {
+    name: "BASIC",
+    description: "The BASIC plan has 9 chatbots, 9 crawlers and 27 files and unlimited messages.",
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_BASIC_PRICE_ID || "",
+
+    maxChatbots: 9,
+    maxCrawlers: 9,
+    maxFiles: 27,
+    unlimitedMessages: true,
+    maxMessagesPerMonth: undefined,
+    basicCustomization: true,
+    userInquiries: true,
+
+    chatFileAttachments: false,
+    brandingCustomization: true,
+    premiumSupport: true,
+
+    price: 9,
+}
+
 export const proPlan: SubscriptionPlan = {
     name: "PRO",
     description: "The PRO plan has 27 chatbots, 27 crawlers and 81 files and unlimited messages.",

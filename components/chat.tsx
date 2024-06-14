@@ -41,9 +41,21 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   let inputFileRef = useRef<HTMLInputElement>(null);
 
   const [chatThreadId, setChatThreadId] = useState<string | null>()
-  
+
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, threadId: chatThreadId || '', clientSidePrompt: clientSidePrompt });
+
+  function handleSubmitMessage(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
+    submitMessage()
+
+    setFileUploaded(false)
+    if (inputFileRef) {
+
+      inputFileRef.current.value = '';
+    }
+  }
 
   useEffect(() => {
     if (threadId) {
@@ -61,6 +73,8 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
 
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+
+  const [fileUploaded, setFileUploaded] = useState(false);
 
   useEffect(() => {
     if (error) {
@@ -236,20 +250,36 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                 </Dialog>
               </div>
             }
+
           </div>
 
           <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl md:py-4">
-            <form onSubmit={submitMessage}
+            <form onSubmit={handleSubmitMessage}
               {...props}
             >
-              <div className={`relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background sm:rounded-md sm:border ${chatbot.chatFileAttachementEnabled ? 'px-8 sm:px-12' : 'px-2 sm:px-2'}`}>
+              {
+                fileUploaded &&
+                <div className="flex w-full sm:w-1/2 items-center p-2 bg-white border rounded-lg shadow-sm">
+                  <Icons.document className="text-gray-400 w-6 h-6 flex-shrink-0" />
+                  <div className="flex flex-col pl-3 pr-6 flex-1 min-w-0">
+                    <span className="font-sm text-gray-800 truncate">{inputFileRef.current?.files[0].name}</span>
+                    <span className="text-sm text-gray-500">Document</span>
+                  </div>
+                  <Button type="button" variant="ghost" className="flex-shrink-0" onClick={() => {
+                    inputFileRef.current.value = '';
+                    setFileUploaded(false);
+                  }}>
+                    <Icons.close className="text-gray-400 w-4 h-4" />
+                  </Button>
+                </div>
+              }
+              <div className={`relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background ${chatbot.chatFileAttachementEnabled ? 'px-8 sm:px-12' : 'px-2 sm:px-2'}`}>
                 {chatbot.chatFileAttachementEnabled &&
                   <div className="">
                     <Label htmlFor="file" className="">
                       <div
-                        className="size-9 absolute left-0 top-[12px] size-8 rounded-full bg-background p-0 sm:left-4 border border-input hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background"
+                        className={`size-9 absolute left-0 top-[12px] size-8 rounded-full bg-background p-0 sm:left-4 border border-input hover:bg-accent hover:text-accent-foreground inline-flex items-center justify-center rounded-full text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background`}
                       >
-                        {inputFileRef && inputFileRef.current?.files.length > 0 && <span className="absolute top-0 right-0 inline-flex rounded-full h-3 w-3 bg-sky-500"></span>}
                         <Icons.paperclip className="text-muted-foreground h-4 w-4" />
                       </div>
                     </Label>
@@ -258,9 +288,13 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                       id="file"
                       type="file"
                       className="hidden"
+                      onChange={() => {
+                        setFileUploaded(true)
+                      }}
                     />
                   </div>
                 }
+
                 <Input
                   ref={inputRef}
                   tabIndex={0}
@@ -273,10 +307,11 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                   value={input}
                   onChange={handleInputChange}
                 />
-                <div className="absolute right-0 top-[13px] sm:right-4">
+                <div className={`absolute right-0 top-[14px] sm:right-4`}>
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
+                        id="submit"
                         disabled={status !== 'awaiting_message' || input === ''}
                         type="submit" size="icon">
                         <Icons.arrowRight />

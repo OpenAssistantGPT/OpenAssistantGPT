@@ -1,7 +1,7 @@
 // @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
 import { UserSubscriptionPlan } from "@/types"
-import { basicPlan, freePlan, hobbyPlan, proPlan } from "@/config/subscriptions"
+import { basicPlan, freePlan, hobbyPlan, legacyBasicPlan, proPlan } from "@/config/subscriptions"
 import { db } from "@/lib/db"
 import { stripe } from "@/lib/stripe"
 
@@ -36,7 +36,14 @@ export async function getUserSubscriptionPlan(
         } else if (subscription.plan.nickname === "Hobby plan") {
             plan = hobbyPlan
         } else if (subscription.plan.nickname === "Basic plan") {
-            plan = basicPlan
+            // if subscription is created before 2024-05-01, it's a legacy plan
+            console.log(subscription.created)
+            if (subscription.created < 1717200000) {
+                plan = legacyBasicPlan
+            } else {
+                plan = basicPlan
+            }
+
         }
     }
 
