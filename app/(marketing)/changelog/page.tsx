@@ -13,6 +13,20 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.13"
+                    date="2024-06-14"
+                    improvements={[
+                        {
+                            title: 'Improve how file attachements works',
+                            description: 'Better UX when uploading files in the chatbot. We now display the file name and we can also remove the file from the chat.',
+                            image: new URL(
+                                '/public/file_attachements_v2.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.12"
                     date="2024-06-09"
                     improvements={[
