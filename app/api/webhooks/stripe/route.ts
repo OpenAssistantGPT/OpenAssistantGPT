@@ -56,6 +56,30 @@ export async function POST(req: Request) {
         }
     }
 
+    if (event.type === "customer.subscription.deleted") {
+        console.log("customer.subscription.deleted")
+        // Update the user stripe into in our database.
+        // Since this is the initial subscription, we need to update
+        // the subscription id and customer id.
+        try {
+            await db.user.update({
+                where: {
+                    stripeSubscriptionId: session.subscription as string,
+                },
+                data: {
+                    stripeSubscriptionId: null,
+                    stripeCustomerId: null,
+                    stripePriceId: null,
+                    stripeCurrentPeriodEnd: null,
+                },
+            })
+
+        } catch (error) {
+            console.log(error)
+            return new Response(`Update error subscription deleted`, { status: 400 })
+        }
+    }
+
     if (event.type === "invoice.payment_succeeded") {
         console.log("invoice.payment_succeeded")
         // Retrieve the subscription details from Stripe.
