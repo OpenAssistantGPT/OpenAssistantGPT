@@ -211,11 +211,12 @@ model User {
   OpenAIConfig OpenAIConfig[]
   File         File[]
 
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
-  Message                Message[]
+  stripeCustomerId         String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId     String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId            String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd   DateTime? @map(name: "stripe_current_period_end")
+  stripeSubscriptionStatus String?
+  Message                  Message[]
 
   inquiryEmailEnabled   Boolean @default(true)
   marketingEmailEnabled Boolean @default(true)
