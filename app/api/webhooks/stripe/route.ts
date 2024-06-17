@@ -71,6 +71,7 @@ export async function POST(req: Request) {
                     stripeCustomerId: null,
                     stripePriceId: null,
                     stripeCurrentPeriodEnd: null,
+                    stripeSubscriptionStatus: "canceled",
                 },
             })
 
