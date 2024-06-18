@@ -21,12 +21,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import Select from 'react-select';
 import { Textarea } from "@/components/ui/textarea"
+import { Switch } from "./ui/switch"
 
 interface ChatbotFormProps extends React.HTMLAttributes<HTMLFormElement> {
-    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "chatbotErrorMessage" | "isImported">
+    chatbot: Pick<Chatbot, "id" | "name" | "openaiKey" | "modelId" | "createdAt" | "welcomeMessage" | "prompt" | "chatbotErrorMessage" | "isImported" | "rightToLeftLanguage">
     currentFiles: File["id"][]
     models: ChatbotModel[]
     files: File[]
@@ -47,6 +48,7 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
             prompt: chatbot.prompt,
             modelId: chatbot.modelId!,
             files: currentFiles,
+            rightToLeftLanguage: chatbot.rightToLeftLanguage,
         }
     })
     const [isSaving, setIsSaving] = useState<boolean>(false)
@@ -88,6 +90,7 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                 chatbotErrorMessage: data.chatbotErrorMessage,
                 prompt: data.prompt,
                 files: data.files,
+                rightToLeftLanguage: data.rightToLeftLanguage,
             }),
         })
 
@@ -289,6 +292,28 @@ export function ChatbotForm({ chatbot, currentFiles, models, files, className, .
                                         The message that will be displayed when the chatbot encounters an error and can&apos;t reply to a user.
                                     </FormDescription>
                                     <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="rightToLeftLanguage"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col items-left justify-between">
+                                    <FormLabel >
+                                        Right to Left Language
+                                    </FormLabel>
+                                    <FormDescription>
+                                        If your chatbot default language is right to left, enable this option. This will change the chatbot layout to support right to left languages.
+                                        <br/>
+                                        Example of right to left languages: Arabic, Hebrew, Persian, Urdu, etc.
+                                    </FormDescription>
+                                    <FormControl>
+                                        <Switch
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
                                 </FormItem>
                             )}
                         />
