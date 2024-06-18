@@ -62,8 +62,9 @@ model Chatbot {
   chatbotErrorMessage String        @default("Oops! An error has occurred. If the issue persists, feel free to reach out to our support team for assistance. We're here to help!")
   isImported          Boolean       @default(false)
 
-  chatTitle              String @default("Chat with us")
-  chatMessagePlaceHolder String @default("Type a message...")
+  chatTitle              String  @default("Chat with us")
+  chatMessagePlaceHolder String  @default("Type a message...")
+  rightToLeftLanguage    Boolean @default(false)
 
   bubbleColor                 String  @default("#FFFFFF")
   bubbleTextColor             String  @default("#000000")
