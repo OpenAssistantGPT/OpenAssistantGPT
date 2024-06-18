@@ -49,6 +49,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
             chatFileAttachementEnabled: true,
             maxCompletionTokens: true,
             maxPromptTokens: true,
+            rightToLeftLanguage: true,
             model: {
                 select: {
                     id: true,

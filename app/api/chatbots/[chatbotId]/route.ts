@@ -107,6 +107,7 @@ export async function PATCH(
         chatbotErrorMessage: payload.chatbotErrorMessage,
         openaiKey: payload.openAIKey,
         modelId: payload.modelId,
+        rightToLeftLanguage: payload.rightToLeftLanguage,
       },
       select: {
         id: true,

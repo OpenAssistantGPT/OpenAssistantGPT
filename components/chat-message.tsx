@@ -20,6 +20,8 @@ export interface ChatMessageProps {
     isFirst?: boolean
 }
 
+const getDirection = (isRTL: boolean) => isRTL ? 'rtl' : 'ltr';
+
 export function ChatMessage({ message, children, chatbot, isFirst, ...props }: ChatMessageProps) {
     return (
         <>
@@ -29,7 +31,11 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                         className={cn('pl-10 group relative mb-4 flex justify-end items-end')}
                         {...props}
                     >
-                        <p style={{ color: chatbot.userReplyTextColor, background: chatbot.userReplyBackgroundColor }} className="p-2 rounded-lg mr-4">
+                        <p
+                            style={{ color: chatbot.userReplyTextColor, background: chatbot.userReplyBackgroundColor }}
+                            className="p-2 rounded-lg mr-4"
+                            dir={getDirection(chatbot.rightToLeftLanguage)} // Set text direction
+                        >
                             <svg fill={chatbot.userReplyBackgroundColor} className="absolute bottom-[0px] right-11" height="14" width="13"><path d="M6 .246c-.175 5.992-1.539 8.89-5.5 13.5 6.117.073 9.128-.306 12.5-3L6 .246Z"></path></svg>
                             {message.content}
                         </p>
@@ -57,7 +63,7 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                                 <Icons.bot />
                             </div>
                         }
-                        <div className="flex-1 px-1 ml-4 ">
+                        <div className="flex-1 px-1 ml-4">
                             {message.content == "loading" ? <Icons.loading className="animate-spin" /> :
                                 <>
                                     <MemoizedReactMarkdown
@@ -72,7 +78,7 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                                                 )
                                             },
                                             p({ children }) {
-                                                return <p className="mb-2 last:mb-0">{children}</p>
+                                                return <p className="mb-2 last:mb-0" dir={getDirection(chatbot.rightToLeftLanguage)}>{children}</p>
                                             },
                                             code({ node, className, children, ...props }) {
                                                 const match = /language-(\w+)/.exec(className || '')
@@ -86,15 +92,6 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                                                 }
 
                                                 if (match && (match[1] === 'math' || match[1] === 'latex')) {
-                                                    //const translateLaTex = (val: string): string => {
-                                                    //    if (val.indexOf("\\") == -1) return val;
-
-                                                    //    return val.replaceAll("\\(", "$")
-                                                    //        .replaceAll("\\)", "$")
-                                                    //        .replaceAll("\\[", "$$")
-                                                    //        .replaceAll("\\]", "$$");
-                                                    //}
-                                                    //console.log(children?.toString() || '')
                                                     return (
                                                         <MathJaxContext>
                                                             <MathJax>{children || ''}</MathJax>
@@ -115,14 +112,14 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                                     >
                                         {message.content.replace(/\【.*?】/g, "")}
                                     </MemoizedReactMarkdown>
-                                    { !isFirst ?
+                                    {!isFirst ?
                                         <ChatMessageActions message={message} /> :
                                         <div className='size-3'></div>
                                     }
                                 </>
                             }
                         </div>
-                    </div >
+                    </div>
                 )
             }
         </>
