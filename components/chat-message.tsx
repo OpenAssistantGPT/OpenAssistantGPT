@@ -33,7 +33,7 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                     >
                         <p
                             style={{ color: chatbot.userReplyTextColor, background: chatbot.userReplyBackgroundColor }}
-                            className="p-2 rounded-lg mr-4"
+                            className="p-2 text-sm rounded-lg mr-4"
                             dir={getDirection(chatbot.rightToLeftLanguage)} // Set text direction
                         >
                             <svg fill={chatbot.userReplyBackgroundColor} className="absolute bottom-[0px] right-11" height="14" width="13"><path d="M6 .246c-.175 5.992-1.539 8.89-5.5 13.5 6.117.073 9.128-.306 12.5-3L6 .246Z"></path></svg>
@@ -67,7 +67,7 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                             {message.content == "loading" ? <Icons.loading className="animate-spin" /> :
                                 <>
                                     <MemoizedReactMarkdown
-                                        className="w-full prose break-words prose-p:leading-relaxed prose-pre:p-0"
+                                        className="w-full prose text-sm break-words prose-p:leading-relaxed prose-pre:p-0"
                                         remarkPlugins={[remarkGfm, remarkMath]}
                                         components={{
                                             a({ node, children, ...props }) {
