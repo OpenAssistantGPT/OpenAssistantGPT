@@ -13,8 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.15"
+                    date="2024-06-19"
+                    improvements={[
+                        {
+                            title: 'Chatbox UX Improvements',
+                            description: 'Now the text size is smaller in the chatbox. This will allow you to see more messages in the chatbox. The header is also sticky when you scroll down. This will allow you to always see the chatbox header.',
+                            image: new URL(
+                                '/public/file_attachements_v2.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.14"
-                    date="2024-06-14"
+                    date="2024-06-16"
                     improvements={[
                         {
                             title: 'Hangle Right to Left languages',
