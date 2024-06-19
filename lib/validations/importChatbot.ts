@@ -6,6 +6,6 @@ export const importChatbotSchema = z.object({
     welcomeMessage: z.string().min(1),
     chatbotErrorMessage: z.string().min(1),
     openAIAssistantId: z.string().min(1),
-    rightToLeftLanguage: z.boolean(),
+    rightToLeftLanguage: z.boolean().default(false),
 })
 
