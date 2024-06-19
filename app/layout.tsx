@@ -55,6 +55,12 @@ export default async function RootLayout({
   return (
     <html lang="en suppressHydrationWarning">
       <head>
+        {
+          process.env.VERCEL_ENV === "production" ?
+            <script defer src="https://unpkg.com/@tinybirdco/flock.js" data-host="https://api.us-east.aws.tinybird.co" data-token={process.env.TINYBIRD_TOKEN}></script>
+            :
+            <></>
+        }
       </head>
       <AOSInit />
       <body
