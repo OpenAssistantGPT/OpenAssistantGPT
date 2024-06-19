@@ -139,6 +139,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
     window.parent.postMessage('closeChat', '*')
   }
 
+
   return (
     <div
       className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"

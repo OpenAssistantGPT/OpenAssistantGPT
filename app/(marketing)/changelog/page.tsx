@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.14"
+                    date="2024-06-14"
+                    improvements={[
+                        {
+                            title: 'Hangle Right to Left languages',
+                            description: 'We now support right to left languages in the chatbot. This will allow you to use languages like Arabic, Hebrew and more.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.13"
                     date="2024-06-14"
                     improvements={[
