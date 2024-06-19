@@ -8,5 +8,5 @@ export const chatbotSchema = z.object({
     chatbotErrorMessage: z.string().min(1),
     modelId: z.string().min(1),
     files: z.array(z.string()),
-    rightToLeftLanguage: z.boolean(),
+    rightToLeftLanguage: z.boolean().default(false),
 })
