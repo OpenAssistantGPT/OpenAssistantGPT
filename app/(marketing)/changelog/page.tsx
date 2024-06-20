@@ -25,6 +25,12 @@ export default function ChangelogPage() {
                             ).toString()
                         },
                     ]}
+                    bugs={[
+                        {
+                            title: 'Fix issue in mobile when link was too long',
+                            description: 'We add a new CSS rule to prevent the link from overflowing the chatbox. Now the link will be displayed on multiple lines if it is too long.'
+                        }
+                    ]}
                 />
                 <Release
                     version="0.2.14"
@@ -153,14 +159,14 @@ export default function ChangelogPage() {
                         }
                     ]}
                     improvements={[
-                            {
-                                title: 'Chatbotjs script now migrates you to the latest version',
-                                description: 'You will automaticly get migrated to our iframe version of the chatbot when you use the chatbotjs script.',
-                            },
-                            {
-                                title: 'Removed 3$ pricing plans',
-                                description: 'For a better futur of the project we are removing the 3$ pricing plans. With Stripe fees, taxes and server costs we can not sustain this pricing plan. Users who already have this pricing plan will keep it and still pay 3$.',
-                            }
+                        {
+                            title: 'Chatbotjs script now migrates you to the latest version',
+                            description: 'You will automaticly get migrated to our iframe version of the chatbot when you use the chatbotjs script.',
+                        },
+                        {
+                            title: 'Removed 3$ pricing plans',
+                            description: 'For a better futur of the project we are removing the 3$ pricing plans. With Stripe fees, taxes and server costs we can not sustain this pricing plan. Users who already have this pricing plan will keep it and still pay 3$.',
+                        }
                     ]}
                 />
                 <Release
