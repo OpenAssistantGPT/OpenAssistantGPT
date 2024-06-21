@@ -57,7 +57,7 @@ export default async function DashboardLayout({
                                         <Image src="/openai-logo.svg" alt="OpenAI logo" width={120} height={120} />
                                     </div>
                                     <div className="flex justify-center pt-4">
-                                        Before we start, let's configure OpenAI! 🚀
+                                        Before we start, let&apos;s configure OpenAI! 🚀
                                     </div>
                                 </DialogTitle>
                                 <div className="">

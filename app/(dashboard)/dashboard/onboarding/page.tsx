@@ -16,7 +16,6 @@ import { cn } from "@/lib/utils"
 import { OpenAIForm } from "@/components/openai-config-form"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Chat } from "@/components/chat"
 import { Button } from "@/components/ui/button"
 
 
