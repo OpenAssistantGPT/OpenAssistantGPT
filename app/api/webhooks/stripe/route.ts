@@ -58,15 +58,14 @@ export async function POST(req: Request) {
 
     if (event.type === "customer.subscription.deleted") {
         console.log("customer.subscription.deleted")
-        console.log(session.subscription)
-        console.log(session)
-        // Update the user stripe into in our database.
+        console.log(`deleting subscription: ${session.id}`)
+                // Update the user stripe into in our database.
         // Since this is the initial subscription, we need to update
         // the subscription id and customer id.
         try {
             await db.user.update({
                 where: {
-                    stripeSubscriptionId: session.subscription as string,
+                    stripeSubscriptionId: session.id as string,
                 },
                 data: {
                     stripeSubscriptionId: null,
