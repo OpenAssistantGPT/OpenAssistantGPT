@@ -59,12 +59,6 @@ export default async function DashboardPage() {
     }
   })
 
-  const openaiConfig = await db.openAIConfig.findFirst({
-    where: {
-      userId: user.id,
-    },
-  })
-
   // get message for each day for the last 7 days
   const messages = await db.message.findMany({
     where: {
@@ -164,12 +158,6 @@ export default async function DashboardPage() {
             <p className="text-sm">If you prefer you can also start with our <a target="_blank" className="underline" href="/guides/how-to-build-smart-chatbot-for-your-webiste">tutorial</a>.</p>
             <br />
             <a href="/dashboard/onboarding"><Button><p className="pr-2">Open Onboarding</p>  <Icons.help className="h-4 w-4" /> ‍</Button></a>
-          </div>
-        }
-        {
-          !openaiConfig &&
-          <div className="mb-4">
-            <OpenAIForm user={user} />
           </div>
         }
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
