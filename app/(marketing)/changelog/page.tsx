@@ -13,6 +13,20 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.16"
+                    date="2024-06-21"
+                    new={[
+                        {
+                            title: 'Create new modal for the OpenAI configuration',
+                            description: 'Now when you need to configure OpenAI, a new modal will be displayed. This will allow you to configure OpenAI without leaving the page.',
+                            image: new URL(
+                                '/public/new_openai_modal.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.15"
                     date="2024-06-19"
                     improvements={[

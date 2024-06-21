@@ -6,6 +6,10 @@ import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/nav"
 import { SiteFooter } from "@/components/site-footer"
 import { UserAccountNav } from "@/components/user-account-nav"
+import { db } from "@/lib/db"
+import { Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog"
+import { OpenAIForm } from "@/components/openai-config-form"
+import Image from "next/image"
 
 interface DashboardLayoutProps {
     children?: React.ReactNode
@@ -19,6 +23,12 @@ export default async function DashboardLayout({
     if (!user) {
         return notFound()
     }
+
+    const openAIKey = await db.openAIConfig.findFirst({
+        where: {
+            userId: user.id,
+        },
+    })
 
     return (
         <div className="flex min-h-screen flex-col space-y-6">
@@ -39,6 +49,23 @@ export default async function DashboardLayout({
                     <DashboardNav items={dashboardConfig.sidebarNav} />
                 </aside>
                 <main className="flex w-full flex-1 flex-col overflow-hidden">
+                    <Dialog open={!openAIKey}>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>
+                                    <div className="flex justify-center">
+                                        <Image src="/openai-logo.svg" alt="OpenAI logo" width={120} height={120} />
+                                    </div>
+                                    <div className="flex justify-center pt-4">
+                                        Before we start, let's configure OpenAI! 🚀
+                                    </div>
+                                </DialogTitle>
+                                <div className="">
+                                    <OpenAIForm className="border-0 shadow-none" user={user} />
+                                </div>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
                     {children}
                 </main>
             </div>

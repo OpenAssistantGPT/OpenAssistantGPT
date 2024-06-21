@@ -78,16 +78,18 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
     return (
         <Form {...form}>
             <form
-                className={cn(className)}
                 onSubmit={form.handleSubmit(onSubmit)}
                 {...props}
             >
-                <Card>
+                <Card className={cn(className)}>
                     <CardHeader>
                         <CardTitle>Configure your account</CardTitle>
                         <CardDescription>
                             Your global api key for OpenAI will be used for all your global configurations. It is very important to set it before creating a chatbot.
                             You can create your API Key <Link target="_blank" className="underline" href='https://platform.openai.com/api-keys'>here</Link>.
+                            <br className="pb-2" />
+                            <br className="pb-2" />
+                            You must <Link className="underline" href="https://platform.openai.com/settings/organization/billing/payment-methods"> add a payment method </Link> to your OpenAI account to increase rate limits even if only using their free credits.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
@@ -100,6 +102,7 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
                                         OpenAI Global API Key
                                     </FormLabel>
                                     <Input
+                                        type="password"
                                         onChange={field.onChange}
                                         id="globalAPIKey"
                                     />
