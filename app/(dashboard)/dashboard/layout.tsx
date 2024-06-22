@@ -7,7 +7,7 @@ import { DashboardNav } from "@/components/nav"
 import { SiteFooter } from "@/components/site-footer"
 import { UserAccountNav } from "@/components/user-account-nav"
 import { db } from "@/lib/db"
-import { Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { OpenAIForm } from "@/components/openai-config-form"
 import Image from "next/image"
 
@@ -49,7 +49,7 @@ export default async function DashboardLayout({
                     <DashboardNav items={dashboardConfig.sidebarNav} />
                 </aside>
                 <main className="flex w-full flex-1 flex-col overflow-hidden">
-                    <Dialog open={!openAIKey}>
+                    <Dialog defaultOpen={!openAIKey}>
                         <DialogContent>
                             <DialogHeader>
                                 <DialogTitle>
