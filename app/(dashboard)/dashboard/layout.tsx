@@ -10,7 +10,6 @@ import { db } from "@/lib/db"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { OpenAIForm } from "@/components/openai-config-form"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 
 interface DashboardLayoutProps {
     children?: React.ReactNode
