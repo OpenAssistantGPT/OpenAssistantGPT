@@ -133,7 +133,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
     if (defaultMessage !== '') {
       input === '' && handleInputChange({ target: { value: defaultMessage } } as React.ChangeEvent<HTMLInputElement>);
     }
-  })
+  }, [])
 
   function closeChat() {
     window.parent.postMessage('closeChat', '*')
