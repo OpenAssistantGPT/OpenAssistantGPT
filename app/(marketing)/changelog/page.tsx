@@ -13,6 +13,20 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.17"
+                    date="2024-06-23"
+                    new={[
+                        {
+                            title: 'Default messages',
+                            description: 'You can now set default messages for your chatbot. This will allow you to set a message that will be displayed when the chatbot is loaded. You can set this message in the chatbot IFRAME url.',
+                            image: new URL(
+                                '/public/default_message.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.16"
                     date="2024-06-21"
                     new={[

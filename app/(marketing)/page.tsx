@@ -54,7 +54,7 @@ export default function IndexPage() {
           </p>
           <div className="min-w-[85%] min-h-[15rem] text-left items-left pt-6">
             <iframe
-              src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false"
+              src="/embed/clq6m06gc000114hm42s838g2/window?chatbox=false&defaultMessage=How%20many%20chatbot%20can%20I%20create%20for%20free?"
               className="overflow-hidden border border-1 rounded-lg shadow-lg w-full h-[65vh]"
               allowFullScreen allow="clipboard-read; clipboard-write"
             ></iframe>
