@@ -261,7 +261,7 @@ export default function ChangelogPage() {
                         {
                             title: 'Display LaTex Math function in the chat',
                             description:
-                                "When you ask your chatbot to output math function and starting them with $$ it will display math function in LaTex style. Here's what your promt should look like to display LaTex: 'Display a math function in latex and the function text must always start with $$'",
+                                "When you ask your chatbot to output math function and starting them with $$ it will display math function in LaTex style. Here's what your prompt should look like to display LaTex: 'Display a math function in latex and the function text must always start with $$'",
                             image: new URL(
                                 '/public/chatmessage-latex.png',
                                 import.meta.url,
