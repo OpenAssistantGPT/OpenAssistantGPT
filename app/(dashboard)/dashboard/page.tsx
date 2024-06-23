@@ -15,15 +15,13 @@ import {
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
 import { MessagesOverview } from "@/components/message-overview"
-import { OpenAIForm } from "@/components/openai-config-form"
 import { Button } from "@/components/ui/button"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { InquiryItem } from "@/components/inquiry-item"
 import { ErrorShortItem } from "@/components/error-short-item"
+import { constructMetadata } from "@/lib/construct-metadata"
 
-export const metadata = {
-  title: `${siteConfig.name} - Dashboard`,
-}
+export const metadata = constructMetadata()
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
