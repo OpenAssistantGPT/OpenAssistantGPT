@@ -153,14 +153,14 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
-                  style={{ color: chatbot.chatHeaderTextColor, background: chatbot.chatHeaderBackgroundColor }}
+                  variant={'nothing'}
                   className="cursor-pointer"
                   size={'icon'}
                   onClick={() => {
                     window.location.reload()
                   }}
                 >
-                  <Icons.reload className="h-4 w-4" />
+                  <Icons.reload style={{ color: chatbot.chatHeaderTextColor }} className="h-4 w-4" />
                   <span className="sr-only">New Chat</span>
                 </Button>
               </TooltipTrigger>
