@@ -52,6 +52,8 @@ export async function POST(req: Request) {
 
         } catch (error) {
             console.log(error)
+            console.log(session)
+            console.log(`Error updating user: ${session?.metadata?.userId}`)
             return new Response(`Update error session completed`, { status: 400 })
         }
     }
@@ -78,6 +80,8 @@ export async function POST(req: Request) {
 
         } catch (error) {
             console.log(error)
+            console.log(session)
+            console.log(`Error updating user ${session?.metadata?.userId} for subscription: ${session.id}`)
             return new Response(`Update error subscription deleted`, { status: 400 })
         }
     }
@@ -107,6 +111,8 @@ export async function POST(req: Request) {
 
         } catch (error) {
             console.log(error)
+            console.log(session)
+            console.log(`Error updating user ${session?.metadata?.userId} for subscription: ${subscription.id}`)
             return new Response(`Update error payment succeeded`, { status: 400 })
         }
     }
