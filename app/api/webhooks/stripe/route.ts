@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     if (event.type === "customer.subscription.deleted") {
         console.log("customer.subscription.deleted")
         console.log(`deleting subscription: ${session.id}`)
-                // Update the user stripe into in our database.
+        // Update the user stripe into in our database.
         // Since this is the initial subscription, we need to update
         // the subscription id and customer id.
         try {
@@ -112,7 +112,7 @@ export async function POST(req: Request) {
         } catch (error) {
             console.log(error)
             console.log(session)
-            console.log(`Error updating user ${session?.metadata?.userId} for subscription: ${subscription.id}`)
+            console.log(`Error updating user ${subscription.id} for subscription: ${subscription.id}`)
             return new Response(`Update error payment succeeded`, { status: 400 })
         }
     }
