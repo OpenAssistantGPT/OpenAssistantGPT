@@ -17,6 +17,7 @@ import { formatDate } from "@/lib/utils"
 import { toast } from "@/components/ui/use-toast"
 import { freePlan, basicPlan, proPlan } from "@/config/subscriptions"
 import { siteConfig } from "@/config/site"
+import { sendGAEvent } from "@next/third-parties/google"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
     subscriptionPlan: UserSubscriptionPlan & {
@@ -60,6 +61,19 @@ export function BillingForm({
         // This could be a checkout page for initial upgrade.
         // Or portal to manage existing subscription.
         const session = await response.json()
+
+        let plan = freePlan
+        if (priceId === basicPlan.stripePriceId) {
+            plan = basicPlan
+        } else if (priceId === proPlan.stripePriceId) {
+            plan = proPlan
+        }
+
+        sendGAEvent({
+            'event': 'purchase',
+            'value': plan.price,
+        })
+
         if (session) {
             window.location.href = session.url
         }
