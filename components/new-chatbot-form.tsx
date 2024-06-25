@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { sendGAEvent } from '@next/third-parties/google'
+import { sendGTMEvent } from '@next/third-parties/google'
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -139,7 +139,7 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             description: "Your chatbot has been saved.",
         })
 
-        sendGAEvent({
+        sendGTMEvent({
             'event': 'chatbot_created',
             'value': data.name
         })
