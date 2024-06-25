@@ -17,7 +17,7 @@ import { formatDate } from "@/lib/utils"
 import { toast } from "@/components/ui/use-toast"
 import { freePlan, basicPlan, proPlan } from "@/config/subscriptions"
 import { siteConfig } from "@/config/site"
-import { sendGAEvent } from "@next/third-parties/google"
+import { sendGTMEvent } from "@next/third-parties/google"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
     subscriptionPlan: UserSubscriptionPlan & {
@@ -69,7 +69,7 @@ export function BillingForm({
             plan = proPlan
         }
 
-        sendGAEvent({
+        sendGTMEvent({
             'event': 'purchase',
             'value': plan.price,
         })
