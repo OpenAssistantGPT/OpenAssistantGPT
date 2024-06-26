@@ -17,7 +17,7 @@ import { formatDate } from "@/lib/utils"
 import { toast } from "@/components/ui/use-toast"
 import { freePlan, basicPlan, proPlan } from "@/config/subscriptions"
 import { siteConfig } from "@/config/site"
-import { sendGTMEvent } from "@next/third-parties/google"
+import { sendGAEvent } from "@next/third-parties/google"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
     subscriptionPlan: UserSubscriptionPlan & {
@@ -62,6 +62,7 @@ export function BillingForm({
         // Or portal to manage existing subscription.
         const session = await response.json()
 
+        // get plan from priceId
         let plan = freePlan
         if (priceId === basicPlan.stripePriceId) {
             plan = basicPlan
@@ -69,7 +70,7 @@ export function BillingForm({
             plan = proPlan
         }
 
-        sendGTMEvent({
+        sendGAEvent({
             'event': 'purchase',
             'value': plan.price,
         })

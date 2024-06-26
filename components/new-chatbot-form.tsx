@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { sendGTMEvent } from '@next/third-parties/google'
 
+import { event } from "@/lib/googleAnalytics"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -32,6 +32,7 @@ interface NewChatbotProps extends React.HTMLAttributes<HTMLElement> {
     isOnboarding: boolean
     user: Pick<User, "id">
 }
+
 
 export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbotProps) {
     const router = useRouter()
@@ -139,10 +140,11 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             description: "Your chatbot has been saved.",
         })
 
-        sendGTMEvent({
-            'event': 'chatbot_created',
-            'value': data.name
-        })
+        event({
+            action: 'chatbot_created',
+            label: 'Chatbot Created',
+            value: data.name
+          });
 
         router.refresh()
 
