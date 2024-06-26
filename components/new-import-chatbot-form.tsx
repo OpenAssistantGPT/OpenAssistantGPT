@@ -23,6 +23,7 @@ import { User } from "@prisma/client"
 import { Textarea } from "@/components/ui/textarea"
 import { importChatbotSchema } from "@/lib/validations/importChatbot"
 import Link from "next/link"
+import { eventGA } from "@/lib/googleAnalytics"
 
 type FormData = z.infer<typeof importChatbotSchema>
 
@@ -86,6 +87,14 @@ export function ImportChatbotForm({ className, ...props }: ImportChatbotProps) {
         toast({
             description: "Your chatbot has been saved.",
         })
+
+        eventGA({
+            action: 'chatbot_created',
+            label: 'Chatbot Imported',
+            value: data.name
+        });
+
+
 
         router.refresh()
 

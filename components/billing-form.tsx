@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 
-import { UserSubscriptionPlan } from "@/types"
 import { cn } from "@/lib/utils"
 import {
     Card,
@@ -17,7 +16,8 @@ import { formatDate } from "@/lib/utils"
 import { toast } from "@/components/ui/use-toast"
 import { freePlan, basicPlan, proPlan } from "@/config/subscriptions"
 import { siteConfig } from "@/config/site"
-import { sendGAEvent } from "@next/third-parties/google"
+import { eventGA } from "@/lib/googleAnalytics"
+import { UserSubscriptionPlan } from "@/types"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
     subscriptionPlan: UserSubscriptionPlan & {
@@ -70,10 +70,12 @@ export function BillingForm({
             plan = proPlan
         }
 
-        sendGAEvent({
-            'event': 'purchase',
-            'value': plan.price,
-        })
+        eventGA({
+            action: 'purchase',
+            label: 'New subscription purchased',
+            value: plan.price,
+            currency: 'USD'
+        });
 
         if (session) {
             window.location.href = session.url
