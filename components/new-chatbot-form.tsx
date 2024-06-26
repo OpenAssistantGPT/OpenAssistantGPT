@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
-import { event } from "@/lib/googleAnalytics"
+import { eventGA } from "@/lib/googleAnalytics"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -140,11 +140,11 @@ export function NewChatbotForm({ isOnboarding, className, ...props }: NewChatbot
             description: "Your chatbot has been saved.",
         })
 
-        event({
+        eventGA({
             action: 'chatbot_created',
             label: 'Chatbot Created',
             value: data.name
-          });
+        });
 
         router.refresh()
 
