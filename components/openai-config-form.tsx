@@ -73,6 +73,7 @@ export function OpenAIForm({ user, className, ...props }: UserNameFormProps) {
         })
 
         router.refresh()
+        window.location.reload()
     }
 
     return (
