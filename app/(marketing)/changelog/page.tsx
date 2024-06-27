@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.18"
+                    date="2024-06-26"
+                    new={[
+                        {
+                            title: 'User message attachements',
+                            description: 'We now use message instead of updating the thread. This will allow you to attach files to a message. The chatbot will then analyse the file and provide a response. You\'ll get better result',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.17"
                     date="2024-06-23"
                     new={[

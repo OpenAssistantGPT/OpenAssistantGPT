@@ -66,7 +66,7 @@ export async function POST(
 
         // Create a thread if needed
         const threadId = data.threadId != '' ? data.threadId : (await openai.beta.threads.create({
-            
+
         })).id
 
         let openAiFile: OpenAI.Files.FileObject | null = null;
@@ -82,37 +82,35 @@ export async function POST(
             }
         }
 
+        let fileInterpreter = false;
+        let fileSearch = false;
         if (openAiFile) {
-            let body = {};
             if (fileTypesFullList.includes(data.filename.split('.').pop()?.toLocaleLowerCase()!)) {
-                body = {
-                    code_interpreter: {
-                        file_ids: [openAiFile.id],
-                    }
-                }
-            } else if (searchFile.includes(data.filename.split('.').pop()!)) {
-                const batch = await openai.beta.vectorStores.create({
-                    name: `Vector Store - ${threadId} ${data.filename}`,
-                    file_ids: [openAiFile.id]
-                });
-
-                body = {
-                    file_search: {
-                        vector_store_ids: [batch.id]
-                    }
-                }
+                fileInterpreter = true;
             }
-
-            await openai.beta.threads.update(threadId!, {
-                tool_resources: body
-            });
+            if (searchFile.includes(data.filename.split('.').pop()!)) {
+                fileSearch = true;
+            }
         }
+
+        const toolList = [
+            fileInterpreter ? { type: "code_interpreter" } : null,
+            fileSearch ? { type: "file_search" } : null
+        ].filter(Boolean)
 
         // Add a message to the thread
         const createdMessage = await openai.beta.threads.messages.create(threadId!, {
             role: 'user' as 'user' | 'assistant',
             content: data.message.toString(),
+            attachments: openAiFile ? [
+                {
+                    file_id: openAiFile.id,
+                    tools: toolList
+                }
+            ] : []
         });
+
+
 
         return AssistantResponse(
             { threadId, messageId: createdMessage.id, chatbotId: params.chatbotId },
