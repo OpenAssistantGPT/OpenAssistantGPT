@@ -209,7 +209,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
           </div>
           <div className="fixed inset-x-0 bottom-0 w-full ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
             <div className={`mx-auto ${chatbot.chatInputStyle === 'default' ? 'sm:max-w-2xl sm:px-4' : ''}`}>
-            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2 px-4 sm:px-0">
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2 px-4 ">
               {chatbot.inquiryEnabled && !hideInquiry && messages.length >= chatbot.inquiryDisplayLinkAfterXMessage &&
               <div className="relative">
                 <button onClick={() => { setHideInquiry(true) }} className="bg-zinc-100 shadow hover:bg-zinc-200 border rounded absolute top-0 right-0 -mt-1 -mr-1">
