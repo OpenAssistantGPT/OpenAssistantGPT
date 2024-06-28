@@ -24,10 +24,12 @@ import { GradientPicker } from "@/components/gradient-picker"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Checkbox } from "@/components/ui/checkbox"
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
+import { Label } from "./ui/label"
 
 
 interface ChatbotOperationsProps {
-    chatbot: Pick<Chatbot, "id" | "name" | "modelId">
+    chatbot: Chatbot
 }
 
 export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
@@ -59,26 +61,24 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
     })
 
     useEffect(() => {
-        fetch(`/api/chatbots/${chatbot.id}/config`, {
-            method: "GET",
-        }).then((res) => res.json()).then((data) => {
-            form.setValue("chatTitle", data.chatTitle)
-            form.setValue("chatMessagePlaceHolder", data.chatMessagePlaceHolder)
+        form.setValue("chatTitle", chatbot.chatTitle)
+        form.setValue("chatMessagePlaceHolder", chatbot.chatMessagePlaceHolder)
+        console.log(chatbot.chatInputStyle)
+        form.setValue("chatInputStyle", chatbot.chatInputStyle)
 
-            // get the colors from the chatbot
-            setBubbleColor(data.bubbleColor)
-            setBubbleLogoColor(data.bubbleTextColor)
-            setChatHeaderBackgroundColor(data.chatHeaderBackgroundColor)
-            setChatHeaderTextColor(data.chatHeaderTextColor)
-            setUserBubbleColor(data.userReplyBackgroundColor)
-            setUserBubbleMessageColor(data.userReplyTextColor)
-            setChatbotLogoURL(data.chatbotLogoURL)
+        // get the colors from the chatbot
+        setBubbleColor(chatbot.bubbleColor)
+        setBubbleLogoColor(chatbot.bubbleTextColor)
+        setChatHeaderBackgroundColor(chatbot.chatHeaderBackgroundColor)
+        setChatHeaderTextColor(chatbot.chatHeaderTextColor)
+        setUserBubbleColor(chatbot.userReplyBackgroundColor)
+        setUserBubbleMessageColor(chatbot.userReplyTextColor)
+        setChatbotLogoURL(chatbot.chatbotLogoURL || '')
 
-            if (data.chatbotLogoURL) {
-                setUseDefaultImage(false)
-            }
-        })
-    }, [])
+        if (chatbot.chatbotLogoURL) {
+            setUseDefaultImage(false)
+        }
+    }, [chatbot.id])
 
     useEffect(() => {
         if (inputFileRef.current?.files && inputFileRef.current.files.length > 0) {
@@ -106,6 +106,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         formData.append('chatHeaderTextColor', chatHeaderTextColor);
         formData.append('userReplyBackgroundColor', userBubbleColor);
         formData.append('userReplyTextColor', userBubbleMessageColor);
+        formData.append('chatInputStyle', data.chatInputStyle);
 
         if (useDefaultImage) {
             formData.set('chatbotLogoFilename', '');
@@ -368,7 +369,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                                             setUseDefaultImage(false)
                                                                         } else {
                                                                             setUseDefaultImage(true)
-                                                                         }
+                                                                        }
                                                                     }
                                                                 } />
                                                                 <div className="flex space-x-2 flex-row">
@@ -382,6 +383,45 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                 </div>
                                                 <div className="flex w-full items-center text-center justify-center">
                                                     {chatbotLogoURL ? <Image className="boder rounded shadow" width={32} height={32} src={chatbotLogoURL} alt="chatbot logo" /> : <Icons.bot className="h-10 w-10" />}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                name="chatInputStyle"
+                                control={form.control}
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
+                                        <div className="space-y-4">
+                                            <h1>Customize Chat Input Style</h1>
+                                            <div className="flex">
+                                                <div className="flex flex-col w-full justify space-y-4">
+                                                    <div className="space-y-0.5">
+                                                        <FormLabel className="text-base">
+                                                            User Background Message Color
+                                                        </FormLabel>
+                                                        <FormDescription>
+                                                            Choose the color for the background of your user&apos;s messages.
+                                                        </FormDescription>
+
+                                                    </div>
+                                                    <FormControl>
+                                                        <RadioGroup
+                                                            defaultValue={chatbot.chatInputStyle}
+                                                            onValueChange={field.onChange}
+                                                        >
+                                                            <div className="flex items-center space-x-2">
+                                                                <RadioGroupItem value="default" id="default" />
+                                                                <Label htmlFor="default">Default Style</Label>
+                                                            </div>
+                                                            <div className="flex items-center space-x-2">
+                                                                <RadioGroupItem value="full-width" id="full-width" />
+                                                                <Label htmlFor="full-width">Full Width</Label>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    </FormControl>
                                                 </div>
                                             </div>
                                         </div>
