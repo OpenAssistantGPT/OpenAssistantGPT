@@ -76,6 +76,8 @@ model Chatbot {
   userReplyTextColor          String  @default("#000000")
   chatbotLogoURL              String?
 
+  chatInputStyle String @default("default")
+
   inquiryEnabled                  Boolean @default(false)
   inquiryLinkText                 String  @default("Contact our support team")
   inquiryTitle                    String  @default("Contact our support team")
