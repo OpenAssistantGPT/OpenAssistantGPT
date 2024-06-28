@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.19"
+                    date="2024-06-27"
+                    new={[
+                        {
+                            title: 'Multiple line text input instead of single line',
+                            description: 'Now the text input in the chatbot is a multiple line input. This will allow you to write longer messages in the chatbot. The input will grow as you write more text.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.18"
                     date="2024-06-26"
                     new={[
