@@ -78,6 +78,7 @@ export async function PATCH(
                 userReplyBackgroundColor: payload.userReplyBackgroundColor,
                 userReplyTextColor: payload.userReplyTextColor,
                 chatbotLogoURL: blob ? blob.url : payload.chatbotLogoFilename === 'keep-current-image' ? currentChatbot?.chatbotLogoURL : '',
+                chatInputStyle: payload.chatInputStyle,
             },
             select: {
                 id: true,

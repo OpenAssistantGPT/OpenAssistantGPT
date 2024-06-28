@@ -34,29 +34,6 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
     }
 
     const chatbot = await db.chatbot.findFirst({
-        select: {
-            id: true,
-            name: true,
-            createdAt: true,
-            openaiKey: true,
-            welcomeMessage: true,
-            chatbotErrorMessage: true,
-            displayBranding: true,
-            prompt: true,
-            modelId: true,
-            openaiId: true,
-            isImported: true,
-            chatFileAttachementEnabled: true,
-            maxCompletionTokens: true,
-            maxPromptTokens: true,
-            rightToLeftLanguage: true,
-            model: {
-                select: {
-                    id: true,
-                    name: true,
-                }
-            },
-        },
         where: {
             id: params.chatbotId,
             userId: user.id,

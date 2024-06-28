@@ -19,6 +19,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { FooterText } from "./chat-footer-text";
 import { ChatMessage } from "./chat-message"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
+import { useEnterSubmit } from '@/hooks/use-enter-submit'
 
 interface ChatbotProps {
   chatbot: Chatbot
@@ -41,6 +42,8 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   let inputFileRef = useRef<HTMLInputElement>(null);
 
   const [chatThreadId, setChatThreadId] = useState<string | null>()
+
+  const { formRef, onKeyDown } = useEnterSubmit()
 
   const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
     useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, threadId: chatThreadId || '', clientSidePrompt: clientSidePrompt });
@@ -196,20 +199,20 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                 <ChatMessage chatbot={chatbot} key={index} message={message} />
               );
             })}
-          </div>
-          {status !== "awaiting_message" &&
+            </div>
+            {status !== "awaiting_message" &&
             <div className="mt-4">
               <ChatMessage chatbot={chatbot} message={{ id: 'waiting', role: "assistant", content: 'loading' }} />
             </div>
-          }
-          <div id="end" ref={containerRef}> </div>
-        </div>
-        <div className="fixed inset-x-0 bottom-0 w-full ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
-          <div className="mx-auto sm:max-w-2xl sm:px-4">
-            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2 px-4 sm:px-0">
+            }
+            <div id="end" ref={containerRef}> </div>
+          </div>
+          <div className="fixed inset-x-0 bottom-0 w-full ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
+            <div className={`mx-auto ${chatbot.chatInputStyle === 'default' ? 'sm:max-w-2xl sm:px-4' : ''}`}>
+            <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2 px-4 ">
               {chatbot.inquiryEnabled && !hideInquiry && messages.length >= chatbot.inquiryDisplayLinkAfterXMessage &&
-                <div className="relative">
-                  <button onClick={() => { setHideInquiry(true) }} className="bg-zinc-100 shadow hover:bg-zinc-200 border rounded absolute top-0 right-0 -mt-1 -mr-1">
+              <div className="relative">
+                <button onClick={() => { setHideInquiry(true) }} className="bg-zinc-100 shadow hover:bg-zinc-200 border rounded absolute top-0 right-0 -mt-1 -mr-1">
                     <Icons.close className="h-4 w-4" />
                   </button>
                   <Dialog open={open} onOpenChange={setOpen}>
@@ -259,6 +262,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
             <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl md:py-4">
               <form onSubmit={handleSubmitMessage}
                 {...props}
+                ref={formRef}
               >
                 {
                   fileUploaded &&
@@ -297,20 +301,23 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                       />
                     </div>
                   }
-
-                  <Input
-                    ref={inputRef}
-                    tabIndex={0}
-                    placeholder={chatbot.chatMessagePlaceHolder}
-                    className="border-0 focus-visible:ring-0 min-h-[60px] w-full resize-none bg-transparent pl-4 pr-8 md:pr-12 py-[1.3rem] focus-within:outline-none sm:text-sm"
-                    spellCheck={false}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    name="message"
-                    value={input}
-                    onChange={handleInputChange}
-                  />
-                  <div className={`absolute right-0 top-[14px] sm:right-4`}>
+                  <div className={chatbot.chatFileAttachementEnabled ?  `pl-4` : `` + ` pr-8`}>
+                    <Textarea
+                      ref={inputRef}
+                      tabIndex={0}
+                      onKeyDown={onKeyDown}
+                      placeholder={chatbot.chatMessagePlaceHolder}
+                      className="border-0 border-gray-300 rounded-lg min-h-[60px] w-full resize-none bg-white pl-4 py-[1rem] sm:text-sm shadow-sm focus-visible:ring-0"
+                      spellCheck={false}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      name="message"
+                      rows={1}
+                      value={input}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className={`absolute top-[14px] right-0`}>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button
