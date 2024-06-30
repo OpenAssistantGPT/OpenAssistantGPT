@@ -395,15 +395,21 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                 render={({ field }) => (
                                     <FormItem className="flex flex-col items-left justify-between rounded-lg border p-4">
                                         <div className="space-y-4">
-                                            <h1>Customize Chat Input Style</h1>
+                                            <h1>Styles</h1>
                                             <div className="flex">
                                                 <div className="flex flex-col w-full justify space-y-4">
                                                     <div className="space-y-0.5">
                                                         <FormLabel className="text-base">
-                                                            User Background Message Color
+                                                            Change the chat input style
                                                         </FormLabel>
                                                         <FormDescription>
-                                                            Choose the color for the background of your user&apos;s messages.
+                                                            You have two choice default style or full width style.
+                                                            <br/>   
+                                                            Default style is the default style of the chat input the width is half the screen of the user on desktop mode.
+                                                            <br/>   
+                                                            Full width style is the full width of the screen of the user on desktop mode.
+                                                            <br/>   
+                                                            Both have the same behavior on mobile mode or widget mode it will have effect with the window integrations.
                                                         </FormDescription>
 
                                                     </div>
