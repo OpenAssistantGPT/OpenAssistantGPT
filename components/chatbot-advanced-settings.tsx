@@ -93,7 +93,7 @@ export function ChatbotAdvancedSettingsForm({ chatbot, ...props }: ChatbotFormPr
                             This is the maximum number of tokens that can be used in a prompt and for completions, to find out more about tokens, please refer to the documentation.
                             <Link href="https://platform.openai.com/docs/assistants/how-it-works/managing-threads-and-messages" className="underlined">Learn more</Link>
                             <br />
-                            When using the File Attachements, we recommend setting the Max Prompt Token to no less than 20,000. For longer conversations or multiple interactions with File Attachements, consider increasing this limit to 50,000, or ideally, removing the Max Prompt Tokens limits altogether to get the highest quality results.
+                            When using the File Attachments, we recommend setting the Max Prompt Token to no less than 20,000. For longer conversations or multiple interactions with File Attachments, consider increasing this limit to 50,000, or ideally, removing the Max Prompt Tokens limits altogether to get the highest quality results.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
