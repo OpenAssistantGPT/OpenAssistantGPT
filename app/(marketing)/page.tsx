@@ -1,5 +1,5 @@
 import { GithubCard } from "@/components/github-card";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,6 +7,8 @@ import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import { FAQ } from '@/components/faq';
 import { freePlan, basicPlan, proPlan } from "@/config/subscriptions";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export default function IndexPage() {
 
@@ -132,7 +134,7 @@ export default function IndexPage() {
               <div className="space-y-2">
                 <h3 className="font-bold">File Attachements</h3>
                 <p className="text-sm">
-                  You can attach a file CSV, XML, Images etc... in the chat and the chatbot will analyse it. 
+                  You can attach a file CSV, XML, Images etc... in the chat and the chatbot will analyse it.
                 </p>
               </div>
             </div>
@@ -235,138 +237,92 @@ export default function IndexPage() {
               </p>
             </div>
           </div>
-          <div className="mx-auto mt-10 grid max-w-sm items-start gap-12 sm:max-w-4xl sm:grid-cols-2 lg:max-w-5xl lg:grid-cols-4">
-            <div className="flex flex-col space-y-2">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">{freePlan.name}</h3>
-                <p className="text-2xl font-bold tracking-tighter">${freePlan.price}</p>
-                <p className="text-sm text-gray-500 ">Perfect for personal projects, experiments, or simply getting familiar with our powerful tools.</p>
-              </div>
-              <ul className="grid gap-2 py-4">
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {freePlan.maxChatbots} Chatbot
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {freePlan.maxCrawlers} Crawlers
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {freePlan.maxFiles} Files
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {freePlan.maxMessagesPerMonth} Messages per Month
-                </li>
-              </ul>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">{basicPlan.name}</h3>
-                <p className="text-2xl font-bold tracking-tighter">${basicPlan.price}</p>
-                <p className="text-sm text-gray-500">
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="p-6">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold">{freePlan.name}</CardTitle>
+                <CardDescription className="text-2xl font-bold">${freePlan.price}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-muted-foreground">
+                  Perfect for personal projects, experiments, or simply getting familiar with our powerful tools.
+                </p>
+                <ul className="space-y-1">
+                  <li>✓ {freePlan.maxChatbots} Chatbot</li>
+                  <li>✓ {freePlan.maxCrawlers} Crawler</li>
+                  <li>✓ {freePlan.maxFiles} Files</li>
+                  <li>✓ {freePlan.maxMessagesPerMonth} Messages per Month</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="p-6 border-2 border-primary relative">
+              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-medium">
+                Popular
+              </Badge>
+              <CardHeader>
+                <CardTitle className="text-xl font-bold">{basicPlan.name}</CardTitle>
+                <CardDescription className="text-2xl font-bold">${basicPlan.price}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-muted-foreground">
                   For organizations that require collaboration and deploy multiple chatbots.
                 </p>
-              </div>
-              <ul className="grid gap-2 py-4">
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {basicPlan.maxChatbots} Chatbot
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {basicPlan.maxCrawlers} Crawlers
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {basicPlan.maxFiles} Files
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Customizations
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Unlimited Messages
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Client Inquiry / Collect Leads
-                </li>
-              </ul>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">{proPlan.name}</h3>
-                <p className="text-2xl font-bold tracking-tighter">${proPlan.price}</p>
-                <p className="text-sm text-gray-500">
+                <ul className="space-y-1">
+                  <li>✓ {basicPlan.maxChatbots} Chatbots</li>
+                  <li>✓ {basicPlan.maxCrawlers} Crawlers</li>
+                  <li>✓ {basicPlan.maxFiles} Files</li>
+                  <li>✓ Customizations</li>
+                  <li>✓ Unlimited Messages</li>
+                  <li>✓ Client Inquiry / Collect Leads</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="p-6">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold">{proPlan.name}</CardTitle>
+                <CardDescription className="text-2xl font-bold">${proPlan.price}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-muted-foreground">
                   Tailored solutions for large-scale operations and advanced requirements.
                 </p>
-              </div>
-              <ul className="grid gap-2 py-4">
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {proPlan.maxChatbots} Chatbot
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {proPlan.maxCrawlers} Crawlers
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  {proPlan.maxFiles} Files
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Customizations
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Unlimited Messages
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Client Inquiry / Collect Leads
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Remove &apos;Powered by {siteConfig.name}&apos;
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  Client File Attachement
-                </li>
-              </ul>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <div className="space-y-2">
-                <h3 className="text-2xl font-bold tracking-tighter">Enterprise</h3>
-                <p className="text-2xl font-bold tracking-tighter"><span>$X</span></p>
-                <p className="text-sm text-gray-500 ">Custom plan for bigger enterprise. Contact the team for more information.</p>
-              </div>
-              <ul className="grid gap-2 py-4">
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  X Chatbot
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  X Crawlers
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  X Files
-                </li>
-                <li>
-                  <Icons.check className="mr-2 inline-block h-4 w-4" />
-                  All Features from other plans.
-                </li>
-              </ul>
-            </div>
+                <ul className="space-y-1">
+                  <li>✓ {proPlan.maxChatbots} Chatbots</li>
+                  <li>✓ {proPlan.maxCrawlers} Crawlers</li>
+                  <li>✓ {proPlan.maxFiles} Files</li>
+                  <li>✓ Customizations</li>
+                  <li>✓ Unlimited Messages</li>
+                  <li>✓ Client Inquiry / Collect Leads</li>
+                  <li>✓ Remove 'Powered by OpenAssistantGPT'</li>
+                  <li>✓ Client File Attachment</li>
+                </ul>
+              </CardContent>
+            </Card>
+            <Card className="p-6">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold">ENTERPRISE</CardTitle>
+                <CardDescription className="text-2xl font-bold">$X</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <p className="text-muted-foreground">
+                  Custom plan for bigger enterprise. Contact the team for more information.
+                </p>
+                <ul className="space-y-1">
+                  <li>✓ X Chatbots</li>
+                  <li>✓ X Crawlers</li>
+                  <li>✓ X Files</li>
+                  <li>✓ All Features from other plans.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center mt-10 text-center">
+            <Link href="/dashboard/billing" className={cn(buttonVariants({ size: "lg" }))}>
+              Buy our paid plan now quick and easy!
+            </Link>
           </div>
         </div>
-      </section >
+      </section>
       <section data-aos="fade-up" id="faq" className="container space-y-6 py-12 md:py-24 lg:py-32">
         <div className="mx-auto flex max-w-[58rem] flex-col items-center justify-center gap-4 text-center">
           <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
