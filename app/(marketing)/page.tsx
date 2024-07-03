@@ -293,7 +293,7 @@ export default function IndexPage() {
                   <li>✓ Customizations</li>
                   <li>✓ Unlimited Messages</li>
                   <li>✓ Client Inquiry / Collect Leads</li>
-                  <li>✓ Remove 'Powered by OpenAssistantGPT'</li>
+                  <li>✓ Remove &apos;Powered by OpenAssistantGPT&apos;</li>
                   <li>✓ Client File Attachment</li>
                 </ul>
               </CardContent>
