@@ -35,7 +35,7 @@ export default function ChangelogPage() {
                     date="2024-06-26"
                     new={[
                         {
-                            title: 'User message attachements',
+                            title: 'User message attachments',
                             description: 'We now use message instead of updating the thread. This will allow you to attach files to a message. The chatbot will then analyse the file and provide a response. You\'ll get better result',
                         },
                     ]}
@@ -103,7 +103,7 @@ export default function ChangelogPage() {
                     date="2024-06-14"
                     improvements={[
                         {
-                            title: 'Improve how file attachements works',
+                            title: 'Improve how file attachments works',
                             description: 'Better UX when uploading files in the chatbot. We now display the file name and we can also remove the file from the chat.',
                             image: new URL(
                                 '/public/file_attachements_v2.png',
@@ -198,7 +198,7 @@ export default function ChangelogPage() {
                     date="2024-05-29"
                     new={[
                         {
-                            title: 'Chat file attachements',
+                            title: 'Chat file attachments',
                             description: 'User in the chat can now upload files, images and more to the chatbot. The chatbot will then analyse the file and provide a response. It uses the "code_execution" function in OpenAI',
                             image: new URL(
                                 '/public/file_attachements.png',
