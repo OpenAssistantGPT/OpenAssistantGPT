@@ -132,7 +132,7 @@ export default function IndexPage() {
             <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
               <Icons.folder></Icons.folder>
               <div className="space-y-2">
-                <h3 className="font-bold">File Attachements</h3>
+                <h3 className="font-bold">File Attachments</h3>
                 <p className="text-sm">
                   You can attach a file CSV, XML, Images etc... in the chat and the chatbot will analyse it.
                 </p>
