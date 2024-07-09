@@ -41,11 +41,13 @@ import {
   Loader,
   RefreshCcw,
   Paperclip,
+  Lock,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  lock: Lock, 
   document: File,
   paperclip: Paperclip,
   reload: RefreshCcw,
