@@ -20,6 +20,7 @@ import { ImportedChatbotForm } from "@/components/imported-chatbot-form"
 import { ChatbotBrandingProSettingsForm } from "@/components/chatbot-branding-pro-settings"
 import { ChatbotFileAttachementProSettingsForm } from "@/components/chatbot-file-attachement-pro-settings"
 import { ChatbotAdvancedSettingsForm } from "@/components/chatbot-advanced-settings"
+import { ChatbotAdvancedSecuritySettingsForm } from "@/components/chatbot-security-settings"
 
 interface ChatbotSettingsProps {
     params: { chatbotId: string }
@@ -65,6 +66,8 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
             chatbotId: chatbot.id,
         },
     })
+
+    console.log(chatbot)
 
     const models = await db.chatbotModel.findMany({})
 
@@ -127,7 +130,10 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
                     </div>
                 </TabsContent>
                 <TabsContent value="advancedSettings">
-                    <ChatbotAdvancedSettingsForm chatbot={chatbot} />
+                    <div className="space-y-4">
+                        <ChatbotAdvancedSettingsForm chatbot={chatbot} />
+                        <ChatbotAdvancedSecuritySettingsForm chatbot={chatbot} />
+                    </div>
                 </TabsContent>
                 <TabsContent value="customizations">
                     <div className="space-y-4">

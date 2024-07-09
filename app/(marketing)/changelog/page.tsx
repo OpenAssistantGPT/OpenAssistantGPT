@@ -13,6 +13,20 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.20"
+                    date="2024-07-08"
+                    new={[
+                        {
+                            title: 'Network Security',
+                            description: 'You can now make chatbot fully private, only accessible by your IP. This will prevent unauthorized access to your chatbot. You can also ban specific IPs from accessing the chatbot.',
+                            image: new URL(
+                                '/public/network_security.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.19"
                     date="2024-06-28"
                     new={[
