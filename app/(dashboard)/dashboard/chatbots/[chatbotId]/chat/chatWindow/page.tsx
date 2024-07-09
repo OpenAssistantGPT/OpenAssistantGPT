@@ -66,7 +66,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
               <Icons.lock className="mx-auto h-12 w-12 text-primary" />
               <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Access Denied</h1>
               <p className="mt-4 text-muted-foreground">
-                You don't have permission to access this page. Please contact an administrator if you believe this is an
+                You don&apos;t have permission to access this page. Please contact an administrator if you believe this is an
                 error.
               </p>
             </div>
