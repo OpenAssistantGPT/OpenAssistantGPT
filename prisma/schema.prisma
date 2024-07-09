@@ -94,6 +94,10 @@ model Chatbot {
   maxCompletionTokens Int?
   maxPromptTokens     Int?
 
+  bannedIps       String[] @default([])
+  allowEveryone   Boolean  @default(true)
+  allowedIpRanges String[] @default([])
+
   user                  User                    @relation(fields: [userId], references: [id])
   ChatbotFiles          ChatbotFiles[]
   ClientInquiries       ClientInquiries[]
