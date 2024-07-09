@@ -152,6 +152,8 @@ model Message {
 
   from String @default("unknown")
 
+  userIP String?
+
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
