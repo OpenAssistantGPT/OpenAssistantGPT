@@ -9,6 +9,7 @@ import { Message } from "openai/resources/beta/threads/messages.mjs";
 import { fileTypesFullList } from "@/lib/validations/codeInterpreter";
 import { fileTypes as searchFile } from "@/lib/validations/fileSearch";
 import { File } from "buffer";
+import { getClientIP } from "@/lib/getIP";
 
 export const maxDuration = 300;
 
@@ -206,6 +207,7 @@ export async function POST(
                                 message: data.message,
                                 threadId: threadId,
                                 response: response,
+                                userIP: getClientIP(),
                                 from: req.headers.get("origin") || "unknown",
                             }
                         })
