@@ -20,6 +20,7 @@ import { FooterText } from "./chat-footer-text";
 import { ChatMessage } from "./chat-message"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog"
 import { useEnterSubmit } from '@/hooks/use-enter-submit'
+import { ChatHistory } from "./chat-history"
 
 interface ChatbotProps {
   chatbot: Chatbot
@@ -41,12 +42,16 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
 
   let inputFileRef = useRef<HTMLInputElement>(null);
 
-  const [chatThreadId, setChatThreadId] = useState<string | null>()
-
   const { formRef, onKeyDown } = useEnterSubmit()
 
-  const { status, messages, input, submitMessage, handleInputChange, error, threadId } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, threadId: chatThreadId || '', clientSidePrompt: clientSidePrompt });
+  const { status, messages, input, submitMessage, handleInputChange, error, threadId, setThreadId, threads, deleteThreadFromHistory } =
+    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, clientSidePrompt: clientSidePrompt });
+
+  useEffect(() => {
+    console.log(setThreadId)
+    console.log(threadId)
+    console.log(threads)
+  }, [threadId])
 
   function handleSubmitMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -59,12 +64,6 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
       inputFileRef.current.value = '';
     }
   }
-
-  useEffect(() => {
-    if (threadId) {
-      setChatThreadId(threadId)
-    }
-  }, [threadId])
 
   useEffect(() => {
     if (status === 'awaiting_message') {
@@ -142,10 +141,10 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
     window.parent.postMessage('closeChat', '*')
   }
 
-
   return (
     <>
-      <CardHeader style={{ background: chatbot.chatHeaderBackgroundColor }} className="sticky z-50 top-0 border-b p-4">
+      <ChatHistory threads={threads} setThreadId={setThreadId} threadId={threadId} deleteThreadFromHistory={deleteThreadFromHistory}></ChatHistory>
+      <CardHeader style={{ background: chatbot.chatHeaderBackgroundColor }} className="sticky z-30 top-0 border-b p-4">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-xl font-bold flex items-center h-10 gap-2">
             <div style={{ color: chatbot.chatHeaderTextColor }}>
@@ -185,6 +184,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
         </div>
 
       </CardHeader>
+
       <div
         className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
       >
@@ -199,20 +199,20 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                 <ChatMessage chatbot={chatbot} key={index} message={message} />
               );
             })}
-            </div>
-            {status !== "awaiting_message" &&
+          </div>
+          {status !== "awaiting_message" &&
             <div className="mt-4">
               <ChatMessage chatbot={chatbot} message={{ id: 'waiting', role: "assistant", content: 'loading' }} />
             </div>
-            }
-            <div id="end" ref={containerRef}> </div>
-          </div>
-          <div className="fixed inset-x-0 bottom-0 w-full ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
-            <div className={`mx-auto ${chatbot.chatInputStyle === 'default' ? 'sm:max-w-2xl sm:px-4' : ''}`}>
+          }
+          <div id="end" ref={containerRef}> </div>
+        </div>
+        <div className="fixed inset-x-0 bottom-0 w-full ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
+          <div className={`mx-auto ${chatbot.chatInputStyle === 'default' ? 'sm:max-w-2xl sm:px-4' : ''}`}>
             <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-2 px-4 ">
               {chatbot.inquiryEnabled && !hideInquiry && messages.length >= chatbot.inquiryDisplayLinkAfterXMessage &&
-              <div className="relative">
-                <button onClick={() => { setHideInquiry(true) }} className="bg-zinc-100 shadow hover:bg-zinc-200 border rounded absolute top-0 right-0 -mt-1 -mr-1">
+                <div className="relative">
+                  <button onClick={() => { setHideInquiry(true) }} className="bg-zinc-100 shadow hover:bg-zinc-200 border rounded absolute top-0 right-0 -mt-1 -mr-1">
                     <Icons.close className="h-4 w-4" />
                   </button>
                   <Dialog open={open} onOpenChange={setOpen}>
@@ -301,7 +301,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                       />
                     </div>
                   }
-                  <div className={chatbot.chatFileAttachementEnabled ?  `pl-4` : `` + ` pr-8`}>
+                  <div className={chatbot.chatFileAttachementEnabled ? `pl-4` : `` + ` pr-8`}>
                     <Textarea
                       ref={inputRef}
                       tabIndex={0}

@@ -1,7 +1,7 @@
 
 
 import { isAbortError } from '@ai-sdk/provider-utils';
-import { useCallback, useRef, useState } from 'react';
+import { use, useCallback, useEffect, useRef, useState } from 'react';
 import { generateId } from '@/lib/generate-id';
 import { readDataStream } from '@/lib/read-data-stream';
 import {
@@ -22,9 +22,24 @@ export type UseAssistantHelpers = {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
 
   /**
+  * Set the current thread ID. Specifying a thread ID will switch to that thread, if it exists. If set to 'undefined', a new thread will be created. For both cases, `threadId` will be updated with the new value and `messages` will be cleared.
+  */
+  setThreadId: (threadId: string | undefined) => void;
+
+  /**
+   * Delete the thread from the history
+   */
+  deleteThreadFromHistory: (threadId: string) => void;
+
+  /**
    * The current thread ID.
    */
   threadId: string | undefined;
+  
+  /**
+   * The list of threads.
+   */
+  threads: string[];
 
   /**
    * The current value of the input field.
@@ -96,9 +111,38 @@ export function useAssistant({
 }: any): UseAssistantHelpers {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [threadId, setThreadId] = useState<string | undefined>(undefined);
+  const [currentThreadId, setCurrentThreadId] = useState<string | undefined>(
+    undefined,
+  );
   const [status, setStatus] = useState<AssistantStatus>('awaiting_message');
   const [error, setError] = useState<undefined | Error>(undefined);
+
+  const [threads, setThreads] = useState<string[]>([]);
+
+  useEffect(() => {
+    const assistantThreads = localStorage.getItem('assistantThreads')
+    const threadsMap = JSON.parse(assistantThreads || '{}')
+
+    // if current thread id is not in local storage, in local storage, set it to undefined
+    if (currentThreadId && threadsMap[currentThreadId] === undefined) {
+      threadsMap[currentThreadId] = []
+      localStorage.setItem('assistantThreads', JSON.stringify(threadsMap))
+    }
+
+    // set only ids
+    setThreads(Object.keys(threadsMap))
+  }, [currentThreadId]);
+
+  useEffect(() => {
+    // store new messages in local storage
+    const assistantThreads = localStorage.getItem('assistantThreads')
+    const threadsMap = JSON.parse(assistantThreads || '{}')
+
+    if (currentThreadId) {
+      threadsMap[currentThreadId] = messages
+      localStorage.setItem('assistantThreads', JSON.stringify(threadsMap))
+    }
+  }, [messages]);
 
   const handleInputChange = (
     event:
@@ -143,7 +187,7 @@ export function useAssistant({
 
       const formData = new FormData();
       formData.append("message", message.content);
-      formData.append("threadId", threadIdParam ?? threadId ?? null);
+      formData.append("threadId", threadIdParam ?? currentThreadId ?? '');
       formData.append("file", inputFile || '');
       formData.append("filename", inputFile !== undefined ? inputFile.name : '');
       formData.append("clientSidePrompt", clientSidePrompt || '');
@@ -224,7 +268,7 @@ export function useAssistant({
           }
 
           case 'assistant_control_data': {
-            setThreadId(value.threadId);
+            setCurrentThreadId(value.threadId);
 
             // set id of last message:
             setMessages(messages => {
@@ -275,11 +319,41 @@ export function useAssistant({
     append({ role: 'user', content: input }, requestOptions);
   };
 
+  const setThreadId = (threadId: string | undefined) => {
+    setCurrentThreadId(threadId);
+    // validate if thread has message in local storage
+    if (threadId === undefined) {
+      setMessages([]);
+      return;
+    }
+
+    const assistantThreads = localStorage.getItem('assistantThreads')
+    const threads = JSON.parse(assistantThreads || '{}')
+    setThreads(Object.keys(threads))
+    if (threads[threadId] !== undefined) {
+      setMessages(threads[threadId])
+    }
+    else {
+      setMessages([]);
+    }
+  };
+
+  const deleteThreadFromHistory = (threadId: string) => { 
+    const assistantThreads = localStorage.getItem('assistantThreads')
+    const threads = JSON.parse(assistantThreads || '{}')
+    delete threads[threadId]
+    localStorage.setItem('assistantThreads', JSON.stringify(threads))
+    setThreads(Object.keys(threads))
+  }
+
   return {
     append,
     messages,
     setMessages,
-    threadId,
+    threadId: currentThreadId,
+    setThreadId,
+    deleteThreadFromHistory,
+    threads,
     input,
     setInput,
     handleInputChange,
