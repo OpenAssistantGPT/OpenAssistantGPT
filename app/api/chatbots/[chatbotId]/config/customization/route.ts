@@ -64,8 +64,6 @@ export async function PATCH(
             },
         });
 
-        console.log(payload.chatHistoryEnabled)
-
         const chatbot = await db.chatbot.update({
             where: {
                 id: params.chatbotId,
