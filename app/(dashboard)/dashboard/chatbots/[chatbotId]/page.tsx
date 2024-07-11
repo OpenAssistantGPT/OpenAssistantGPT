@@ -67,8 +67,6 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         },
     })
 
-    console.log(chatbot)
-
     const models = await db.chatbotModel.findMany({})
 
     return (

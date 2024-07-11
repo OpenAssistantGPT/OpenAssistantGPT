@@ -7,7 +7,6 @@ export function getClientIP() {
     const realIP = headersList.get("x-real-ip") || ""
    
     if (forwardedFor) {
-        console.log("Forwarded for: ", forwardedFor)
         if (forwardedFor === "::1") {
             return "127.0.0.1"
         }

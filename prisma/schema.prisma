@@ -88,6 +88,8 @@ model Chatbot {
   inquiryAutomaticReplyText       String  @default("Your inquiry has been sent. Our team will get back to you shortly.")
   inquiryDisplayLinkAfterXMessage Int     @default(1)
 
+  chatHistoryEnabled Boolean @default(false)
+
   displayBranding            Boolean @default(true)
   chatFileAttachementEnabled Boolean @default(false)
 
