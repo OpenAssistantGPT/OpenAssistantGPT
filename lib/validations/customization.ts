@@ -12,6 +12,7 @@ export const customizationSchema = z.object({
     chatbotLogoFilename: z.string().default("").optional(),
     chatbotLogo: z.any(),
     chatInputStyle: z.string().default("default"),
+    chatHistoryEnabled: z.boolean().default(false),
 })
 
 
@@ -27,4 +28,5 @@ export const customizationStringBackendSchema = z.object({
     userReplyTextColor: z.string().default(""),
     chatbotLogo: z.any(),
     chatInputStyle: z.string().default("default"),
+    chatHistoryEnabled: z.string().default('false'),
 })

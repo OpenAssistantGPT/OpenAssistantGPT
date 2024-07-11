@@ -1,7 +1,5 @@
-
-
 import { isAbortError } from '@ai-sdk/provider-utils';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { generateId } from '@/lib/generate-id';
 import { readDataStream } from '@/lib/read-data-stream';
 import {
@@ -11,80 +9,38 @@ import {
 } from 'ai';
 
 export type UseAssistantHelpers = {
-  /**
-   * The current array of chat messages.
-   */
   messages: Message[];
-
-  /**
-   * Update the message store with a new array of messages.
-   */
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-
-  /**
-   * The current thread ID.
-   */
+  setThreadId: (threadId: string | undefined) => void;
+  deleteThreadFromHistory: (threadId: string) => void;
   threadId: string | undefined;
-
-  /**
-   * The current value of the input field.
-   */
+  threads: Record<string, { creationDate: string; messages: Message[] }>;
   input: string;
-
-  /**
-   * Append a user message to the chat list. This triggers the API call to fetch
-   * the assistant's response.
-   * @param message The message to append
-   * @param requestOptions Additional options to pass to the API call
-   */
   append: (
     message: Message | CreateMessage,
     requestOptions?: {
       data?: Record<string, string>;
     },
   ) => Promise<void>;
-
-  /**
-Abort the current request immediately, keep the generated tokens if any.
-   */
   stop: () => void;
-
-  /**
-   * setState-powered method to update the input value.
-   */
   setInput: React.Dispatch<React.SetStateAction<string>>;
-
-  /**
-   * Handler for the `onChange` event of the input field to control the input's value.
-   */
   handleInputChange: (
     event:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => void;
-
-  /**
-   * Form submission handler that automatically resets the input field and appends a user message.
-   */
   submitMessage: (
     event?: React.FormEvent<HTMLFormElement>,
     requestOptions?: {
       data?: Record<string, string>;
     },
   ) => Promise<void>;
-
-  /**
-   * The current status of the assistant. This can be used to show a loading indicator.
-   */
   status: AssistantStatus;
-
-  /**
-   * The error thrown during the assistant message processing, if any.
-   */
   error: undefined | unknown;
 };
 
 export function useAssistant({
+  id,
   api,
   threadId: threadIdParam,
   inputFile,
@@ -94,11 +50,41 @@ export function useAssistant({
   body,
   onError,
 }: any): UseAssistantHelpers {
+
+  const localStorageName = `assistantThreads-${id}`;
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [threadId, setThreadId] = useState<string | undefined>(undefined);
+  const [currentThreadId, setCurrentThreadId] = useState<string | undefined>(
+    undefined,
+  );
   const [status, setStatus] = useState<AssistantStatus>('awaiting_message');
   const [error, setError] = useState<undefined | Error>(undefined);
+
+  const [threads, setThreads] = useState<
+    Record<string, { creationDate: string; messages: Message[] }>
+  >({});
+
+  useEffect(() => {
+    const assistantThreads = localStorage.getItem(localStorageName)
+    const threadsMap = JSON.parse(assistantThreads || '{}')
+
+    if (currentThreadId && threadsMap[currentThreadId] === undefined) {
+      threadsMap[currentThreadId] = { creationDate: new Date().toISOString(), messages: [] }
+      localStorage.setItem(localStorageName, JSON.stringify(threadsMap))
+    }
+
+    setThreads(threadsMap)
+  }, [currentThreadId]);
+
+  useEffect(() => {
+    const assistantThreads = localStorage.getItem(localStorageName)
+    const threadsMap = JSON.parse(assistantThreads || '{}')
+    if (currentThreadId && threadsMap[currentThreadId] !== undefined) {
+      threadsMap[currentThreadId].messages = messages
+      localStorage.setItem(localStorageName, JSON.stringify(threadsMap))
+    }
+  }, [messages]);
 
   const handleInputChange = (
     event:
@@ -108,7 +94,6 @@ export function useAssistant({
     setInput(event.target.value);
   };
 
-  // Abort controller to cancel the current API call.
   const abortControllerRef = useRef<AbortController | null>(null);
 
   const stop = useCallback(() => {
@@ -143,7 +128,7 @@ export function useAssistant({
 
       const formData = new FormData();
       formData.append("message", message.content);
-      formData.append("threadId", threadIdParam ?? threadId ?? null);
+      formData.append("threadId", threadIdParam ?? currentThreadId ?? '');
       formData.append("file", inputFile || '');
       formData.append("filename", inputFile !== undefined ? inputFile.name : '');
       formData.append("clientSidePrompt", clientSidePrompt || '');
@@ -176,7 +161,6 @@ export function useAssistant({
           }
 
           case 'message_annotations': {
-            // loop over all annotations
             for (const annotation of value) {
               if (annotation.type !== 'file_path') {
                 continue;
@@ -194,7 +178,6 @@ export function useAssistant({
           }
 
           case 'text': {
-            // text delta - add to last message:
             setMessages(messages => {
               const lastMessage = messages[messages.length - 1];
               return [
@@ -224,9 +207,8 @@ export function useAssistant({
           }
 
           case 'assistant_control_data': {
-            setThreadId(value.threadId);
+            setCurrentThreadId(value.threadId);
 
-            // set id of last message:
             setMessages(messages => {
               const lastMessage = messages[messages.length - 1];
               lastMessage.id = value.messageId;
@@ -243,7 +225,6 @@ export function useAssistant({
         }
       }
     } catch (error) {
-      // Ignore abort errors as they are expected when the user cancels the request:
       if (isAbortError(error) && abortController.signal.aborted) {
         abortControllerRef.current = null;
         return;
@@ -275,11 +256,46 @@ export function useAssistant({
     append({ role: 'user', content: input }, requestOptions);
   };
 
+  const setThreadId = (threadId: string | undefined) => {
+    setCurrentThreadId(threadId);
+    if (threadId === undefined) {
+      setMessages([]);
+      return;
+    }
+
+    const assistantThreads = localStorage.getItem(localStorageName)
+    const threads = JSON.parse(assistantThreads || '{}')
+    setThreads(threads)
+    if (threads[threadId] !== undefined) {
+      setMessages(threads[threadId].messages)
+    }
+    else {
+      setMessages([]);
+    }
+  };
+
+  const deleteThreadFromHistory = (threadId: string) => {
+    const assistantThreads = localStorage.getItem(localStorageName)
+    const threads = JSON.parse(assistantThreads || '{}')
+    delete threads[threadId]
+    localStorage.setItem(localStorageName, JSON.stringify(threads))
+
+    // if threadId is the current thread set to undefined
+    if (currentThreadId === threadId) {
+      setThreadId(undefined)
+    }
+
+    setThreads(threads)
+  }
+
   return {
     append,
     messages,
     setMessages,
-    threadId,
+    threadId: currentThreadId,
+    setThreadId,
+    deleteThreadFromHistory,
+    threads,
     input,
     setInput,
     handleInputChange,
