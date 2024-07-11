@@ -13,6 +13,21 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.21"
+                    date="2024-07-11"
+                    new={[
+                        {
+                            title: 'Chat History',
+                            description: 'You can now enable the chat history in customization settings. This will allow the user to see his previous messages in the chatbot. The chat history will be displayed in the chatbot window.',
+                            image: new URL(
+                                '/public/chat_history.png',
+                                import.meta.url,
+                            ).toString()
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.2.20"
                     date="2024-07-08"
                     new={[
