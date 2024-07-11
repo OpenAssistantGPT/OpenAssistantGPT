@@ -80,8 +80,7 @@ export function useAssistant({
   useEffect(() => {
     const assistantThreads = localStorage.getItem(localStorageName)
     const threadsMap = JSON.parse(assistantThreads || '{}')
-
-    if (currentThreadId) {
+    if (currentThreadId && threadsMap[currentThreadId] !== undefined) {
       threadsMap[currentThreadId].messages = messages
       localStorage.setItem(localStorageName, JSON.stringify(threadsMap))
     }
@@ -280,6 +279,12 @@ export function useAssistant({
     const threads = JSON.parse(assistantThreads || '{}')
     delete threads[threadId]
     localStorage.setItem(localStorageName, JSON.stringify(threads))
+
+    // if threadId is the current thread set to undefined
+    if (currentThreadId === threadId) {
+      setThreadId(undefined)
+    }
+
     setThreads(threads)
   }
 

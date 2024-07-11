@@ -64,6 +64,8 @@ export async function PATCH(
             },
         });
 
+        console.log(payload.chatHistoryEnabled)
+
         const chatbot = await db.chatbot.update({
             where: {
                 id: params.chatbotId,
@@ -79,6 +81,7 @@ export async function PATCH(
                 userReplyTextColor: payload.userReplyTextColor,
                 chatbotLogoURL: blob ? blob.url : payload.chatbotLogoFilename === 'keep-current-image' ? currentChatbot?.chatbotLogoURL : '',
                 chatInputStyle: payload.chatInputStyle,
+                chatHistoryEnabled: payload.chatHistoryEnabled === 'true',
             },
             select: {
                 id: true,

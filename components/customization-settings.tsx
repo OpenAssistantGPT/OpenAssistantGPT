@@ -26,6 +26,7 @@ import Image from "next/image"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "./ui/label"
+import { Switch } from "./ui/switch"
 
 
 interface ChatbotOperationsProps {
@@ -64,6 +65,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         form.setValue("chatTitle", chatbot.chatTitle)
         form.setValue("chatMessagePlaceHolder", chatbot.chatMessagePlaceHolder)
         form.setValue("chatInputStyle", chatbot.chatInputStyle)
+        form.setValue('chatHistoryEnabled', chatbot.chatHistoryEnabled)
 
         // get the colors from the chatbot
         setBubbleColor(chatbot.bubbleColor)
@@ -94,7 +96,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         }
 
         const fileImage = inputFileRef.current.files[0];
-        console.log(fileImage)
 
         const formData = new FormData();
         formData.append('chatTitle', data.chatTitle || '');
@@ -106,6 +107,7 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
         formData.append('userReplyBackgroundColor', userBubbleColor);
         formData.append('userReplyTextColor', userBubbleMessageColor);
         formData.append('chatInputStyle', data.chatInputStyle);
+        formData.append('chatHistoryEnabled', String(data.chatHistoryEnabled));
 
         if (useDefaultImage) {
             formData.set('chatbotLogoFilename', '');
@@ -403,11 +405,11 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                         </FormLabel>
                                                         <FormDescription>
                                                             You have two choice default style or full width style.
-                                                            <br/>   
+                                                            <br />
                                                             Default style is the default style of the chat input the width is half the screen of the user on desktop mode.
-                                                            <br/>   
+                                                            <br />
                                                             Full width style is the full width of the screen of the user on desktop mode.
-                                                            <br/>   
+                                                            <br />
                                                             Both have the same behavior on mobile mode or widget mode it will have effect with the window integrations.
                                                         </FormDescription>
 
@@ -430,6 +432,29 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
                                                 </div>
                                             </div>
                                         </div>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="chatHistoryEnabled"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                                        <div className="space-y-0.5">
+                                            <FormLabel className="text-base">
+                                                Chat History
+                                            </FormLabel>
+                                            <FormDescription>
+                                                Enable or disable chat history. Enabling chat history will allow users to view previous chat with your chatbot.
+                                            </FormDescription>
+                                        </div>
+                                        <FormControl>
+                                            <Switch
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
                                     </FormItem>
                                 )}
                             />
