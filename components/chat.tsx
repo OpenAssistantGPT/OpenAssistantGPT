@@ -45,13 +45,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
   const { formRef, onKeyDown } = useEnterSubmit()
 
   const { status, messages, input, submitMessage, handleInputChange, error, threadId, setThreadId, threads, deleteThreadFromHistory } =
-    useAssistant({ api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, clientSidePrompt: clientSidePrompt });
-
-  useEffect(() => {
-    console.log(setThreadId)
-    console.log(threadId)
-    console.log(threads)
-  }, [threadId])
+    useAssistant({ id: chatbot.id, api: `/api/chatbots/${chatbot.id}/chat`, inputFile: inputFileRef.current?.files ? inputFileRef.current.files[0] : undefined, clientSidePrompt: clientSidePrompt });
 
   function handleSubmitMessage(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -190,7 +184,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
       >
 
         <div
-          className={cn('pb-[200px] overflow-auto pl-5 sm:pl-20 pr-5 sm:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
+          className={cn('pb-[200px] overflow-auto pl-6 sm:pl-20 pr-6 sm:pr-20 md:pb-[200px] pt-4 md:pt-10', className)}
         >
           <ChatMessage isFirst={true} chatbot={chatbot} message={{ id: '0', role: "assistant", content: chatbot.welcomeMessage }} />
           <div className="flex-grow overflow-y-auto space-y-6 flex flex-col order-2">

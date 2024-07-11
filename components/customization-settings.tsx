@@ -63,7 +63,6 @@ export function CustomizationSettings({ chatbot }: ChatbotOperationsProps) {
     useEffect(() => {
         form.setValue("chatTitle", chatbot.chatTitle)
         form.setValue("chatMessagePlaceHolder", chatbot.chatMessagePlaceHolder)
-        console.log(chatbot.chatInputStyle)
         form.setValue("chatInputStyle", chatbot.chatInputStyle)
 
         // get the colors from the chatbot
