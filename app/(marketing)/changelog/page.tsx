@@ -13,6 +13,23 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.22"
+                    date="2024-07-12"
+                    improvements={[
+                        {
+                            title: 'Exports now contain user IP',
+                            description: 'Exports now contain the user IP. This will allow you to see the IP of the user who sent the message in the export.',
+                        },
+                    ]}
+                    bugs={[
+                        {
+                            title: 'Chat history was displaying thread name after doing a click in the ui',
+                            description: 'Issue was fixed and now the chat history is displaying the thread name correctly.',
+                        },
+                    ]}
+                />
+                <Release
+                    isFirst={true}
                     version="0.2.21"
                     date="2024-07-11"
                     new={[

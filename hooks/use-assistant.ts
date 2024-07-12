@@ -83,6 +83,7 @@ export function useAssistant({
     if (currentThreadId && threadsMap[currentThreadId] !== undefined) {
       threadsMap[currentThreadId].messages = messages
       localStorage.setItem(localStorageName, JSON.stringify(threadsMap))
+      setThreads(threadsMap)
     }
   }, [messages]);
 
