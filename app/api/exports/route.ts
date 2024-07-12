@@ -56,6 +56,7 @@ export async function POST(
                 response: true,
                 createdAt: true,
                 threadId: true,
+                userIP: true,
             },
         })
 
