@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.23"
+                    date="2024-07-15"
+                    improvements={[
+                        {
+                            title: 'Add option to configure max number of pages to crawl',
+                            description: 'This feature will allow you to configure the maximum number of pages to crawl. This will prevent the crawler from crawling too many pages and using too much resources.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.22"
                     date="2024-07-12"
                     improvements={[
@@ -29,7 +39,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.21"
                     date="2024-07-11"
                     new={[
@@ -44,7 +53,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.20"
                     date="2024-07-08"
                     new={[
