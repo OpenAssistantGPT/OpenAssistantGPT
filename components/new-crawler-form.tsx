@@ -185,7 +185,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                         value={field.value}
                                     />
                                     <FormDescription>
-                                        Set a maximum pages to crawl. You can choose a number between 1 and 200.
+                                        Set a maximum of pages to crawl. You can choose a number between 1 and 200.
                                         If you have more than 200 pages we recommend using your API or other solution to get the data.
                                     </FormDescription>
                                     <FormMessage />
