@@ -5,13 +5,8 @@ import * as z from "zod"
 import { db } from "@/lib/db"
 import { getUserSubscriptionPlan } from "@/lib/subscription";
 import { RequiresHigherPlanError } from "@/lib/exceptions";
+import { crawlerSchema } from "@/lib/validations/crawler";
 
-const crawlerCreateSchema = z.object({
-    name: z.string(),
-    crawlUrl: z.string(),
-    urlMatch: z.string(),
-    selector: z.string()
-})
 
 export async function GET(request: Request) {
     try {
@@ -27,6 +22,7 @@ export async function GET(request: Request) {
                 id: true,
                 name: true,
                 createdAt: true,
+                maxPagesToCrawl: true,
             },
             where: {
                 userId: user?.id,
@@ -63,7 +59,7 @@ export async function POST(req: Request) {
         }
 
         const json = await req.json()
-        const body = crawlerCreateSchema.parse(json)
+        const body = crawlerSchema.parse(json)
 
         const crawler = await db.crawler.create({
             data: {
@@ -71,7 +67,7 @@ export async function POST(req: Request) {
                 crawlUrl: body.crawlUrl,
                 urlMatch: body.urlMatch,
                 selector: body.selector,
-                maxPagesToCrawl: 25,
+                maxPagesToCrawl: body.maxPagesToCrawl,
                 userId: session?.user?.id,
             },
             select: {
