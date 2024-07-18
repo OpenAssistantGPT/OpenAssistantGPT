@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.24"
+                    date="2024-07-18"
+                    new={[
+                        {
+                            title: 'We now support gpt-4o-mini',
+                            description: 'We support the latest model from OpenAI, gpt-4o-mini. This model is faster and cheaper.',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.23"
                     date="2024-07-15"
                     improvements={[

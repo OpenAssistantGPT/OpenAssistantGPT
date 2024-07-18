@@ -137,7 +137,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
 
   return (
     <>
-      { chatbot.chatHistoryEnabled && <ChatHistory threads={threads} setThreadId={setThreadId} threadId={threadId} deleteThreadFromHistory={deleteThreadFromHistory}></ChatHistory>}
+      {chatbot.chatHistoryEnabled && <ChatHistory threads={threads} setThreadId={setThreadId} threadId={threadId} deleteThreadFromHistory={deleteThreadFromHistory}></ChatHistory>}
       <CardHeader style={{ background: chatbot.chatHeaderBackgroundColor }} className="sticky z-30 top-0 border-b p-4">
         <div className="flex flex-row justify-between items-center">
           <h2 className="text-xl font-bold flex items-center h-10 gap-2">
@@ -263,11 +263,19 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                   <div className="flex w-full sm:w-1/2 items-center p-2 bg-white border rounded-lg shadow-sm">
                     <Icons.document className="text-gray-400 w-6 h-6 flex-shrink-0" />
                     <div className="flex flex-col pl-3 pr-6 flex-1 min-w-0">
-                      <span className="font-sm text-gray-800 truncate">{inputFileRef.current?.files[0].name}</span>
-                      <span className="text-sm text-gray-500">Document</span>
+                      <span className="font-sm text-gray-800 truncate">{inputFileRef.current?.files![0].name}</span>
+                      <span className="text-sm text-gray-500">
+                        {inputFileRef.current?.files![0].type === 'image/jpeg'
+                          ? 'Image'
+                          : inputFileRef.current?.files![0].type === 'image/png'
+                            ? 'Image'
+                            : inputFileRef.current?.files![0].type === 'image/svg+xml'
+                              ? 'Image'
+                              : 'Document'}
+                      </span>
                     </div>
                     <Button type="button" variant="ghost" className="flex-shrink-0" onClick={() => {
-                      inputFileRef.current.value = '';
+                      inputFileRef.current!.value = '';
                       setFileUploaded(false);
                     }}>
                       <Icons.close className="text-gray-400 w-4 h-4" />
