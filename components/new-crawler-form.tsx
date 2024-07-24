@@ -181,7 +181,7 @@ export function NewCrawlerForm({ className, ...props }: React.HTMLAttributes<HTM
                                     <Input
                                         id="maxPagesToCrawl"
                                         type="number"
-                                        onChange={field.onChange}
+                                        onChange={e => field.onChange(Number(e.target.value))}
                                         value={field.value}
                                     />
                                     <FormDescription>
