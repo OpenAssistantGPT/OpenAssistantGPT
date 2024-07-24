@@ -24,7 +24,7 @@ import { Icons } from "@/components/icons"
 import { Form, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
 interface CrawlerFormProps extends React.HTMLAttributes<HTMLFormElement> {
-    crawler: Pick<Crawler, "id" | "name" | "crawlUrl" | "selector" | "urlMatch">
+    crawler: Pick<Crawler, "id" | "name" | "crawlUrl" | "selector" | "urlMatch" | "maxPagesToCrawl">
 }
 
 type FormData = z.infer<typeof crawlerSchema>
@@ -38,6 +38,7 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
             crawlUrl: crawler?.crawlUrl || "",
             selector: crawler?.selector || "",
             urlMatch: crawler?.urlMatch || "",
+            maxPagesToCrawl: crawler?.maxPagesToCrawl || 150
         },
     })
     const [isSaving, setIsSaving] = React.useState<boolean>(false)
@@ -54,7 +55,8 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                 name: data.name,
                 crawlUrl: data.crawlUrl,
                 selector: data.selector,
-                urlMatch: data.urlMatch
+                urlMatch: data.urlMatch,
+                maxPagesToCrawl: data.maxPagesToCrawl
             }),
         })
 
@@ -166,6 +168,28 @@ export function CrawlerForm({ crawler, className, ...props }: CrawlerFormProps) 
                                     <FormDescription>
                                         The selector will be used by the query selector to get the content from a specific part of the website. You can test your query selector when you open your website with F12 in the console and do this: document.querySelector(&quot;[id=&apos;root&apos;]&quot;).
                                         If you want to extract all the content simply use: &apos;body&apos;
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="maxPagesToCrawl"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="maxPagesToCrawl">
+                                        Number of pages to crawl
+                                    </FormLabel>
+                                    <Input
+                                        id="maxPagesToCrawl"
+                                        type="number"
+                                        onChange={e => field.onChange(Number(e.target.value))}
+                                        value={field.value}
+                                    />
+                                    <FormDescription>
+                                        Set a maximum of pages to crawl. You can choose a number between 1 and 200.
+                                        If you have more than 200 pages we recommend using your API or other solution to get the data.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

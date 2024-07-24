@@ -57,9 +57,7 @@ export default async function CrawlerSettingsPage({ params }: CrawlerSettingsPro
                 </Link>
             </DashboardHeader>
             <div className="grid gap-10">
-                <CrawlerForm crawler={{
-                    id: crawler.id, name: crawler.name, crawlUrl: crawler.crawlUrl, selector: crawler.selector, urlMatch: crawler.urlMatch
-                }} />
+                <CrawlerForm crawler={crawler} />
             </div>
         </DashboardShell>
     )
