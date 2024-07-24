@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.25"
+                    date="2024-07-24"
+                    new={[
+                        {
+                            title: 'New Chatbot SDK released',
+                            description: 'We now have a new chatbot SDK to help people build chatbots. The SDK is open source and can be used to build chatbots for any platform. Find out more about the SDK here https://sdk.openassistantgpt.io',
+                        },
+                    ]}
+                />
+                <Release
                     version="0.2.24"
                     date="2024-07-18"
                     new={[

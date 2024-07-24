@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import Chatbot from '@/components/chatbot';
-import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { AOSInit } from '@/components/aos-init';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { constructMetadata } from '@/lib/construct-metadata';
