@@ -91,6 +91,7 @@ export async function PATCH(
                 crawlUrl: payload.crawlUrl,
                 selector: payload.selector,
                 urlMatch: payload.urlMatch,
+                maxPagesToCrawl: payload.maxPagesToCrawl,
             },
         })
 

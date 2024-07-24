@@ -1,11 +1,9 @@
 
 import { redirect } from "next/navigation"
-import { Crawler, User } from "@prisma/client"
 
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { authOptions } from "@/lib/auth"
-import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import Link from "next/link"
 import { buttonVariants } from "@/components/ui/button"

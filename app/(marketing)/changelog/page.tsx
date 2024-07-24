@@ -13,6 +13,22 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.25"
+                    date="2024-07-24"
+                    new={[
+                        {
+                            title: 'New Chatbot SDK released',
+                            description: 'We now have a new chatbot SDK to help people build chatbots. The SDK is open source and can be used to build chatbots for any platform. Find out more about the SDK here https://sdk.openassistantgpt.io',
+                        },
+                    ]}
+                    bugs={[
+                        {
+                            title: 'Fix issue when updating crawler number of pages to crawl',
+                            description: 'Missing validation was preventing the user from updating the number of pages to crawl. This issue has been fixed and you can now update the number of pages to crawl.',
+                        }
+                    ]}
+                />
+                <Release
                     version="0.2.24"
                     date="2024-07-18"
                     new={[
