@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.26"
+                    date="2024-07-28"
+                    bugs={[
+                        {
+                            title: 'Fix issue when assistant was searching for files but could not find them',
+                            description: 'Fix issue when assistant was searching for files but could not find them. Now tools are only enabled when needed',
+                        }
+                    ]}
+                />
+                <Release
                     version="0.2.25"
                     date="2024-07-24"
                     new={[
