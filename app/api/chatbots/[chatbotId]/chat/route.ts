@@ -10,6 +10,7 @@ import { fileTypesFullList } from "@/lib/validations/codeInterpreter";
 import { fileTypes as searchFile } from "@/lib/validations/fileSearch";
 import { File } from "buffer";
 import { getClientIP } from "@/lib/getIP";
+import { AssistantTool } from "openai/resources/beta/assistants.mjs";
 
 export const maxDuration = 300;
 
@@ -140,14 +141,19 @@ export async function POST(
                         }
                     }
 
+                    let toolList: AssistantTool[] = []
+                    if (fileInterpreter) {
+                        toolList.push({ type: "code_interpreter" })
+                    }
+                    if (fileSearch) {
+                        toolList.push({ type: "file_search" })
+                    }
+
                     // Run the assistant on the thread
                     const runStream = openai.beta.threads.runs.stream(threadId!, {
                         assistant_id: chatbot.openaiId,
                         instructions: (data.clientSidePrompt || "").replace('+', '') || "",
-                        tools: [
-                            { type: "file_search" },
-                            { type: "code_interpreter" },
-                        ],
+                        tools: toolList,
                         max_completion_tokens: chatbot.maxCompletionTokens,
                         max_prompt_tokens: chatbot.maxPromptTokens,
                     });
