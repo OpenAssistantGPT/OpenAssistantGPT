@@ -144,10 +144,6 @@ export async function POST(
                     const runStream = openai.beta.threads.runs.stream(threadId!, {
                         assistant_id: chatbot.openaiId,
                         instructions: (data.clientSidePrompt || "").replace('+', '') || "",
-                        tools: [
-                            { type: "file_search" },
-                            { type: "code_interpreter" },
-                        ],
                         max_completion_tokens: chatbot.maxCompletionTokens,
                         max_prompt_tokens: chatbot.maxPromptTokens,
                     });
