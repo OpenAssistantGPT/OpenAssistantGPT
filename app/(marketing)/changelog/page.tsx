@@ -19,6 +19,10 @@ export default function ChangelogPage() {
                         {
                             title: 'Download transcripts',
                             description: 'We now support downloading the chat transcripts, users can download the chat to export it.',
+                            image: new URL(
+                                '/public/download_feature.png',
+                                import.meta.url,
+                            ).toString()
                         },
                     ]}
                     bugs={[
