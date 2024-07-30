@@ -67,7 +67,7 @@ export function ChatMessage({ message, children, chatbot, isFirst, ...props }: C
                             {message.content == "loading" ? <Icons.loading className="animate-spin" /> :
                                 <>
                                     <MemoizedReactMarkdown
-                                        className="w-full text-sm break-words prose-p:leading-relaxed prose-pre:p-0"
+                                        className="w-full prose text-sm break-words prose-p:leading-relaxed prose-pre:p-0"
                                         remarkPlugins={[remarkGfm, remarkMath]}
                                         components={{
                                             a({ node, children, ...props }) {
