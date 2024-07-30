@@ -135,6 +135,23 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
     window.parent.postMessage('closeChat', '*')
   }
 
+  function downloadTranscript() {
+    const transcript =
+      `assistant: ${chatbot.welcomeMessage}\n\n` +
+      messages
+        .map((msg: Message) => `${msg.role}: ${msg.content}`)
+        .join('\n\n');
+    const blob = new Blob([transcript], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'chat_transcript.txt';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
   return (
     <>
       {chatbot.chatHistoryEnabled && <ChatHistory threads={threads} setThreadId={setThreadId} threadId={threadId} deleteThreadFromHistory={deleteThreadFromHistory}></ChatHistory>}
@@ -145,7 +162,7 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
               {chatbot.chatTitle}
             </div>
           </h2>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center space-x-4">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -161,6 +178,23 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
                 </Button>
               </TooltipTrigger>
               <TooltipContent>New Chat</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant={'nothing'}
+                  className="cursor-pointer"
+                  size={'icon'}
+                  onClick={downloadTranscript}
+                >
+                  <Icons.download
+                    style={{ color: chatbot.chatHeaderTextColor }}
+                    className="h-4 w-4"
+                  />
+                  <span className="sr-only">Download Transcript</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Download Transcript</TooltipContent>
             </Tooltip>
             {withExitX &&
               <div className="items-end">
