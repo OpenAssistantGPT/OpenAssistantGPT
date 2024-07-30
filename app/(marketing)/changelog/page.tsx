@@ -13,6 +13,33 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.2.27"
+                    date="2024-07-29"
+                    new={[
+                        {
+                            title: 'Download transcripts',
+                            description: 'We now support downloading the chat transcripts, users can download the chat to export it.',
+                        },
+                    ]}
+                    bugs={[
+                        {
+                            title: 'Fix issue when the assistant reply was leaving empty space on the right',
+                            description: 'Now the assistant reply will not leave empty space on the right. The chatbox will be resized to fit the assistant reply.',
+                        }
+                    ]}
+                />
+                <Release
+                    isFirst={true}
+                    version="0.2.26"
+                    date="2024-07-28"
+                    bugs={[
+                        {
+                            title: 'Fix issue when assistant was searching for files but could not find them',
+                            description: 'Fix issue when assistant was searching for files but could not find them. Now tools are only enabled when needed',
+                        }
+                    ]}
+                />
+                <Release
                     version="0.2.25"
                     date="2024-07-24"
                     new={[
