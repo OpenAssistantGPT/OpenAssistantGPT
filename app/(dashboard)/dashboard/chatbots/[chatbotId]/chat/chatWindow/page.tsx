@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { Chat } from "@/components/chat"
+import { Chat, ClientSideChatbotProps } from "@/components/chat-sdk"
 import { Chatbot } from "@prisma/client"
 import { db } from "@/lib/db"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
@@ -45,19 +45,19 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         accessDenied = true
     }
 
-    const plan = await getUserSubscriptionPlan(chatbot.userId)
+    //const plan = await getUserSubscriptionPlan(chatbot.userId)
     
-    if (chatbot.displayBranding === false && plan?.brandingCustomization === false) {
-        chatbot.displayBranding = true
-    }
+    //if (chatbot.displayBranding === false && plan?.brandingCustomization === false) {
+    //    chatbot.displayBranding = true
+    //}
 
-    if (chatbot.chatFileAttachementEnabled && plan?.chatFileAttachments === false) {
-        chatbot.chatFileAttachementEnabled = false
-    }
+    //if (chatbot.chatFileAttachementEnabled && plan?.chatFileAttachments === false) {
+    //    chatbot.chatFileAttachementEnabled = false
+    //}
 
-    if (chatbot.chatbotLogoURL !== '' && plan?.basicCustomization === false) {
-        chatbot.chatbotLogoURL = null
-    }
+    //if (chatbot.chatbotLogoURL !== '' && plan?.basicCustomization === false) {
+    //    chatbot.chatbotLogoURL = null
+    //}
 
     if (accessDenied) {
         return (
@@ -73,8 +73,46 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
           </div>
         )
     }
+    
+    const clientSideChatbot: ClientSideChatbotProps = {
+        id: chatbot.id,
+        name: chatbot.name,
+        userId: chatbot.userId,
+        openaiId: chatbot.openaiId,
+        createdAt: chatbot.createdAt,
+        welcomeMessage: chatbot.welcomeMessage,
+        chatbotErrorMessage: chatbot.chatbotErrorMessage,
+        isImported: chatbot.isImported,
+        chatTitle: chatbot.chatTitle,
+        chatMessagePlaceHolder: chatbot.chatMessagePlaceHolder,
+        rightToLeftLanguage: chatbot.rightToLeftLanguage,
+        bubbleColor: chatbot.bubbleColor,
+        bubbleTextColor: chatbot.bubbleTextColor,
+        chatHeaderBackgroundColor: chatbot.chatHeaderBackgroundColor,
+        chatHeaderTextColor: chatbot.chatHeaderTextColor,
+        chatbotReplyBackgroundColor: chatbot.chatbotReplyBackgroundColor,
+        chatbotReplyTextColor: chatbot.chatbotReplyTextColor,
+        userReplyBackgroundColor: chatbot.userReplyBackgroundColor,
+        userReplyTextColor: chatbot.userReplyTextColor,
+        chatInputStyle: chatbot.chatInputStyle,
+        inquiryEnabled: chatbot.inquiryEnabled,
+        inquiryLinkText: chatbot.inquiryLinkText,
+        inquiryTitle: chatbot.inquiryTitle,
+        inquirySubtitle: chatbot.inquirySubtitle,
+        inquiryEmailLabel: chatbot.inquiryEmailLabel,
+        inquiryMessageLabel: chatbot.inquiryMessageLabel,
+        inquirySendButtonText: chatbot.inquirySendButtonText,
+        inquiryAutomaticReplyText: chatbot.inquiryAutomaticReplyText,
+        inquiryDisplayLinkAfterXMessage: chatbot.inquiryDisplayLinkAfterXMessage,
+        chatHistoryEnabled: chatbot.chatHistoryEnabled,
+        displayBranding: chatbot.displayBranding,
+        chatFileAttachementEnabled: chatbot.chatFileAttachementEnabled,
+        bannedIps: chatbot.bannedIps,
+        allowEveryone: chatbot.allowEveryone,
+        allowedIpRanges: chatbot.allowedIpRanges,
+    }
 
     return (
-        <Chat chatbot={chatbot} withExitX={params.withExitX} defaultMessage={params.defaultMessage || ""} clientSidePrompt={params.clientSidePrompt || ""}></Chat>
+        <Chat chatbot={clientSideChatbot} withExitX={params.withExitX} defaultMessage={params.defaultMessage || ""} clientSidePrompt={params.clientSidePrompt || ""}></Chat>
     )
 }
