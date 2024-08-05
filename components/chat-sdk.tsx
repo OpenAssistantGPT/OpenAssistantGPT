@@ -67,9 +67,14 @@ interface ChatbotProps {
 export function Chat({ chatbot, defaultMessage, className, withExitX = false, clientSidePrompt, ...props }: ChatbotProps) {
 
   const [count, setMessagesCount] = useState(0);
+  const [threadId, setThreadId] = useState('');
   
   function handleMessagesChange(messages: Message[]) {
     setMessagesCount(messages.length);
+  }
+
+  function handleThreadIdChange(threadId: string | undefined) {
+    setThreadId(threadId || '');
   }
 
   console.log(chatbot);
@@ -83,8 +88,9 @@ export function Chat({ chatbot, defaultMessage, className, withExitX = false, cl
       chatbotLogoURL: chatbot.chatbotLogoURL || '',
     }} path={`/api/chatbots/${chatbot.id}/chat`} withExitX={withExitX} clientSidePrompt={clientSidePrompt} defaultMessage={defaultMessage} {...props} 
     onMessagesChange={handleMessagesChange}
+    onThreadIdChange={handleThreadIdChange}
     extensions={[
-      chatbot.inquiryEnabled && count > chatbot.inquiryDisplayLinkAfterXMessage && <SupportInquiry key="inquiry" chatbot={chatbot} threadId={chatbot.id} />
+      chatbot.inquiryEnabled && count > chatbot.inquiryDisplayLinkAfterXMessage && <SupportInquiry key="inquiry" chatbot={chatbot} threadId={threadId} />
     ]}
     />
   )
