@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { OpenAI } from "openai";
 import { z } from "zod";
 
+import { handleFileFunction } from "openassistantgpt"
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -35,14 +36,5 @@ export async function GET(
         apiKey: openaiKey.openaiKey,
     });
 
-    const [file, fileContent] = await Promise.all([
-        openai.files.retrieve(params.fileId),
-        openai.files.content(params.fileId),
-    ]);
-
-    return new Response(fileContent.body, {
-        headers: {
-            "Content-Disposition": `attachment; filename="${file.filename}"`,
-        },
-    });
+    return handleFileFunction(openai, params.fileId)
 }
