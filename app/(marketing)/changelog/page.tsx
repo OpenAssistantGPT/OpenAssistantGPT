@@ -13,6 +13,16 @@ export default function ChangelogPage() {
             <div className="p-4 max-w-screen-sm">
                 <Release
                     isFirst={true}
+                    version="0.3.0"
+                    date="2024-08-05"
+                    bugs={[
+                        {
+                            title: 'Improve UX for the chatbot by using our own new SDK',
+                            description: 'We now use our own SDK to improve the chatbot experience. This will allow us to provide better support and more features in the future.',
+                        }
+                    ]}
+                />
+                <Release
                     version="0.2.27"
                     date="2024-07-29"
                     new={[
@@ -33,7 +43,6 @@ export default function ChangelogPage() {
                     ]}
                 />
                 <Release
-                    isFirst={true}
                     version="0.2.26"
                     date="2024-07-28"
                     bugs={[
