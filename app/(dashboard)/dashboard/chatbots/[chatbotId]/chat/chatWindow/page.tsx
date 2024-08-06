@@ -45,19 +45,19 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         accessDenied = true
     }
 
-    const plan = await getUserSubscriptionPlan(chatbot.userId)
+    //const plan = await getUserSubscriptionPlan(chatbot.userId)
     
-    if (chatbot.displayBranding === false && plan?.brandingCustomization === false) {
-        chatbot.displayBranding = true
-    }
+    //if (chatbot.displayBranding === false && plan?.brandingCustomization === false) {
+    //    chatbot.displayBranding = true
+    //}
 
-    if (chatbot.chatFileAttachementEnabled && plan?.chatFileAttachments === false) {
-        chatbot.chatFileAttachementEnabled = false
-    }
+    //if (chatbot.chatFileAttachementEnabled && plan?.chatFileAttachments === false) {
+    //    chatbot.chatFileAttachementEnabled = false
+    //}
 
-    if (chatbot.chatbotLogoURL !== '' && plan?.basicCustomization === false) {
-        chatbot.chatbotLogoURL = null
-    }
+    //if (chatbot.chatbotLogoURL !== '' && plan?.basicCustomization === false) {
+    //    chatbot.chatbotLogoURL = null
+    //}
 
     if (accessDenied) {
         return (
@@ -84,6 +84,7 @@ export default async function ChatbotPage({ params }: ChatbotSettingsProps) {
         chatbotErrorMessage: chatbot.chatbotErrorMessage,
         isImported: chatbot.isImported,
         chatTitle: chatbot.chatTitle,
+        chatbotLogoURL: chatbot.chatbotLogoURL || '',
         chatMessagePlaceHolder: chatbot.chatMessagePlaceHolder,
         rightToLeftLanguage: chatbot.rightToLeftLanguage,
         bubbleColor: chatbot.bubbleColor,
