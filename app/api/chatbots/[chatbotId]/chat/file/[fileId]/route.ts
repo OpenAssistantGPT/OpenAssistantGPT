@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { OpenAI } from "openai";
 import { z } from "zod";
 
-import { handleFileFunction } from "openassistantgpt"
+import { handleFileFunction } from "@openassistantgpt/assistant"
 
 const routeContextSchema = z.object({
     params: z.object({
