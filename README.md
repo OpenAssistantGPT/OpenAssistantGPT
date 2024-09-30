@@ -26,6 +26,52 @@ For more detailed information and implementation guidelines, you can visit our [
 5. Create your chatbot with the file you uploaded.
 6. Test your chatbot!
 
+## Technical Features
+## Crawlers
+  - Crawlers exist within the assistant in order to crawl through websites and extract certain information. Criteria such as strings or sections can be specified in order to allow the crawler to collect data.
+  - The data collected is stored in files
+  - The files can be used to help train your chatbot to become more intelligent 
+## Files
+  - Files can be used to train your chatbot
+  - File uploads allow the user to upload a table of questions and answers to provide the chatbot with more knowledge
+  - File uploads enhance chatbot performance
+  - File types are currently limited. Refer to https://www.openassistantgpt.io/docs/documentation/files to see which file types can be uploaded.
+## Chatbots
+  - Users can create or import chatbots
+  - Created chatbots can be configured with a display name, welcome message, default prompt, and OpenAI Model
+  - Users must enter an OpenAI API key when creating a chatbot
+  - Files can be uploaded when the chatbot is created in order for the AI to be able to search for content when a query is made
+## Web Search
+  - If the chatbot cannot generate an answer, the web search feature will be used
+  - The web search feature is sometimes also used in coordination with the chatbot's knowledge in order to generate more accurate responses
+  - Users can influence the use of the web search feature based on context of their questions, asking follow up questions, and by explicitly prompting the chatbot to do a web search
+    ## Benefits:
+    - Improves accuracy
+    - Better experience for the users
+    - More knowledge to pull from 
+
+## Tips 
+  - In order for the chatbot to perform as expected, users should create clearly state their objectives to the chatbot
+  - The chatbot can be configured to respond with certain message lengths, as well as with a positive tone
+  - The chatbot can be configured to inform users that their question is out of scope if the question asked is off topic
+
+## Use Cases
+  - Building a smart chatbot for your website
+  - Building a smart chatbot to assist with classwork
+  - Building a smart chatbot to respond to emails
+  - And much more depending on user needs!
+
+## Integrating the smart chatbot to your website
+Integrating your smart chatbot with your website is quite simple. You will need the following two accounts before beginning:
+  - Google or Github account
+  - OpenAI account
+
+1. Create a new secret key on https://platform.openai.com/api-keys, and set this new secret key in your OpenAssistantGPT settings
+2. Upload any files with the content you desire to train the chatbot
+3. Create your new chatbot
+4. Embed the chatbot in your website 
+  
+
 ## Documentation
 For full documentation, visit our [documentation](https://openassistantgpt.io/docs)
 
